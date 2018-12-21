@@ -1,0 +1,5 @@
+{
+    "js": ["widget.js", "components.js"],
+    "callback": ["suggestionsWidget"],
+    "templates": ["new.html", "change.html"]
+}
