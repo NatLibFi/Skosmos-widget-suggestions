@@ -1,0 +1,103 @@
+{
+  "new": {
+    "button": "Föreslå ett nytt begrepp till vokabuläret",
+    "header": "Föreslå ett nytt begrepp till YSA, Allärs eller ALLFO",
+    "p1": "Vem som helst som använder YSA, Allärs eller ALLFO kan föreslå nya begrepp till vokabulärerna.",
+    "p2": "Du kan föreslå ändringar till spesifika begrepp på deras egna sidor.",
+    "conceptType": {
+      "label": "Typ: *",
+      "for": "typ av begrepp",
+      "placeholder": "Välj typ av begrepp",
+      "none": "Begreppstyper är inte tillgängliga",
+      "error": "Välj typ av begrepp."
+    },
+    "prefLabel": {
+      "error": "Huvudbeteckningen måste vara en unik term.",
+      "fi": {
+        "label": "Term/ämnesord på finska",
+        "for": "termen på finska"
+      },
+      "sv": {
+        "label": "Term/ämnesord på svenska: *",
+        "for": "termen på svenska"
+      },
+      "en": {
+        "label": "Term/ämnesord på engelska:",
+        "for": "termen på engelska"
+      }
+    },
+    "altLabels": {
+      "label": "Alternativa termer och uttryck:",
+      "for": "andra liknande termer"
+    },
+    "broaderLabels": {
+      "label": "Överordnat begrepp i ALLFO:",
+      "for": "överordnat begrepp"
+    },
+    "narrowerLabels": {
+      "label": "Underordnade begrepp:",
+      "for": "underordnade begrepp"
+    },
+    "relatedLabels": {
+      "label": "Associativa (RT):",
+      "for": "relaterade begrepp"
+    },
+    "groups": {
+      "label": "Tematisk grupp i Allärs/ALLFO:",
+      "for": "relaterade grupper till begreppet",
+      "none": "Inga mer grupper hittas",
+      "placeholder": "Välj grupp(er) ur listan"
+    },
+    "exactMatches": {
+      "label": "Motsvarande begrepp i annan terminologi:",
+      "for": "liknande begrepp i andra vokabulärer",
+      "vocab": "Vokabulär (LCSH, Wikipedia, etc.)",
+      "uri": "URI eller term"
+
+    },
+    "scopeNote": {
+      "label": "Förklaring som preciserar betydelsen:",
+      "for": "en förklarande anteckning som förklarar syftet"
+    },
+    "explanation": {
+      "label": "Motiveringar för förslaget: *",
+      "for": "motivering för den föreslagna termen",
+      "error": "Detta är obligatorisk information."
+    },
+    "neededFor": {
+      "label": "I beskrivningen av vilket material behöver du begreppet (t.ex. titel eller URL): *",
+      "for": "varför behövs begreppet",
+      "error": "Detta är obligatorisk information."
+    },
+    "fromOrg": {
+      "label": "Förslagsställarens organisation:",
+      "for": "vilket organisation förslagsställaren representerar"
+    },
+    "common": {
+      "none": "Termer hittades inte",
+      "exists": "Termen du föreslår finns redan i vokabulären",
+      "places": "yso-paikat"
+    },
+    "submit": "Skicka förslaget"
+  },
+  "edit": {
+    "button": "Föreslå en förändring till begreppet",
+    "header": "Föreslå en förändring till begreppet",
+    "paragraph": "Vem som helst som använder YSA, Allärs eller ALLFO kan föreslå ändringar i vokabulärerna.",
+    "description": {
+      "label": "Förslag till ändring: *",
+      "for": "motivering för den föreslagna ändringen",
+      "error": "Detta är obligatorisk information."
+    },
+    "reason": {
+      "label": "Motiveringar för förslaget: *",
+      "for": "varför behövs förändringen",
+      "error": "Detta är obligatorisk information."
+    },
+    "fromOrg": {
+      "label": "Förslagsställarens organisation:",
+      "for": "vilket organisation förslagsställaren representerar"
+    },
+    "submit": "Skicka förslaget"
+  }
+}

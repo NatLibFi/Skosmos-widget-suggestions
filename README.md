@@ -11,6 +11,8 @@ When the plugin is added to the Skosmos environment, update the correct Suggesti
 
 This plugin fulfills the requirements for [Skosmos](https://github.com/NatLibFi/Skosmos) [plugins](https://github.com/NatLibFi/Skosmos/wiki/Plugins).
 
+To update the dialog forms this widget provides, for example to make changes translations, see `component-bundler`. This plugin uses a bundled Vue application, which then provides the plugin custom HTML tags/web components through `components.js` for the dialog forms.
+
 ## Additionally
 
 Pollutes the global namespace with `SUGGESTIONS` and `SUGGESTION_API_URL`.
