@@ -11,7 +11,7 @@ When the plugin is added to the Skosmos environment, update the correct Suggesti
 
 This plugin fulfills the requirements for [Skosmos](https://github.com/NatLibFi/Skosmos) [plugins](https://github.com/NatLibFi/Skosmos/wiki/Plugins).
 
-To make changes the dialog forms this widget provides (e.g. to update translations), see the `component-bundler` folder. The dialog forms are provided with the **components.js** file, which is created with the bundler. See the [bundler's README](https://github.com/NatLibFi/Skosmos-widget-suggestions/tree/master/component-bundler) for more information.
+To make changes the dialog forms this widget provides (e.g. to update translations), see the `component-bundler` folder. The dialog forms are provided with the **components.js** file, which is created with the bundler. See the bundler's [README](https://github.com/NatLibFi/Skosmos-widget-suggestions/tree/master/component-bundler) for more information.
 
 ## Additionally
 
