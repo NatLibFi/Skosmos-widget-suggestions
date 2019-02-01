@@ -156,8 +156,8 @@ export default {
         "group": this.formData.groups.selectedGroups,
         "exactMatches": this.formData.exactMatches,
         "scopeNote": this.formData.scopeNote,
-        "description": this.formData.explanation,
-        "reason": this.formData.neededFor,
+        "reason": this.formData.explanation,
+        "neededFor": this.formData.neededFor,
         "organization": this.formData.fromOrg,
         "tags": {
           "label": this.formData.conceptType.value.toUpperCase()
