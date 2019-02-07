@@ -60,7 +60,7 @@ a {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   text-align: center;
-  z-index: 2;
+  z-index: 10000;
 }
 
 .dialog-modal {
@@ -75,7 +75,7 @@ a {
   max-height: calc(100% - 80px);
   width: 650px;
   overflow-y: auto;
-  z-index: 3;
+  z-index: 10001;
   padding: 0;
   border-top: 2px solid #000000;
 }
