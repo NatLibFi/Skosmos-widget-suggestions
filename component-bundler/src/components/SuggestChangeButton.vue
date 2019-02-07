@@ -76,7 +76,7 @@ export default {
       };
       axios
         .post(
-          this.url + '/suggestions', data
+          this.url + 'suggestions', data
         )
         .then(response => console.log(response))
         .catch(error => console.log(error));
