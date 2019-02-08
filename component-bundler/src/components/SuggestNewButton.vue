@@ -170,7 +170,6 @@ export default {
         "neededFor": this.formData.neededFor,
         "organization": this.formData.fromOrg
       };
-      console.log(data);
       await axios
         .post(
           this.url + 'suggestions', data, {
@@ -199,13 +198,9 @@ export default {
     },
     handlePrefLabelLanguages () {
       if (this.$i18n.locale === 'fi') {
-        console.log(this.$i18n.locale)
-        console.log(this.formData.prefLabel.primary, this.formData.prefLabel.secondary)
         this.formData.prefLabel.fi.value = this.formData.prefLabel.primary;
         this.formData.prefLabel.sv.value = this.formData.prefLabel.secondary;
       } else if (this.$i18n.locale === 'sv') {
-        console.log(this.$i18n.locale)
-        console.log(this.formData.prefLabel.primary, this.formData.prefLabel.secondary)
         this.formData.prefLabel.sv.value = this.formData.prefLabel.primary;
         this.formData.prefLabel.fi.value = this.formData.prefLabel.secondary;
       }
