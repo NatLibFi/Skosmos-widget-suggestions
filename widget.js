@@ -1,13 +1,13 @@
 // declaring a namespace for the plugin
 var SUGGESTIONS = SUGGESTIONS || {};
 
-// the URL of the suggestion management platform's API without trailing slash:
-var SUGGESTION_API_URL = '';
+// the URL of the suggestion management platform's API with trailing slash:
+var SUGGESTION_BASE_URL = '';
 
 SUGGESTIONS = {
     renderNew: function() {
         var context = {
-            "url": SUGGESTION_API_URL,
+            "url": SUGGESTION_BASE_URL,
             "lang": lang,
             "vocab": vocab
         };
@@ -15,7 +15,7 @@ SUGGESTIONS = {
     },
     renderChange: function(data) {
         var context = {
-            "url": SUGGESTION_API_URL,
+            "url": SUGGESTION_BASE_URL,
             "lang": lang,
             "vocab": vocab,
             "label": data.prefLabels[0].label,
@@ -23,6 +23,7 @@ SUGGESTIONS = {
         };
         $(".concept-main").append(Handlebars.compile( $("#suggestions-change").html())(context));
     },
+
     fetchUri: function(data) {
         if (data.uri) {
             return data.uri;

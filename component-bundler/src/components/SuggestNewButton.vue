@@ -7,6 +7,7 @@
       v-if="isOpened"
       @close="closeDialog()">
       <new-suggestion
+        v-if="!showSuccessMessage && !showFailureMessage"
         :d="formData"
         :v="$v.formData"
         @update:vocabulary="formData.vocabulary = $event"
@@ -26,6 +27,8 @@
         @update:fromOrg="formData.fromOrg = $event"
         @submitForm="submitForm()"
         />
+        <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url"/>
+        <failure-message v-if="showFailureMessage" />
     </centered-dialog>
   </div>
 </template>
@@ -33,13 +36,17 @@
 <script>
 import NewSuggestion from './NewSuggestion';
 import CenteredDialog from './common/CenteredDialog';
+import SuccessMessage from './common/SuccessMessage';
+import FailureMessage from './common/FailureMessage';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
 
 export default {
   components: {
     NewSuggestion,
-    CenteredDialog
+    CenteredDialog,
+    SuccessMessage,
+    FailureMessage
   },
   props: {
     lang: String,
@@ -55,6 +62,9 @@ export default {
   data: () => {
     return {
       isOpened: false,
+      showSuccessMessage: false,
+      showFailureMessage: false,
+      suggestionUrl: '',
       formData: {
         vocabulary: 'yso',
         conceptType: {
@@ -139,48 +149,72 @@ export default {
         console.log('Data not sent: required data of the form was not provided.');
       }
     },
-    sendData () {
+    async sendData () {
       this.handlePrefLabelLanguages();
       let data = {
         "suggestion_type": "NEW",
         "uri": "",
         "preferred_label": {
-          "fi": {value: this.formData.prefLabel.fi.value},
-          "sv": {value: this.formData.prefLabel.sv.value},
-          "en": {value: this.formData.prefLabel.en.value}
+          "fi": { value: this.formData.prefLabel.fi.value, uri: '' },
+          "sv": { value: this.formData.prefLabel.sv.value, uri: '' },
+          "en": this.formData.prefLabel.en
         },
-        "alternative_label": this.formData.altLabels,
-        "broader": this.formData.broaderLabels,
-        "narrower": this.formData.narrowerLabels,
-        "related": this.formData.relatedLabels,
-        "group": this.formData.groups.selectedGroups,
+        "alternative_labels": this.formData.altLabels,
+        "broader_labels": this.formData.broaderLabels,
+        "narrower_labels": this.formData.narrowerLabels,
+        "related_labels": this.formData.relatedLabels,
+        "groups": this.formData.groups.selectedGroups,
         "exactMatches": this.formData.exactMatches,
         "scopeNote": this.formData.scopeNote,
         "reason": this.formData.explanation,
         "neededFor": this.formData.neededFor,
-        "organization": this.formData.fromOrg,
-        "tags": {
-          "label": this.formData.conceptType.value.toUpperCase()
-        }
+        "organization": this.formData.fromOrg
       };
-      axios
+      console.log(data);
+      await axios
         .post(
-          this.url + 'suggestions', data
+          this.url + 'suggestions', data, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              "Access-Control-Allow-Origin": "*"
+            }
+          }
         )
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
+        .then(response => {
+          this.toggleSuccessMessage(response.data.suggestionUrl);
+        })
+        .catch(error => {
+          this.toggleFailureMessage();
+        });
+    },
+    toggleSuccessMessage(responseUrl) {
+      if (responseUrl && responseUrl.length > 0) {
+        this.suggestionUrl = responseUrl;
+        this.showSuccessMessage = true;
+      }
+      this.showSuccessMessage = true;
+    },
+    toggleFailureMessage() {
+      this.showFailureMessage = true;
     },
     handlePrefLabelLanguages () {
       if (this.$i18n.locale === 'fi') {
+        console.log(this.$i18n.locale)
+        console.log(this.formData.prefLabel.primary, this.formData.prefLabel.secondary)
         this.formData.prefLabel.fi.value = this.formData.prefLabel.primary;
         this.formData.prefLabel.sv.value = this.formData.prefLabel.secondary;
       } else if (this.$i18n.locale === 'sv') {
+        console.log(this.$i18n.locale)
+        console.log(this.formData.prefLabel.primary, this.formData.prefLabel.secondary)
         this.formData.prefLabel.sv.value = this.formData.prefLabel.primary;
         this.formData.prefLabel.fi.value = this.formData.prefLabel.secondary;
       }
     },
     closeDialog () {
       this.isOpened = !this.isOpened;
+      this.showSuccessMessage = false;
+      this.showFailureMessage = false;
+      this.suggestionUrl = '';
       this.$v.$reset();
       this.formData = {
         vocabulary: 'yso',
@@ -200,6 +234,12 @@ export default {
         prefLabel: {
           primary: '',
           secondary: '',
+          fi: {
+            value: ''
+          },
+          sv: {
+            value: ''
+          },
           en: ''
         },
         altLabels: [{

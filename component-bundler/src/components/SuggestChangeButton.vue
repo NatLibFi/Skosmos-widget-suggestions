@@ -7,6 +7,7 @@
       v-if="isOpened"
       @close="closeDialog()">
       <edit-suggestion
+        v-if="!showSuccessMessage && !showFailureMessage"
         :d="formData"
         :v="$v.formData"
         :label="label"
@@ -18,6 +19,8 @@
         @update:fromOrg="formData.fromOrg = $event"
         @submitForm="submitForm()"
         />
+        <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url"/>
+        <failure-message v-if="showFailureMessage" />
     </centered-dialog>
   </div>
 </template>
@@ -25,13 +28,17 @@
 <script>
 import EditSuggestion from './EditSuggestion';
 import CenteredDialog from './common/CenteredDialog';
+import SuccessMessage from './common/SuccessMessage';
+import FailureMessage from './common/FailureMessage';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
 
 export default {
   components: {
     EditSuggestion,
-    CenteredDialog
+    CenteredDialog,
+    SuccessMessage,
+    FailureMessage
   },
   props: {
     lang: String,
@@ -49,6 +56,9 @@ export default {
   data: () => {
     return {
       isOpened: false,
+      showSuccessMessage: false,
+      showFailureMessage: false,
+      suggestionUrl: '',
       formData: {
         description: '',
         reason: '',
@@ -65,40 +75,73 @@ export default {
         console.log('Data not sent: required data of the form was not provided.');
       }
     },
-    sendData () {
+    async sendData () {
       let data = {
         "suggestion_type": "MODIFY",
-        "uri": '',
+        "uri": "",
         "preferred_label": this.handlePrefLabelLanguages(),
         "description": this.formData.description,
         "reason": this.formData.reason,
         "organization": this.formData.fromOrg
       };
-      axios
+      console.log(data);
+      await axios
         .post(
-          this.url + 'suggestions', data
+          this.url + 'suggestions', data, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              "Access-Control-Allow-Origin": "*"
+            }
+          }
         )
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
+        .then(response => {
+          this.toggleSuccessMessage(response.data.suggestionUrl);
+        })
+        .catch(error => {
+          this.toggleFailureMessage();
+        })
+    },
+    toggleSuccessMessage(responseUrl) {
+      if (responseUrl && responseUrl.length > 0) {
+        this.suggestionUrl = responseUrl;
+        this.showSuccessMessage = true;
+      }
+      this.showSuccessMessage = true;
+    },
+    toggleFailureMessage() {
+      this.showFailureMessage = true;
     },
     handlePrefLabelLanguages () {
       if (this.lang === 'sv') {
         return {
-          'sv': {
-            'value': this.label,
-            'uri': this.uri
+          sv: {
+            value: this.label,
+            uri: this.uri
+          },
+          en: '',
+          fi: {
+            value: '',
+            uri: ''
           }
         }
       }
       return {
-        'fi': {
-          'value': this.label,
-          'uri': this.uri
+        fi: {
+          value: this.label,
+          uri: this.uri
+        },
+        en: '',
+        sv: {
+          value: '',
+          uri: ''
         }
       }
     },
     closeDialog () {
       this.isOpened = !this.isOpened;
+      this.showSuccessMessage = false;
+      this.showFailureMessage = false;
+      this.suggestionUrl = '';
       this.$v.$reset();
       this.formData = {
         description: '',
