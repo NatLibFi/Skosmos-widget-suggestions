@@ -84,7 +84,6 @@ export default {
         "reason": this.formData.reason,
         "organization": this.formData.fromOrg
       };
-      console.log(data);
       await axios
         .post(
           this.url + 'suggestions', data, {
