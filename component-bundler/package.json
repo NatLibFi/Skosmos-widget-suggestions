@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm run build",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack",
-    "dev": "webpack --watch"
+    "dev": "webpack --watch",
+    "start:dev": "http-server -p 8888 -d --cors"
   },
   "author": "",
   "license": "MIT",
@@ -24,6 +25,7 @@
     "cross-env": "^4.0.0",
     "css-loader": "^0.26.2",
     "file-loader": "^0.11.1",
+    "http-server": "^0.11.1",
     "rimraf": "^2.6.1",
     "uglify-js": "git://github.com/mishoo/UglifyJS2.git#harmony",
     "vue": "^2.2.6",

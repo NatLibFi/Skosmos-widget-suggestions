@@ -84,13 +84,11 @@ export default {
         "reason": this.formData.reason,
         "organization": this.formData.fromOrg
       };
-      console.log(data);
       await axios
         .post(
           this.url + 'suggestions', data, {
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              "Access-Control-Allow-Origin": "*"
+              'Content-Type': 'application/json'
             }
           }
         )
