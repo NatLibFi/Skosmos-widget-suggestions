@@ -2,12 +2,12 @@
 var SUGGESTIONS = SUGGESTIONS || {};
 
 // the URL of the suggestion management platform's API with trailing slash:
-var SUGGESTION_BASE_URL = '';
+var SUGGESTION_API_BASE_URL = '';
 
 SUGGESTIONS = {
     renderNew: function() {
         var context = {
-            "url": SUGGESTION_BASE_URL,
+            "url": SUGGESTION_API_BASE_URL,
             "lang": lang,
             "vocab": vocab
         };
@@ -15,7 +15,7 @@ SUGGESTIONS = {
     },
     renderChange: function(data) {
         var context = {
-            "url": SUGGESTION_BASE_URL,
+            "url": SUGGESTION_API_BASE_URL,
             "lang": lang,
             "vocab": vocab,
             "label": data.prefLabels[0].label,
