@@ -122,7 +122,8 @@ export default {
         scopeNote: '',
         explanation: '',
         neededFor: '',
-        fromOrg: ''
+        fromOrg: '',
+        tags: []
       }
     }
   },
@@ -151,6 +152,9 @@ export default {
     },
     async sendData () {
       this.handlePrefLabelLanguages();
+      if (this.formData.vocabulary === 'yso-paikat') {
+        this.formData.tags = [{"label": "MAANTIETEELLINEN"}];
+      }
       let data = {
         "suggestion_type": "NEW",
         "uri": "",
@@ -168,7 +172,8 @@ export default {
         "scopeNote": this.formData.scopeNote,
         "reason": this.formData.explanation,
         "neededFor": this.formData.neededFor,
-        "organization": this.formData.fromOrg
+        "organization": this.formData.fromOrg,
+        "tags": this.formData.tags
       };
       await axios
         .post(
