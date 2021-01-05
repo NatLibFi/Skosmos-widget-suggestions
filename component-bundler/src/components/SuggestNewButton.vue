@@ -40,6 +40,14 @@ import SuccessMessage from './common/SuccessMessage';
 import FailureMessage from './common/FailureMessage';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
+// import { Octokit } from "@octokit/rest";
+// import { Octokit } from "@octokit/rest";
+// const { Octokit } = require("@octokit/core");
+// import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
+
+// import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
+
+
 
 export default {
   components: {
@@ -124,6 +132,9 @@ export default {
         neededFor: '',
         fromOrg: '',
         tags: []
+        // title: '',
+        // body: '',
+        // state: ''
       }
     }
   },
@@ -151,11 +162,15 @@ export default {
       }
     },
     async sendData () {
+      const gh_secret = require('../secrets.json')
       this.handlePrefLabelLanguages();
       if (this.formData.vocabulary === 'yso-paikat') {
         this.formData.tags = [{"label": "MAANTIETEELLINEN"}];
       }
-      let data = {
+      const altTerms = []
+      this.formData.altLabels.forEach(item => item.value !== "" ? altTerms.push(item.value) : null);
+
+      let dataOrig_still_for_testing = {
         "suggestion_type": "NEW",
         "uri": "",
         "preferred_label": {
@@ -175,20 +190,47 @@ export default {
         "organization": this.formData.fromOrg,
         "tags": this.formData.tags
       };
-      await axios
-        .post(
-          this.url + 'suggestions', data, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-        .then(response => {
-          this.toggleSuccessMessage(response.data.suggestionUrl);
-        })
-        .catch(error => {
-          this.toggleFailureMessage();
-        });
+
+      let data = `suggestion_type: NEW \n
+        uri: \n
+        preferred_label: \n
+          fi:  ${ this.formData.prefLabel.fi.value } uri: \n
+          sv:  ${ this.formData.prefLabel.sv.value } uri: \n
+          en:  ${ this.formData.prefLabel.en }
+        \nalternative_labels:  ${ altTerms }
+        \nbroader_labels:  ${ this.formData.broaderLabels }
+        \nnarrower_labels:  ${ this.formData.narrowerLabels }
+        \nrelated_labels:  ${ this.formData.relatedLabels }
+        \ngroups:  ${ this.formData.groups.selectedGroups }
+        \nexactMatches:  ${ this.formData.exactMatches }
+        \nscopeNote:  ${ this.formData.scopeNote }
+        \nreason:  ${ this.formData.explanation }
+        \nneededFor:  ${ this.formData.neededFor }
+        \norganization:  ${ this.formData.fromOrg }
+        \ntags:  ${ this.formData.tags }`
+
+      let dataBundle = {
+        "title": this.formData.prefLabel.fi.value,
+        "body": data,
+        "state": "open",
+        "labels": ["uusi"]
+      };
+
+      await axios.post(this.url, dataBundle, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3.raw',
+          'Authorization': gh_secret.gh_Token
+        },
+      })
+
+      .then(response => {
+        this.toggleSuccessMessage(response.data.suggestionUrl);
+      })
+      .catch(error => {
+        this.toggleFailureMessage();
+      });
+
     },
     toggleSuccessMessage(responseUrl) {
       if (responseUrl && responseUrl.length > 0) {
@@ -318,4 +360,3 @@ export default {
     cursor: hand;
   }
 </style>
-

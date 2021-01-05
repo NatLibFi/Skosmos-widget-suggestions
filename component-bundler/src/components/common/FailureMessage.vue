@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h2>Ehdotuksen lähettäminen ei onnistunut</h2>
+  <h2>Ehdotuksen lähettäminen ei onnistunuta</h2>
   <p>Ehdotustasi ei valitettavasti pystytty vastaanottamaan.</p>
   <p>Voit kokeilla ehdotuksen täyttämistä uudestaan tai ottaa yhteyttä Finton ylläpitäjiin Tietoja-välilehden kautta.</p>
 </div>

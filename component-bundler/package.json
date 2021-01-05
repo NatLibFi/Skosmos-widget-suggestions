@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm run build",
-    "build": "rimraf dist && cross-env NODE_ENV=production webpack",
+    "build": "rimraf dist && cross-env NODE_ENV=development webpack",
     "dev": "webpack --watch",
     "start:dev": "http-server -p 8888 -d --cors"
   },
@@ -37,9 +37,12 @@
     "webpack-bundle-analyzer": "^3.0.3"
   },
   "dependencies": {
+    "@octokit/rest": "^18.0.12",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
+    "build": "^0.1.4",
     "lodash": "^4.17.11",
+    "uglify-es": "git://github.com/mishoo/UglifyJS2.git#harmony",
     "vue-clickaway": "^2.2.2",
     "vue-i18n": "^8.4.0",
     "vuelidate": "^0.7.4"

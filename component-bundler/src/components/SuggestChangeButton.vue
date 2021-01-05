@@ -84,6 +84,10 @@ export default {
         "reason": this.formData.reason,
         "organization": this.formData.fromOrg
       };
+
+
+      // Tämä on tärkeä kohta ja käytä Webpackin testaamiseen
+      // Original: this.url + 'suggestions', data, {
       await axios
         .post(
           this.url + 'suggestions', data, {

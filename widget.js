@@ -2,7 +2,10 @@
 var SUGGESTIONS = SUGGESTIONS || {};
 
 // the URL of the suggestion management platform's API with trailing slash:
-var SUGGESTION_API_BASE_URL = '';
+// var API_RAW = 'https://api.github.com/repos/miguelahonen/c/issues'
+// new_str = str.slice(0, -11);
+// var SUGGESTION_API_BASE_URL = API_RAW.slice(0, -11);
+var SUGGESTION_API_BASE_URL = 'https://api.github.com/repos/miguelahonen/c/issues'
 
 SUGGESTIONS = {
     renderNew: function() {
