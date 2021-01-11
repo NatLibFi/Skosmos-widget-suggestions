@@ -34699,7 +34699,7 @@ module.exports = {"new":{"button":"Föreslå ett nytt begrepp till vokabuläret"
 /* 502 */
 /***/ (function(module, exports) {
 
-module.exports = {"gh_Token":"token 08a9f6b83579c77f9c2aedd1f6be837fcb283181"}
+module.exports = {"gh_Token":"token tee tähän uusi"}
 
 /***/ }),
 /* 503 */
