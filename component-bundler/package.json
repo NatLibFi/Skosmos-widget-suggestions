@@ -37,6 +37,7 @@
     "webpack-bundle-analyzer": "^3.0.3"
   },
   "dependencies": {
+    "@octokit/core": "^3.2.4",
     "@octokit/rest": "^18.0.12",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
