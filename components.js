@@ -7755,14 +7755,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     sendData: function sendData() {
       var _this2 = this;
 
-      var gh_secret, altTerms, dataOrig_still_for_testing, data, dataBundle;
+      var gh_secret, altTerms, brdLabls, dataOrig_still_for_testing, data, dataBundle;
       return regeneratorRuntime.async(function sendData$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               gh_secret = __webpack_require__(502);
 
-              console.log(gh_secret);
               this.handlePrefLabelLanguages();
               if (this.formData.vocabulary === 'yso-paikat') {
                 this.formData.tags = [{ "label": "MAANTIETEELLINEN" }];
@@ -7772,6 +7771,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               this.formData.altLabels.forEach(function (item) {
                 return item.value !== "" ? altTerms.push(item.value) : null;
               });
+              brdLabls = [];
+
+              this.formData.broaderLabels.forEach(function (item) {
+                return item.value !== "" ? brdLabls.push(item.value) : null;
+              });
+              // this.formData.broaderLabels
 
               dataOrig_still_for_testing = {
                 "suggestion_type": "NEW",
@@ -7793,14 +7798,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 "organization": this.formData.fromOrg,
                 "tags": this.formData.tags
               };
-              data = 'suggestion_type: NEW \n\n        uri: \n\n        preferred_label: \n\n          fi:  ' + this.formData.prefLabel.fi.value + ' uri: \n\n          sv:  ' + this.formData.prefLabel.sv.value + ' uri: \n\n          en:  ' + this.formData.prefLabel.en + '\n        \nalternative_labels:  ' + altTerms + '\n        \nbroader_labels:  ' + this.formData.broaderLabels + '\n        \nnarrower_labels:  ' + this.formData.narrowerLabels + '\n        \nrelated_labels:  ' + this.formData.relatedLabels + '\n        \ngroups:  ' + this.formData.groups.selectedGroups + '\n        \nexactMatches:  ' + this.formData.exactMatches + '\n        \nscopeNote:  ' + this.formData.scopeNote + '\n        \nreason:  ' + this.formData.explanation + '\n        \nneededFor:  ' + this.formData.neededFor + '\n        \norganization:  ' + this.formData.fromOrg + '\n        \ntags:  ' + this.formData.tags;
+
+              // Puuttuu:
+              // state
+
+              data = '\n      K\xE4sitteen tyyppi: \n\n      CONCEPT\n\n      Ehdotettu termi suomeksi\n\n      ' + this.formData.prefLabel.fi.value + '\n\n      Ehdotettu termi ruotsiksi\n\n      ' + this.formData.prefLabel.sv.value + '\n\n      Ehdotettu termi englanniksi\n\n      ' + this.formData.prefLabel.en + '\n\n      Tarkoitusta t\xE4sment\xE4v\xE4 selite\n\n      ' + this.formData.scopeNote + '\n\n      Perustelut ehdotukselle\n\n      ' + this.formData.explanation + '\n\n      Ehdotettu yl\xE4k\xE4site YSOssa (LT)\n\n      ' + brdLabls + '\n      Vaihtoehtoiset termit\n\n      ' + altTerms + '\n      \nnarrower_labels:  ' + this.formData.narrowerLabels + '\n      \nrelated_labels:  ' + this.formData.relatedLabels + '\n      \ngroups:  ' + this.formData.groups.selectedGroups + '\n      \nexactMatches:  ' + this.formData.exactMatches + '\n      \nneededFor:  ' + this.formData.neededFor + '\n      \norganization:  ' + this.formData.fromOrg + '\n      \ntags:  ' + this.formData.tags;
               dataBundle = {
                 "title": this.formData.prefLabel.fi.value,
                 "body": data,
                 "state": "open",
                 "labels": ["uusi"]
               };
-              _context2.next = 11;
+              _context2.next = 12;
               return regeneratorRuntime.awrap(__WEBPACK_IMPORTED_MODULE_5_axios___default.a.post(this.url, dataBundle, {
                 headers: {
                   'Content-Type': 'application/json',
@@ -7823,7 +7832,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.toggleFailureMessage();
               }));
 
-            case 11:
+            case 12:
             case 'end':
               return _context2.stop();
           }
@@ -34690,7 +34699,7 @@ module.exports = {"new":{"button":"Föreslå ett nytt begrepp till vokabuläret"
 /* 502 */
 /***/ (function(module, exports) {
 
-module.exports = {"gh_Token":"token ace257454b450563f63117bc9082fc60a1cd9c27"}
+module.exports = {"gh_Token":"token 08a9f6b83579c77f9c2aedd1f6be837fcb283181"}
 
 /***/ }),
 /* 503 */

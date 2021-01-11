@@ -161,6 +161,9 @@ export default {
       }
       const altTerms = []
       this.formData.altLabels.forEach(item => item.value !== "" ? altTerms.push(item.value) : null);
+      const brdLabls = []
+      this.formData.broaderLabels.forEach(item => item.value !== "" ? brdLabls.push(item.value) : null);
+      // this.formData.broaderLabels
 
       let dataOrig_still_for_testing = {
         "suggestion_type": "NEW",
@@ -183,23 +186,33 @@ export default {
         "tags": this.formData.tags
       };
 
-      let data = `suggestion_type: NEW \n
-        uri: \n
-        preferred_label: \n
-          fi:  ${ this.formData.prefLabel.fi.value } uri: \n
-          sv:  ${ this.formData.prefLabel.sv.value } uri: \n
-          en:  ${ this.formData.prefLabel.en }
-        \nalternative_labels:  ${ altTerms }
-        \nbroader_labels:  ${ this.formData.broaderLabels }
-        \nnarrower_labels:  ${ this.formData.narrowerLabels }
-        \nrelated_labels:  ${ this.formData.relatedLabels }
-        \ngroups:  ${ this.formData.groups.selectedGroups }
-        \nexactMatches:  ${ this.formData.exactMatches }
-        \nscopeNote:  ${ this.formData.scopeNote }
-        \nreason:  ${ this.formData.explanation }
-        \nneededFor:  ${ this.formData.neededFor }
-        \norganization:  ${ this.formData.fromOrg }
-        \ntags:  ${ this.formData.tags }`
+      // Puuttuu:
+      // state
+
+      let data = `
+      Käsitteen tyyppi: \n
+      CONCEPT\n
+      Ehdotettu termi suomeksi\n
+      ${ this.formData.prefLabel.fi.value }\n
+      Ehdotettu termi ruotsiksi\n
+      ${ this.formData.prefLabel.sv.value }\n
+      Ehdotettu termi englanniksi\n
+      ${ this.formData.prefLabel.en }\n
+      Tarkoitusta täsmentävä selite\n
+      ${ this.formData.scopeNote }\n
+      Perustelut ehdotukselle\n
+      ${ this.formData.explanation }\n
+      Ehdotettu yläkäsite YSOssa (LT)\n
+      ${ brdLabls }
+      Vaihtoehtoiset termit\n
+      ${ altTerms }
+      \nnarrower_labels:  ${ this.formData.narrowerLabels }
+      \nrelated_labels:  ${ this.formData.relatedLabels }
+      \ngroups:  ${ this.formData.groups.selectedGroups }
+      \nexactMatches:  ${ this.formData.exactMatches }
+      \nneededFor:  ${ this.formData.neededFor }
+      \norganization:  ${ this.formData.fromOrg }
+      \ntags:  ${ this.formData.tags }`
 
       let dataBundle = {
         "title": this.formData.prefLabel.fi.value,
