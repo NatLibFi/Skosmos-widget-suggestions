@@ -40,14 +40,6 @@ import SuccessMessage from './common/SuccessMessage';
 import FailureMessage from './common/FailureMessage';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
-// import { Octokit } from "@octokit/rest";
-// import { Octokit } from "@octokit/rest";
-// const { Octokit } = require("@octokit/core");
-// import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
-
-// import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
-
-
 
 export default {
   components: {
@@ -223,6 +215,14 @@ export default {
           'Authorization': gh_secret.gh_Token
         },
       })
+
+      // await axios.post(this.url, dataBundle, {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Accept': 'application/vnd.github.v3.raw',
+      //     'Authorization': gh_secret.gh_Token
+      //   },
+      // })
 
       .then(response => {
         this.toggleSuccessMessage(response.data.suggestionUrl);
