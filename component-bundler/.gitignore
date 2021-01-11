@@ -1,3 +1,5 @@
-/dist
-/node_modules
-/src/secrets.json
+dist
+node_modules
+secrets.json
+components.js
+components.js
