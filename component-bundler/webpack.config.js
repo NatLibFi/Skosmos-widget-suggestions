@@ -5,10 +5,14 @@ const webpack = require('webpack')
 
 module.exports = {
   entry: ['babel-polyfill', './src/main.js'],
+  // target:'node',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'components.js'
   },
+  // node: {
+  //   fs: "empty",
+  // },
   resolve: {
     extensions: ['.js', '.vue'],
     alias: {

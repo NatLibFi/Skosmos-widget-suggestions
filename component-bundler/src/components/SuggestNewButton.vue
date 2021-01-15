@@ -40,6 +40,13 @@ import SuccessMessage from './common/SuccessMessage';
 import FailureMessage from './common/FailureMessage';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
+// import os;
+// import dotenv from 'dotenv'
+// import load_dotenv from 'dotenv';
+// from dotenv import load_dotenv
+// from dotenv import load_dotenv
+// TÄMÄ TOIMI
+// import dotenv from 'dotenv';
 
 export default {
   components: {
@@ -116,7 +123,10 @@ export default {
         },
         exactMatches: [{
           vocab: '',
-          value: '',
+          value: '',      // load_dotenv()
+      // var os = require('os');
+      // API_KEY = os.getenv('PROJECT_API_KEY')
+      // console.log(API_KEY)
           isTouched: false
         }],
         scopeNote: '',
@@ -163,6 +173,15 @@ export default {
       this.formData.altLabels.forEach(item => item.value !== "" ? altTerms.push(item.value) : null);
       const brdLabls = []
       this.formData.broaderLabels.forEach(item => item.value !== "" ? brdLabls.push(item.value) : null);
+      const groups = []
+      // console.log(this.formData.groups.selectedGroups)
+      // this.formData.groups.selectedGroups.forEach(item => item.prefLabel !== "" ? groups.push(item.prefLabel) : null);
+      console.log(this.formData.groups.selectedGroups)
+      this.formData.groups.selectedGroups.forEach(item => item.prefLabel !== "" ? groups.push(`[${ item.prefLabel }](${item.uri})`) : null);
+
+// organization:  [sdfsdf](http://www.google.fi)
+
+
       // this.formData.broaderLabels
 
       let dataOrig_still_for_testing = {
@@ -203,12 +222,13 @@ export default {
       Perustelut ehdotukselle\n
       ${ this.formData.explanation }\n
       Ehdotettu yläkäsite YSOssa (LT)\n
-      ${ brdLabls }
+      ${ brdLabls }\n
+      Ehdotetut temaattiset ryhmät (YSA-ryhmät)\n
+      ${ groups }
       Vaihtoehtoiset termit\n
       ${ altTerms }
       \nnarrower_labels:  ${ this.formData.narrowerLabels }
       \nrelated_labels:  ${ this.formData.relatedLabels }
-      \ngroups:  ${ this.formData.groups.selectedGroups }
       \nexactMatches:  ${ this.formData.exactMatches }
       \nneededFor:  ${ this.formData.neededFor }
       \norganization:  ${ this.formData.fromOrg }
@@ -221,14 +241,17 @@ export default {
         "labels": ["uusi"]
       };
 
-      await axios.post(this.url, dataBundle, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/vnd.github.v3.raw',
-          'Authorization': gh_secret.gh_Token
-        },
-      })
+// curl localhost:3301/test/1
 
+// This is the working one - do not remove
+      // await axios.post(this.url, dataBundle, {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Accept': 'application/vnd.github.v3.raw',
+      //     'Authorization': gh_secret.gh_Token
+      //   },
+      // })
+      await axios.get('http://localhost:3301/test/1')
       // await axios.post(this.url, dataBundle, {
       //   headers: {
       //     'Content-Type': 'application/json',
