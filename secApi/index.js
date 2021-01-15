@@ -10,7 +10,7 @@ const app = express();
 // Some settings
 const PORT = 3301;
 const HOST = "localhost";
-const API_SERVICE_URL = "https://jsonplaceholder.typicode.com";
+const API_SERVICE_URL = "";
 
 // Some info for status and logging is needed
 app.use(morgan('dev'));
@@ -53,13 +53,13 @@ app.use('', (req, res, next) => {
 });
 
 // Proxy endpoints
-app.use('/send_to_gh', createProxyMiddleware({
-   target: API_SERVICE_URL,
-   changeOrigin: true,
-   pathRewrite: {
-       [`^/send_to_gh`]: '',
-   },
-}));
+// app.use('/send_to_gh', createProxyMiddleware({
+//    target: API_SERVICE_URL,
+//    changeOrigin: true,
+//    pathRewrite: {
+//        [`^/send_to_gh`]: '',
+//    },
+// }));
 
 // Proxy endpoints
 app.use('/send_to_gh_test', createProxyMiddleware({
