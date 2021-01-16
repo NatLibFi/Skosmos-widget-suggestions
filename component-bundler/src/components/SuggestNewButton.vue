@@ -251,7 +251,14 @@ export default {
       //     'Authorization': gh_secret.gh_Token
       //   },
       // })
-      await axios.get('http://localhost:3301/test/1')
+      var urlencode = require('urlencode');
+      // urlencode.encodeURIcomp
+      const payload = encodeURIComponent(JSON.stringify(dataBundle));
+      console.log("*****")
+      console.log(payload)
+      console.log("*****")
+      // encodeURIcomp JSON.stringify(dataBundle)
+      await axios.get(`http://localhost:3301/test/1/${payload}`)
       // await axios.post(this.url, dataBundle, {
       //   headers: {
       //     'Content-Type': 'application/json',
