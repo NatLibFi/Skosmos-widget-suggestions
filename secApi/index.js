@@ -19,17 +19,11 @@ app.use(morgan('dev'));
 
 // Test type of endpoint
 app.get('/test/:id/:data', (req, res, next) => {
-   	res.send(req.params.id + ' If you get this message you know the proxy service propably is up and running properly\n' + req.params.package + '\n');
-
-	console.log("Something between")
-	console.log(urlencode.decode(req.params.data))
-	console.log("And it ends")
-      axios.post('https://api.github.com/repos/miguelahonen/c/issues', {
-        "title": "Testi6",
-        "body": "asia4, asia5, asia6",
-        "state": "open",
-        "labels": ["uusi"]
-      }, {
+    if (req.connection.remoteAddress === gh_secret.white_address) {
+      console.log("Something between")
+      console.log(urlencode.decode(req.params.data))
+      console.log("And it ends")
+      axios.post('https://api.github.com/repos/miguelahonen/c/issues', urlencode.decode(req.params.data), {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
@@ -37,12 +31,18 @@ app.get('/test/:id/:data', (req, res, next) => {
           'Authorization':  gh_secret.gh_Token
         }
       })
-	.then(function (response) {
-	      console.log(response);
-  	})
-	.catch(function (error) {
-	    console.log(error);
-  	});
+      .then(function (response) {
+        console.log(response.status);
+        if (response.status === '201') {
+          res.setStatus('201')
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    } else {
+      console.log("You are not authenticated to access this endpoint")
+    }
 
 
 });
