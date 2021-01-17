@@ -241,16 +241,7 @@ export default {
         "labels": ["uusi"]
       };
 
-// curl localhost:3301/test/1
 
-// This is the working one - do not remove
-      // await axios.post(this.url, dataBundle, {
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Accept': 'application/vnd.github.v3.raw',
-      //     'Authorization': gh_secret.gh_Token
-      //   },
-      // })
       var urlencode = require('urlencode');
       // urlencode.encodeURIcomp
       const payload = encodeURIComponent(JSON.stringify(dataBundle));
@@ -259,13 +250,7 @@ export default {
       console.log("*****")
       // encodeURIcomp JSON.stringify(dataBundle)
       await axios.get(`http://localhost:3301/test/1/${payload}`)
-      // await axios.post(this.url, dataBundle, {
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Accept': 'application/vnd.github.v3.raw',
-      //     'Authorization': gh_secret.gh_Token
-      //   },
-      // })
+
 
       .then(response => {
         this.toggleSuccessMessage(response.data.suggestionUrl);
