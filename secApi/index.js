@@ -1,7 +1,7 @@
 //import axios from 'axios';
 const axios = require('axios');
 const express = require('express');
-const morgan = require("morgan");
+// 1 const morgan = require("morgan");
 const urlencode = require('urlencode');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
@@ -15,7 +15,7 @@ const API_SERVICE_URL = "https://google.fi";
 const gh_secret = require('./secrets.json')
 
 // Some info for status and logging is needed
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 // Test type of endpoint
 app.get('/test/:id/:data', (req, res, next) => {
@@ -32,7 +32,7 @@ app.get('/test/:id/:data', (req, res, next) => {
         }
       })
       .then(function (response) {
-        console.log(response.status);
+        console.log(response);
         if (response.status === '201') {
           res.setStatus('201')
         }
@@ -56,23 +56,21 @@ app.use('', (req, res, next) => {
    }
 });
 
-// Proxy endpoints
- app.use('/send_to_gh', createProxyMiddleware({
-    target: API_SERVICE_URL,
-    changeOrigin: true,
-    pathRewrite: {
-        [`^/send_to_gh`]: '',
-    },
- }));
+ // app.use('/send_to_gh', createProxyMiddleware({
+ //    target: API_SERVICE_URL,
+ //    changeOrigin: true,
+ //    pathRewrite: {
+ //        [`^/send_to_gh`]: '',
+ //    },
+ // }));
 
-// Proxy endpoints
-app.use('/send_to_gh_test', createProxyMiddleware({
-   target: API_SERVICE_URL,
-   changeOrigin: true,
-   pathRewrite: {
-       [`^/send_to_gh`]: '',
-   },
-}));
+// app.use('/send_to_gh_test', createProxyMiddleware({
+//    target: API_SERVICE_URL,
+//    changeOrigin: true,
+//    pathRewrite: {
+//        [`^/send_to_gh`]: '',
+//    },
+// }));
 
 // Start
 app.listen(PORT, HOST, () => {

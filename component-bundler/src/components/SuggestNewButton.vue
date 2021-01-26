@@ -164,6 +164,24 @@ export default {
       }
     },
     async sendData () {
+      // *************
+      // var xhr = new XMLHttpRequest();
+      // xhr.open('POST', '../../php/some_simple_test.php');
+      // // xhr.onload() = function() {
+      // //   console.log(this.response);
+      // // }
+      // xhr.send("moikka");
+
+      // $.ajax({
+      //   url: '../../php/some_simple_test.php',
+      //   type: 'post',
+      //   success: function(response){
+      //
+      //   }
+      // });
+
+
+      // *********
       const gh_secret = require('../secrets.json')
       this.handlePrefLabelLanguages();
       if (this.formData.vocabulary === 'yso-paikat') {
@@ -243,19 +261,25 @@ export default {
 
 
       var urlencode = require('urlencode');
-      // urlencode.encodeURIcomp
       const payload = encodeURIComponent(JSON.stringify(dataBundle));
       console.log("*****")
       console.log(payload)
       console.log("*****")
+      const headers = {
+          'Access-Control-Allow-Origin': '*'
+      };
       // encodeURIcomp JSON.stringify(dataBundle)
-      await axios.get(`http://localhost:3301/test/1/${payload}`)
-
-
-      .then(response => {
-        this.toggleSuccessMessage(response.data.suggestionUrl);
+      // await axios.get(`http://localhost:3301/test/1/${payload}`)
+      await axios.post(`http://localhost:8000/some_simple_test.php?payload=${payload}`).then(response => {
+        // https://api.github.com/repos/miguelahonen/c/issues/236 https://github.com/miguelahonen/c/issues/235
+        var n = response.data.url.lastIndexOf('/');
+        response.data.url.substring(n + 1)
+        console.log(response.data.url.substring(n + 1));
+        this.toggleSuccessMessage(`https://github.com/miguelahonen/c/issues/${response.data.url.substring(n + 1)}`);
+        // this.toggleSuccessMessage(response.data.suggestionUrl);
       })
       .catch(error => {
+        console.log(error)
         this.toggleFailureMessage();
       });
 
