@@ -223,34 +223,70 @@ export default {
         "tags": this.formData.tags
       };
 
-      // Puuttuu:
-      // state
-
+// Very strange newlines, taken from the GitHub issue body by "blind" copying
       let data = `
-      Käsitteen tyyppi: \n
-      CONCEPT\n
-      Ehdotettu termi suomeksi\n
-      ${ this.formData.prefLabel.fi.value }\n
-      Ehdotettu termi ruotsiksi\n
-      ${ this.formData.prefLabel.sv.value }\n
-      Ehdotettu termi englanniksi\n
-      ${ this.formData.prefLabel.en }\n
-      Tarkoitusta täsmentävä selite\n
-      ${ this.formData.scopeNote }\n
-      Perustelut ehdotukselle\n
-      ${ this.formData.explanation }\n
-      Ehdotettu yläkäsite YSOssa (LT)\n
-      ${ brdLabls }\n
-      Ehdotetut temaattiset ryhmät (YSA-ryhmät)\n
-      ${ groups }
-      Vaihtoehtoiset termit\n
-      ${ altTerms }
-      \nnarrower_labels:  ${ this.formData.narrowerLabels }
-      \nrelated_labels:  ${ this.formData.relatedLabels }
-      \nexactMatches:  ${ this.formData.exactMatches }
-      \nneededFor:  ${ this.formData.neededFor }
-      \norganization:  ${ this.formData.fromOrg }
-      \ntags:  ${ this.formData.tags }`
+**Käsitteen tyyppi**
+
+CONCEPT
+
+**Ehdotettu termi suomeksi**
+
+${ this.formData.prefLabel.fi.value }
+
+**Ehdotettu termi ruotsiksi**
+
+${ this.formData.prefLabel.sv.value }
+
+**Ehdotettu termi englanniksi**
+
+${ this.formData.prefLabel.en }
+
+**Tarkoitusta täsmentävä selite**
+
+${ this.formData.scopeNote }
+
+**Perustelut ehdotukselle**
+
+${ this.formData.explanation }
+
+**Ehdotettu yläkäsite YSOssa (LT)**
+
+${ brdLabls }
+
+**Ehdotetut temaattiset ryhmät**
+
+${ groups }
+
+**Vaihtoehtoiset termit**
+
+${ altTerms }
+
+**Alakäsitteet (RT)**
+
+${ this.formData.narrowerLabels }
+
+**Assosiatiiviset (RT)**
+
+${ this.formData.relatedLabels }
+
+**Vastaava käsite muussa sanastossa**
+
+${ this.formData.exactMatches }
+
+**Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**
+
+${ this.formData.neededFor }
+
+**Ehdottajan organisaatio**
+
+${ this.formData.fromOrg }
+
+**Tunnisteet**
+
+${ this.formData.tags }`
+    // )
+
+      console.log(data);
 
       let dataBundle = {
         "title": this.formData.prefLabel.fi.value,
