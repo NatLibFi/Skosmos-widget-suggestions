@@ -155,6 +155,15 @@ export default {
         )
         .then(response => this.formData.groups.allGroups = response.data.groups);
     },
+
+    addHTTPOrHTTPS(str){
+      if(!(/(http(s?)):\/\//.test(str))){
+        return `http://${str}`;
+      } else {
+        return `${str}`;
+      }
+    },
+
     submitForm () {
       this.$v.$touch();
       if (!this.$v.$invalid) {
@@ -164,43 +173,30 @@ export default {
       }
     },
     async sendData () {
-      // *************
-      // var xhr = new XMLHttpRequest();
-      // xhr.open('POST', '../../php/some_simple_test.php');
-      // // xhr.onload() = function() {
-      // //   console.log(this.response);
-      // // }
-      // xhr.send("moikka");
 
-      // $.ajax({
-      //   url: '../../php/some_simple_test.php',
-      //   type: 'post',
-      //   success: function(response){
-      //
-      //   }
-      // });
-
-
-      // *********
       const gh_secret = require('../secrets.json')
       this.handlePrefLabelLanguages();
       if (this.formData.vocabulary === 'yso-paikat') {
         this.formData.tags = [{"label": "MAANTIETEELLINEN"}];
       }
       const altTerms = []
-      this.formData.altLabels.forEach(item => item.value !== "" ? altTerms.push(item.value) : null);
+      this.formData.altLabels.forEach(item => item.value !== "" ? altTerms.push(` ${item.value}`) : null);
+
       const brdLabls = []
-      this.formData.broaderLabels.forEach(item => item.value !== "" ? brdLabls.push(item.value) : null);
+      this.formData.broaderLabels.forEach(item => item.value !== "" ? brdLabls.push(` [${ item.value }](${item.uri})`) : null);
+
       const groups = []
-      // console.log(this.formData.groups.selectedGroups)
-      // this.formData.groups.selectedGroups.forEach(item => item.prefLabel !== "" ? groups.push(item.prefLabel) : null);
-      console.log(this.formData.groups.selectedGroups)
-      this.formData.groups.selectedGroups.forEach(item => item.prefLabel !== "" ? groups.push(`[${ item.prefLabel }](${item.uri})`) : null);
+      this.formData.groups.selectedGroups.forEach(item => item.prefLabel !== "" ? groups.push(` [${ item.prefLabel }](${item.uri})`) : null);
 
-// organization:  [sdfsdf](http://www.google.fi)
+      const nrrLabls = []
+      this.formData.narrowerLabels.forEach(item => item.value !== "" ? nrrLabls.push(` [${ item.value }](${item.uri})`) : null);
 
 
-      // this.formData.broaderLabels
+      const rltdLabls = []
+      this.formData.relatedLabels.forEach(item => item.value !== "" ? rltdLabls.push(` [${ item.value }](${item.uri})`) : null);
+
+      const exctLabls = []
+      this.formData.exactMatches.forEach(item => item.value !== "" ? exctLabls.push(` [${ item.vocab }](${this.addHTTPOrHTTPS(item.value)})`) : null);
 
       let dataOrig_still_for_testing = {
         "suggestion_type": "NEW",
@@ -263,15 +259,15 @@ ${ altTerms }
 
 **Alakäsitteet (RT)**
 
-${ this.formData.narrowerLabels }
+${ nrrLabls }
 
 **Assosiatiiviset (RT)**
 
-${ this.formData.relatedLabels }
+${ rltdLabls }
 
 **Vastaava käsite muussa sanastossa**
 
-${ this.formData.exactMatches }
+${ exctLabls }
 
 **Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**
 
