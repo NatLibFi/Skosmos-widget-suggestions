@@ -40,13 +40,6 @@ import SuccessMessage from './common/SuccessMessage';
 import FailureMessage from './common/FailureMessage';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
-// import os;
-// import dotenv from 'dotenv'
-// import load_dotenv from 'dotenv';
-// from dotenv import load_dotenv
-// from dotenv import load_dotenv
-// TÄMÄ TOIMI
-// import dotenv from 'dotenv';
 
 export default {
   components: {
@@ -123,10 +116,7 @@ export default {
         },
         exactMatches: [{
           vocab: '',
-          value: '',      // load_dotenv()
-      // var os = require('os');
-      // API_KEY = os.getenv('PROJECT_API_KEY')
-      // console.log(API_KEY)
+          value: '',
           isTouched: false
         }],
         scopeNote: '',
@@ -134,9 +124,6 @@ export default {
         neededFor: '',
         fromOrg: '',
         tags: []
-        // title: '',
-        // body: '',
-        // state: ''
       }
     }
   },
@@ -176,8 +163,15 @@ export default {
 
       const gh_secret = require('../secrets.json')
       this.handlePrefLabelLanguages();
+      var ontTypeInTargetSuggestionSystem = '';
+      const labelsInTargetSuggestionSystem = [];
       if (this.formData.vocabulary === 'yso-paikat') {
-        this.formData.tags = [{"label": "MAANTIETEELLINEN"}];
+        labelsInTargetSuggestionSystem.push("uusi");
+        labelsInTargetSuggestionSystem.push("MAANTIETEELLINEN");
+        ontTypeInTargetSuggestionSystem = "GEO";
+      } else {
+        labelsInTargetSuggestionSystem.push("uusi");
+        ontTypeInTargetSuggestionSystem = "CONCEPT";
       }
       const altTerms = []
       this.formData.altLabels.forEach(item => item.value !== "" ? altTerms.push(` ${item.value}`) : null);
@@ -216,14 +210,14 @@ export default {
         "reason": this.formData.explanation,
         "neededFor": this.formData.neededFor,
         "organization": this.formData.fromOrg,
-        "tags": this.formData.tags
       };
-
+// Taken from the previous
+      // "tags": this.formData.tags
 // Very strange newlines, taken from the GitHub issue body by "blind" copying
       let data = `
 **Käsitteen tyyppi**
 
-CONCEPT
+${ ontTypeInTargetSuggestionSystem }
 
 **Ehdotettu termi suomeksi**
 
@@ -276,11 +270,12 @@ ${ this.formData.neededFor }
 **Ehdottajan organisaatio**
 
 ${ this.formData.fromOrg }
+`
 
-**Tunnisteet**
+// Takem from the variable above
+//
+// ${ this.formData.tags }
 
-${ this.formData.tags }`
-    // )
 
       console.log(data);
 
@@ -288,15 +283,10 @@ ${ this.formData.tags }`
         "title": this.formData.prefLabel.fi.value,
         "body": data,
         "state": "open",
-        "labels": ["uusi"]
+        "labels": labelsInTargetSuggestionSystem
       };
-
-
       var urlencode = require('urlencode');
       const payload = encodeURIComponent(JSON.stringify(dataBundle));
-      console.log("*****")
-      console.log(payload)
-      console.log("*****")
       const headers = {
           'Access-Control-Allow-Origin': '*'
       };
@@ -308,7 +298,6 @@ ${ this.formData.tags }`
         response.data.url.substring(n + 1)
         console.log(response.data.url.substring(n + 1));
         this.toggleSuccessMessage(`https://github.com/miguelahonen/c/issues/${response.data.url.substring(n + 1)}`);
-        // this.toggleSuccessMessage(response.data.suggestionUrl);
       })
       .catch(error => {
         console.log(error)
