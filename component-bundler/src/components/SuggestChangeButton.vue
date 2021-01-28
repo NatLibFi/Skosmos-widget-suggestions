@@ -76,32 +76,52 @@ export default {
       }
     },
     async sendData () {
-      let data = {
-        "suggestion_type": "MODIFY",
-        "uri": "",
-        "preferred_label": this.handlePrefLabelLanguages(),
-        "description": this.formData.description,
-        "reason": this.formData.reason,
-        "organization": this.formData.fromOrg
+      let data = `
+**Käsitteen tyyppi**
+
+Muutos olemassa olevaan käsitteeseen
+
+**prefabel**
+
+[${this.label}](${this.uri})
+
+**Tila**
+
+Käsittelyssä
+
+**Ehdotettu muutos**
+
+${this.formData.description}
+
+**Perustelut ehdotukselle**
+
+${this.formData.reason}
+
+**Ehdottajan organisaatio**
+
+${this.formData.fromOrg}
+
+`
+      let dataBundle = {
+        "title": this.label,
+        "body": data,
+        "state": "open",
+        "labels": ["muutos"]
       };
 
+      var urlencode = require('urlencode');
+      const payload = encodeURIComponent(JSON.stringify(dataBundle));
 
-      // Tämä on tärkeä kohta ja käytä Webpackin testaamiseen
-      // Original: this.url + 'suggestions', data, {
-      await axios
-        .post(
-          this.url + 'suggestions', data, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-        .then(response => {
-          this.toggleSuccessMessage(response.data.suggestionUrl);
-        })
-        .catch(error => {
-          this.toggleFailureMessage();
-        })
+      await axios.post(`http://localhost:8000/some_simple_test.php?payload=${payload}`).then(response => {
+        var n = response.data.url.lastIndexOf('/');
+        response.data.url.substring(n + 1)
+        console.log(response.data.url.substring(n + 1));
+        this.toggleSuccessMessage(`https://github.com/miguelahonen/c/issues/${response.data.url.substring(n + 1)}`);
+      })
+      .catch(error => {
+        console.log(error)
+        this.toggleFailureMessage();
+      });
     },
     toggleSuccessMessage(responseUrl) {
       if (responseUrl && responseUrl.length > 0) {

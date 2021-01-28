@@ -1,9 +1,5 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-// 'Access-Control-Allow-Origin': '*',
-// 'Content-Type': 'application/json',
-// 'Accept': 'application/vnd.github.v3.raw',
-// 'Authorization':  gh_secret.gh_Token
 
 function apiCall( $requestMethod, $body = null ){
 
@@ -44,9 +40,10 @@ function apiCall( $requestMethod, $body = null ){
   $resp_json = json_encode($resp_array, JSON_PRETTY_PRINT);
 
   curl_close($curl);
-  return $resp_json;
+  return $resp_json; //orig
   }
 $raw_response = apiCall( 'POST', $_GET['payload'] );
+// echo $decoded_result;
 echo $raw_response;
 
 

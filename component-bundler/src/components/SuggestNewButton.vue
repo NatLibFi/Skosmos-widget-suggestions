@@ -161,7 +161,6 @@ export default {
     },
     async sendData () {
 
-      const gh_secret = require('../secrets.json')
       this.handlePrefLabelLanguages();
       var ontTypeInTargetSuggestionSystem = '';
       const labelsInTargetSuggestionSystem = [];
@@ -290,10 +289,7 @@ ${ this.formData.fromOrg }
       const headers = {
           'Access-Control-Allow-Origin': '*'
       };
-      // encodeURIcomp JSON.stringify(dataBundle)
-      // await axios.get(`http://localhost:3301/test/1/${payload}`)
       await axios.post(`http://localhost:8000/some_simple_test.php?payload=${payload}`).then(response => {
-        // https://api.github.com/repos/miguelahonen/c/issues/236 https://github.com/miguelahonen/c/issues/235
         var n = response.data.url.lastIndexOf('/');
         response.data.url.substring(n + 1)
         console.log(response.data.url.substring(n + 1));
