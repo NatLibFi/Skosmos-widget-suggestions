@@ -58,6 +58,7 @@ export default {
     if (this.lang === 'sv') {
       this.$i18n.locale = this.lang;
     }
+    this.setDropDown();
   },
   data: () => {
     return {
@@ -71,11 +72,11 @@ export default {
           value: '',
           options: [
             {
-              value: 'Käsite',
+              value: '',
               vocab: 'yso'
             },
             {
-              value: 'Maantieteellinen paikka',
+              value: '',
               vocab: 'yso-paikat'
             }
           ]
@@ -142,6 +143,10 @@ export default {
         )
         .then(response => this.formData.groups.allGroups = response.data.groups);
     },
+    setDropDown: function() {
+      this.formData.conceptType.options[0].value = this.$t('new.common.concept');
+      this.formData.conceptType.options[1].value = this.$t('new.common.geo');
+    },
 
     addHTTPOrHTTPS(str){
       if(!(/(http(s?)):\/\//.test(str))){
@@ -160,7 +165,6 @@ export default {
       }
     },
     async sendData () {
-
       this.handlePrefLabelLanguages();
       var ontTypeInTargetSuggestionSystem = '';
       const labelsInTargetSuggestionSystem = [];
@@ -275,9 +279,6 @@ ${ this.formData.fromOrg }
 //
 // ${ this.formData.tags }
 
-
-      console.log(data);
-
       let dataBundle = {
         "title": this.formData.prefLabel.fi.value,
         "body": data,
@@ -325,18 +326,17 @@ ${ this.formData.fromOrg }
       this.showSuccessMessage = false;
       this.showFailureMessage = false;
       this.suggestionUrl = '';
-      this.$v.$reset();
       this.formData = {
         vocabulary: 'yso',
         conceptType: {
           value: '',
           options: [
             {
-              value: 'Käsite',
+              value: '',
               vocab: 'yso'
             },
             {
-              value: 'Maantieteellinen paikka',
+              value: '',
               vocab: 'yso-paikat'
             }
           ]
@@ -385,6 +385,8 @@ ${ this.formData.fromOrg }
         neededFor: '',
         fromOrg: ''
       };
+      this.setDropDown();
+      this.$v.$reset();
       this.getGroups();
     }
   },

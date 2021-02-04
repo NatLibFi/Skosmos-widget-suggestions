@@ -76,7 +76,9 @@
     "common": {
       "none": "Termer hittades inte",
       "exists": "Termen du föreslår finns redan i vokabulären",
-      "places": "yso-paikat"
+      "places": "yso-paikat",
+      "concept": "Begrepp",
+      "geo": "Geografisk plats"
     },
     "submit": "Skicka förslaget"
   },

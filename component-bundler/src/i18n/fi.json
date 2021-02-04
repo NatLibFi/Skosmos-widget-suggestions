@@ -76,7 +76,9 @@
     "common": {
       "none": "Termejä ei löydy hakusanalla",
       "exists": "Ehdottamasi termi löytyy jo sanastosta",
-      "places": "yso-paikat"
+      "places": "yso-paikat",
+      "concept": "Käsite",
+      "geo": "Maantieteellinen paikka"      
     },
     "submit": "Lähetä käsite-ehdotus"
   },
