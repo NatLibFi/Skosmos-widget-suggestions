@@ -112,11 +112,14 @@ ${this.formData.fromOrg}
       var urlencode = require('urlencode');
       const payload = encodeURIComponent(JSON.stringify(dataBundle));
 
-      await axios.post(`http://localhost:8000/some_simple_test.php?payload=${payload}`).then(response => {
-        var n = response.data.url.lastIndexOf('/');
-        response.data.url.substring(n + 1)
-        console.log(response.data.url.substring(n + 1));
-        this.toggleSuccessMessage(`https://github.com/miguelahonen/c/issues/${response.data.url.substring(n + 1)}`);
+      var urlToPrx = require('../prx.json');
+      await axios.post(`${urlToPrx[0].url}?payload=${payload}`).then(response => {
+      // await axios.post(`http://localhost:8000/some_simple_test.php?payload=${payload}`).then(response => {
+        // var n = response.data.url.lastIndexOf('/');
+        // response.data.url.substring(n + 1)
+        // console.log(response.data.url.substring(n + 1));
+        // this.toggleSuccessMessage(`https://github.com/miguelahonen/c/issues/${response.data.url.substring(n + 1)}`);
+        this.toggleSuccessMessage(`${response.data.url.replace("/repos", "").replace("api.", "")}`);
       })
       .catch(error => {
         console.log(error)
