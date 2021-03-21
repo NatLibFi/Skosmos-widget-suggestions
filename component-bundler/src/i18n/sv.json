@@ -101,5 +101,18 @@
       "for": "vilket organisation förslagsställaren representerar"
     },
     "submit": "Skicka förslaget"
+  },
+  "messages": {
+    "success": {
+      "h2": "Förslaget skickades framgångsrikt",
+      "p_1": "Ditt förslag kommer nu att hänvisas till YSO-mötet.",
+      "p_2a": "Du kan följa förslagsprocessen",
+      "p_2b": "här"
+    },
+    "failed": {
+      "h2": "Det gick inte att skicka förslaget",
+      "p_1a": "Vi beklagar problemet med att ta emot ditt förslag.",
+      "p_1b": "Du kan försöka fylla i formuläret igen eller så kan du kontakta Finto-administratörer via informationen på sidan \"Om\"."
+    }
   }
 }

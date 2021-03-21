@@ -1,0 +1,116 @@
+{
+  "new": {
+    "button": "Suggest a new concept to the vocabulary:",
+    "header": "Suggest a new concept to the YSO (General Finnish ontology)",
+    "p1": "All users can suggest changes to this vocabulary.",
+    "p2": "Changes to the existing concepts can be suggested in the concept pages.",
+    "conceptType": {
+      "label": "Type of suggestion: *",
+      "for": "type of suggestion",
+      "placeholder": "Select the type of suggestion",
+      "none": "Type of suggestion is not selectable",
+      "error": "Select a type for the suggestion."
+    },
+    "prefLabel": {
+      "error": "The main term should be unique",
+      "fi": {
+        "label": "Main term (in Finnish): *",
+        "for": "suggested term in Finnish"
+      },
+      "sv": {
+        "label": "Term in Swedish:",
+        "for": "suggested term in Swedish"
+      },
+      "en": {
+        "label": "Term in English:",
+        "for": "suggested term in English"
+      }
+    },
+    "altLabels": {
+      "label": "Alternative terms:",
+      "for": "Other terms with similar meaning"
+    },
+    "broaderLabels": {
+      "label": "Broader term in the YSO (BT):",
+      "for": "broader terms for the suggested term"
+    },
+    "narrowerLabels": {
+      "label": "Narrower terms (NT):",
+      "for": "Narrower terms for the suggested term"
+    },
+    "relatedLabels": {
+      "label": "Related (RT):",
+      "for": "Related terms for the suggested term"
+    },
+    "groups": {
+      "label": "YSO thematic group:",
+      "for": "groups the suggested concept belongs to",
+      "none": "No more groups to select.",
+      "placeholder": "Select group(s) from the list"
+    },
+    "exactMatches": {
+      "label": "Similar concepts in other vocabularies:",
+      "for": "similar concepts in other vocabularies",
+      "vocab": "Vocabulary (LCSH, Wikipedia or similar)",
+      "uri": "URI/URL like http://..."
+
+    },
+    "scopeNote": {
+      "label": "Tarkoitusta täsmentävä selite!!! WHAAAT???",
+      "for": "A short description for a concept????"
+    },
+    "explanation": {
+      "label": "Describe and specify the suggestion: *",
+      "for": "describe and specify the suggestion",
+      "error": "This information is mandatory."
+    },
+    "neededFor": {
+      "label": "What material does the concept describe? (e.g. Title or URL): *",
+      "for": "what material does the concept describe?",
+      "error": "This information is mandatory."
+    },
+    "fromOrg": {
+      "label": "Organization (sender of the suggestion):",
+      "for": "the organization the sender of the suggestion represents"
+    },
+    "common": {
+      "none": "No terms can be found",
+      "exists": "The vocabulary already contains a term you suggested",
+      "places": "YSO places"
+    },
+    "submit": "Send the suggestion"
+  },
+  "edit": {
+    "button": "Suggest changes to the concept",
+    "header": "Suggest changes to the concept",
+    "paragraph": "Any user of the YSO and Allärs may suggest changes to the vocabulary.",
+    "description": {
+      "label": "Suggested changes to be made: *",
+      "for": "suggested changes to be made",
+      "error": "This information is mandatory."
+    },
+    "reason": {
+      "label": "Reasons why the changes are necessary: *",
+      "for": "why are the changes necessary?",
+      "error": "This information is mandatory."
+    },
+    "fromOrg": {
+      "label": "Organization (sender of the suggestion):",
+      "for": "the organization the sender of the suggestion represents"
+    },
+    "submit": "Send the suggestion"
+  },
+  "messages": {
+    "success": {
+      "h2": "The suggestion successfully sent",
+      "p_1": "The suggestion will now be referred to the YSO meeting",
+      "p_2a": "You can follow the suggestion process here",
+      "p_2b": "here"
+    },
+    "failed": {
+      "h2": "The sending of suggestion failed",
+      "p_1a": "We are sorry for having problems in the receiving of your suggestion.",
+      "p_1b": "You can try to fill up the form again or you can get in touch with Finto administrators via information given on the About page"
+    }
+  }
+}

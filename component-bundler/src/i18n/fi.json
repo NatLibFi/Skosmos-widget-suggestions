@@ -1,9 +1,9 @@
 {
   "new": {
     "button": "Ehdota uutta käsitettä sanastoon:",
-    "header": "Ehdota käsitettä YSA- ja YSO-aineistoihin",
-    "p1": "Kuka tahansa YSAn, Allärsin tai YSOn käyttäjä saa ehdottaa muutoksia sanastoon.",
-    "p2": "Olemassaoleviin käsitteisiin voit ehdottaa muutoksia näiden omilta sivuilta.",
+    "header": "Ehdota uutta käsitettä YSOon",
+    "p1": "",
+    "p2": "Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta",
     "conceptType": {
       "label": "Tyyppi: *",
       "for": "ehdotuksen tyyppi",
@@ -77,8 +77,8 @@
       "none": "Termejä ei löydy hakusanalla",
       "exists": "Ehdottamasi termi löytyy jo sanastosta",
       "places": "yso-paikat",
-      "concept": "Käsite",
-      "geo": "Maantieteellinen paikka"      
+      "concept": "Yleiskäsite",
+      "geo": "Maantieteellinen paikka"
     },
     "submit": "Lähetä käsite-ehdotus"
   },
@@ -101,5 +101,18 @@
       "for": "mitä organisaatiota ehdottaja edustaa"
     },
     "submit": "Lähetä muutosehdotus"
+  },
+  "messages": {
+    "success": {
+      "h2": "Ehdotus lähetetty onnistuneesti",
+      "p_1": "Ehdotuksesi siirtyy nyt YSO-kokouksen käsiteltäväksi.",
+      "p_2a": "Voit seurata ehdotuksesi käsittelyn etenemistä",
+      "p_2b": "täällä"
+    },
+    "failed": {
+      "h2": "Ehdotuksen lähettäminen ei onnistunut",
+      "p_1a": "Ehdotustasi ei valitettavasti pystytty vastaanottamaan.",
+      "p_1b": "Voit kokeilla ehdotuksen täyttämistä uudestaan tai ottaa yhteyttä Finton ylläpitäjiin Tietoja-välilehden kautta."
+    }
   }
 }

@@ -5,3 +5,4 @@ node_modules
 secrets.json
 components.js
 .env
+prx.json

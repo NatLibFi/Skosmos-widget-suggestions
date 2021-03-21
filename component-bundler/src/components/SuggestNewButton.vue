@@ -295,16 +295,6 @@ ${ this.formData.fromOrg }
 
       var urlToPrx = require('../prx.json');
       await axios.post(`${urlToPrx[0].url}?payload=${payload}`).then(response => {
-      // await axios.post(`http://localhost:8000/some_simple_test.php?payload=${payload}`).then(response => {
-        // console.log(this.urlForGHEndpoint.firstname)
-        // console.log(this.urlForGHEndpoint.lastname)
-        // var n = response.data.url.lastIndexOf('/');
-        // response.data.url.substring(n + 1)
-        // console.log("Tämä on muokattu responseUrl")
-        // console.log(response.data.url.substring(n + 1));
-        // console.log("Tämä on toivottavasti lopullinen responseUrl")
-        // console.log(response.data.url.replace("/repos", "").replace("api.", ""));
-        // console.log(response.data.url.substring(n + 1));
         this.toggleSuccessMessage(`${response.data.url.replace("/repos", "").replace("api.", "")}`);
         // this.toggleSuccessMessage(`https://github.com/miguelahonen/c/issues/${response.data.url.substring(n + 1)}`);
       })
