@@ -59,6 +59,7 @@ export default {
       this.$i18n.locale = this.lang;
     }
     this.setDropDown();
+    this.getGroups();
   },
   data: () => {
     return {
@@ -133,8 +134,12 @@ export default {
   },
   methods: {
     getGroups: async function() {
+      if (this.lang === 'sv') {
+        this.$i18n.locale = this.lang;
+      }
       await axios
         .get(
+          // The next following should be a value from a config file - fix it - use key value pair
           'http://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
             params: {
               lang: this.$i18n.locale

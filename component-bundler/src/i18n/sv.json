@@ -85,7 +85,7 @@
   "edit": {
     "button": "Föreslå en förändring till begreppet",
     "header": "Föreslå en förändring till begreppet",
-    "paragraph": "Vem som helst som använder YSA, Allärs eller ALLFO kan föreslå ändringar i vokabulärerna.",
+    "paragraph": "Vem som helst som använder ALLFO kan föreslå ändringar i vokabulärerna.",
     "description": {
       "label": "Förslag till ändring: *",
       "for": "motivering för den föreslagna ändringen",

@@ -85,7 +85,7 @@
   "edit": {
     "button": "Ehdota muutosta käsitteeseen",
     "header": "Ehdota muutosta käsitteeseen",
-    "paragraph": "Kuka tahansa YSAn, Allärsin tai YSOn käyttäjä saa ehdottaa muutoksia sanastoon.",
+    "paragraph": "Kuka YSOn käyttäjä saa ehdottaa muutoksia sanastoon.",
     "description": {
       "label": "Ehdotettu muutos: *",
       "for": "perustelut ehdotetulle muutokselle",
