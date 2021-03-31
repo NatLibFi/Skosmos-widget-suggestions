@@ -199,28 +199,6 @@ export default {
 
       const exctLabls = []
       this.formData.exactMatches.forEach(item => item.value !== "" ? exctLabls.push(` [${ item.vocab }](${this.addHTTPOrHTTPS(item.value)})`) : null);
-
-      let dataOrig_still_for_testing = {
-        "suggestion_type": "NEW",
-        "uri": "",
-        "preferred_label": {
-          "fi": { value: this.formData.prefLabel.fi.value, uri: '' },
-          "sv": { value: this.formData.prefLabel.sv.value, uri: '' },
-          "en": this.formData.prefLabel.en
-        },
-        "alternative_labels": this.formData.altLabels,
-        "broader_labels": this.formData.broaderLabels,
-        "narrower_labels": this.formData.narrowerLabels,
-        "related_labels": this.formData.relatedLabels,
-        "groups": this.formData.groups.selectedGroups,
-        "exactMatches": this.formData.exactMatches,
-        "scopeNote": this.formData.scopeNote,
-        "reason": this.formData.explanation,
-        "neededFor": this.formData.neededFor,
-        "organization": this.formData.fromOrg,
-      };
-// Taken from the previous
-      // "tags": this.formData.tags
 // Very strange newlines, taken from the GitHub issue body by "blind" copying
       let data = `
 **Käsitteen tyyppi**
@@ -280,12 +258,8 @@ ${ this.formData.neededFor }
 ${ this.formData.fromOrg }
 `
 
-// Takem from the variable above
-//
-// ${ this.formData.tags }
-
       let dataBundle = {
-        "title": this.formData.prefLabel.fi.value,
+        "title": (this.$i18n.locale === 'sv' ? this.formData.prefLabel.sv.value : this.formData.prefLabel.fi.value),
         "body": data,
         "state": "open",
         "labels": labelsInTargetSuggestionSystem
@@ -295,9 +269,6 @@ ${ this.formData.fromOrg }
       const headers = {
           'Access-Control-Allow-Origin': '*'
       };
-
-// $config['to_endpoint']
-
       var urlToPrx = require('../prx.json');
       await axios.post(`${urlToPrx[0].url}?payload=${payload}`).then(response => {
         this.toggleSuccessMessage(`${response.data.url.replace("/repos", "").replace("api.", "")}`);

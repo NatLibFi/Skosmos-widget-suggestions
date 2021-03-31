@@ -9895,7 +9895,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     sendData: function sendData() {
       var _this2 = this;
 
-      var ontTypeInTargetSuggestionSystem, labelsInTargetSuggestionSystem, altTerms, brdLabls, groups, nrrLabls, rltdLabls, exctLabls, dataOrig_still_for_testing, data, dataBundle, urlencode, payload, headers, urlToPrx;
+      var ontTypeInTargetSuggestionSystem, labelsInTargetSuggestionSystem, altTerms, brdLabls, groups, nrrLabls, rltdLabls, exctLabls, data, dataBundle, urlencode, payload, headers, urlToPrx;
       return regeneratorRuntime.async(function sendData$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -9947,38 +9947,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               this.formData.exactMatches.forEach(function (item) {
                 return item.value !== "" ? exctLabls.push(' [' + item.vocab + '](' + _this2.addHTTPOrHTTPS(item.value) + ')') : null;
               });
-
-              dataOrig_still_for_testing = {
-                "suggestion_type": "NEW",
-                "uri": "",
-                "preferred_label": {
-                  "fi": { value: this.formData.prefLabel.fi.value, uri: '' },
-                  "sv": { value: this.formData.prefLabel.sv.value, uri: '' },
-                  "en": this.formData.prefLabel.en
-                },
-                "alternative_labels": this.formData.altLabels,
-                "broader_labels": this.formData.broaderLabels,
-                "narrower_labels": this.formData.narrowerLabels,
-                "related_labels": this.formData.relatedLabels,
-                "groups": this.formData.groups.selectedGroups,
-                "exactMatches": this.formData.exactMatches,
-                "scopeNote": this.formData.scopeNote,
-                "reason": this.formData.explanation,
-                "neededFor": this.formData.neededFor,
-                "organization": this.formData.fromOrg
-              };
-              // Taken from the previous
-              // "tags": this.formData.tags
               // Very strange newlines, taken from the GitHub issue body by "blind" copying
-
               data = '\n**K\xE4sitteen tyyppi**\n\n' + ontTypeInTargetSuggestionSystem + '\n\n**Ehdotettu termi suomeksi**\n\n' + this.formData.prefLabel.fi.value + '\n\n**Ehdotettu termi ruotsiksi**\n\n' + this.formData.prefLabel.sv.value + '\n\n**Ehdotettu termi englanniksi**\n\n' + this.formData.prefLabel.en + '\n\n**Tarkoitusta t\xE4sment\xE4v\xE4 selite**\n\n' + this.formData.scopeNote + '\n\n**Perustelut ehdotukselle**\n\n' + this.formData.explanation + '\n\n**Ehdotettu yl\xE4k\xE4site YSOssa (LT)**\n\n' + brdLabls + '\n\n**Ehdotetut temaattiset ryhm\xE4t**\n\n' + groups + '\n\n**Vaihtoehtoiset termit**\n\n' + altTerms + '\n\n**Alak\xE4sitteet (RT)**\n\n' + nrrLabls + '\n\n**Assosiatiiviset (RT)**\n\n' + rltdLabls + '\n\n**Vastaava k\xE4site muussa sanastossa**\n\n' + exctLabls + '\n\n**Aineisto jonka kuvailussa k\xE4sitett\xE4 tarvitaan (esim. nimeke tai URL)**\n\n' + this.formData.neededFor + '\n\n**Ehdottajan organisaatio**\n\n' + this.formData.fromOrg + '\n';
-
-              // Takem from the variable above
-              //
-              // ${ this.formData.tags }
-
               dataBundle = {
-                "title": this.formData.prefLabel.fi.value,
+                "title": this.$i18n.locale === 'sv' ? this.formData.prefLabel.sv.value : this.formData.prefLabel.fi.value,
                 "body": data,
                 "state": "open",
                 "labels": labelsInTargetSuggestionSystem
@@ -9988,11 +9960,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               headers = {
                 'Access-Control-Allow-Origin': '*'
               };
-
-              // $config['to_endpoint']
-
               urlToPrx = __webpack_require__(166);
-              _context2.next = 25;
+              _context2.next = 24;
               return regeneratorRuntime.awrap(__WEBPACK_IMPORTED_MODULE_5_axios___default.a.post(urlToPrx[0].url + '?payload=' + payload).then(function (response) {
                 _this2.toggleSuccessMessage('' + response.data.url.replace("/repos", "").replace("api.", ""));
                 // this.toggleSuccessMessage(`https://github.com/miguelahonen/c/issues/${response.data.url.substring(n + 1)}`);
@@ -10001,7 +9970,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.toggleFailureMessage();
               }));
 
-            case 25:
+            case 24:
             case 'end':
               return _context2.stop();
           }
