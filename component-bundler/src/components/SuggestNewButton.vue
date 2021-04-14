@@ -140,7 +140,8 @@ export default {
       await axios
         .get(
           // The next following should be a value from a config file - fix it - use key value pair
-          'http://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
+          // 'http://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
+          'https://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
             params: {
               lang: this.$i18n.locale
             }

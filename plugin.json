@@ -1,5 +1,5 @@
 {
-    "js": ["widget.js", "components.js"],
+    "js": ["widget.js?v=3", "components.js?v=3"],
     "callback": ["suggestionsWidget"],
     "templates": ["new.html", "change.html"]
 }

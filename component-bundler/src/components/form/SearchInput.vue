@@ -70,7 +70,8 @@ export default {
     handleResult: async function(inputValue) {
       await axios
         .get(
-          'http://api.finto.fi/rest/v1/search', {
+          // 'http://api.finto.fi/rest/v1/search', {
+          'https://api.finto.fi/rest/v1/search', {
             params: {
               vocab: this.vocabulary,
               lang: this.language,

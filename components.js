@@ -8355,7 +8355,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* 166 */
 /***/ (function(module, exports) {
 
-module.exports = [{"url":"http://dev.finto.fi/plugins/suggestions/some_simple_test.php"}]
+module.exports = [{"url":"https://dev.finto.fi/plugins/suggestions/gh_prx.php"}]
 
 /***/ }),
 /* 167 */
@@ -9857,7 +9857,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               _context.next = 3;
               return regeneratorRuntime.awrap(__WEBPACK_IMPORTED_MODULE_5_axios___default.a.get(
               // The next following should be a value from a config file - fix it - use key value pair
-              'http://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
+              // 'http://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
+              'https://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
                 params: {
                   lang: this.$i18n.locale
                 }
@@ -10430,7 +10431,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return regeneratorRuntime.awrap(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.get('http://api.finto.fi/rest/v1/search', {
+              return regeneratorRuntime.awrap(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.get(
+              // 'http://api.finto.fi/rest/v1/search', {
+              'https://api.finto.fi/rest/v1/search', {
                 params: {
                   vocab: this.vocabulary,
                   lang: 'fi',
@@ -10589,7 +10592,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return regeneratorRuntime.awrap(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.get('http://api.finto.fi/rest/v1/search', {
+              return regeneratorRuntime.awrap(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.get(
+              // 'http://api.finto.fi/rest/v1/search', {
+              'https://api.finto.fi/rest/v1/search', {
                 params: {
                   vocab: this.vocabulary,
                   lang: this.language,
