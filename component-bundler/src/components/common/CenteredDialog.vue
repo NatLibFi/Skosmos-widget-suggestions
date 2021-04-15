@@ -1,6 +1,7 @@
 <template>
     <div class="template">
-      <div class="dialog-overlay" @click="close">
+      <!-- <div class="dialog-overlay" @click="close"> -->
+      <div class="dialog-overlay">
       </div>
       <div class="dialog-modal">
         <div class="dialog-content">

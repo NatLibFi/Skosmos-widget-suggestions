@@ -10098,6 +10098,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -25979,10 +25980,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "template"
   }, [_c('div', {
-    staticClass: "dialog-overlay",
-    on: {
-      "click": _vm.close
-    }
+    staticClass: "dialog-overlay"
   }), _vm._v(" "), _c('div', {
     staticClass: "dialog-modal"
   }, [_c('div', {
