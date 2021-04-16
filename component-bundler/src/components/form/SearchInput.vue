@@ -5,7 +5,7 @@
     && searchResult.uri.length > 0
     && checkCapitalization(searchString) === searchResult.prefLabel">
     <p>
-      {{ $t('new.common.exists') }} <strong>{{ vocabulary }}</strong>:
+      {{ $t('new.common.exists') }} <strong>{{ $t('new.common.voc') }}</strong>:
       <a :href="searchResult.uri">{{ searchResult.prefLabel }}</a>
     </p>
   </div>

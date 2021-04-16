@@ -1,118 +1,119 @@
 {
   "new": {
-    "button": "Föreslå ett nytt begrepp till vokabuläret",
-    "header": "Föreslå ett nytt begrepp till YSA, Allärs eller ALLFO",
-    "p1": "Vem som helst som använder YSA, Allärs eller ALLFO kan föreslå nya begrepp till vokabulärerna.",
-    "p2": "Du kan föreslå ändringar till spesifika begrepp på deras egna sidor.",
+    "button": "Föreslå ett nytt begrepp till vokabulären",
+    "header": "Föreslå ett nytt begrepp till ALLFO",
+    "p1": "",
+    "p2": "Du kan föreslå ändringar av begrepp som redan finns i vokabulären via begreppens egna sidor.",
     "conceptType": {
       "label": "Typ: *",
       "for": "typ av begrepp",
       "placeholder": "Välj typ av begrepp",
-      "none": "Begreppstyper är inte tillgängliga",
+      "none": "Begreppstyper kan inte väljas",
       "error": "Välj typ av begrepp."
     },
     "prefLabel": {
-      "error": "Huvudbeteckningen måste vara en unik term.",
+      "error": "Huvudtermen måste vara en unik term.",
       "fi": {
-        "label": "Term/ämnesord på finska",
-        "for": "termen på finska"
+        "label": "Term på finska",
+        "for": "den föreslagna termen på finska"
       },
       "sv": {
         "label": "Term/ämnesord på svenska: *",
-        "for": "termen på svenska"
+        "for": "den föreslagna termen på svenska"
       },
       "en": {
-        "label": "Term/ämnesord på engelska:",
-        "for": "termen på engelska"
+        "label": "Term på engelska:",
+        "for": "den föreslagna termen på engelska"
       }
     },
     "altLabels": {
       "label": "Alternativa termer och uttryck:",
-      "for": "andra liknande termer"
+      "for": "andra motsvarande termer"
     },
     "broaderLabels": {
-      "label": "Överordnat begrepp i ALLFO:",
-      "for": "överordnat begrepp"
+      "label": "Överordnade begrepp i ALLFO:",
+      "for": "överordnade begrepp till den föreslagna termen"
     },
     "narrowerLabels": {
       "label": "Underordnade begrepp:",
-      "for": "underordnade begrepp"
+      "for": "underordnade begrepp till den föreslagna termen"
     },
     "relatedLabels": {
-      "label": "Associativa (RT):",
-      "for": "relaterade begrepp"
+      "label": "Relaterade begrepp:",
+      "for": "relaterade begrepp till den föreslagna termen"
     },
     "groups": {
-      "label": "Tematisk grupp i Allärs/ALLFO:",
-      "for": "relaterade grupper till begreppet",
-      "none": "Inga mer grupper hittas",
+      "label": "Tematisk grupp i ALLFO:",
+      "for": "tematiska grupper för den föreslagna termen",
+      "none": "Inga fler grupper kan väljas",
       "placeholder": "Välj grupp(er) ur listan"
     },
     "exactMatches": {
-      "label": "Motsvarande begrepp i annan terminologi:",
-      "for": "liknande begrepp i andra vokabulärer",
+      "label": "Motsvarande begrepp i annan vokabulär:",
+      "for": "motsvarande begrepp i andra vokabulärer",
       "vocab": "Vokabulär (LCSH, Wikipedia, etc.)",
       "uri": "URI eller term"
 
     },
     "scopeNote": {
       "label": "Förklaring som preciserar betydelsen:",
-      "for": "en förklarande anteckning som förklarar syftet"
+      "for": "förklaring som preciserar betydelsen"
     },
     "explanation": {
-      "label": "Motiveringar för förslaget: *",
-      "for": "motivering för den föreslagna termen",
+      "label": "Motiveringar till förslaget: *",
+      "for": "motiveringar till den föreslagna termen",
       "error": "Detta är obligatorisk information."
     },
     "neededFor": {
-      "label": "I beskrivningen av vilket material behöver du begreppet (t.ex. titel eller URL): *",
-      "for": "varför behövs begreppet",
+      "label": "För vilket materials beskrivning behöver du begreppet (t.ex. titel eller URL): *",
+      "for": "för vilket material behövs termen",
       "error": "Detta är obligatorisk information."
     },
     "fromOrg": {
       "label": "Förslagsställarens organisation:",
-      "for": "vilket organisation förslagsställaren representerar"
+      "for": "vilken organisation reDu kan försöka fylla i formuläret igen eller så kan du kontakta Finto-administratörer via informationen på sidan \"Om\".presenterar förslagsställaren"
     },
     "common": {
-      "none": "Termer hittades inte",
+      "none": "Termer hittades inte med sökordet",
       "exists": "Termen du föreslår finns redan i vokabulären",
-      "places": "yso-paikat",
-      "concept": "Begrepp",
+      "voc": "allfo",
+      "places": "allfo-orter",
+      "concept": "Allmänt begrepp",
       "geo": "Geografisk plats"
     },
     "submit": "Skicka förslaget"
   },
   "edit": {
-    "button": "Föreslå en förändring till begreppet",
-    "header": "Föreslå en förändring till begreppet",
-    "paragraph": "Vem som helst som använder ALLFO kan föreslå ändringar i vokabulärerna.",
+    "button": "Föreslå en ändring av begreppet",
+    "header": "Föreslå en ändring av begreppet",
+    "paragraph": "Vem som helst som använder ALLFO kan föreslå ändringar till vokabulären.",
     "description": {
       "label": "Förslag till ändring: *",
-      "for": "motivering för den föreslagna ändringen",
+      "for": "förslag till ändring",
       "error": "Detta är obligatorisk information."
     },
     "reason": {
-      "label": "Motiveringar för förslaget: *",
-      "for": "varför behövs förändringen",
+      "label": "Motiveringar till förslaget: *",
+      "for": "varför behövs ändringen",
       "error": "Detta är obligatorisk information."
     },
     "fromOrg": {
       "label": "Förslagsställarens organisation:",
-      "for": "vilket organisation förslagsställaren representerar"
+      "for": "vilken organisation representerar förslagsställaren"
     },
     "submit": "Skicka förslaget"
   },
   "messages": {
     "success": {
-      "h2": "Förslaget skickades framgångsrikt",
-      "p_1": "Ditt förslag kommer nu att hänvisas till YSO-mötet.",
-      "p_2a": "Du kan följa förslagsprocessen",
+      "h2": "Förslaget skickades",
+      "p_1": "Ditt förslag vidarebefordras till YSO-mötet.",
+      "p_2a": "Du kan följa hur behandlingen av ditt förslag framskrider",
       "p_2b": "här"
     },
     "failed": {
-      "h2": "Det gick inte att skicka förslaget",
-      "p_1a": "Vi beklagar problemet med att ta emot ditt förslag.",
-      "p_1b": "Du kan försöka fylla i formuläret igen eller så kan du kontakta Finto-administratörer via informationen på sidan \"Om\"."
+      "h2": "Förslaget kunde inte skickas",
+      "p_1a": "Ditt förslag kunde tyvärr inte tas emot.",
+      "p_1b": "Du kan försöka fylla i formuläret igen eller så kan du kontakta Finto-servicens administratörer via responssidan."
     }
   }
 }

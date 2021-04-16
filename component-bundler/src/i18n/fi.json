@@ -1,6 +1,6 @@
 {
   "new": {
-    "button": "Ehdota uutta käsitettä sanastoon:",
+    "button": "Ehdota uutta käsitettä sanastoon",
     "header": "Ehdota uutta käsitettä YSOon",
     "p1": "",
     "p2": "Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta",
@@ -76,6 +76,7 @@
     "common": {
       "none": "Termejä ei löydy hakusanalla",
       "exists": "Ehdottamasi termi löytyy jo sanastosta",
+      "voc": "yso",
       "places": "yso-paikat",
       "concept": "Yleiskäsite",
       "geo": "Maantieteellinen paikka"
@@ -85,7 +86,7 @@
   "edit": {
     "button": "Ehdota muutosta käsitteeseen",
     "header": "Ehdota muutosta käsitteeseen",
-    "paragraph": "Kuka YSOn käyttäjä saa ehdottaa muutoksia sanastoon.",
+    "paragraph": "Kuka tahansa YSOn käyttäjä saa ehdottaa muutoksia sanastoon.",
     "description": {
       "label": "Ehdotettu muutos: *",
       "for": "perustelut ehdotetulle muutokselle",
