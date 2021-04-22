@@ -1,7 +1,7 @@
 <template>
   <div>
     <a role="button" @click="isOpened = !isOpened">
-      <span>{{ $t('new.button') }} {{ vocab }}</span>
+      <span>{{ $t('new.button') }} {{ $t('new.common.voc') }}</span>
     </a>
     <centered-dialog
       v-if="isOpened"
@@ -58,6 +58,8 @@ export default {
     if (this.lang === 'sv') {
       this.$i18n.locale = this.lang;
     }
+    this.setDropDown();
+    this.getGroups();
   },
   data: () => {
     return {
@@ -71,11 +73,11 @@ export default {
           value: '',
           options: [
             {
-              value: 'Käsite',
+              value: '',
               vocab: 'yso'
             },
             {
-              value: 'Maantieteellinen paikka',
+              value: '',
               vocab: 'yso-paikat'
             }
           ]
@@ -132,9 +134,14 @@ export default {
   },
   methods: {
     getGroups: async function() {
+      if (this.lang === 'sv') {
+        this.$i18n.locale = this.lang;
+      }
       await axios
         .get(
-          'http://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
+          // The next following should be a value from a config file - fix it - use key value pair
+          // 'http://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
+          'https://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
             params: {
               lang: this.$i18n.locale
             }
@@ -142,6 +149,19 @@ export default {
         )
         .then(response => this.formData.groups.allGroups = response.data.groups);
     },
+    setDropDown: function() {
+      this.formData.conceptType.options[0].value = this.$t('new.common.concept');
+      this.formData.conceptType.options[1].value = this.$t('new.common.geo');
+    },
+
+    addHTTPOrHTTPS(str){
+      if(!(/(http(s?)):\/\//.test(str))){
+        return `http://${str}`;
+      } else {
+        return `${str}`;
+      }
+    },
+
     submitForm () {
       this.$v.$touch();
       if (!this.$v.$invalid) {
@@ -152,43 +172,114 @@ export default {
     },
     async sendData () {
       this.handlePrefLabelLanguages();
+      var ontTypeInTargetSuggestionSystem = '';
+      const labelsInTargetSuggestionSystem = [];
       if (this.formData.vocabulary === 'yso-paikat') {
-        this.formData.tags = [{"label": "MAANTIETEELLINEN"}];
+        labelsInTargetSuggestionSystem.push("uusi");
+        labelsInTargetSuggestionSystem.push("MAANTIETEELLINEN");
+        ontTypeInTargetSuggestionSystem = "GEO";
+      } else {
+        labelsInTargetSuggestionSystem.push("uusi");
+        ontTypeInTargetSuggestionSystem = "CONCEPT";
       }
-      let data = {
-        "suggestion_type": "NEW",
-        "uri": "",
-        "preferred_label": {
-          "fi": { value: this.formData.prefLabel.fi.value, uri: '' },
-          "sv": { value: this.formData.prefLabel.sv.value, uri: '' },
-          "en": this.formData.prefLabel.en
-        },
-        "alternative_labels": this.formData.altLabels,
-        "broader_labels": this.formData.broaderLabels,
-        "narrower_labels": this.formData.narrowerLabels,
-        "related_labels": this.formData.relatedLabels,
-        "groups": this.formData.groups.selectedGroups,
-        "exactMatches": this.formData.exactMatches,
-        "scopeNote": this.formData.scopeNote,
-        "reason": this.formData.explanation,
-        "neededFor": this.formData.neededFor,
-        "organization": this.formData.fromOrg,
-        "tags": this.formData.tags
+      const altTerms = []
+      this.formData.altLabels.forEach(item => item.value !== "" ? altTerms.push(` ${item.value}`) : null);
+
+      const brdLabls = []
+      this.formData.broaderLabels.forEach(item => item.value !== "" ? brdLabls.push(` [${ item.value }](${item.uri})`) : null);
+
+      const groups = []
+      this.formData.groups.selectedGroups.forEach(item => item.prefLabel !== "" ? groups.push(` [${ item.prefLabel }](${item.uri})`) : null);
+
+      const nrrLabls = []
+      this.formData.narrowerLabels.forEach(item => item.value !== "" ? nrrLabls.push(` [${ item.value }](${item.uri})`) : null);
+
+
+      const rltdLabls = []
+      this.formData.relatedLabels.forEach(item => item.value !== "" ? rltdLabls.push(` [${ item.value }](${item.uri})`) : null);
+
+      const exctLabls = []
+      this.formData.exactMatches.forEach(item => item.value !== "" ? exctLabls.push(` [${ item.vocab }](${this.addHTTPOrHTTPS(item.value)})`) : null);
+// Very strange newlines, taken from the GitHub issue body by "blind" copying
+      let data = `
+**Käsitteen tyyppi**
+
+${ ontTypeInTargetSuggestionSystem }
+
+**Ehdotettu termi suomeksi**
+
+${ this.formData.prefLabel.fi.value }
+
+**Ehdotettu termi ruotsiksi**
+
+${ this.formData.prefLabel.sv.value }
+
+**Ehdotettu termi englanniksi**
+
+${ this.formData.prefLabel.en }
+
+**Tarkoitusta täsmentävä selite**
+
+${ this.formData.scopeNote }
+
+**Perustelut ehdotukselle**
+
+${ this.formData.explanation }
+
+**Ehdotettu yläkäsite YSOssa (LT)**
+
+${ brdLabls }
+
+**Ehdotetut temaattiset ryhmät**
+
+${ groups }
+
+**Vaihtoehtoiset termit**
+
+${ altTerms }
+
+**Alakäsitteet (RT)**
+
+${ nrrLabls }
+
+**Assosiatiiviset (RT)**
+
+${ rltdLabls }
+
+**Vastaava käsite muussa sanastossa**
+
+${ exctLabls }
+
+**Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**
+
+${ this.formData.neededFor }
+
+**Ehdottajan organisaatio**
+
+${ this.formData.fromOrg }
+`
+
+      let dataBundle = {
+        "title": (this.$i18n.locale === 'sv' ? this.formData.prefLabel.sv.value : this.formData.prefLabel.fi.value),
+        "body": data,
+        "state": "open",
+        "labels": labelsInTargetSuggestionSystem
       };
-      await axios
-        .post(
-          this.url + 'suggestions', data, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-        .then(response => {
-          this.toggleSuccessMessage(response.data.suggestionUrl);
-        })
-        .catch(error => {
-          this.toggleFailureMessage();
-        });
+      var urlencode = require('urlencode');
+      const payload = encodeURIComponent(JSON.stringify(dataBundle));
+      const headers = {
+          'Access-Control-Allow-Origin': '*'
+      };
+      var urlToPrx = require('../prx.json');
+      await axios.post(`${urlToPrx[0].url}?payload=${payload}`).then(response => {
+        this.toggleSuccessMessage(`${response.data.url.replace("/repos", "").replace("api.", "")}`);
+        // this.toggleSuccessMessage(`https://github.com/miguelahonen/c/issues/${response.data.url.substring(n + 1)}`);
+      })
+      .catch(error => {
+        console.log(error)
+        this.toggleFailureMessage();
+      });
+
     },
     toggleSuccessMessage(responseUrl) {
       if (responseUrl && responseUrl.length > 0) {
@@ -214,18 +305,17 @@ export default {
       this.showSuccessMessage = false;
       this.showFailureMessage = false;
       this.suggestionUrl = '';
-      this.$v.$reset();
       this.formData = {
         vocabulary: 'yso',
         conceptType: {
           value: '',
           options: [
             {
-              value: 'Käsite',
+              value: '',
               vocab: 'yso'
             },
             {
-              value: 'Maantieteellinen paikka',
+              value: '',
               vocab: 'yso-paikat'
             }
           ]
@@ -274,6 +364,8 @@ export default {
         neededFor: '',
         fromOrg: ''
       };
+      this.setDropDown();
+      this.$v.$reset();
       this.getGroups();
     }
   },
@@ -318,4 +410,3 @@ export default {
     cursor: hand;
   }
 </style>
-

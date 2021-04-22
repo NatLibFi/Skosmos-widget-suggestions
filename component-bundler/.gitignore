@@ -1,2 +1,8 @@
-/dist
-/node_modules
+dist
+#node_modules
+.secret
+.secret.php
+secrets.json
+components.js
+.env
+prx.json

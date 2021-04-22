@@ -1,14 +1,14 @@
 <template>
 <div>
-  <h2>Ehdotus lähetetty onnistuneesti</h2>
-  <p>Ehdotuksesi siirtyy nyt YSO-kokouksen käsiteltäväksi.</p>
+  <h2>{{ $t('messages.success.h2') }}</h2>
+  <p>{{ $t('messages.success.p_1') }}</p>
   <p v-if="!suggestionUrl || suggestionUrl.length === 0">
-    Voit seurata ehdotusten käsittelyä
-    <a :href="url">täällä</a>.
+    {{ $t('messages.success.p_2a') }}
+    <a :href="url">{{ $t('messages.success.p_2b') }}</a>.
   </p>
   <p v-if="suggestionUrl && suggestionUrl.length > 0">
-    Voit seurata ehdotuksesi käsittelyn etenemistä
-    <a :href="suggestionUrl">täältä</a>.
+    {{ $t('messages.success.p_2a') }}
+    <a target="_blank" :href="suggestionUrl">{{ $t('messages.success.p_2b') }}</a>.
   </p>
 </div>
 </template>

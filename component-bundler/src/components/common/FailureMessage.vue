@@ -1,8 +1,8 @@
 <template>
 <div>
-  <h2>Ehdotuksen lähettäminen ei onnistunut</h2>
-  <p>Ehdotustasi ei valitettavasti pystytty vastaanottamaan.</p>
-  <p>Voit kokeilla ehdotuksen täyttämistä uudestaan tai ottaa yhteyttä Finton ylläpitäjiin Tietoja-välilehden kautta.</p>
+  <h2>{{ $t('messages.failed.h2') }}</h2>
+  <p>{{ $t('messages.failed.p_1a') }}</p>
+  <p>{{ $t('messages.failed.p_1b') }}</p>
 </div>
 </template>
 
