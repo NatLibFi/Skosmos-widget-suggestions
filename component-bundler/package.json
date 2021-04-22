@@ -39,7 +39,7 @@
   "dependencies": {
     "@octokit/core": "^3.2.4",
     "@octokit/rest": "^18.0.12",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "build": "^0.1.4",
     "dotenv": "^8.2.0",
