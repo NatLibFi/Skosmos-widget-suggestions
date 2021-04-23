@@ -26,7 +26,7 @@
     "css-loader": "^5.2.4",
     "file-loader": "^0.11.1",
     "rimraf": "^2.6.1",
-    "uglify-js": "git://github.com/mishoo/UglifyJS2.git#harmony",
+    "uglify-js": "^2.6.0",
     "vue": "^2.2.6",
     "vue-custom-element": "^1.0.13",
     "vue-loader": "^14.2.2",
