@@ -94,7 +94,8 @@ export default {
           'https://api.finto.fi/rest/v1/search', {
             params: {
               vocab: this.vocabulary,
-              lang: 'fi',
+              lang: this.language,
+              // lang: 'sv', // Original was lang: 'fi'
               query: inputValue + '*'
             }
           }
