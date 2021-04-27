@@ -6,7 +6,8 @@
     && checkCapitalization(searchString) === searchResult.prefLabel">
     <p>
       {{ $t('new.common.exists') }} <strong>{{ $t('new.common.voc') }}</strong>:
-      <a :href="searchResult.uri">{{ searchResult.prefLabel }}</a>
+      <a :href="searchResult.uri">{{ searchResult.lang === 'fi' ? 'suomee' : ''}}</a>
+      <!-- <a :href="searchResult.uri">{{ searchResult.prefLabel }}</a> -->
     </p>
   </div>
   <div class="input-container">
@@ -48,7 +49,8 @@ export default {
     values: Array,
     vocabulary: String,
     label: Object,
-    vocabulary: String
+    vocabulary: String,
+    language: String
   },
   data () {
     return {
