@@ -63,6 +63,7 @@
       <search-auto-complete
         :values="d.broaderLabels"
         :vocabulary="d.vocabulary"
+        :language="$i18n.locale"
         @input="$emit('update:broaderLabels', $event)"
         :label="{text: $t('new.broaderLabels.label'), for: $t('new.broaderLabels.for')}"
         :hasUniqueValue="false" />
@@ -70,6 +71,7 @@
       <search-auto-complete
         :values="d.narrowerLabels"
         :vocabulary="d.vocabulary"
+        :language="$i18n.locale"
         @input="$emit('update:narrowerLabels', $event)"
         :label="{text: $t('new.narrowerLabels.label'), for: $t('new.narrowerLabels.for')}"
         :hasUniqueValue="false" />
@@ -77,6 +79,7 @@
       <search-auto-complete
         :values="d.relatedLabels"
         :vocabulary="d.vocabulary"
+        :language="$i18n.locale"
         @input="$emit('update:relatedLabels', $event)"
         :label="{text: $t('new.relatedLabels.label'), for: this.$t('new.relatedLabels.for')}"
         :hasUniqueValue="false" />
