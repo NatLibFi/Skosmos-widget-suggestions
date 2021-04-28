@@ -3,10 +3,10 @@
   <label :for="label.for">{{ label.text }}</label>
   <div v-if="searchResult
     && searchResult.uri.length > 0
-    && checkCapitalization(searchString) === searchResult.prefLabel">
+    && searchString.toLowerCase() === searchResult.prefLabel.toLowerCase()">
     <p>
       {{ $t('new.common.exists') }} <strong>{{ $t('new.common.voc') }}</strong>:
-      <a :href="searchResult.uri">{{ searchResult.prefLabel }}</a>
+      <a :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a>
     </p>
   </div>
   <div class="input-container">
@@ -48,7 +48,8 @@ export default {
     values: Array,
     vocabulary: String,
     label: Object,
-    vocabulary: String
+    vocabulary: String,
+    language: String
   },
   data () {
     return {
@@ -85,6 +86,9 @@ export default {
       if (this.searchResult && this.searchResult.prefLabel === this.searchString) {
         this.$emit('input', '');
       }
+    },
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     },
     checkCapitalization(inputValue) {
       if (inputValue && this.vocabulary === this.$t('new.common.places')) {
