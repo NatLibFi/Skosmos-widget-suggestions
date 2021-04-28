@@ -1,7 +1,8 @@
 <template>
   <div>
     <a role="button" @click="isOpened = !isOpened">
-      <span>{{ $t('new.button') }} {{ $t('new.common.voc') }}</span>
+      <!-- <span>{{ $t('new.button') }} {{ $t('new.common.voc') }}</span> -->
+      <span>{{ $t('new.button') }}</span>
     </a>
     <centered-dialog
       v-if="isOpened"
