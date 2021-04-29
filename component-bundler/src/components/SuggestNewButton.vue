@@ -2,7 +2,13 @@
   <div>
     <a role="button" @click="isOpened = !isOpened">
       <!-- <span>{{ $t('new.button') }} {{ $t('new.common.voc') }}</span> -->
-      <span>{{ $t('new.button') }}</span>
+      <span>
+        <div id="vocab-info">
+          <div>
+            <h3>{{ $t('new.button') }}</h3>
+          </div>
+        </div>
+      </span>
     </a>
     <centered-dialog
       v-if="isOpened"
