@@ -1,0 +1,10 @@
+version: 1
+update_configs:
+  - package_manager: "javascript"
+    directory: "/"
+    update_schedule: "live"
+    target_branch: "issue32-security-checks-20210818"
+  - package_manager: "javascript"
+    directory: "./component-bundler"
+    update_schedule: "live"
+    target_branch: "issue32-security-checks-20210818"
