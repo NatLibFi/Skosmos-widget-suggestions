@@ -1,5 +1,6 @@
 dist
 #node_modules
+package.json_orig
 .secret
 .secret.php
 secrets.json
