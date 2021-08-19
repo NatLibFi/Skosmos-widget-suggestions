@@ -1,5 +1,7 @@
 <template>
 <div class="suggestion-container">
+            <div>{{ getUrl() }}#direct</div>
+            <!-- <div>{{ getUrl() }} . {{$i18n.locale}}</div> -->
   <div class="suggestion-header">
     <h4>{{ $t('new.header') }}</h4>
     <p>{{ $t('new.p1') }}</p>
@@ -161,6 +163,9 @@ export default {
   methods: {
     submitForm () {
       this.$emit('submitForm');
+    },
+    getUrl() {
+      return window.location.href;
     }
   }
 }
