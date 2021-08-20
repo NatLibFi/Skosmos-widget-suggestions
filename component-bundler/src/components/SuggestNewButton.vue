@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a role="button" @click="isOpened = !isOpened">
+    <a role="button" @click="isOpened = !isOpened" id="fordirect">
       <!-- <span>{{ $t('new.button') }} {{ $t('new.common.voc') }}</span> -->
       <span>
         <div id="vocab-info">

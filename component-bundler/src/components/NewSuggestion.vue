@@ -1,7 +1,6 @@
 <template>
 <div class="suggestion-container">
-            <div>{{ getUrl() }}#direct</div>
-            <!-- <div>{{ getUrl() }} . {{$i18n.locale}}</div> -->
+  <button onclick="navigator.clipboard.writeText(window.location.href)">Kopioi leikepöydälle</button>
   <div class="suggestion-header">
     <h4>{{ $t('new.header') }}</h4>
     <p>{{ $t('new.p1') }}</p>
@@ -158,7 +157,7 @@ export default {
     // Form Data:
     d: Object,
     // Form Validations:
-    v: Object
+    v: Object,
   },
   methods: {
     submitForm () {
@@ -166,6 +165,14 @@ export default {
     },
     getUrl() {
       return window.location.href;
+    },
+    copyX: function(){
+      var copyText = window.document.getElementById("textToCopy");
+      copyText.select();
+      console.log(copyText);
+      copyText.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(copyText.value);
+      alert("Leikepöydälle lisättiin: " + copyText.value); 
     }
   }
 }
