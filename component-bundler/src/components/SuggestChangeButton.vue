@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a role="button" @click="isOpened = !isOpened">
+    <a role="button" @click="isOpened = !isOpened" id="fordirectmodify">
       <span>{{ $t('edit.button') }}</span>
     </a>
     <centered-dialog
@@ -45,7 +45,6 @@ export default {
     vocab: String,
     label: String,
     uri: String,
-    // url for suggestion platform
     url: String
   },
   beforeMount: function () {

@@ -1,5 +1,5 @@
 #!/bin/bash 
-sudo chown ${USER}:[YOUR_GROUP] dist/components.js
+sudo chown ${USER}:[YOUR-GROUP]] dist/components.js
 sudo chmod 744 ../components.js dist/components.js
 npm run build
 sudo chmod 744 -R dist

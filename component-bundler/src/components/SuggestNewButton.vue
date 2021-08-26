@@ -1,7 +1,6 @@
 <template>
   <div>
-    <a role="button" @click="isOpened = !isOpened">
-      <!-- <span>{{ $t('new.button') }} {{ $t('new.common.voc') }}</span> -->
+    <a role="button" @click="isOpened = !isOpened" id="fordirectnew">
       <span>
         <div id="vocab-info">
           <div>
@@ -34,6 +33,7 @@
         @update:fromOrg="formData.fromOrg = $event"
         @submitForm="submitForm()"
         />
+
         <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url"/>
         <failure-message v-if="showFailureMessage" />
     </centered-dialog>
@@ -58,7 +58,6 @@ export default {
   props: {
     lang: String,
     vocab: String,
-    // url for suggestion platform
     url: String
   },
   beforeMount: function () {
@@ -154,9 +153,10 @@ export default {
             }
           }
         )
-        .then(response => this.formData.groups.allGroups = response.data.groups);
+        .then(response => this.formData.groups.allGroups = response.data.groups); // orig
     },
-    setDropDown: function() {
+
+setDropDown: function() {
       this.formData.conceptType.options[0].value = this.$t('new.common.concept');
       this.formData.conceptType.options[1].value = this.$t('new.common.geo');
     },
@@ -280,7 +280,6 @@ ${ this.formData.fromOrg }
       var urlToPrx = require('../prx.json');
       await axios.post(`${urlToPrx[0].url}?payload=${payload}`).then(response => {
         this.toggleSuccessMessage(`${response.data.url.replace("/repos", "").replace("api.", "")}`);
-        // this.toggleSuccessMessage(`https://github.com/miguelahonen/c/issues/${response.data.url.substring(n + 1)}`);
       })
       .catch(error => {
         console.log(error)

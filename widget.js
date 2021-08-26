@@ -1,47 +1,41 @@
 // declaring a namespace for the plugin
 var SUGGESTIONS = SUGGESTIONS || {};
 
-// the URL of the suggestion management platform's API with trailing slash:
-// var API_RAW = 'https://api.github.com/repos/miguelahonen/c/issues'
-// new_str = str.slice(0, -11);
-// var SUGGESTION_API_BASE_URL = API_RAW.slice(0, -11);
-var SUGGESTION_API_BASE_URL = 'https://api.github.com/repos/miguelahonen/c/issues'
+const delay = ms => new Promise(resolved => setTimeout(resolved, ms));
 
 SUGGESTIONS = {
     renderNew: function() {
-        var context = {
-            "url": SUGGESTION_API_BASE_URL,
-            "lang": lang,
-            "vocab": vocab
-        };
-        $("#vocab-info").append(Handlebars.compile( $("#suggestions-new").html())(context));
-    },
-    renderChange: function(data) {
-        var context = {
-            "url": SUGGESTION_API_BASE_URL,
-            "lang": lang,
-            "vocab": vocab,
-            "label": data.prefLabels[0].label,
-            "uri": this.fetchUri(data)
-        };
-        $(".concept-main").append(Handlebars.compile( $("#suggestions-change").html())(context));
-    },
-
-    fetchUri: function(data) {
-        if (data.uri) {
-            return data.uri;
+        $("#vocab-info").append(Handlebars.compile( $("#suggestions-new").html())({
+            "url": this.fetchUrl() ? this.fetchUrl() : '',
+            "lang": lang ? lang : '',
+            "vocab": vocab ? vocab : ''
+            }));
+        window.onload = async function exampleFunction() {
+            await delay(2000);
+            window.location.href.includes("#directnew") ? window.document.getElementById("fordirectnew").click() : '';
         }
-        return '';
-    }
-};
+    },
 
+    renderChange: async function(data) {
+        $(".concept-main").append(Handlebars.compile( $("#suggestions-change").html())({
+            "url": this.fetchUrl() ? this.fetchUrl() : '',
+            "lang": lang ? lang : '',
+            "vocab": vocab ? vocab : '',
+            "label": data.prefLabels[0].label ? data.prefLabels[0].label : '',
+            "uri": this.fetchUri(data) ? this.fetchUri(data) : ''
+            }));
+        await delay(2000);
+        window.location.href.includes("#directmodify") ? window.document.getElementById("fordirectmodify").click() : '';
+    },
+            
+    fetchUri: data => data.uri ? data.uri : '',
+    fetchUrl: () => window.location.href
+};
+        
 $(function() {
     window.suggestionsWidget = function(data) {
-        if ($('#vocab-info').length > 0) {
-            SUGGESTIONS.renderNew();
-        }
-        if ($('.concept-main').length > 0) {
-            SUGGESTIONS.renderChange(data);
-        }
+        $('#vocab-info').length > 0 ? SUGGESTIONS.renderNew() : '';
+        $('.concept-main').length > 0 ? SUGGESTIONS.renderChange(data) : '';
     };
 });
+        
