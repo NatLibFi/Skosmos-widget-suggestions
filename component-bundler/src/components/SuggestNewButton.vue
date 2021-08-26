@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a role="button" @click="isOpened = !isOpened" id="fordirect">
+    <a role="button" @click="isOpened = !isOpened" id="fordirectnew">
       <span>
         <div id="vocab-info">
           <div>
