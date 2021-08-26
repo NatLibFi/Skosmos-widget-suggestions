@@ -45,7 +45,6 @@ export default {
     vocab: String,
     label: String,
     uri: String,
-    // url for suggestion platform
     url: String
   },
   beforeMount: function () {

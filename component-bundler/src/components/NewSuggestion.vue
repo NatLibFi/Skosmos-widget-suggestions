@@ -1,6 +1,7 @@
 <template>
 <div class="suggestion-container">
-  <button onclick="navigator.clipboard.writeText(window.location.href)">Kopioi leikepöydälle</button>
+  <!-- Keep this as an option -->
+  <!-- <button onclick="navigator.clipboard.writeText(window.location.href)">Kopioi leikepöydälle</button> -->
   <div class="suggestion-header">
     <h4>{{ $t('new.header') }}</h4>
     <p>{{ $t('new.p1') }}</p>
@@ -92,6 +93,12 @@
         @select="$emit('update:groups', $event)"
         :label="{text: $t('new.groups.label'), for: this.$t('new.groups.for')}" />
 
+      <!-- <ul id="temp-list">
+        <li v-for="item in d.groups.allGroups" :key="item.prefLabel">
+          {{ item.prefLabel }}
+        </li>
+      </ul> -->
+
       <the-exact-matches-input
         :values="d.exactMatches"
         @input="$emit('update:exactMatches', $event)"
@@ -157,23 +164,13 @@ export default {
     // Form Data:
     d: Object,
     // Form Validations:
-    v: Object,
+    v: Object
   },
+
   methods: {
     submitForm () {
       this.$emit('submitForm');
     },
-    getUrl() {
-      return window.location.href;
-    },
-    copyX: function(){
-      var copyText = window.document.getElementById("textToCopy");
-      copyText.select();
-      console.log(copyText);
-      copyText.setSelectionRange(0, 99999);
-      navigator.clipboard.writeText(copyText.value);
-      alert("Leikepöydälle lisättiin: " + copyText.value); 
-    }
   }
 }
 </script>
