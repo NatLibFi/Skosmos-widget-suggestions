@@ -1,18 +1,12 @@
 const path = require('path')
 const webpack = require('webpack')
 
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
 module.exports = {
   entry: ['babel-polyfill', './src/main.js'],
-  // target:'node',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'components.js'
   },
-  // node: {
-  //   fs: "empty",
-  // },
   resolve: {
     extensions: ['.js', '.vue'],
     alias: {
@@ -44,13 +38,12 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: 'production'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      // uncomment to enable sourcemap
-      // sourceMap: true,
-      compress: {
-        warnings: false
+    module.exports = {
+      optimization: {
+        minimize: true, //Update this to true or false
+        minimizer: [new TerserPlugin()],
       }
-    }),
+    },
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
