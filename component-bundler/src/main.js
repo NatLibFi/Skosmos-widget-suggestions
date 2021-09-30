@@ -1,6 +1,7 @@
 // support for older browsers
 import 'document-register-element/build/document-register-element';
-import './polyfills/polyfills';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 import Vue from 'vue';
 

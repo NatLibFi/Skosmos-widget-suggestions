@@ -11,7 +11,7 @@ SUGGESTIONS = {
             "vocab": vocab ? vocab : ''
             }));
         window.onload = async function exampleFunction() {
-            await delay(2000);
+            await delay(2500);
             window.location.href.includes("#directnew") ? window.document.getElementById("fordirectnew").click() : '';
         }
     },
@@ -24,18 +24,17 @@ SUGGESTIONS = {
             "label": data.prefLabels[0].label ? data.prefLabels[0].label : '',
             "uri": this.fetchUri(data) ? this.fetchUri(data) : ''
             }));
-        await delay(2000);
+        await delay(2500);
         window.location.href.includes("#directmodify") ? window.document.getElementById("fordirectmodify").click() : '';
     },
-            
+
     fetchUri: data => data.uri ? data.uri : '',
     fetchUrl: () => window.location.href
 };
-        
+
 $(function() {
     window.suggestionsWidget = function(data) {
         $('#vocab-info').length > 0 ? SUGGESTIONS.renderNew() : '';
         $('.concept-main').length > 0 ? SUGGESTIONS.renderChange(data) : '';
     };
 });
-        
