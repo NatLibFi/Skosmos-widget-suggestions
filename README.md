@@ -41,6 +41,7 @@ Siirry Skosmoksen alla olevaan plugins-kansioon (voi myös olla symbolinen linkk
 Proxyn tulee sijaita palvelimella kansiossa, johon pääsy on sallittu portin 80 läpi ja jossa voi ajaa php-tiedostoja. 
 
 `cd Skosmos-widget-suggestions`
+
 `mv component-bundler/php/gh_prx.php/gh_prx.php [valitsemasi julkinen php-kansio]`
 
 ## Luo GitHubissa token, jota käytetään widgetin autorisoinnissa issuet sisältävään repositoryyn:
@@ -54,10 +55,14 @@ On äärimmäisen tärkeää, että token ei vaarannu, joten sen sisältävän t
 
 `vim [haluamasti turvallinen kansio palvelimellasi]/.secret.php`
 
-(aseta tiedostossa oleville avaimille haluamasi arvot)
+aseta tiedostossa oleville avaimille haluamasi arvot
+
 $config['gh_token'] = "token aiemmin_luomasi_token";
+
 $config['white_address'] = "127.0.0.1";
+
 $config['allowed_ip'] = "*";
+
 $config['to_endpoint'] = "https://api.github.com/repos/[GitHub-käyttäjäsi]/[repository]/issues";
 
 `Esc`
@@ -86,8 +91,11 @@ muuta polku vastaaman sijaintia, johon secret.php:n sijoitit: [haluamasti turval
 
 `vim ./component-bundler/src/prx.json`
 
-aseta kohdassa "url": "url.." arvoksi url, josta php-proxy vastaa
-Esimerkiksi: "url": "https://yourdomain.dom/plugins/suggestions/gh_prx.php"
+aseta kohdassa "url": "url.." 
+
+arvoksi url, josta php-proxy vastaa, esimerkiksi: 
+
+"url": "https://yourdomain.dom/plugins/suggestions/gh_prx.php"
 
 `Esc`
 
