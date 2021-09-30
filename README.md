@@ -23,11 +23,14 @@ KESKEN/KÄÄNNETTÄVÄNÄ
 
 ## Minimivaatimukset:
 PHP 	7.2
+
 Node 	10.19.0
+
 npm 	7.20.0
 
 ## Valitse asennuskansio:
 Siirry Skosmoksen alla olevaan plugins-kansioon (voi myös olla symbolinen linkki) tai luo kyseinen kansio (mkdir plugins):
+
 `cd plugins`
 
 ## Vedä asennuspaketti Github.comista:
@@ -38,7 +41,6 @@ Siirry Skosmoksen alla olevaan plugins-kansioon (voi myös olla symbolinen linkk
 Proxyn tulee sijaita palvelimella kansiossa, johon pääsy on sallittu portin 80 läpi ja jossa voi ajaa php-tiedostoja. 
 
 `cd Skosmos-widget-suggestions`
-
 `mv component-bundler/php/gh_prx.php/gh_prx.php [valitsemasi julkinen php-kansio]`
 
 ## Luo GitHubissa token, jota käytetään widgetin autorisoinnissa issuet sisältävään repositoryyn:
