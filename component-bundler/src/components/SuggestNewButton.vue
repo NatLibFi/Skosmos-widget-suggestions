@@ -1,6 +1,7 @@
 <template>
   <div>
-    <a role="button" @click="isOpened = !isOpened" id="fordirectnew">
+    {{ pageUrl }}
+    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl}#suggestion`" >
       <span>
         <div id="vocab-info">
           <div>
@@ -69,6 +70,7 @@ export default {
   },
   data: () => {
     return {
+      pageUrl : "",
       isOpened: false,
       showSuccessMessage: false,
       showFailureMessage: false,
@@ -137,8 +139,12 @@ export default {
   },
   created: function() {
     this.getGroups();
+    this.getUrl();
   },
   methods: {
+    getUrl: async function () {
+      this.pageUrl = window.location.href;
+    },
     getGroups: async function() {
       if (this.lang === 'sv') {
         this.$i18n.locale = this.lang;

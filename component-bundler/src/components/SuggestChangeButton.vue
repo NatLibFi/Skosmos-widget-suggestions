@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a role="button" @click="isOpened = !isOpened" id="fordirectmodify">
+    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl}#suggestion`" >
       <span>{{ $t('edit.button') }}</span>
     </a>
     <centered-dialog
@@ -54,6 +54,7 @@ export default {
   },
   data: () => {
     return {
+      pageUrl : "",
       isOpened: false,
       showSuccessMessage: false,
       showFailureMessage: false,
@@ -65,7 +66,13 @@ export default {
       }
     }
   },
+  created: function() {
+    this.getUrl();
+  },
   methods: {
+    async getUrl () {
+      this.pageUrl = window.location.href;
+    },
     submitForm () {
       this.$v.$touch();
       if (!this.$v.$invalid) {

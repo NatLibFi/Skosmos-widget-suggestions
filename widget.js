@@ -5,6 +5,9 @@ const delay = ms => new Promise(resolved => setTimeout(resolved, ms));
 
 SUGGESTIONS = {
     renderNew: function() {
+        console.log("Det börjar");
+        console.log(this.fetchUrl());
+        console.log("Slut");
         $("#vocab-info").append(Handlebars.compile( $("#suggestions-new").html())({
             "url": this.fetchUrl() ? this.fetchUrl() : '',
             "lang": lang ? lang : '',
@@ -12,11 +15,14 @@ SUGGESTIONS = {
             }));
         window.onload = async function exampleFunction() {
             await delay(2500);
-            window.location.href.includes("#directnew") ? window.document.getElementById("fordirectnew").click() : '';
+            window.location.href.includes("#suggestion") ? window.document.getElementById("fordirectnew").click() : '';
         }
     },
 
     renderChange: async function(data) {
+        console.log("Det börjar");
+        console.log(this.fetchUrl());
+        console.log("Slut");
         $(".concept-main").append(Handlebars.compile( $("#suggestions-change").html())({
             "url": this.fetchUrl() ? this.fetchUrl() : '',
             "lang": lang ? lang : '',
@@ -25,7 +31,7 @@ SUGGESTIONS = {
             "uri": this.fetchUri(data) ? this.fetchUri(data) : ''
             }));
         await delay(2500);
-        window.location.href.includes("#directmodify") ? window.document.getElementById("fordirectmodify").click() : '';
+        window.location.href.includes("#suggestion") ? window.document.getElementById("fordirectmodify").click() : '';
     },
 
     fetchUri: data => data.uri ? data.uri : '',
