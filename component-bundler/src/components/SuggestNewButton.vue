@@ -1,7 +1,6 @@
 <template>
   <div>
-    {{ pageUrl }}
-    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl}#suggestion`" >
+    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl.split('#')[0]}#suggestion`" >
       <span>
         <div id="vocab-info">
           <div>

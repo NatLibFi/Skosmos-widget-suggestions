@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl}#suggestion`" >
+    <a role="button" @click="isOpened = !isOpened" id="fordirectmodify" :href="`${pageUrl.split('#')[0]}#suggestion`" >
       <span>{{ $t('edit.button') }}</span>
     </a>
     <centered-dialog

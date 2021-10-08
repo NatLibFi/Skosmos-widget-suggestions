@@ -5,11 +5,8 @@ const delay = ms => new Promise(resolved => setTimeout(resolved, ms));
 
 SUGGESTIONS = {
     renderNew: function() {
-        console.log("Det börjar");
-        console.log(this.fetchUrl());
-        console.log("Slut");
         $("#vocab-info").append(Handlebars.compile( $("#suggestions-new").html())({
-            "url": this.fetchUrl() ? this.fetchUrl() : '',
+            // "url": this.fetchUrl() ? this.fetchUrl() : '',
             "lang": lang ? lang : '',
             "vocab": vocab ? vocab : ''
             }));
@@ -20,11 +17,8 @@ SUGGESTIONS = {
     },
 
     renderChange: async function(data) {
-        console.log("Det börjar");
-        console.log(this.fetchUrl());
-        console.log("Slut");
         $(".concept-main").append(Handlebars.compile( $("#suggestions-change").html())({
-            "url": this.fetchUrl() ? this.fetchUrl() : '',
+            // "url": this.fetchUrl() ? this.fetchUrl() : '',
             "lang": lang ? lang : '',
             "vocab": vocab ? vocab : '',
             "label": data.prefLabels[0].label ? data.prefLabels[0].label : '',
