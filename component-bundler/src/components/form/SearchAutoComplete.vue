@@ -89,10 +89,6 @@ export default {
       }
     }, 200),
     fetchResults: async function(inputValue) {
-      console.log("***");
-      console.log("***");
-      console.log(this.language);
-      console.log("***");
       await axios
         .get(
           // 'http://api.finto.fi/rest/v1/search', {
@@ -108,6 +104,11 @@ export default {
         .then(response => (this.options = response.data.results))
         .catch(error => console.log(error));
         this.isOpened = true;
+        console.log('Det börjar');
+        console.log(this.vocabulary);
+        console.log(this.language);
+        console.log(inputValue);
+        console.log('slut...');
     },
     checkCapitalization(inputValue) {
       if (inputValue && this.vocabulary === this.$t('new.common.places')) {
