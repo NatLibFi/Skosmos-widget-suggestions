@@ -6,9 +6,9 @@
     && searchString.toLowerCase() === searchResult.prefLabel.toLowerCase()">
     <p>
       <!-- {{ $t('new.common.exists') }} <strong>{{ $t('new.common.voc') }}</strong>: -->
-      {{ $t('new.common.exists') }} 
+      {{ $t('new.common.exists1') }} 
       <strong><a :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
-      {{ $t('new.common.voc') }}
+      {{ $t('new.common.exists2') }}
     </p>
   </div>
   <div class="input-container">
@@ -69,36 +69,26 @@ export default {
       } else {
         this.$emit('input', this.searchString);
       }
-    }, 200),
+    }, 630),
     handleResult: async function(inputValue) {
-      let vocs = [];
-      if (this.vocabulary === 'yso-paikat') {
-        vocs = ["yso-paikat"];
-      } else {
-        vocs = ["yso", "yse"];
-      }
+      const vocs = ["yso-paikat", "yso", "yse"];
       for (var i = 0; i < vocs.length; i++) {
-
-       await axios
-        .get(
-          // 'http://api.finto.fi/rest/v1/search', {
-          'https://api.finto.fi/rest/v1/search', {
-            params: {
+        const response = await axios({
+         method: 'get',
+         url: 'https://api.finto.fi/rest/v1/search',
+         params: {
               vocab: vocs[i],
               lang: this.language,
               query: inputValue
-            }
-          }
-        )
-        .then(response => (this.searchResult = response.data.results[0]))
-        .catch(error => console.log(error));
+            } 
+       }).catch(error => console.log(error));
+      this.searchResult = response.data.results[0]
       this.$emit('input', this.searchString);
-      if (this.searchResult && this.searchResult.prefLabel === this.searchString) {
+      if (this.searchResult) {
         this.$emit('input', '');
         break;
         }
       }
-
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);

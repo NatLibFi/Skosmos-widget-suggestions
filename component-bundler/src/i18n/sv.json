@@ -75,8 +75,8 @@
     },
     "common": {
       "none": "Termer hittades inte med sökordet",
-      "exists": "Termen du föreslår finns redan i vokabulären",
-      "voc": "allfo",
+      "exists1": "Termen ",
+      "exists2": " finns redan i ALLFO, ALLFO orter eller YSE",
       "places": "allfo-orter",
       "concept": "Allmänt begrepp",
       "geo": "Geografisk plats"

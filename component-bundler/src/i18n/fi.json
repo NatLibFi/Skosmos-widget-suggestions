@@ -75,8 +75,8 @@
     },
     "common": {
       "none": "Termejä ei löydy hakusanalla",
-      "exists": "Ehdottamasi termi ",
-      "voc": " löytyy jo YSOsta tai sanastoehdotuksista",
+      "exists1": "Ehdottamasi termi ",
+      "exists2": " löytyy jo YSOsta, YSO-paikoista tai sanastoehdotuksista",
       "places": "yso-paikat",
       "concept": "Yleiskäsite",
       "geo": "Maantieteellinen paikka"
