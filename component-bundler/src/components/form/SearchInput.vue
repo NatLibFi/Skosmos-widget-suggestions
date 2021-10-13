@@ -69,7 +69,7 @@ export default {
       } else {
         this.$emit('input', this.searchString);
       }
-    }, 630),
+    }, 1000),
     handleResult: async function(inputValue) {
       const vocs = ["yso-paikat", "yso", "yse"];
       for (var i = 0; i < vocs.length; i++) {
