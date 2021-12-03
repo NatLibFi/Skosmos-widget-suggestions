@@ -4,12 +4,25 @@
   <div v-if="searchResult
     && searchResult.uri.length > 0
     && searchString.toLowerCase() === searchResult.prefLabel.toLowerCase()">
-    <p>
-      <!-- {{ $t('new.common.exists') }} <strong>{{ $t('new.common.voc') }}</strong>: -->
-      {{ $t('new.common.exists1') }} 
-      <strong><a :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
-      {{ $t('new.common.exists2') }}
-    </p>
+      <div v-if="searchResult.vocab === 'yse'">
+        <p>
+          {{ $t('new.common.ifyse1') }}
+          <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
+          {{ $t('new.common.ifyse2') }}
+        </p>
+      </div>
+    <div v-if="searchResult.vocab === 'yso'">
+      <p>
+        {{ $t('new.common.ifyso') }}
+        <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
+      </p>
+    </div>
+    <div v-if="searchResult.vocab === 'yso-paikat'">
+      <p>
+        {{ $t('new.common.ifysopaikat') }}
+        <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
+      </p>
+    </div>
   </div>
   <div class="input-container">
     <div class="auto-complete">
@@ -82,11 +95,12 @@ export default {
               query: inputValue
             } 
        }).catch(error => console.log(error));
+      // For the future: this is assigned only if the term is found and is null otherwise
       this.searchResult = response.data.results[0]
-      this.$emit('input', this.searchString);
-      if (this.searchResult) {
-        this.$emit('input', '');
-        break;
+        this.$emit('input', this.searchString);
+        if (this.searchResult) {
+          this.$emit('input', '');
+          break;
         }
       }
     },

@@ -79,7 +79,11 @@
       "exists2": " löytyy jo YSOsta, YSO-paikoista tai sanastoehdotuksista",
       "places": "yso-paikat",
       "concept": "Yleiskäsite",
-      "geo": "Maantieteellinen paikka"
+      "geo": "Maantieteellinen paikka",
+      "ifyso": "Termi löytyy jo YSOsta:",
+      "ifysopaikat": "Termi löytyy jo YSO-paikoista:",
+      "ifyse1": "Termistä on jo olemassa käsite-ehdotus:",
+      "ifyse2": ". Kommentoi tai kannata ehdotusta sen tiedoista löytyvän kotisivulinkin kautta"
     },
     "submit": "Lähetä käsite-ehdotus"
   },
