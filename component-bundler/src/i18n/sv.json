@@ -79,7 +79,11 @@
       "exists2": " finns redan i ALLFO, ALLFO orter eller YSE",
       "places": "allfo-orter",
       "concept": "Allmänt begrepp",
-      "geo": "Geografisk plats"
+      "geo": "Geografisk plats",
+      "ifyso": "Termen finns redan i ALLFO:",
+      "ifysopaikat": "Termen finns redan i ALLFO-orter :",
+      "ifyse1": "Termen har redan föreslagits:",
+      "ifyse2": ". Kommentera eller understöd förslaget via länken till förslagets hemsida."
     },
     "submit": "Skicka förslaget"
   },

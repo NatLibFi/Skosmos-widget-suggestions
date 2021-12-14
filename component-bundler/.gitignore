@@ -8,5 +8,6 @@ package.json_orig
 .secret.php
 secrets.json
 #components.js
+#../components.js
 .env
 prx.json

@@ -63,8 +63,9 @@ export default {
     values: Array,
     vocabulary: String,
     label: Object,
-    vocabulary: String,
-    language: String
+    // vocabulary: String,
+    language: String,
+    conceptType: String
   },
   data () {
     return {
@@ -84,6 +85,11 @@ export default {
       }
     }, 1500),
     handleResult: async function(inputValue) {
+
+      // concetpType is carried here as a property from the higher level component. It will be used
+      // to exclude Geographical Concept type out from the checklist.
+      if ((this.conceptType != "")) console.log("conceptType: %s", this.conceptType);
+
       const vocs = ["yso-paikat", "yso", "yse"];
       for (var i = 0; i < vocs.length; i++) {
         const response = await axios({
