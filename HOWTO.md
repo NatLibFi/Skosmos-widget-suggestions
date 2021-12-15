@@ -16,6 +16,6 @@ $config['to_endpoint'] = "https://api.github.com/repos/miguelahonen/c/issues";
 /var/www/Skosmos-plugins/Skosmos-widget-suggestions/component-bundler/src/prx.json
 [
   {
-    "url": "https://dev.finto.fi/plugins/suggestions/gh_prx.php"
+    "url": "https://finto.fi/plugins/suggestions/gh_prx.php"
   }
 ]

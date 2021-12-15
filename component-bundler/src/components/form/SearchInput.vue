@@ -4,10 +4,25 @@
   <div v-if="searchResult
     && searchResult.uri.length > 0
     && searchString.toLowerCase() === searchResult.prefLabel.toLowerCase()">
-    <p>
-      {{ $t('new.common.exists') }} <strong>{{ $t('new.common.voc') }}</strong>:
-      <a :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a>
-    </p>
+      <div v-if="searchResult.vocab === 'yse'">
+        <p>
+          {{ $t('new.common.ifyse1') }}
+          <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
+          {{ $t('new.common.ifyse2') }}
+        </p>
+      </div>
+    <div v-if="searchResult.vocab === 'yso'">
+      <p>
+        {{ $t('new.common.ifyso') }}
+        <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
+      </p>
+    </div>
+    <div v-if="searchResult.vocab === 'yso-paikat'">
+      <p>
+        {{ $t('new.common.ifysopaikat') }}
+        <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
+      </p>
+    </div>
   </div>
   <div class="input-container">
     <div class="auto-complete">
@@ -48,8 +63,9 @@ export default {
     values: Array,
     vocabulary: String,
     label: Object,
-    vocabulary: String,
-    language: String
+    // vocabulary: String,
+    language: String,
+    conceptType: String
   },
   data () {
     return {
@@ -67,24 +83,31 @@ export default {
       } else {
         this.$emit('input', this.searchString);
       }
-    }, 200),
+    }, 1500),
     handleResult: async function(inputValue) {
-      await axios
-        .get(
-          // 'http://api.finto.fi/rest/v1/search', {
-          'https://api.finto.fi/rest/v1/search', {
-            params: {
-              vocab: this.vocabulary,
+
+      // concetpType is carried here as a property from the higher level component. It will be used
+      // to exclude Geographical Concept type out from the checklist.
+      if ((this.conceptType != "")) console.log("conceptType: %s", this.conceptType);
+
+      const vocs = ["yso-paikat", "yso", "yse"];
+      for (var i = 0; i < vocs.length; i++) {
+        const response = await axios({
+         method: 'get',
+         url: 'https://api.finto.fi/rest/v1/search',
+         params: {
+              vocab: vocs[i],
               lang: this.language,
               query: inputValue
-            }
-          }
-        )
-        .then(response => (this.searchResult = response.data.results[0]))
-        .catch(error => console.log(error));
-      this.$emit('input', this.searchString);
-      if (this.searchResult && this.searchResult.prefLabel === this.searchString) {
-        this.$emit('input', '');
+            } 
+       }).catch(error => console.log(error));
+      // For the future: this is assigned only if the term is found and is null otherwise
+      this.searchResult = response.data.results[0]
+        this.$emit('input', this.searchString);
+        if (this.searchResult) {
+          this.$emit('input', '');
+          break;
+        }
       }
     },
     capitalizeFirstLetter(string) {

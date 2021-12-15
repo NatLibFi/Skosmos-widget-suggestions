@@ -20,6 +20,7 @@
       <div v-if="$i18n.locale === 'fi'">
         <search-input
           :value="d.prefLabel.primary"
+          :conceptType="d.conceptType.value"
           :vocabulary="d.vocabulary"
           :language="'fi'"
           @input="$emit('update:primaryPrefLabel', $event)"
@@ -28,6 +29,7 @@
 
         <search-input
           :value="d.prefLabel.secondary"
+          :conceptType="d.conceptType.value"
           :vocabulary="d.vocabulary"
           :language="'sv'"
           @input="$emit('update:secondaryPrefLabel', $event)"
@@ -38,6 +40,7 @@
         <search-input
           :value="d.prefLabel.primary"
           :vocabulary="d.vocabulary"
+          :conceptType="d.conceptType.value"
           :language="'sv'"
           @input="$emit('update:primaryPrefLabel', $event)"
           :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
@@ -46,6 +49,7 @@
         <search-input
           :value="d.prefLabel.secondary"
           :vocabulary="d.vocabulary"
+          :conceptType="d.conceptType.value"
           :language="'fi'"
           @input="$emit('update:secondaryPrefLabel', $event)"
           :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />

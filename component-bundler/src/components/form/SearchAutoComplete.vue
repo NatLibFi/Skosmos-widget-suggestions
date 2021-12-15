@@ -89,10 +89,6 @@ export default {
       }
     }, 200),
     fetchResults: async function(inputValue) {
-      console.log("***");
-      console.log("***");
-      console.log(this.language);
-      console.log("***");
       await axios
         .get(
           // 'http://api.finto.fi/rest/v1/search', {

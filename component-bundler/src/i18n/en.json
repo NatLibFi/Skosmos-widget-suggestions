@@ -75,7 +75,8 @@
     },
     "common": {
       "none": "No terms can be found",
-      "exists": "The vocabulary already contains a term you suggested",
+      "exists1": "The suggestion ",
+      "exists2": " was already found in YSO, YSO Places or YSE",
       "places": "YSO places"
     },
     "submit": "Send the suggestion"
