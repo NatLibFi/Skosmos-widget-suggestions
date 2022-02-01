@@ -17,7 +17,7 @@
         :value="d.reason"
         @input="$emit('update:reason', $event)"
         :label="{text: $t('edit.reason.label'), for: $t('edit.reason.for')}"
-        :isTextArea="false" />
+        :isTextArea="true" />
       <p v-if="v.$dirty && !v.reason.required" class="error">{{ $t('edit.reason.error') }}</p>
 
       <basic-input
