@@ -43,7 +43,7 @@
     "@types/vuelidate": "^0.7.14",
     "acorn": "^8.4.1",
     "acorn-walk": "^8.2.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "babel-polyfill": "^6.26.0",
     "build": "^0.1.4",
     "core-js": "^3.18.1",
