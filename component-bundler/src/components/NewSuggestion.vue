@@ -126,7 +126,7 @@
         :value="d.neededFor"
         @input="$emit('update:neededFor', $event)"
         :label="{text: $t('new.neededFor.label'), for: $t('new.neededFor.for')}"
-        :isTextArea="false" />
+        :isTextArea="true" />
       <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p>
 
       <basic-input
