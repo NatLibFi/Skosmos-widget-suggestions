@@ -122,6 +122,7 @@
         :isTextArea="true" />
       <p v-if="v.$dirty && !v.explanation.required" class="error">{{ $t('new.explanation.error') }}</p>
 
+<!-- isTextArea set true on 2022-02-01     -->
       <basic-input
         :value="d.neededFor"
         @input="$emit('update:neededFor', $event)"
