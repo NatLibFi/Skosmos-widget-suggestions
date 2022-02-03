@@ -11,7 +11,7 @@ SUGGESTIONS = {
             "vocab": vocab ? vocab : ''
             }));
         window.onload = async function exampleFunction() {
-            await delay(2500);
+            await delay(1); // Palauta takaisin jos ei toimi
             window.location.href.includes("#suggestion") ? window.document.getElementById("fordirectnew").click() : '';
         }
     },
@@ -24,7 +24,7 @@ SUGGESTIONS = {
             "label": data.prefLabels[0].label ? data.prefLabels[0].label : '',
             "uri": this.fetchUri(data) ? this.fetchUri(data) : ''
             }));
-        await delay(2500);
+        await delay(1); // Palauta takaisin jos ei toimi
         window.location.href.includes("#suggestion") ? window.document.getElementById("fordirectmodify").click() : '';
     },
 
