@@ -10,8 +10,25 @@ SUGGESTIONS = {
             "lang": lang ? lang : '',
             "vocab": vocab ? vocab : ''
             }));
-        window.onload = async function exampleFunction() {
-            await delay(1); // Palauta takaisin jos ei toimi
+        window.onload = async function wakeUpTheForm() {
+            var boxElement = document.createElement("div");
+            boxElement.style.position = "fixed";
+            boxElement.style.top = 20 + "%";
+            boxElement.style.left = 20 + "%";
+            boxElement.style.background = "white";
+            // boxElement.style.background = "#83cfc8";
+            boxElement.style.borderStyle = "solid";
+            boxElement.style.borderWidth = 4 + "px";
+            boxElement.style.borderColor = "#83cfc8";
+            boxElement.style.width = 50 + "%";
+            boxElement.style.height = 70 + "%";
+            boxElement.style.textAlign = "center";
+            boxElement.style.verticalAlign = "middle";
+            boxElement.style.lineHeight = 250 + "px";
+            boxElement.innerHTML = "Opening the form";
+            document.getElementById("vocab-info").appendChild(boxElement);
+            await delay(10000); // Palauta takaisin jos ei toimi
+            boxElement.remove();
             window.location.href.includes("#suggestion") ? window.document.getElementById("fordirectnew").click() : '';
         }
     },

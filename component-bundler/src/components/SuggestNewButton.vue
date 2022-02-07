@@ -1,6 +1,9 @@
 <template>
   <div>
+  <div id="progressBox" v-bind:class="{ invisible: toBeShown, width: tempWidth + 'px' }"></div>
+  <div :class="{ invisible: !toBeShown }">
     <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl.split('#')[0]}#suggestion`" >
+<!--    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="setTimeout(()=>{`${pageUrl.split('#')[0]}#suggestion`}, 3000)" >-->
       <span>
         <div id="vocab-info">
           <div>
@@ -38,6 +41,9 @@
         <failure-message v-if="showFailureMessage" />
     </centered-dialog>
   </div>
+  </div>
+
+
 </template>
 
 <script>
@@ -69,6 +75,9 @@ export default {
   },
   data: () => {
     return {
+      toBeShown: false,
+      // toBeDisplayed: 'content',
+      tempWidth: 100,
       pageUrl : "",
       isOpened: false,
       showSuccessMessage: false,
@@ -137,10 +146,22 @@ export default {
     }
   },
   created: function() {
+    this.delay();
     this.getGroups();
     this.getUrl();
   },
   methods: {
+    delay: async function(){
+      const timeToWait = 1000;
+      const waitAWhile = ms => new Promise(resolved => setTimeout(resolved, ms));
+      for (let i = 1; i <= timeToWait/100; i++) {
+        await waitAWhile(timeToWait);
+        this.tempWidth += 10;
+        document.getElementById("progressBox").style.width = this.tempWidth + 'px';
+      }
+      this.toBeShown = true;
+    },
+
     getUrl: async function () {
       this.pageUrl = window.location.href;
     },
@@ -392,6 +413,14 @@ ${ this.formData.fromOrg }
 </script>
 
 <style>
+  .invisible {
+    visibility: hidden;
+  }
+  #progressBox {
+    background-color: #83cfc8;
+    height: 1px;
+    width: 25px;
+  }
   .error {
     color: #e83a30;
     text-indent: 2px;
