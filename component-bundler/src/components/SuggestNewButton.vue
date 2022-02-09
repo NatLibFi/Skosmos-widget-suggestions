@@ -1,46 +1,49 @@
 <template>
   <div>
-  <div id="progressBox" v-bind:class="{ invisible: toBeShown, width: tempWidth + 'px' }"></div>
-  <div :class="{ invisible: !toBeShown }">
-    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl.split('#')[0]}#suggestion`" >
-<!--    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="setTimeout(()=>{`${pageUrl.split('#')[0]}#suggestion`}, 3000)" >-->
-      <span>
-        <div id="vocab-info">
-          <div>
-            <h3>{{ $t('new.button') }}</h3>
+<!--  <div id="progressBox" v-bind:class="{ invisible: toBeShown, width: tempWidth + 'px' }">-->
+    <div id="progressBox" v-bind:class="{ invisible: toBeShown }">
+      <img :src="wait" height="20px" width="200px" />
+    </div>
+    <div :class="{ invisible: !toBeShown }">
+      <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl.split('#')[0]}#suggestion`" >
+  <!--    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="setTimeout(()=>{`${pageUrl.split('#')[0]}#suggestion`}, 3000)" >-->
+        <span>
+          <div id="vocab-info">
+            <div>
+              <h3>{{ $t('new.button') }}</h3>
+            </div>
           </div>
-        </div>
-      </span>
-    </a>
-    <centered-dialog
-      v-if="isOpened"
-      @close="closeDialog()">
-      <new-suggestion
-        v-if="!showSuccessMessage && !showFailureMessage"
-        :d="formData"
-        :v="$v.formData"
-        @update:vocabulary="formData.vocabulary = $event"
-        @update:conceptType="formData.conceptType.value = $event"
-        @update:primaryPrefLabel="formData.prefLabel.primary = $event"
-        @update:secondaryPrefLabel="formData.prefLabel.secondary = $event"
-        @update:enPrefLabel="formData.prefLabel.en = $event"
-        @update:altLabels="formData.altLabels = $event"
-        @update:broaderLabels="formData.broaderLabels = $event"
-        @update:narrowerLabels="formData.narrowerLabels = $event"
-        @update:relatedLabels="formData.relatedLabels = $event"
-        @update:groups="formData.groups.selectedGroups = $event"
-        @update:exactMatches="formData.exactMatches = $event"
-        @update:scopeNote="formData.scopeNote = $event"
-        @update:explanation="formData.explanation = $event"
-        @update:neededFor="formData.neededFor = $event"
-        @update:fromOrg="formData.fromOrg = $event"
-        @submitForm="submitForm()"
-        />
+        </span>
+      </a>
+      <centered-dialog
+        v-if="isOpened"
+        @close="closeDialog()">
+        <new-suggestion
+          v-if="!showSuccessMessage && !showFailureMessage"
+          :d="formData"
+          :v="$v.formData"
+          @update:vocabulary="formData.vocabulary = $event"
+          @update:conceptType="formData.conceptType.value = $event"
+          @update:primaryPrefLabel="formData.prefLabel.primary = $event"
+          @update:secondaryPrefLabel="formData.prefLabel.secondary = $event"
+          @update:enPrefLabel="formData.prefLabel.en = $event"
+          @update:altLabels="formData.altLabels = $event"
+          @update:broaderLabels="formData.broaderLabels = $event"
+          @update:narrowerLabels="formData.narrowerLabels = $event"
+          @update:relatedLabels="formData.relatedLabels = $event"
+          @update:groups="formData.groups.selectedGroups = $event"
+          @update:exactMatches="formData.exactMatches = $event"
+          @update:scopeNote="formData.scopeNote = $event"
+          @update:explanation="formData.explanation = $event"
+          @update:neededFor="formData.neededFor = $event"
+          @update:fromOrg="formData.fromOrg = $event"
+          @submitForm="submitForm()"
+          />
 
-        <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url"/>
-        <failure-message v-if="showFailureMessage" />
-    </centered-dialog>
-  </div>
+          <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url"/>
+          <failure-message v-if="showFailureMessage" />
+      </centered-dialog>
+    </div>
   </div>
 
 
@@ -53,6 +56,7 @@ import SuccessMessage from './common/SuccessMessage';
 import FailureMessage from './common/FailureMessage';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
+import wait from "./resources/wait.gif";
 
 export default {
   components: {
@@ -75,6 +79,7 @@ export default {
   },
   data: () => {
     return {
+      wait: wait,
       toBeShown: false,
       // toBeDisplayed: 'content',
       tempWidth: 100,
@@ -152,13 +157,9 @@ export default {
   },
   methods: {
     delay: async function(){
-      const timeToWait = 1000;
+      const timeToWait = 10000;
       const waitAWhile = ms => new Promise(resolved => setTimeout(resolved, ms));
-      for (let i = 1; i <= timeToWait/100; i++) {
-        await waitAWhile(timeToWait);
-        this.tempWidth += 10;
-        document.getElementById("progressBox").style.width = this.tempWidth + 'px';
-      }
+      await waitAWhile(timeToWait);
       this.toBeShown = true;
     },
 
@@ -171,8 +172,6 @@ export default {
       }
       await axios
         .get(
-          // The next following should be a value from a config file - fix it - use key value pair
-          // 'http://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
           'https://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
             params: {
               lang: this.$i18n.locale
@@ -417,9 +416,9 @@ ${ this.formData.fromOrg }
     visibility: hidden;
   }
   #progressBox {
-    background-color: #83cfc8;
+    /*background-color: #83cfc8;*/
     height: 1px;
-    width: 25px;
+    width: 15px;
   }
   .error {
     color: #e83a30;

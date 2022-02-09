@@ -1,27 +1,32 @@
 <template>
   <div>
-    <a role="button" @click="isOpened = !isOpened" id="fordirectmodify" :href="`${pageUrl.split('#')[0]}#suggestion`" >
-      <span>{{ $t('edit.button') }}</span>
-    </a>
-    <centered-dialog
-      v-if="isOpened"
-      @close="closeDialog()">
-      <edit-suggestion
-        v-if="!showSuccessMessage && !showFailureMessage"
-        :d="formData"
-        :v="$v.formData"
-        :label="label"
-        :uri="uri"
-        @update:conceptType="formData.conceptType.value = $event"
-        @update:primaryPrefLabel="formData.prefLabel.primary = $event"
-        @update:description="formData.description = $event"
-        @update:reason="formData.reason = $event"
-        @update:fromOrg="formData.fromOrg = $event"
-        @submitForm="submitForm()"
-        />
-        <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url"/>
-        <failure-message v-if="showFailureMessage" />
-    </centered-dialog>
+    <div id="progressBox" v-bind:class="{ invisible: toBeShown }">
+      <img :src="wait" height="20px" width="200px" />
+    </div>
+    <div :class="{ invisible: !toBeShown }">
+      <a role="button" @click="isOpened = !isOpened" id="fordirectmodify" :href="`${pageUrl.split('#')[0]}#suggestion`" >
+        <span>{{ $t('edit.button') }}</span>
+      </a>
+      <centered-dialog
+        v-if="isOpened"
+        @close="closeDialog()">
+        <edit-suggestion
+          v-if="!showSuccessMessage && !showFailureMessage"
+          :d="formData"
+          :v="$v.formData"
+          :label="label"
+          :uri="uri"
+          @update:conceptType="formData.conceptType.value = $event"
+          @update:primaryPrefLabel="formData.prefLabel.primary = $event"
+          @update:description="formData.description = $event"
+          @update:reason="formData.reason = $event"
+          @update:fromOrg="formData.fromOrg = $event"
+          @submitForm="submitForm()"
+          />
+          <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url"/>
+          <failure-message v-if="showFailureMessage" />
+      </centered-dialog>
+    </div>
   </div>
 </template>
 
@@ -32,6 +37,7 @@ import SuccessMessage from './common/SuccessMessage';
 import FailureMessage from './common/FailureMessage';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
+import wait from "./resources/wait.gif";
 
 export default {
   components: {
@@ -54,6 +60,10 @@ export default {
   },
   data: () => {
     return {
+      wait: wait,
+      toBeShown: false,
+      // toBeDisplayed: 'content',
+      tempWidth: 100,
       pageUrl : "",
       isOpened: false,
       showSuccessMessage: false,
@@ -67,9 +77,16 @@ export default {
     }
   },
   created: function() {
+    this.delay();
     this.getUrl();
   },
   methods: {
+    delay: async function(){
+      const timeToWait = 10000;
+      const waitAWhile = ms => new Promise(resolved => setTimeout(resolved, ms));
+      await waitAWhile(timeToWait);
+      this.toBeShown = true;
+    },
     async getUrl () {
       this.pageUrl = window.location.href;
     },
@@ -120,11 +137,6 @@ ${this.formData.fromOrg}
 
       var urlToPrx = require('../prx.json');
       await axios.post(`${urlToPrx[0].url}?payload=${payload}`).then(response => {
-      // await axios.post(`http://localhost:8000/some_simple_test.php?payload=${payload}`).then(response => {
-        // var n = response.data.url.lastIndexOf('/');
-        // response.data.url.substring(n + 1)
-        // console.log(response.data.url.substring(n + 1));
-        // this.toggleSuccessMessage(`https://github.com/miguelahonen/c/issues/${response.data.url.substring(n + 1)}`);
         this.toggleSuccessMessage(`${response.data.url.replace("/repos", "").replace("api.", "")}`);
       })
       .catch(error => {
@@ -191,6 +203,14 @@ ${this.formData.fromOrg}
 </script>
 
 <style>
+  .invisible {
+    visibility: hidden;
+  }
+  #progressBox {
+    /*background-color: #83cfc8;*/
+    height: 1px;
+    width: 15px;
+  }
   ::placeholder {
     color: #5ea8B7;
     opacity: 1;
