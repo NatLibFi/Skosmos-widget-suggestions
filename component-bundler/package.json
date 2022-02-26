@@ -56,7 +56,7 @@
     "node-fetch": "^2.6.7",
     "npm": "^7.24.1",
     "postcss-selector-parser": "^6.0.6",
-    "prismjs": "^1.24.0",
+    "prismjs": "^1.27.0",
     "regenerator-runtime": "^0.13.9",
     "schema-utils": "^3.1.1",
     "serialize-javascript": "^3.1.0",
