@@ -1,6 +1,6 @@
 #dist
-../node_modules
-node_modules
+#../node_modules
+#node_modules
 node_modules_abc
 dist2
 package.json_orig
