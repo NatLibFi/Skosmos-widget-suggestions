@@ -5,7 +5,11 @@ const delay = ms => new Promise(resolved => setTimeout(resolved, ms));
 
 SUGGESTIONS = {
     renderNew: function() {
-        $("#vocab-info").append(Handlebars.compile( $("#suggestions-new").html())({
+        // orig $("#vocab-info").append(Handlebars.compile( $("#suggestions-new").html())({
+        // Domain ontology changes
+        $("#vocab-info").append(Handlebars.compile((vocab == "yso" || vocab == "yso-paikat" ?
+            $("#suggestions-new").html() : $("#suggestions-"+vocab+"-new").html()))({
+            //
             // "url": this.fetchUrl() ? this.fetchUrl() : '',
             "lang": lang ? lang : '',
             "vocab": vocab ? vocab : ''
@@ -17,7 +21,11 @@ SUGGESTIONS = {
     },
 
     renderChange: async function(data) {
-        $(".concept-main").append(Handlebars.compile( $("#suggestions-change").html())({
+        // orig $(".concept-main").append(Handlebars.compile( $("#suggestions-change").html())({
+        // Domain ontology changes
+        $(".concept-main").append(Handlebars.compile((vocab == "yso" || vocab == "yso-paikat" ?
+            $("#suggestions-change").html() : $("#suggestions-"+vocab+"-change").html()))({
+            //
             // "url": this.fetchUrl() ? this.fetchUrl() : '',
             "lang": lang ? lang : '',
             "vocab": vocab ? vocab : '',
