@@ -75,7 +75,8 @@ export default {
       showFailureMessage: false,
       suggestionUrl: '',
       formData: {
-        vocabulary: 'yso',
+        // vocabulary: 'yso',
+        vocabulary: vocab,
         conceptType: {
           value: '',
           options: [
@@ -317,7 +318,8 @@ ${ this.formData.fromOrg }
       this.showFailureMessage = false;
       this.suggestionUrl = '';
       this.formData = {
-        vocabulary: 'yso',
+        // vocabulary: 'yso',
+        vocabulary: vocab,
         conceptType: {
           value: '',
           options: [

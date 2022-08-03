@@ -90,12 +90,20 @@
         :label="{text: $t('new.relatedLabels.label'), for: this.$t('new.relatedLabels.for')}"
         :hasUniqueValue="false" />
 
+<!--      <h1 v-if="d.vocabulary === 'liiko'">jos oli kyllä {{ d.vocabulary }}</h1>-->
+<!--      <h1 v-else>jos oli ei {{ d.vocabulary }}</h1>-->
+<!--      <h1>{{ d.vocabulary }}</h1>-->
+
+
+      <!-- Domain specific ontology changes -->
+      <div v-if="d.vocabulary === 'yso'">
       <select-with-chips
         v-if="d.vocabulary !== $t('new.common.places')"
         :value="$t('new.groups.placeholder')"
         :options="d.groups.allGroups"
         @select="$emit('update:groups', $event)"
         :label="{text: $t('new.groups.label'), for: this.$t('new.groups.for')}" />
+      </div>
 
       <!-- <ul id="temp-list">
         <li v-for="item in d.groups.allGroups" :key="item.prefLabel">
