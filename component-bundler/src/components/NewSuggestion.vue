@@ -96,7 +96,7 @@
 
 
       <!-- Domain specific ontology changes -->
-      <div v-if="d.vocabulary === 'yso'">
+      <div v-if="d.vocabulary === 'yso' || d.vocabulary === 'yso-paikat'">
       <select-with-chips
         v-if="d.vocabulary !== $t('new.common.places')"
         :value="$t('new.groups.placeholder')"

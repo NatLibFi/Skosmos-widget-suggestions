@@ -4,6 +4,7 @@
   <div v-if="searchResult
     && searchResult.uri.length > 0
     && searchString.toLowerCase() === searchResult.prefLabel.toLowerCase()">
+    <div>{{ searchResult.vocab }}</div>
       <div v-if="searchResult.vocab === 'yse'">
         <p>
           {{ $t('new.common.ifyse1') }}
@@ -11,16 +12,27 @@
           {{ $t('new.common.ifyse2') }}
         </p>
       </div>
+<!--Domain specific ontologies changes-->
     <div v-if="searchResult.vocab === 'yso'">
+<!--    <div v-if="searchResult.vocab === 'liiko'">-->
+<!--    <div v-if=searchResult.vocab>-->
       <p>
         {{ $t('new.common.ifyso') }}
         <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
       </p>
     </div>
-    <div v-if="searchResult.vocab === 'yso-paikat'">
+    <div v-else-if="searchResult.vocab === 'yso-paikat'">
       <p>
         {{ $t('new.common.ifysopaikat') }}
         <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
+      </p>
+    </div>
+<!--    <div v-if="searchResult.vocab !== 'yso' && searchResult.vocab !== 'yso-paikat' && searchResult.vocab !== 'yse'">-->
+    <div v-else>
+      <p>
+        Löytyy jo erikoisontologiasta se ja se ...
+        <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
+        ...tähän sopiva teksti
       </p>
     </div>
   </div>
@@ -90,8 +102,14 @@ export default {
       // to exclude Geographical Concept type out from the checklist.
       if ((this.conceptType != "")) console.log("conceptType: %s", this.conceptType);
 
-      const vocs = ["yso-paikat", "yso", "yse"];
+      // Domain specific ontologies changes
+      // const vocs = ["yso-paikat", "yso", "yse"];
+      // const vocs = ["liiko"];
+      const vocs = this.vocabulary === 'yso' || this.vocabulary === 'yso-paikat' ? ["yso-paikat", "yso", "yse"] : [this.vocabulary];
+      console.log(this.vocabulary);
       for (var i = 0; i < vocs.length; i++) {
+        console.log("vocs[i]");
+        console.log(vocs[i]);
         const response = await axios({
          method: 'get',
          url: 'https://api.finto.fi/rest/v1/search',
