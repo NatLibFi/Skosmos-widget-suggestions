@@ -106,10 +106,7 @@ export default {
       // const vocs = ["yso-paikat", "yso", "yse"];
       // const vocs = ["liiko"];
       const vocs = this.vocabulary === 'yso' || this.vocabulary === 'yso-paikat' ? ["yso-paikat", "yso", "yse"] : [this.vocabulary];
-      console.log(this.vocabulary);
       for (var i = 0; i < vocs.length; i++) {
-        console.log("vocs[i]");
-        console.log(vocs[i]);
         const response = await axios({
          method: 'get',
          url: 'https://api.finto.fi/rest/v1/search',
@@ -120,7 +117,18 @@ export default {
             } 
        }).catch(error => console.log(error));
       // For the future: this is assigned only if the term is found and is null otherwise
-      this.searchResult = response.data.results[0]
+        this.searchResult = response.data.results[0];
+        if (this.searchResult) {
+          let indexForOnto = this.searchResult.uri.indexOf("\/onto\/");
+          if ((this.searchResult.vocab !== 'yso' && this.searchResult.vocab !== 'yso-paikat' && this.searchResult.vocab !== 'yse')
+              && this.searchResult.uri.slice(indexForOnto + 6, indexForOnto + 9) !== this.searchResult.vocab) {
+            if (this.searchResult.exvocab && this.searchResult.exvocab === 'yso') {
+              this.searchResult.prefLabel = '';
+            }
+          }
+
+        }
+        // uri: "http://www.yso.fi/onto/yso/p19378"
         this.$emit('input', this.searchString);
         if (this.searchResult) {
           this.$emit('input', '');
