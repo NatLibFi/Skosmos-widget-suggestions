@@ -247,9 +247,9 @@ ${ this.formData.explanation }
 
 ${ brdLabls }
 
-**Ehdotetut temaattiset ryhmät**
+${vocab === 'yso' || vocab === 'yso-paikat' ? "**Ehdotetut temaattiset ryhmät**" : ''}
 
-${ groups }
+${vocab === 'yso'  || vocab === 'yso-paikat' ?  groups  : ''}
 
 **Vaihtoehtoiset termit**
 
