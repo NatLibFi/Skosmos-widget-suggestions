@@ -191,8 +191,12 @@ setDropDown: function() {
         labelsInTargetSuggestionSystem.push("uusi");
         labelsInTargetSuggestionSystem.push("MAANTIETEELLINEN");
         ontTypeInTargetSuggestionSystem = "GEO";
+      } else if (this.formData.vocabulary === 'yso') {
+        labelsInTargetSuggestionSystem.push("uusi");
+        ontTypeInTargetSuggestionSystem = "CONCEPT";
       } else {
         labelsInTargetSuggestionSystem.push("uusi");
+        labelsInTargetSuggestionSystem.push(vocab.toUpperCase());
         ontTypeInTargetSuggestionSystem = "CONCEPT";
       }
       const altTerms = []
