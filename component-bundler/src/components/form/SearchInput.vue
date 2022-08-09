@@ -118,14 +118,22 @@ export default {
        }).catch(error => console.log(error));
       // For the future: this is assigned only if the term is found and is null otherwise
         this.searchResult = response.data.results[0];
+
+        console.log("Mitä searchResult sisältää?");
+        console.log(this.searchResult ? this.searchResult : "Ei löytynyt");
+
         if (this.searchResult) {
           let indexForOnto = this.searchResult.uri.indexOf("\/onto\/");
-          if ((this.searchResult.vocab !== 'yso' && this.searchResult.vocab !== 'yso-paikat' && this.searchResult.vocab !== 'yse')
-              && this.searchResult.uri.slice(indexForOnto + 6, indexForOnto + 9) !== this.searchResult.vocab) {
+          // PALAUTA if ((this.searchResult.vocab !== 'yso' && this.searchResult.vocab !== 'yso-paikat') // If it is a domain ontology
+          // // if ((this.searchResult.vocab !== 'yso' && this.searchResult.vocab !== 'yso-paikat' && this.searchResult.vocab !== 'yse')
+          //     && this.searchResult.uri.slice(indexForOnto + 6, indexForOnto + 9) !== this.searchResult.vocab) {
+            console.log("Urin sanasto-osa ja sanastotunnus olivat eri eli:")
+            console.log("sanasto-osa: " + this.searchResult.uri.slice(indexForOnto + 6, indexForOnto + 9));
+            console.log("sanastotunnus: " + this.searchResult.vocab);
             if (this.searchResult.exvocab && this.searchResult.exvocab === 'yso') {
               this.searchResult.prefLabel = '';
             }
-          }
+          // }
 
         }
         // uri: "http://www.yso.fi/onto/yso/p19378"
