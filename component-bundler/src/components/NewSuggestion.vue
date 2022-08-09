@@ -6,16 +6,19 @@
     <h4>{{ $t('new.header') }}</h4>
     <p>{{ $t('new.p1') }}</p>
     <p>{{ $t('new.p2') }}</p>
+
   </div>
   <div class="suggestion-form">
     <div class="form-inputs">
-      <basic-drop-down
-        :value="d.conceptType.value"
-        :options="d.conceptType.options"
-        @changeVocabulary="$emit('update:vocabulary', $event)"
-        @select="$emit('update:conceptType', $event)"
-        :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />
-      <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>
+      <div v-if="d.vocabulary === 'yso' || d.vocabulary === 'yso-paikat'">
+        <basic-drop-down
+            :value="d.conceptType.value"
+            :options="d.conceptType.options"
+            @changeVocabulary="$emit('update:vocabulary', $event)"
+            @select="$emit('update:conceptType', $event)"
+            :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />
+        <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>
+      </div>
 
       <div v-if="$i18n.locale === 'fi'">
         <search-input

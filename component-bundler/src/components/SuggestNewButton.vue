@@ -384,7 +384,8 @@ ${ this.formData.fromOrg }
   },
   validations: {
     formData: {
-      conceptType: { value: { required } },
+      conceptType: vocab === 'yso' || vocab === 'yso-paikat' ? { value: { required } } : '',
+      // conceptType: { value: { required } },
       prefLabel: { primary: { required, minLength: minLength(1) }},
       explanation: { required },
       neededFor: { required }
