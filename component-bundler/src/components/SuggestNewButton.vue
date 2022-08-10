@@ -288,7 +288,8 @@ ${ this.formData.fromOrg }
           'Access-Control-Allow-Origin': '*'
       };
       var urlToPrx = require('../prx.json');
-      await axios.post(`${urlToPrx[0].url}?payload=${payload}&voc=liiko`).then(response => {
+      // await axios.post(`${urlToPrx[0].url}?payload=${payload}&voc=liiko`).then(response => {
+      await axios.post(`${urlToPrx[0].url}?payload=${payload}`).then(response => {
         this.toggleSuccessMessage(`${response.data.url.replace("/repos", "").replace("api.", "")}`);
       })
       .catch(error => {
