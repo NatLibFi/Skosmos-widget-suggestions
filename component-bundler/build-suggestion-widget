@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "Starting the building"
-npx rimraf ./dist && npx webpack --entry ./src/main.js  --mode production
+#npx rimraf ./dist && # Temporarily taken off. The previous was oneliner with the command below
+npx webpack --entry ./src/main.js  --mode production
 sleep 1
 cp -p dist/components.js ../components.js
 echo "components.js copied from dist folder to the root folder"

@@ -6,6 +6,11 @@
     <h4>{{ $t('new.header') }}</h4>
     <p>{{ $t('new.p1') }}</p>
     <p>{{ $t('new.p2') }}</p>
+    <div id="testing">
+      <button v-on:click="messenger()">Klikkaa mua!</button>
+    </div>
+    <div v-for="config in configDataList.yso">{{config}}</div>
+    <span>{{configDataList.key3}}</span>
   </div>
   <div class="suggestion-form">
     <div class="form-inputs">
@@ -154,6 +159,7 @@ import BasicInput from './form/BasicInput';
 import TheMultipleBasicInput from './form/TheMultipleBasicInput';
 import SelectWithChips from './form/SelectWithChips';
 import TheExactMatchesInput from './form/TheExactMatchesInput';
+import { vocabularyOptionsConfig } from '../../../options.js';
 
 export default {
   components: {
@@ -176,6 +182,32 @@ export default {
     submitForm () {
       this.$emit('submitForm');
     },
+    messenger () {
+      console.log(this.msg);
+      Object.keys(this.configDataList.yso).forEach(key => {
+        console.log(this.configDataList.yso[key]);
+      });
+      Object.keys(this.configDataList.juho).forEach(key => {
+        console.log(this.configDataList.juho[key]);
+      });
+      Object.keys(this.configDataList.slm).forEach(key => {
+        console.log(this.configDataList.slm[key]);
+      });
+      Object.keys(this.configDataList.liiko).forEach(key => {
+        console.log(this.configDataList.liiko[key]);
+      });
+      console.log(this.configDataList.key1);
+      console.log(this.configDataList.key2);
+      console.log(this.configDataList.key3);
+      console.log("CheckTermsAlsoInTheIncludedYSO");
+      console.log(this.configDataList.yso.CheckTermsAlsoInTheIncludedYSO);
+    }
+  },
+  data: () => {
+    return {
+      msg: "Pidetään tämäkin reitti avoimena",
+      configDataList: vocabularyOptionsConfig
+    }
   }
 }
 </script>
