@@ -5,69 +5,122 @@ export const vocabularyOptionsConfig = {
   "yso": {
     "alku": "yso on täällä",
     "CheckTermsAlsoInTheIncludedYSO": true,
-    "type": true,
-    "prefLabel": true,
-    "swedish": true,
-    "english": true,
-    "altLabels": true,
-    "broaders": true,
-    "narrowers": true,
-    "associatives": true,
-    "thematicGroup": true,
-    "clarification": true,
-    "reason": true,
-    "toBeDescribedIn": true,
-    "organization": true
+    "type": {
+      "show": true,
+      "mandatory": true
+    },
+    "finnish": {
+      "show": true,
+      "mandatory": true
+    },
+    "swedish": {
+      "show": true,
+      "mandatory": true
+    },
+    "optionalLanguage": {
+      "show": true,
+      "mandatory": true
+    },
+    "prefLabel": {
+      "show": true,
+      "mandatory": true
+    },
+    "altLabels": {
+      "show": true,
+      "mandatory": true
+    },
+    "broaders": {
+      "show": true,
+      "mandatory": true
+    },
+    "narrowers": {
+      "show": true,
+      "mandatory": true
+    },
+    "related": {
+      "show": true,
+      "mandatory": true
+    },
+    "thematicGroups": {
+      "show": true,
+      "mandatory": true
+    },
+    "exactMatches": {
+      "show": true,
+      "mandatory": true
+    },
+    "scopeNote": {
+      "show": true,
+      "mandatory": true
+    },
+    "explanation": {
+      "show": true,
+      "mandatory": true
+    },
+    "neededFor": {
+      "show": true,
+      "mandatory": true
+    },
+    "fromOrg": {
+      "show": true,
+      "mandatory": true
+    }
   },
   "liiko": {
     "alku": "yso on täällä",
     "CheckTermsAlsoInTheIncludedYSO": true,
     "type": true,
-    "prefLabel": true,
+    "finnish": true,
     "swedish": true,
-    "english": true,
+    "optionalLanguage": true,
+    "prefLabel": true,
     "altLabels": true,
     "broaders": true,
     "narrowers": true,
-    "associatives": true,
-    "thematicGroup": true,
-    "clarification": true,
-    "reason": true,
-    "toBeDescribedIn": true,
-    "organization": true
+    "related": true,
+    "thematicGroups": true,
+    "exactMatches": true,
+    "scopeNote": true,
+    "explanation": true,
+    "neededFor": true,
+    "fromOrg": true
   },
   "slm": {
     "alku": "yso on täällä",
     "CheckTermsAlsoInTheIncludedYSO": true,
     "type": true,
-    "prefLabel": true,
+    "finnish": true,
     "swedish": true,
-    "english": true,
+    "optionalLanguage": true,
+    "prefLabel": true,
     "altLabels": true,
     "broaders": true,
     "narrowers": true,
-    "associatives": true,
-    "thematicGroup": true,
-    "clarification": true,
-    "reason": true,
-    "toBeDescribedIn": true,
-    "organization": true
+    "related": true,
+    "thematicGroups": true,
+    "exactMatches": true,
+    "scopeNote": true,
+    "explanation": true,
+    "neededFor": true,
+    "fromOrg": true
   },
   "juho": {
     "alku": "yso on täällä",
     "CheckTermsAlsoInTheIncludedYSO": true,
     "type": true,
-    "prefLabel": true,
+    "finnish": true,
     "swedish": true,
-    "english": true,
+    "optionalLanguage": true,
+    "prefLabel": true,
     "altLabels": true,
     "broaders": true,
     "narrowers": true,
-    "associatives": true,
-    "thematicGroup": true,
-    "clarification": true,
-    "reason": true,
-    "toBeDescribedIn": true,
-    "organization": true
+    "related": true,
+    "thematicGroups": true,
+    "exactMatches": true,
+    "scopeNote": true,
+    "explanation": true,
+    "neededFor": true,
+    "fromOrg": true
   }
 }

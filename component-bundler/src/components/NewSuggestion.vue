@@ -10,139 +10,138 @@
       <button v-on:click="messenger()">Klikkaa mua!</button>
     </div>
     <div v-for="config in configDataList.yso">{{config}}</div>
-    <span>{{configDataList.key3}}</span>
-    <!-- <span>{{getVocabId}}</span> -->
     <span>{{vocabId}}</span>
   </div>
   <div class="suggestion-form">
     <div class="form-inputs">
-      <basic-drop-down
+      <basic-drop-down v-if="configDataList[vocabId].type.show"
         :value="d.conceptType.value"
         :options="d.conceptType.options"
         @changeVocabulary="$emit('update:vocabulary', $event)"
         @select="$emit('update:conceptType', $event)"
         :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />
       <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>
+    </div>
 
-      <div v-if="$i18n.locale === 'fi'">
-        <search-input
-          :value="d.prefLabel.primary"
-          :conceptType="d.conceptType.value"
-          :vocabulary="d.vocabulary"
-          :language="'fi'"
-          @input="$emit('update:primaryPrefLabel', $event)"
-          :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-        <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>
-
-        <search-input
-          :value="d.prefLabel.secondary"
-          :conceptType="d.conceptType.value"
-          :vocabulary="d.vocabulary"
-          :language="'sv'"
-          @input="$emit('update:secondaryPrefLabel', $event)"
-          :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
-      </div>
-
-      <div v-if="$i18n.locale === 'sv'">
-        <search-input
-          :value="d.prefLabel.primary"
-          :vocabulary="d.vocabulary"
-          :conceptType="d.conceptType.value"
-          :language="'sv'"
-          @input="$emit('update:primaryPrefLabel', $event)"
-          :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
-        <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>
-
-        <search-input
-          :value="d.prefLabel.secondary"
-          :vocabulary="d.vocabulary"
-          :conceptType="d.conceptType.value"
-          :language="'fi'"
-          @input="$emit('update:secondaryPrefLabel', $event)"
-          :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-      </div>
-
-      <basic-input
-        :value="d.prefLabel.en"
-        @input="$emit('update:enPrefLabel', $event)"
-        :label="{text: $t('new.prefLabel.en.label'), for: $t('new.prefLabel.en.for')}"
-        :isTextArea="false" />
-
-      <the-multiple-basic-input v-if="configDataList[vocabId].altLabels"
-        :values="d.altLabels"
-        @input="$emit('update:altLabels', $event)"
-        :label="{text: $t('new.altLabels.label'), for: $t('new.altLabels.for')}" />
-
-      <search-auto-complete
-        :values="d.broaderLabels"
+    <div v-if="$i18n.locale === 'fi' && configDataList[vocabId].finnish.show">
+      <search-input 
+        :value="d.prefLabel.primary"
+        :conceptType="d.conceptType.value"
         :vocabulary="d.vocabulary"
-        :language="$i18n.locale"
-        @input="$emit('update:broaderLabels', $event)"
-        :label="{text: $t('new.broaderLabels.label'), for: $t('new.broaderLabels.for')}"
-        :hasUniqueValue="false" />
+        :language="'fi'"
+        @input="$emit('update:primaryPrefLabel', $event)"
+        :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
+      <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>
 
-      <search-auto-complete
-        :values="d.narrowerLabels"
+      <search-input 
+        :value="d.prefLabel.secondary"
+        :conceptType="d.conceptType.value"
         :vocabulary="d.vocabulary"
-        :language="$i18n.locale"
-        @input="$emit('update:narrowerLabels', $event)"
-        :label="{text: $t('new.narrowerLabels.label'), for: $t('new.narrowerLabels.for')}"
-        :hasUniqueValue="false" />
+        :language="'sv'"
+        @input="$emit('update:secondaryPrefLabel', $event)"
+        :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
+    </div>
 
-      <search-auto-complete
-        :values="d.relatedLabels"
+    <div v-if="$i18n.locale === 'sv' && configDataList[vocabId].swedish.show">
+      <search-input 
+        :value="d.prefLabel.primary"
         :vocabulary="d.vocabulary"
-        :language="$i18n.locale"
-        @input="$emit('update:relatedLabels', $event)"
-        :label="{text: $t('new.relatedLabels.label'), for: this.$t('new.relatedLabels.for')}"
-        :hasUniqueValue="false" />
+        :conceptType="d.conceptType.value"
+        :language="'sv'"
+        @input="$emit('update:primaryPrefLabel', $event)"
+        :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
+      <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>
 
-      <select-with-chips
-        v-if="d.vocabulary !== $t('new.common.places')"
-        :value="$t('new.groups.placeholder')"
-        :options="d.groups.allGroups"
-        @select="$emit('update:groups', $event)"
-        :label="{text: $t('new.groups.label'), for: this.$t('new.groups.for')}" />
+      <search-input 
+        :value="d.prefLabel.secondary"
+        :vocabulary="d.vocabulary"
+        :conceptType="d.conceptType.value"
+        :language="'fi'"
+        @input="$emit('update:secondaryPrefLabel', $event)"
+        :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
+    </div>
 
-      <!-- <ul id="temp-list">
-        <li v-for="item in d.groups.allGroups" :key="item.prefLabel">
-          {{ item.prefLabel }}
-        </li>
-      </ul> -->
+    <basic-input v-if="configDataList[vocabId].optionalLanguage.show"
+      :value="d.prefLabel.en"
+      @input="$emit('update:enPrefLabel', $event)"
+      :label="{text: $t('new.prefLabel.en.label'), for: $t('new.prefLabel.en.for')}"
+      :isTextArea="false" />
 
-      <the-exact-matches-input
-        :values="d.exactMatches"
-        @input="$emit('update:exactMatches', $event)"
-        :label="{text: $t('new.exactMatches.label'), for: this.$t('new.exactMatches.for')}"
-        />
+    <the-multiple-basic-input v-if="configDataList[vocabId].altLabels.show"
+      :values="d.altLabels"
+      @input="$emit('update:altLabels', $event)"
+      :label="{text: $t('new.altLabels.label'), for: $t('new.altLabels.for')}" />
 
-      <basic-input
-        :value="d.scopeNote"
-        @input="$emit('update:scopeNote', $event)"
-        :label="{text: $t('new.scopeNote.label'), for: $t('new.scopeNote.for')}"
-        :isTextArea="true" />
+    <search-auto-complete v-if="configDataList[vocabId].broaders.show"
+      :values="d.broaderLabels"
+      :vocabulary="d.vocabulary"
+      :language="$i18n.locale"
+      @input="$emit('update:broaderLabels', $event)"
+      :label="{text: $t('new.broaderLabels.label'), for: $t('new.broaderLabels.for')}"
+      :hasUniqueValue="false" />
 
-      <basic-input
-        :value="d.explanation"
-        @input="$emit('update:explanation', $event)"
-        :label="{text: $t('new.explanation.label'), for: $t('new.explanation.label')}"
-        :isTextArea="true" />
-      <p v-if="v.$dirty && !v.explanation.required" class="error">{{ $t('new.explanation.error') }}</p>
+    <search-auto-complete v-if="configDataList[vocabId].narrowers.show"
+      :values="d.narrowerLabels"
+      :vocabulary="d.vocabulary"
+      :language="$i18n.locale"
+      @input="$emit('update:narrowerLabels', $event)"
+      :label="{text: $t('new.narrowerLabels.label'), for: $t('new.narrowerLabels.for')}"
+      :hasUniqueValue="false" />
+
+    <search-auto-complete v-if="configDataList[vocabId].related.show"
+      :values="d.relatedLabels"
+      :vocabulary="d.vocabulary"
+      :language="$i18n.locale"
+      @input="$emit('update:relatedLabels', $event)"
+      :label="{text: $t('new.relatedLabels.label'), for: this.$t('new.relatedLabels.for')}"
+      :hasUniqueValue="false" />
+
+    <select-with-chips 
+      v-if="d.vocabulary !== $t('new.common.places') && configDataList[vocabId].thematicGroups.show"
+      :value="$t('new.groups.placeholder')"
+      :options="d.groups.allGroups"
+      @select="$emit('update:groups', $event)"
+      :label="{text: $t('new.groups.label'), for: this.$t('new.groups.for')}" />
+
+    <!-- <ul id="temp-list">
+      <li v-for="item in d.groups.allGroups" :key="item.prefLabel">
+        {{ item.prefLabel }}
+      </li>
+    </ul> -->
+
+    <the-exact-matches-input v-if="configDataList[vocabId].exactMatches.show"
+      :values="d.exactMatches"
+      @input="$emit('update:exactMatches', $event)"
+      :label="{text: $t('new.exactMatches.label'), for: this.$t('new.exactMatches.for')}"
+      />
+
+    <basic-input v-if="configDataList[vocabId].scopeNote.show"
+      :value="d.scopeNote"
+      @input="$emit('update:scopeNote', $event)"
+      :label="{text: $t('new.scopeNote.label'), for: $t('new.scopeNote.for')}"
+      :isTextArea="true" />
+
+    <basic-input v-if="configDataList[vocabId].explanation.show"
+      :value="d.explanation"
+      @input="$emit('update:explanation', $event)"
+      :label="{text: $t('new.explanation.label'), for: $t('new.explanation.label')}"
+      :isTextArea="true" />
+    <p v-if="v.$dirty && !v.explanation.required" class="error">{{ $t('new.explanation.error') }}</p>
 
 <!-- isTextArea set true on 2022-02-01     -->
-      <basic-input
-        :value="d.neededFor"
-        @input="$emit('update:neededFor', $event)"
-        :label="{text: $t('new.neededFor.label'), for: $t('new.neededFor.for')}"
-        :isTextArea="true" />
-      <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p>
+    <basic-input v-if="configDataList[vocabId].neededFor.show"
+      :value="d.neededFor"
+      @input="$emit('update:neededFor', $event)"
+      :label="{text: $t('new.neededFor.label'), for: $t('new.neededFor.for')}"
+      :isTextArea="true" />
+    <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p>
 
-      <basic-input
-        :value="d.fromOrg"
-        @input="$emit('update:fromOrg', $event)"
-        :label="{text: $t('new.fromOrg.label'), for: $t('new.fromOrg.for')}"
-        :isTextArea="false" />
-    </div>
+    <basic-input v-if="configDataList[vocabId].fromOrg.show"
+      :value="d.fromOrg"
+      @input="$emit('update:fromOrg', $event)"
+      :label="{text: $t('new.fromOrg.label'), for: $t('new.fromOrg.for')}"
+      :isTextArea="false" />
+    <!-- </div> -->
 
     <div class="form-submit">
       <a @click="submitForm()">
