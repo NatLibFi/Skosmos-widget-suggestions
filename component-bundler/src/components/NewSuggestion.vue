@@ -11,6 +11,8 @@
     </div>
     <div v-for="config in configDataList.yso">{{config}}</div>
     <span>{{configDataList.key3}}</span>
+    <!-- <span>{{getVocabId}}</span> -->
+    <span>{{vocabId}}</span>
   </div>
   <div class="suggestion-form">
     <div class="form-inputs">
@@ -66,7 +68,7 @@
         :label="{text: $t('new.prefLabel.en.label'), for: $t('new.prefLabel.en.for')}"
         :isTextArea="false" />
 
-      <the-multiple-basic-input
+      <the-multiple-basic-input v-if="configDataList[vocabId].altLabels"
         :values="d.altLabels"
         @input="$emit('update:altLabels', $event)"
         :label="{text: $t('new.altLabels.label'), for: $t('new.altLabels.for')}" />
@@ -196,17 +198,16 @@ export default {
       Object.keys(this.configDataList.liiko).forEach(key => {
         console.log(this.configDataList.liiko[key]);
       });
-      console.log(this.configDataList.key1);
-      console.log(this.configDataList.key2);
-      console.log(this.configDataList.key3);
       console.log("CheckTermsAlsoInTheIncludedYSO");
       console.log(this.configDataList.yso.CheckTermsAlsoInTheIncludedYSO);
-    }
+    },
+    getVocabId: () => { return this.vocabId},
   },
   data: () => {
     return {
       msg: "Pidetään tämäkin reitti avoimena",
-      configDataList: vocabularyOptionsConfig
+      configDataList: vocabularyOptionsConfig,
+      vocabId: window.vocab
     }
   }
 }
