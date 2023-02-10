@@ -11,14 +11,14 @@
         @input="$emit('update:description', $event)"
         :label="{text: $t('edit.description.label'), for: $t('edit.description.label')}"
         :isTextArea="true" />
-      <p v-if="v.$dirty && !v.description.required" class="error">{{ $t('edit.description.error') }}</p>
+      <!-- <p v-if="v.$dirty && !v.description.required" class="error">{{ $t('edit.description.error') }}</p> PALAUTA -->
 
       <basic-input
         :value="d.reason"
         @input="$emit('update:reason', $event)"
         :label="{text: $t('edit.reason.label'), for: $t('edit.reason.for')}"
         :isTextArea="true" />
-      <p v-if="v.$dirty && !v.reason.required" class="error">{{ $t('edit.reason.error') }}</p>
+      <!-- <p v-if="v.$dirty && !v.reason.required" class="error">{{ $t('edit.reason.error') }}</p> PALAUTA -->
 
       <basic-input
         :value="d.fromOrg"
@@ -47,7 +47,7 @@ export default {
     // Form Data:
     d: Object,
     // Form Validations:
-    v: Object,
+    // v: Object, // PALAUTA
     label: String,
     uri: String
   },

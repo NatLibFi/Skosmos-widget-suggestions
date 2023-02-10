@@ -12,7 +12,7 @@
     <centered-dialog
       v-if="isOpened"
       @close="closeDialog()">
-      <new-suggestion
+      <!-- <new-suggestion PALAUTA
         v-if="!showSuccessMessage && !showFailureMessage"
         :d="formData"
         :v="$v.formData"
@@ -32,7 +32,29 @@
         @update:neededFor="formData.neededFor = $event"
         @update:fromOrg="formData.fromOrg = $event"
         @submitForm="submitForm()"
+        /> -->
+        <new-suggestion
+        v-if="!showSuccessMessage && !showFailureMessage"
+        :d="formData"
+        @update:vocabulary="formData.vocabulary = $event"
+        @update:conceptType="formData.conceptType.value = $event"
+        @update:primaryPrefLabel="formData.prefLabel.primary = $event"
+        @update:secondaryPrefLabel="formData.prefLabel.secondary = $event"
+        @update:enPrefLabel="formData.prefLabel.en = $event"
+        @update:altLabels="formData.altLabels = $event"
+        @update:broaderLabels="formData.broaderLabels = $event"
+        @update:narrowerLabels="formData.narrowerLabels = $event"
+        @update:relatedLabels="formData.relatedLabels = $event"
+        @update:groups="formData.groups.selectedGroups = $event"
+        @update:exactMatches="formData.exactMatches = $event"
+        @update:scopeNote="formData.scopeNote = $event"
+        @update:explanation="formData.explanation = $event"
+        @update:neededFor="formData.neededFor = $event"
+        @update:fromOrg="formData.fromOrg = $event"
+        @submitForm="submitForm()"
         />
+        <!-- <p v-bind="testErrorMessage" class="error">{{ $t('new.prefLabel.error') }}</p> -->
+        <!-- <p v-bind="testErrorMessage" class="error">{{ $t('new.prefLabel.error') }}</p> -->
 
         <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url"/>
         <failure-message v-if="showFailureMessage" />
@@ -67,11 +89,12 @@ export default {
     }
     this.setDropDown();
     this.getGroups();
-    this.deleteCookiesList();
-    this.setMandatoryValuesToCookies();
+    // this.deleteCookiesList();
+    // this.setMandatoryValuesToCookies();
   },
   data: () => {
     return {
+      testErrorMessage: '',
       configDataList: vocabularyOptionsConfig,
       vocabId: window.vocab,
       pageUrl : "",
@@ -146,12 +169,15 @@ export default {
     this.getUrl();
   },
   methods: {
-    setMandatoryValuesToCookies: function () {
-      document.cookie = 'type=' + this.configDataList.yso.type.mandatory + ';';
-    },
-    deleteCookiesList: function() {
-      document.cookie = "type= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-    },
+    // setMandatoryValuesToCookies: function () {
+    //   document.cookie = 'type=' + this.configDataList.yso.type.mandatory + ';';
+    // },
+    // deleteCookiesList: function() {
+    //   document.cookie = "type= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    // },
+    // checkTheLength: function() {
+    //   this.formData.prefLabel.primary.length < 3 ? this.testErrorMessage = "Must be at least two characters .." : '';
+    // },
     getUrl: async function () {
       this.pageUrl = window.location.href;
     },
@@ -186,12 +212,12 @@ export default {
     },
 
     submitForm () {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
+      // this.$v.$touch(); PALAUTA
+      // if (!this.$v.$invalid) { PALAUTA
         this.sendData();
-      } else {
-        console.log('Data not sent: required data of the form was not provided.');
-      }
+      // } else { PALAUTA
+      //   console.log('Data not sent: required data of the form was not provided.');
+      // }
     },
     async sendData () {
       this.handlePrefLabelLanguages();
@@ -387,22 +413,23 @@ ${ this.formData.fromOrg }
         fromOrg: ''
       };
       this.setDropDown();
-      this.$v.$reset();
+      // this.$v.$reset(); // PALAUTA
       this.getGroups();
     }
   },
-  validations: {
+  // validations: { PALAUTA
     
-    // formData: {
-    // conceptType: { value: { required } }, // alkuperäinen
-
-    formData: {
-      conceptType: { value: (document.cookie.split('; ').find((row) => row.startsWith('type=')).split('=')[1] === 'true' ? true : false ) ? { required } : { } },
-      prefLabel: { primary: { required, minLength: minLength(1) }},
-      explanation: { required },
-      neededFor: { required }
-    }    
-  }
+  //   // formData: {
+  //   // conceptType: { value: { required } }, // alkuperäinen
+    
+  //   formData: {
+  //     // conceptType: { value: { required } }, // alkuperäinen
+  //     conceptType: { value: (document.cookie.toString().split('; ').find((row) => row.startsWith('type=')).split('=')[1] === 'true' ? true : false ) ? { required } : { } },
+  //     prefLabel: { primary: { required, minLength: minLength(1) }},
+  //     explanation: { required },
+  //     neededFor: { required }
+  //   }    
+  // }
 }
 </script>
 

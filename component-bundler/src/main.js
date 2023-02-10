@@ -5,8 +5,8 @@ import "regenerator-runtime/runtime";
 
 import Vue from 'vue';
 
-import Vuelidate from 'vuelidate';
-Vue.use(Vuelidate);
+// import Vuelidate from 'vuelidate'; PALAUTA
+// Vue.use(Vuelidate);
 
 import VueI18n from 'vue-i18n';
 Vue.use(VueI18n);

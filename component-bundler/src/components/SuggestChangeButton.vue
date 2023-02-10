@@ -6,10 +6,22 @@
     <centered-dialog
       v-if="isOpened"
       @close="closeDialog()">
-      <edit-suggestion
+      <!-- <edit-suggestion // PALAUTA
         v-if="!showSuccessMessage && !showFailureMessage"
         :d="formData"
         :v="$v.formData"
+        :label="label"
+        :uri="uri"
+        @update:conceptType="formData.conceptType.value = $event"
+        @update:primaryPrefLabel="formData.prefLabel.primary = $event"
+        @update:description="formData.description = $event"
+        @update:reason="formData.reason = $event"
+        @update:fromOrg="formData.fromOrg = $event"
+        @submitForm="submitForm()"
+        /> -->
+        <edit-suggestion
+        v-if="!showSuccessMessage && !showFailureMessage"
+        :d="formData"
         :label="label"
         :uri="uri"
         @update:conceptType="formData.conceptType.value = $event"
@@ -74,12 +86,12 @@ export default {
       this.pageUrl = window.location.href;
     },
     submitForm () {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
+      // this.$v.$touch(); PALAUTA
+      // if (!this.$v.$invalid) { PALAUTA
         this.sendData();
-      } else {
-        console.log('Data not sent: required data of the form was not provided.');
-      }
+      // } else { PALAUTA
+        // console.log('Data not sent: required data of the form was not provided.');
+      // }
     },
     async sendData () {
       let data = `
@@ -173,7 +185,7 @@ ${this.formData.fromOrg}
       this.showSuccessMessage = false;
       this.showFailureMessage = false;
       this.suggestionUrl = '';
-      this.$v.$reset();
+      // this.$v.$reset(); PALAUTA
       this.formData = {
         description: '',
         reason: '',
@@ -181,12 +193,12 @@ ${this.formData.fromOrg}
       };
     }
   },
-  validations: {
-    formData: {
-      description: { required },
-      reason: { required }
-    }
-  }
+  // validations: { // PALAUTA
+  //   formData: {
+  //     description: { required },
+  //     reason: { required }
+  //   }
+  // }
 }
 </script>
 

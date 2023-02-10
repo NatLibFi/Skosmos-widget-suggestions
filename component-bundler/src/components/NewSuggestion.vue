@@ -15,12 +15,12 @@
   <div class="suggestion-form">
     <div class="form-inputs">
       <basic-drop-down v-if="configDataList[vocabId].type.show"
-        :value="CONCEPT"
+        :value="d.conceptType.value"
         :options="d.conceptType.options"
         @changeVocabulary="$emit('update:vocabulary', $event)"
         @select="$emit('update:conceptType', $event)"
         :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />
-      <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>
+      <!-- <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p> PALAUTA--> 
     </div>
 
     <div v-if="$i18n.locale === 'fi' && configDataList[vocabId].finnish.show">
@@ -31,7 +31,8 @@
         :language="'fi'"
         @input="$emit('update:primaryPrefLabel', $event)"
         :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-      <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>
+        <p v-bind:testErrorMessage="checkTheLength()" class="error">{{ testErrorMessage }}</p>
+      <!-- <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p> PALAUTA -->
 
       <search-input 
         :value="d.prefLabel.secondary"
@@ -50,7 +51,7 @@
         :language="'sv'"
         @input="$emit('update:primaryPrefLabel', $event)"
         :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
-      <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>
+      <!-- <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p> PALAUTA -->
 
       <search-input 
         :value="d.prefLabel.secondary"
@@ -126,7 +127,7 @@
       @input="$emit('update:explanation', $event)"
       :label="{text: $t('new.explanation.label'), for: $t('new.explanation.label')}"
       :isTextArea="true" />
-    <p v-if="v.$dirty && !v.explanation.required" class="error">{{ $t('new.explanation.error') }}</p>
+    <!-- <p v-if="v.$dirty && !v.explanation.required" class="error">{{ $t('new.explanation.error') }}</p> PALAUTA -->
 
 <!-- isTextArea set true on 2022-02-01     -->
     <basic-input v-if="configDataList[vocabId].neededFor.show"
@@ -134,7 +135,7 @@
       @input="$emit('update:neededFor', $event)"
       :label="{text: $t('new.neededFor.label'), for: $t('new.neededFor.for')}"
       :isTextArea="true" />
-    <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p>
+    <!-- <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p> PALAUTA -->
 
     <basic-input v-if="configDataList[vocabId].fromOrg.show"
       :value="d.fromOrg"
@@ -176,10 +177,12 @@ export default {
     // Form Data:
     d: Object,
     // Form Validations:
-    v: Object
+    // v: Object // PALAUTA
   },
-
   methods: {
+    checkTheLength () {
+      this.d.prefLabel.primary < 3 ? this.testErrorMessage = "Must be at least two characters .." : this.testErrorMessage = '';
+    },
     submitForm () {
       this.$emit('submitForm');
     },
@@ -204,6 +207,7 @@ export default {
   },
   data: () => {
     return {
+      testErrorMessage: 'Johan se nyt virheen tekikin ..',
       msg: "Pidetään tämäkin reitti avoimena",
       configDataList: vocabularyOptionsConfig,
       vocabId: window.vocab
