@@ -15,7 +15,7 @@
   <div class="suggestion-form">
     <div class="form-inputs">
       <basic-drop-down v-if="configDataList[vocabId].type.show"
-        :value="d.conceptType.value"
+        :value="CONCEPT"
         :options="d.conceptType.options"
         @changeVocabulary="$emit('update:vocabulary', $event)"
         @select="$emit('update:conceptType', $event)"

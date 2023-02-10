@@ -47,6 +47,7 @@ import SuccessMessage from './common/SuccessMessage';
 import FailureMessage from './common/FailureMessage';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
+import { vocabularyOptionsConfig } from '../../../options.js';
 
 export default {
   components: {
@@ -66,9 +67,13 @@ export default {
     }
     this.setDropDown();
     this.getGroups();
+    this.deleteCookiesList();
+    this.setMandatoryValuesToCookies();
   },
   data: () => {
     return {
+      configDataList: vocabularyOptionsConfig,
+      vocabId: window.vocab,
       pageUrl : "",
       isOpened: false,
       showSuccessMessage: false,
@@ -141,6 +146,12 @@ export default {
     this.getUrl();
   },
   methods: {
+    setMandatoryValuesToCookies: function () {
+      document.cookie = 'type=' + this.configDataList.yso.type.mandatory + ';';
+    },
+    deleteCookiesList: function() {
+      document.cookie = "type= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    },
     getUrl: async function () {
       this.pageUrl = window.location.href;
     },
@@ -161,7 +172,7 @@ export default {
         .then(response => this.formData.groups.allGroups = response.data.groups); // orig
     },
 
-setDropDown: function() {
+    setDropDown: function() {
       this.formData.conceptType.options[0].value = this.$t('new.common.concept');
       this.formData.conceptType.options[1].value = this.$t('new.common.geo');
     },
@@ -319,7 +330,7 @@ ${ this.formData.fromOrg }
       this.formData = {
         vocabulary: 'yso',
         conceptType: {
-          value: '',
+          value: 'CONCEPT',
           options: [
             {
               value: '',
@@ -381,12 +392,16 @@ ${ this.formData.fromOrg }
     }
   },
   validations: {
+    
+    // formData: {
+    // conceptType: { value: { required } }, // alkuperäinen
+
     formData: {
-      conceptType: { value: { required } },
+      conceptType: { value: (document.cookie.split('; ').find((row) => row.startsWith('type=')).split('=')[1] === 'true' ? true : false ) ? { required } : { } },
       prefLabel: { primary: { required, minLength: minLength(1) }},
       explanation: { required },
       neededFor: { required }
-    }
+    }    
   }
 }
 </script>
