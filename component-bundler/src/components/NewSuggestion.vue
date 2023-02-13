@@ -31,7 +31,7 @@
         :language="'fi'"
         @input="$emit('update:primaryPrefLabel', $event)"
         :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-        <p v-bind:testErrorMessage="checkTheLength()" class="error">{{ testErrorMessage }}</p>
+        <!-- <p v-bind:testErrorMessage="checkTheLength()" class="error">{{ testErrorMessage }}</p> // periaatteessa toimii -->
       <!-- <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p> PALAUTA -->
 
       <search-input 

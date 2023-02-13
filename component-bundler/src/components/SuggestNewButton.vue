@@ -33,7 +33,7 @@
         @update:fromOrg="formData.fromOrg = $event"
         @submitForm="submitForm()"
         /> -->
-        <new-suggestion
+        <new-suggestion id="newsuggestionform"
         v-if="!showSuccessMessage && !showFailureMessage"
         :d="formData"
         @update:vocabulary="formData.vocabulary = $event"
@@ -94,6 +94,9 @@ export default {
   },
   data: () => {
     return {
+      amountOfErrors: 0,
+      errorMessages: [],
+      validationsChecklist: {},
       testErrorMessage: '',
       configDataList: vocabularyOptionsConfig,
       vocabId: window.vocab,
@@ -130,7 +133,7 @@ export default {
         },
         altLabels: [{
           value: '',
-          isTouched: false
+          // isTouched: false
         }],
         broaderLabels: [{
           value: '',
@@ -169,15 +172,9 @@ export default {
     this.getUrl();
   },
   methods: {
-    // setMandatoryValuesToCookies: function () {
-    //   document.cookie = 'type=' + this.configDataList.yso.type.mandatory + ';';
-    // },
-    // deleteCookiesList: function() {
-    //   document.cookie = "type= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-    // },
-    // checkTheLength: function() {
-    //   this.formData.prefLabel.primary.length < 3 ? this.testErrorMessage = "Must be at least two characters .." : '';
-    // },
+    getVocabId() {
+      return this.vocabId.toString();
+    },
     getUrl: async function () {
       this.pageUrl = window.location.href;
     },
@@ -214,10 +211,75 @@ export default {
     submitForm () {
       // this.$v.$touch(); PALAUTA
       // if (!this.$v.$invalid) { PALAUTA
-        this.sendData();
+        // this.sendData();
       // } else { PALAUTA
       //   console.log('Data not sent: required data of the form was not provided.');
       // }
+
+      // UUSI ALKAA
+
+      var paragraph = document.getElementById("newsuggestionform");
+
+      this.validationsChecklist = {
+        type: {
+          condition: this.formData.prefLabel.primary.length > 2
+        },
+        finnish: {
+          condition: this.formData.prefLabel.primary.length > 2
+        },
+        swedish: {
+          condition: this.formData.prefLabel.primary.length > 2
+        },
+        optionalLanguage: {
+          condition: this.formData.prefLabel.primary.length > 2,
+        },
+        prefLabel: {
+          condition: this.formData.prefLabel.primary.length > 2,
+        },
+        altLabels: {
+          condition: this.formData.prefLabel.primary.length > 2          
+        },
+        broaders: {
+          condition: this.formData.broaderLabels[0].value.length > 0,
+        },
+        narrowers: {
+          condition: this.formData.prefLabel.primary.length > 2,
+        },
+        related: {
+          condition: this.formData.prefLabel.primary.length > 2,
+        },
+        thematicGroups: {
+          condition: this.formData.prefLabel.primary.length > 2,
+        },
+        exactMatches: {
+          condition: this.formData.prefLabel.primary.length > 2,
+        },
+        scopeNote: {
+          condition: this.formData.prefLabel.primary.length > 2,
+        },
+        explanation: {
+          condition: this.formData.prefLabel.primary.length > 2,
+        },
+        neededFor: {
+          condition: this.formData.prefLabel.primary.length > 2,
+        },
+        fromOrg: {
+          condition: this.formData.prefLabel.primary.length > 2,
+        }
+      }
+    
+      this.amountOfErrors = 0;
+      if (this.configDataList[this.getVocabId()].prefLabel.mandatory && !this.validationsChecklist.prefLabel.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.prefLabel')));
+        this.amountOfErrors += 1;
+      }
+      if (this.configDataList[this.getVocabId()].broaders.mandatory && !this.validationsChecklist.broaders.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.broaders')));
+        this.amountOfErrors += 1;
+      }
+      console.log(this.amountOfErrors);
+      this.amountOfErrors == 0 ? this.sendData() : '';
+    
     },
     async sendData () {
       this.handlePrefLabelLanguages();

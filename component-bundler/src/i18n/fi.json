@@ -85,7 +85,11 @@
       "ifyse1": "Termistä on jo olemassa käsite-ehdotus:",
       "ifyse2": ". Kommentoi tai kannata ehdotusta sen tiedoista löytyvän kotisivulinkin kautta"
     },
-    "submit": "Lähetä käsite-ehdotus"
+    "submit": "Lähetä käsite-ehdotus",
+    "validation": {
+      "prefLabel": "Päätermin pitää sisältää vähintään kolme merkkiä",
+      "broaders": "Valitse vähintään yksi yläkäsite"
+    }
   },
   "edit": {
     "button": "Ehdota muutosta käsitteeseen",
