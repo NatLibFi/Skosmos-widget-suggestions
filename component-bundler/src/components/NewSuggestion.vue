@@ -23,8 +23,8 @@
       <!-- <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p> PALAUTA--> 
     </div>
 
-    <div v-if="$i18n.locale === 'fi' && configDataList[vocabId].finnish.show">
-      <search-input 
+    <div >
+      <search-input v-if="$i18n.locale === 'fi' && configDataList[vocabId].primaryLang.show"
         :value="d.prefLabel.primary"
         :conceptType="d.conceptType.value"
         :vocabulary="d.vocabulary"
@@ -34,7 +34,7 @@
         <!-- <p v-bind:testErrorMessage="checkTheLength()" class="error">{{ testErrorMessage }}</p> // periaatteessa toimii -->
       <!-- <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p> PALAUTA -->
 
-      <search-input 
+      <search-input v-if="$i18n.locale === 'fi' && configDataList[vocabId].secondaryLang.show"
         :value="d.prefLabel.secondary"
         :conceptType="d.conceptType.value"
         :vocabulary="d.vocabulary"
@@ -43,8 +43,8 @@
         :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
     </div>
 
-    <div v-if="$i18n.locale === 'sv' && configDataList[vocabId].swedish.show">
-      <search-input 
+    <div >
+      <search-input v-if="$i18n.locale === 'sv' && configDataList[vocabId].primaryLang.show"
         :value="d.prefLabel.primary"
         :vocabulary="d.vocabulary"
         :conceptType="d.conceptType.value"
@@ -53,7 +53,7 @@
         :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
       <!-- <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p> PALAUTA -->
 
-      <search-input 
+      <search-input v-if="$i18n.locale === 'sv' && configDataList[vocabId].secondaryLang.show"
         :value="d.prefLabel.secondary"
         :vocabulary="d.vocabulary"
         :conceptType="d.conceptType.value"

@@ -7,13 +7,13 @@ export const vocabularyOptionsConfig = {
     "CheckTermsAlsoInTheIncludedYSO": true,
     "type": {
       "show": true,
-      "mandatory": false
-    },
-    "finnish": {
-      "show": true,
       "mandatory": true
     },
-    "swedish": {
+    "primaryLang": {
+      "show": true, // must always be true
+      "mandatory": true // must always be true
+    },
+    "secondaryLang": {
       "show": true,
       "mandatory": true
     },

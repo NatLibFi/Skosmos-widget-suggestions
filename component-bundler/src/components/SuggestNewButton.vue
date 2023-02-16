@@ -220,21 +220,27 @@ export default {
 
       var paragraph = document.getElementById("newsuggestionform");
 
+      console.log('Tarkistuksia varten');
+      console.log('this.formData.prefLabel.primary.length > 0');
+      console.log(this.formData.prefLabel.primary.length > 0);
+      console.log(this.formData.prefLabel.primary);
+      console.log('this.formData.prefLabel.secondary.length > 0');
+      console.log(this.formData.prefLabel.secondary.length > 0);
+      console.log(this.formData.prefLabel.secondary);
+
+
       this.validationsChecklist = {
         type: {
+          condition: this.formData.conceptType.value.length > 0
+        },
+        primaryLang: {
           condition: this.formData.prefLabel.primary.length > 2
         },
-        finnish: {
-          condition: this.formData.prefLabel.primary.length > 2
-        },
-        swedish: {
-          condition: this.formData.prefLabel.primary.length > 2
+        secondaryLang: {
+          condition: this.formData.prefLabel.secondary.length > 2
         },
         optionalLanguage: {
-          condition: this.formData.prefLabel.primary.length > 2,
-        },
-        prefLabel: {
-          condition: this.formData.prefLabel.primary.length > 2,
+          condition: this.formData.prefLabel.en.length > 2,
         },
         altLabels: {
           condition: this.formData.prefLabel.primary.length > 2          
@@ -267,12 +273,33 @@ export default {
           condition: this.formData.prefLabel.primary.length > 2,
         }
       }
+
+      console.log(this.formData.prefLabel.en.toString());
+      console.log(this.validationsChecklist.optionalLanguage.condition);
     
+      // Add the correct number of errors (if occured) to the array that will eventually be used as a condition for sending the form. Expectation: zero errors
       this.amountOfErrors = 0;
-      if (this.configDataList[this.getVocabId()].prefLabel.mandatory && !this.validationsChecklist.prefLabel.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.prefLabel')));
+      // type = yleiskäsite | maantieteellinen
+      if (this.configDataList[this.getVocabId()].type.mandatory && !this.validationsChecklist.type.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.type')));
         this.amountOfErrors += 1;
       }
+      // prefLabel (primaryLang) but the language specific validations should be implemented as well
+      if (this.configDataList[this.getVocabId()].primaryLang.mandatory && !this.validationsChecklist.primaryLang.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.primaryLang')));
+        this.amountOfErrors += 1;
+      }
+      // prefLabel (secondaryLang) but the language specific validations should be implemented as well
+      if (this.configDataList[this.getVocabId()].secondaryLang.mandatory && !this.validationsChecklist.secondaryLang.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.secondaryLang')));
+        this.amountOfErrors += 1;
+      }
+      // prefLabel (Optional Language)
+      if (this.configDataList[this.getVocabId()].optionalLanguage.mandatory && !this.validationsChecklist.optionalLanguage.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.optionalLanguage')));
+        this.amountOfErrors += 1;
+      }
+      // broaders
       if (this.configDataList[this.getVocabId()].broaders.mandatory && !this.validationsChecklist.broaders.condition) {
         paragraph.appendChild(document.createTextNode(this.$t('new.validation.broaders')));
         this.amountOfErrors += 1;
