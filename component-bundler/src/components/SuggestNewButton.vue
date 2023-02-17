@@ -255,27 +255,27 @@ export default {
           condition: this.formData.relatedLabels[0].value.length > 0
         },
         thematicGroups: {
-          condition: this.formData.prefLabel.primary.length > 2,
+          condition: this.formData.groups.selectedGroups.length > 0
         },
         exactMatches: {
-          condition: this.formData.prefLabel.primary.length > 2,
+          condition: this.formData.exactMatches[0].vocab.length && this.formData.exactMatches[0].value.length > 0
         },
         scopeNote: {
-          condition: this.formData.prefLabel.primary.length > 2,
+          condition: this.formData.scopeNote.length > 2,
         },
         explanation: {
-          condition: this.formData.prefLabel.primary.length > 2,
+          condition: this.formData.explanation.length > 2,
         },
         neededFor: {
-          condition: this.formData.prefLabel.primary.length > 2,
+          condition: this.formData.neededFor.length > 2,
         },
         fromOrg: {
-          condition: this.formData.prefLabel.primary.length > 2,
+          condition: this.formData.fromOrg.length > 2,
         }
       }
 
-      console.log('this.formData.relatedLabels[0].value.length');
-      console.log(this.formData.relatedLabels[0].value.length);
+      // console.log('this.formData.scopeNote.length');
+      // console.log(this.formData.scopeNote.length);
     
       // Add the correct number of errors (if occured) to the array that will eventually be used as a condition for sending the form. Expectation: zero errors
       this.amountOfErrors = 0;
@@ -319,6 +319,38 @@ export default {
         paragraph.appendChild(document.createTextNode(this.$t('new.validation.related')));
         this.amountOfErrors += 1;
       }
+      // thematicGroups
+      if (this.configDataList[this.getVocabId()].thematicGroups.mandatory && !this.validationsChecklist.thematicGroups.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.thematicGroups')));
+        this.amountOfErrors += 1;
+      }
+      // exactMatches
+      if (this.configDataList[this.getVocabId()].exactMatches.mandatory && !this.validationsChecklist.exactMatches.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.exactMatches')));
+        this.amountOfErrors += 1;
+      }
+      // scopeNote
+      if (this.configDataList[this.getVocabId()].scopeNote.mandatory && !this.validationsChecklist.scopeNote.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.scopeNote')));
+        this.amountOfErrors += 1;
+      }
+      // explanation
+      if (this.configDataList[this.getVocabId()].explanation.mandatory && !this.validationsChecklist.explanation.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.explanation')));
+        this.amountOfErrors += 1;
+      }
+      // neededFor
+      if (this.configDataList[this.getVocabId()].neededFor.mandatory && !this.validationsChecklist.neededFor.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.neededFor')));
+        this.amountOfErrors += 1;
+      }
+      // fromOrg
+      if (this.configDataList[this.getVocabId()].fromOrg.mandatory && !this.validationsChecklist.fromOrg.condition) {
+        paragraph.appendChild(document.createTextNode(this.$t('new.validation.fromOrg')));
+        this.amountOfErrors += 1;
+      }
+
+
       console.log(this.amountOfErrors);
       this.amountOfErrors == 0 ? this.sendData() : '';
     

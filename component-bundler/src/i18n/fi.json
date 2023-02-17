@@ -94,7 +94,13 @@
       "altLabels": "Lisää vähintään yksi altLabel",
       "broaders": "Valitse vähintään yksi yläkäsite",
       "narrowers": "Valitse vähintään yksi alakäsite",
-      "related": "Lisää vähintään yksi assosiatiivinen käsite"
+      "related": "Lisää vähintään yksi assosiatiivinen käsite",
+      "thematicGroups": "Valitse vähintään yksi temaattinen ryhmä",
+      "exactMatches": "Lisää vähintään yksi vastaava käsite ja siihen viittaava linkki muusta sanastosta",
+      "scopeNote": "Lisää tarkoitusta täsmentävä selite",
+      "explanation": "Lisää ehdotukselle perustelut",
+      "neededFor": "Kerro minkä aineiston kuvailussa tarvitsisit käsitettä",
+      "fromOrg": "Kerro mistä organisaatiosta olet" 
     }
   },
   "edit": {
