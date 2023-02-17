@@ -9,6 +9,7 @@ export const vocabularyOptionsConfig = {
       "show": true,
       "mandatory": true
     },
+    // Always if the mandatory option is true, show option must been set up to true as well
     "primaryLang": {
       "show": true, // must always be true
       "mandatory": true // must always be true
