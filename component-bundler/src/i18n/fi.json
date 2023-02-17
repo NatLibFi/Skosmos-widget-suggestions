@@ -5,7 +5,7 @@
     "p1": "",
     "p2": "Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta",
     "conceptType": {
-      "label": "Tyyppi: *",
+      "label": "Tyyppi:",
       "for": "ehdotuksen tyyppi",
       "placeholder": "Valitse ehdotuksen tyyppi",
       "none": "Ehdotustyyppejä ei valittavissa",
@@ -14,7 +14,7 @@
     "prefLabel": {
       "error": "Päätermiksi tarvitaan uniikki termi.",
       "fi": {
-        "label": "Päätermi/asiasana: *",
+        "label": "Päätermi/asiasana:",
         "for": "ehdotettava termi suomeksi"
       },
       "sv": {
@@ -60,12 +60,12 @@
       "for": "tarkoitusta täsmentävä selite"
     },
     "explanation": {
-      "label": "Perustelut ehdotukselle: *",
+      "label": "Perustelut ehdotukselle:",
       "for": "perustelut ehdotetulle termille",
       "error": "Tämä on pakollinen tieto."
     },
     "neededFor": {
-      "label": "Minkä aineiston kuvailussa tarvitsisit käsitettä? (esim. nimeke tai URL): *",
+      "label": "Minkä aineiston kuvailussa tarvitsisit käsitettä? (esim. nimeke tai URL):",
       "for": "mihin ehdotettua termiä tarvitaan",
       "error": "Tämä on pakollinen tieto."
     },
@@ -94,7 +94,7 @@
       "altLabels": "Lisää vähintään yksi altLabel",
       "broaders": "Valitse vähintään yksi yläkäsite",
       "narrowers": "Valitse vähintään yksi alakäsite",
-      "related": "Lisää vähintään yksi assosiatiivinen käsite",
+      "related": "Valitse vähintään yksi assosiatiivinen käsite",
       "thematicGroups": "Valitse vähintään yksi temaattinen ryhmä",
       "exactMatches": "Lisää vähintään yksi vastaava käsite ja siihen viittaava linkki muusta sanastosta",
       "scopeNote": "Lisää tarkoitusta täsmentävä selite",
@@ -108,12 +108,12 @@
     "header": "Ehdota muutosta käsitteeseen",
     "paragraph": "Kuka tahansa YSOn käyttäjä saa ehdottaa muutoksia sanastoon.",
     "description": {
-      "label": "Ehdotettu muutos: *",
+      "label": "Ehdotettu muutos:",
       "for": "perustelut ehdotetulle muutokselle",
       "error": "Tämä on pakollinen tieto."
     },
     "reason": {
-      "label": "Perustelut ehdotukselle: *",
+      "label": "Perustelut ehdotukselle:",
       "for": "miksi muutosta tarvitaan",
       "error": "Tämä on pakollinen tieto."
     },

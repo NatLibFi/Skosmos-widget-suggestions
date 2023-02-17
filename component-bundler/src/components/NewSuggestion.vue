@@ -19,19 +19,20 @@
         :options="d.conceptType.options"
         @changeVocabulary="$emit('update:vocabulary', $event)"
         @select="$emit('update:conceptType', $event)"
-        :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />
+        :label="{text: setFieldLabelsByMandatoryStatus('conceptType'), for: $t('new.conceptType.for')}" />
+        <!-- :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />  alkuperäinen -->
       <!-- <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p> PALAUTA--> 
     </div>
 
     <div >
-      <search-input v-if="$i18n.locale === 'fi' && configDataList[vocabId].primaryLang.show"
+      <search-input v-if="$i18n.locale === 'fi' && configDataList[vocabId].primaryLang.show" 
         :value="d.prefLabel.primary"
         :conceptType="d.conceptType.value"
         :vocabulary="d.vocabulary"
         :language="'fi'"
         @input="$emit('update:primaryPrefLabel', $event)"
-        :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-        <!-- <p v-bind:testErrorMessage="checkTheLength()" class="error">{{ testErrorMessage }}</p> // periaatteessa toimii -->
+        :label="{text: setFieldLabelsByMandatoryStatus('prefLabel'), for: $t('new.prefLabel.fi.for')}" />
+          <!-- :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" /> alkuperäinen-->
       <!-- <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p> PALAUTA -->
 
       <search-input v-if="$i18n.locale === 'fi' && configDataList[vocabId].secondaryLang.show"
@@ -162,6 +163,7 @@ import TheMultipleBasicInput from './form/TheMultipleBasicInput';
 import SelectWithChips from './form/SelectWithChips';
 import TheExactMatchesInput from './form/TheExactMatchesInput';
 import { vocabularyOptionsConfig } from '../../../options.js';
+import translations from '../i18n/i18n';
 
 export default {
   components: {
@@ -203,14 +205,33 @@ export default {
       console.log("CheckTermsAlsoInTheIncludedYSO");
       console.log(this.configDataList.yso.CheckTermsAlsoInTheIncludedYSO);
     },
-    getVocabId: () => { return this.vocabId},
+    getConfigDatalist: () => { return this.configDataList},
+    setFieldLabelsByMandatoryStatus(propertyTag) {
+      let translatedText = '';
+      this.propertyTagger = propertyTag;
+      const mandatoryCase = '';
+      const nonMandatoryCase = ';'
+      if (propertyTag === 'prefLabel') {
+        this.mandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag][content_lang].label + "*";
+        this.nonMandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag][content_lang].label ;
+      } else {
+        this.mandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag].label + "*";
+        this.nonMandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag].label ;
+      }
+      const vocabularyConfig = this.configDataList[this.vocabId.toString()];
+      vocabularyConfig.primaryLang.mandatory ? translatedText = this.mandatoryCase : translatedText = this.nonMandatoryCase;
+      return translatedText;
+    }
   },
   data: () => {
     return {
       testErrorMessage: 'Johan se nyt virheen tekikin ..',
       msg: "Pidetään tämäkin reitti avoimena",
       configDataList: vocabularyOptionsConfig,
-      vocabId: window.vocab
+      vocabId: window.vocab,
+      preFormattedTranslations: translations,
+      translatedText: '',
+      propertyTagger: ''
     }
   }
 }

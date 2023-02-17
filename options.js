@@ -5,66 +5,62 @@ export const vocabularyOptionsConfig = {
   "yso": {
     "alku": "yso on täällä",
     "CheckTermsAlsoInTheIncludedYSO": true,
+    // Always if the mandatory option is true, show option must been set up to true as well
     "type": {
       "show": true,
       "mandatory": true
     },
-    // Always if the mandatory option is true, show option must been set up to true as well
-    "primaryLang": {
+    "primaryLang": { // prefLabel
       "show": true, // must always be true
       "mandatory": true // must always be true
     },
-    "secondaryLang": {
-      "show": true,
-      "mandatory": true
+    "secondaryLang": { // prefLabel
+      "show": false,
+      "mandatory": false
     },
-    "optionalLanguage": {
-      "show": true,
-      "mandatory": true
-    },
-    "prefLabel": {
-      "show": true,
-      "mandatory": true
+    "optionalLanguage": { // prefLabel
+      "show": false,
+      "mandatory": false
     },
     "altLabels": {
-      "show": true,
-      "mandatory": true
+      "show": false,
+      "mandatory": false
     },
     "broaders": {
-      "show": true,
-      "mandatory": true
+      "show": false,
+      "mandatory": false
     },
     "narrowers": {
-      "show": true,
-      "mandatory": true
+      "show": false,
+      "mandatory": false
     },
     "related": {
-      "show": true,
-      "mandatory": true
+      "show": false,
+      "mandatory": false
     },
     "thematicGroups": {
-      "show": true,
-      "mandatory": true
+      "show": false,
+      "mandatory": false
     },
     "exactMatches": {
-      "show": true,
-      "mandatory": true
+      "show": false,
+      "mandatory": false
     },
     "scopeNote": {
-      "show": true,
-      "mandatory": true
+      "show": false,
+      "mandatory": false
     },
     "explanation": {
-      "show": true,
-      "mandatory": true
+      "show": false,
+      "mandatory": false
     },
     "neededFor": {
-      "show": true,
-      "mandatory": true
+      "show": false,
+      "mandatory": false
     },
     "fromOrg": {
-      "show": true,
-      "mandatory": true
+      "show": false,
+      "mandatory": false
     }
   },
   "liiko": {
