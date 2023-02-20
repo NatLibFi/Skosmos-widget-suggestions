@@ -387,9 +387,8 @@ export default {
       this.formData.exactMatches.forEach(item => item.value !== "" ? exctLabls.push(` [${ item.vocab }](${this.addHTTPOrHTTPS(item.value)})`) : null);
 // Very strange newlines, taken from the GitHub issue body by "blind" copying
       let data = `
-**Käsitteen tyyppi**
-
-${ ontTypeInTargetSuggestionSystem }
+${ this.configDataList[this.getVocabId()].type.show ? "**Käsitteen tyyppi**": ''}
+${ this.configDataList[this.getVocabId()].type.show ? ontTypeInTargetSuggestionSystem : ''}
 
 **Ehdotettu termi suomeksi**
 
@@ -442,6 +441,11 @@ ${ this.formData.neededFor }
 **Ehdottajan organisaatio**
 
 ${ this.formData.fromOrg }
+
+${ 1 === 1 ? "ehdot toimivat" : "ehdot eivät toimi" }
+
+
+
 `
 
       let dataBundle = {

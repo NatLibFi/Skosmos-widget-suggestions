@@ -15,52 +15,52 @@ export const vocabularyOptionsConfig = {
       "mandatory": true // must always be true
     },
     "secondaryLang": { // prefLabel
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "optionalLanguage": { // prefLabel
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "altLabels": {
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "broaders": {
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "narrowers": {
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "related": {
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "thematicGroups": {
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "exactMatches": {
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "scopeNote": {
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "explanation": {
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "neededFor": {
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     },
     "fromOrg": {
-      "show": false,
-      "mandatory": false
+      "show": true,
+      "mandatory": true
     }
   },
   "liiko": {
@@ -196,7 +196,7 @@ export const vocabularyOptionsConfig = {
     "CheckTermsAlsoInTheIncludedYSO": true,
     "type": {
       "show": true,
-      "mandatory": true
+      "mandatory": false
     },
     "finnish": {
       "show": true,

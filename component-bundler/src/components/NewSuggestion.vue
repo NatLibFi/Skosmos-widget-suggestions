@@ -19,8 +19,9 @@
         :options="d.conceptType.options"
         @changeVocabulary="$emit('update:vocabulary', $event)"
         @select="$emit('update:conceptType', $event)"
-        :label="{text: setFieldLabelsByMandatoryStatus('conceptType'), for: $t('new.conceptType.for')}" />
-        <!-- :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />  alkuperäinen -->
+        :label="{text: addAsteriskIfNeeded('new.conceptType.label', 'type'), for: $t('new.conceptType.for')}" />  
+        <!-- :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />   -->
+        <!-- :label="{text: setFieldLabelsByMandatoryStatus('conceptType'), for: $t('new.conceptType.for')}" /> -->
       <!-- <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p> PALAUTA--> 
     </div>
 
@@ -31,8 +32,9 @@
         :vocabulary="d.vocabulary"
         :language="'fi'"
         @input="$emit('update:primaryPrefLabel', $event)"
-        :label="{text: setFieldLabelsByMandatoryStatus('prefLabel'), for: $t('new.prefLabel.fi.for')}" />
-          <!-- :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" /> alkuperäinen-->
+        :label="{text: addAsteriskIfNeeded('new.prefLabel.fi.label', 'primaryLang'), for: $t('new.prefLabel.fi.for')}" /> 
+        <!-- :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />  -->
+        <!-- :label="{text: setFieldLabelsByMandatoryStatus('prefLabel', 'fi'), for: $t('new.prefLabel.fi.for')}" /> -->
       <!-- <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p> PALAUTA -->
 
       <search-input v-if="$i18n.locale === 'fi' && configDataList[vocabId].secondaryLang.show"
@@ -42,6 +44,7 @@
         :language="'sv'"
         @input="$emit('update:secondaryPrefLabel', $event)"
         :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
+        <!-- :label="{text: setFieldLabelsByMandatoryStatus('prefLabel', 'sv'), for: $t('new.prefLabel.sv.for')}" /> -->
     </div>
 
     <div >
@@ -52,6 +55,7 @@
         :language="'sv'"
         @input="$emit('update:primaryPrefLabel', $event)"
         :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
+        <!-- :label="{text: setFieldLabelsByMandatoryStatus('prefLabel', 'sv'), for: $t('new.prefLabel.sv.for')}" /> -->
       <!-- <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p> PALAUTA -->
 
       <search-input v-if="$i18n.locale === 'sv' && configDataList[vocabId].secondaryLang.show"
@@ -61,6 +65,7 @@
         :language="'fi'"
         @input="$emit('update:secondaryPrefLabel', $event)"
         :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
+        <!-- :label="{text: setFieldLabelsByMandatoryStatus('prefLabel', 'fi'), for: $t('new.prefLabel.fi.for')}" /> -->
     </div>
 
     <basic-input v-if="configDataList[vocabId].optionalLanguage.show"
@@ -68,6 +73,7 @@
       @input="$emit('update:enPrefLabel', $event)"
       :label="{text: $t('new.prefLabel.en.label'), for: $t('new.prefLabel.en.for')}"
       :isTextArea="false" />
+      <!-- :label="{text: setFieldLabelsByMandatoryStatus('prefLabel', 'en'), for: $t('new.prefLabel.en.for')}" -->
 
     <the-multiple-basic-input v-if="configDataList[vocabId].altLabels.show"
       :values="d.altLabels"
@@ -206,14 +212,35 @@ export default {
       console.log(this.configDataList.yso.CheckTermsAlsoInTheIncludedYSO);
     },
     getConfigDatalist: () => { return this.configDataList},
-    setFieldLabelsByMandatoryStatus(propertyTag) {
+    addAsteriskIfNeeded(translation, configKey) {
+      console.log(vocabularyOptionsConfig["yso"][configKey].mandatory);
+      const parts = translation.split('.');
+      if (parts.length === 3) {
+        return (vocabularyOptionsConfig[vocab][configKey].mandatory ? translations[content_lang][parts[0]][parts[1]][parts[2]] + "*" : translations[content_lang][parts[0]][parts[1]][parts[2]]);
+      } else {
+        return (vocabularyOptionsConfig[vocab][configKey].mandatory ? translations[content_lang][parts[0]][parts[1]][parts[2]][parts[3]] + "*" : translations[content_lang][parts[0]][parts[1]][parts[2]][parts[3]]);
+      }
+    },
+    setFieldLabelsByMandatoryStatus(propertyTag, fiOrSvOrOther) {
+      console.log(content_lang);
       let translatedText = '';
       this.propertyTagger = propertyTag;
       const mandatoryCase = '';
-      const nonMandatoryCase = ';'
+      const nonMandatoryCase = '';
+      console.log(propertyTag);
       if (propertyTag === 'prefLabel') {
-        this.mandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag][content_lang].label + "*";
-        this.nonMandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag][content_lang].label ;
+        if (content_lang === 'fi' || content_lang === "sv"){
+          console.log(propertyTag);
+          this.mandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag][fiOrSvOrOther].label + "*";
+          this.nonMandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag][fiOrSvOrOther].label ;
+        } else {
+          // This part must be changed if the optional (the third) language is about to implement. Via the variables
+          console.log(propertyTag);
+          // content_lang and fiOrSvOrOther should be passed the correct language tag like se, en or alike.
+          // 'new.prefLabel.en.label'
+          this.mandatoryCase = this.preFormattedTranslations['fi'].new[propertyTag]['en'].label + "*";
+          this.nonMandatoryCase = this.preFormattedTranslations['fi'].new[propertyTag]['en'].label ;
+        }
       } else {
         this.mandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag].label + "*";
         this.nonMandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag].label ;
@@ -231,7 +258,8 @@ export default {
       vocabId: window.vocab,
       preFormattedTranslations: translations,
       translatedText: '',
-      propertyTagger: ''
+      propertyTagger: '',
+      cLang: lang
     }
   }
 }
