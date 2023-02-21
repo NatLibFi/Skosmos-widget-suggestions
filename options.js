@@ -1,10 +1,5 @@
 export const vocabularyOptionsConfig = {
-  "key1": 100,
-  "key2": "testing",
-  "key3": true,
   "yso": {
-    "alku": "yso on täällä",
-    "CheckTermsAlsoInTheIncludedYSO": true,
     // Always if the mandatory option is true, show option must been set up to true as well
     "type": {
       "show": true,
@@ -64,25 +59,19 @@ export const vocabularyOptionsConfig = {
     }
   },
   "liiko": {
-    "alku": "yso on täällä",
-    "CheckTermsAlsoInTheIncludedYSO": true,
     "type": {
       "show": true,
       "mandatory": true
     },
-    "finnish": {
+    "primaryLang": { // prefLabel
+      "show": true, // must always be true
+      "mandatory": true // must always be true
+    },
+    "secondaryLang": { // prefLabel
       "show": true,
       "mandatory": true
     },
-    "swedish": {
-      "show": true,
-      "mandatory": true
-    },
-    "optionalLanguage": {
-      "show": true,
-      "mandatory": true
-    },
-    "prefLabel": {
+    "optionalLanguage": { // prefLabel
       "show": true,
       "mandatory": true
     },
@@ -128,25 +117,19 @@ export const vocabularyOptionsConfig = {
     }
   },
   "slm": {
-    "alku": "yso on täällä",
-    "CheckTermsAlsoInTheIncludedYSO": true,
     "type": {
       "show": true,
       "mandatory": true
     },
-    "finnish": {
+    "primaryLang": { // prefLabel
+      "show": true, // must always be true
+      "mandatory": true // must always be true
+    },
+    "secondaryLang": { // prefLabel
       "show": true,
       "mandatory": true
     },
-    "swedish": {
-      "show": true,
-      "mandatory": true
-    },
-    "optionalLanguage": {
-      "show": true,
-      "mandatory": true
-    },
-    "prefLabel": {
+    "optionalLanguage": { // prefLabel
       "show": true,
       "mandatory": true
     },
@@ -192,25 +175,19 @@ export const vocabularyOptionsConfig = {
     }
   },
   "juho": {
-    "alku": "yso on täällä",
-    "CheckTermsAlsoInTheIncludedYSO": true,
     "type": {
       "show": true,
-      "mandatory": false
+      "mandatory": true
     },
-    "finnish": {
+    "primaryLang": { // prefLabel
+      "show": true, // must always be true
+      "mandatory": true // must always be true
+    },
+    "secondaryLang": { // prefLabel
       "show": true,
       "mandatory": true
     },
-    "swedish": {
-      "show": true,
-      "mandatory": true
-    },
-    "optionalLanguage": {
-      "show": true,
-      "mandatory": true
-    },
-    "prefLabel": {
+    "optionalLanguage": { // prefLabel
       "show": true,
       "mandatory": true
     },

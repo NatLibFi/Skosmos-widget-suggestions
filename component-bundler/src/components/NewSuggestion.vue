@@ -6,23 +6,16 @@
     <h4>{{ $t('new.header') }}</h4>
     <p>{{ $t('new.p1') }}</p>
     <p>{{ $t('new.p2') }}</p>
-    <div id="testing">
-      <button v-on:click="messenger()">Klikkaa mua!</button>
-    </div>
-    <div v-for="config in configDataList.yso">{{config}}</div>
-    <span>{{vocabId}}</span>
   </div>
   <div class="suggestion-form">
     <div class="form-inputs">
+      <!-- The addAsteriskIfNeeded function passes as arguments a reference to the translation and a property in the options.js file -->
       <basic-drop-down v-if="configDataList[vocabId].type.show"
         :value="d.conceptType.value"
         :options="d.conceptType.options"
         @changeVocabulary="$emit('update:vocabulary', $event)"
         @select="$emit('update:conceptType', $event)"
         :label="{text: addAsteriskIfNeeded('new.conceptType.label', 'type'), for: $t('new.conceptType.for')}" />  
-        <!-- :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />   -->
-        <!-- :label="{text: setFieldLabelsByMandatoryStatus('conceptType'), for: $t('new.conceptType.for')}" /> -->
-      <!-- <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p> PALAUTA--> 
     </div>
 
     <div >
@@ -33,9 +26,6 @@
         :language="'fi'"
         @input="$emit('update:primaryPrefLabel', $event)"
         :label="{text: addAsteriskIfNeeded('new.prefLabel.fi.label', 'primaryLang'), for: $t('new.prefLabel.fi.for')}" /> 
-        <!-- :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />  -->
-        <!-- :label="{text: setFieldLabelsByMandatoryStatus('prefLabel', 'fi'), for: $t('new.prefLabel.fi.for')}" /> -->
-      <!-- <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p> PALAUTA -->
 
       <search-input v-if="$i18n.locale === 'fi' && configDataList[vocabId].secondaryLang.show"
         :value="d.prefLabel.secondary"
@@ -43,8 +33,7 @@
         :vocabulary="d.vocabulary"
         :language="'sv'"
         @input="$emit('update:secondaryPrefLabel', $event)"
-        :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
-        <!-- :label="{text: setFieldLabelsByMandatoryStatus('prefLabel', 'sv'), for: $t('new.prefLabel.sv.for')}" /> -->
+        :label="{text: addAsteriskIfNeeded('new.prefLabel.sv.label', 'secondaryLang'), for: $t('new.prefLabel.sv.for')}" />
     </div>
 
     <div >
@@ -54,9 +43,7 @@
         :conceptType="d.conceptType.value"
         :language="'sv'"
         @input="$emit('update:primaryPrefLabel', $event)"
-        :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
-        <!-- :label="{text: setFieldLabelsByMandatoryStatus('prefLabel', 'sv'), for: $t('new.prefLabel.sv.for')}" /> -->
-      <!-- <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p> PALAUTA -->
+        :label="{text: addAsteriskIfNeeded('new.prefLabel.sv.label', 'primaryLang'), for: $t('new.prefLabel.sv.for')}" />
 
       <search-input v-if="$i18n.locale === 'sv' && configDataList[vocabId].secondaryLang.show"
         :value="d.prefLabel.secondary"
@@ -64,28 +51,26 @@
         :conceptType="d.conceptType.value"
         :language="'fi'"
         @input="$emit('update:secondaryPrefLabel', $event)"
-        :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-        <!-- :label="{text: setFieldLabelsByMandatoryStatus('prefLabel', 'fi'), for: $t('new.prefLabel.fi.for')}" /> -->
+        :label="{text: addAsteriskIfNeeded('new.prefLabel.fi.label', 'secondaryLang'), for: $t('new.prefLabel.fi.for')}" />
     </div>
 
     <basic-input v-if="configDataList[vocabId].optionalLanguage.show"
       :value="d.prefLabel.en"
       @input="$emit('update:enPrefLabel', $event)"
-      :label="{text: $t('new.prefLabel.en.label'), for: $t('new.prefLabel.en.for')}"
+      :label="{text: addAsteriskIfNeeded('new.prefLabel.en.label', 'optionalLanguage'), for: $t('new.prefLabel.en.for')}"
       :isTextArea="false" />
-      <!-- :label="{text: setFieldLabelsByMandatoryStatus('prefLabel', 'en'), for: $t('new.prefLabel.en.for')}" -->
 
     <the-multiple-basic-input v-if="configDataList[vocabId].altLabels.show"
       :values="d.altLabels"
       @input="$emit('update:altLabels', $event)"
-      :label="{text: $t('new.altLabels.label'), for: $t('new.altLabels.for')}" />
+      :label="{text: addAsteriskIfNeeded('new.altLabels.label', 'altLabels'), for: $t('new.altLabels.for')}" />
 
     <search-auto-complete v-if="configDataList[vocabId].broaders.show"
       :values="d.broaderLabels"
       :vocabulary="d.vocabulary"
       :language="$i18n.locale"
       @input="$emit('update:broaderLabels', $event)"
-      :label="{text: $t('new.broaderLabels.label'), for: $t('new.broaderLabels.for')}"
+      :label="{text: addAsteriskIfNeeded('new.broaderLabels.label', 'broaders'), for: $t('new.broaderLabels.for')}"
       :hasUniqueValue="false" />
 
     <search-auto-complete v-if="configDataList[vocabId].narrowers.show"
@@ -93,7 +78,7 @@
       :vocabulary="d.vocabulary"
       :language="$i18n.locale"
       @input="$emit('update:narrowerLabels', $event)"
-      :label="{text: $t('new.narrowerLabels.label'), for: $t('new.narrowerLabels.for')}"
+      :label="{text: addAsteriskIfNeeded('new.narrowerLabels.label', 'narrowers'), for: $t('new.narrowerLabels.for')}"
       :hasUniqueValue="false" />
 
     <search-auto-complete v-if="configDataList[vocabId].related.show"
@@ -101,7 +86,7 @@
       :vocabulary="d.vocabulary"
       :language="$i18n.locale"
       @input="$emit('update:relatedLabels', $event)"
-      :label="{text: $t('new.relatedLabels.label'), for: this.$t('new.relatedLabels.for')}"
+      :label="{text: addAsteriskIfNeeded('new.relatedLabels.label', 'related'), for: this.$t('new.relatedLabels.for')}"
       :hasUniqueValue="false" />
 
     <select-with-chips 
@@ -109,47 +94,37 @@
       :value="$t('new.groups.placeholder')"
       :options="d.groups.allGroups"
       @select="$emit('update:groups', $event)"
-      :label="{text: $t('new.groups.label'), for: this.$t('new.groups.for')}" />
-
-    <!-- <ul id="temp-list">
-      <li v-for="item in d.groups.allGroups" :key="item.prefLabel">
-        {{ item.prefLabel }}
-      </li>
-    </ul> -->
+      :label="{text: addAsteriskIfNeeded('new.groups.label', 'thematicGroups'), for: this.$t('new.groups.for')}" />
 
     <the-exact-matches-input v-if="configDataList[vocabId].exactMatches.show"
       :values="d.exactMatches"
       @input="$emit('update:exactMatches', $event)"
-      :label="{text: $t('new.exactMatches.label'), for: this.$t('new.exactMatches.for')}"
+      :label="{text: addAsteriskIfNeeded('new.exactMatches.label', 'exactMatches'), for: this.$t('new.exactMatches.for')}"
       />
 
     <basic-input v-if="configDataList[vocabId].scopeNote.show"
       :value="d.scopeNote"
       @input="$emit('update:scopeNote', $event)"
-      :label="{text: $t('new.scopeNote.label'), for: $t('new.scopeNote.for')}"
+      :label="{text: addAsteriskIfNeeded('new.scopeNote.label', 'scopeNote'), for: $t('new.scopeNote.for')}"
       :isTextArea="true" />
 
     <basic-input v-if="configDataList[vocabId].explanation.show"
       :value="d.explanation"
       @input="$emit('update:explanation', $event)"
-      :label="{text: $t('new.explanation.label'), for: $t('new.explanation.label')}"
+      :label="{text: addAsteriskIfNeeded('new.explanation.label', 'explanation'), for: $t('new.explanation.label')}"
       :isTextArea="true" />
-    <!-- <p v-if="v.$dirty && !v.explanation.required" class="error">{{ $t('new.explanation.error') }}</p> PALAUTA -->
 
-<!-- isTextArea set true on 2022-02-01     -->
     <basic-input v-if="configDataList[vocabId].neededFor.show"
       :value="d.neededFor"
       @input="$emit('update:neededFor', $event)"
-      :label="{text: $t('new.neededFor.label'), for: $t('new.neededFor.for')}"
+      :label="{text: addAsteriskIfNeeded('new.neededFor.label', 'neededFor'), for: $t('new.neededFor.for')}"
       :isTextArea="true" />
-    <!-- <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p> PALAUTA -->
 
     <basic-input v-if="configDataList[vocabId].fromOrg.show"
       :value="d.fromOrg"
       @input="$emit('update:fromOrg', $event)"
-      :label="{text: $t('new.fromOrg.label'), for: $t('new.fromOrg.for')}"
+      :label="{text: addAsteriskIfNeeded('new.fromOrg.label', 'fromOrg'), for: $t('new.fromOrg.for')}"
       :isTextArea="false" />
-    <!-- </div> -->
 
     <div class="form-submit">
       <a @click="submitForm()">
@@ -211,44 +186,20 @@ export default {
       console.log("CheckTermsAlsoInTheIncludedYSO");
       console.log(this.configDataList.yso.CheckTermsAlsoInTheIncludedYSO);
     },
-    getConfigDatalist: () => { return this.configDataList},
     addAsteriskIfNeeded(translation, configKey) {
-      console.log(vocabularyOptionsConfig["yso"][configKey].mandatory);
+      // The function checks if the field to be shown is set as mandatory and if it is, the asterisk must be added to the end of the field label. 
+      // So far English is not a language in the tranlslations list and therefore it needs a special treatment
+      var langProperty = content_lang;
+      lang === 'en' ? langProperty = 'fi' : langProperty;
       const parts = translation.split('.');
       if (parts.length === 3) {
-        return (vocabularyOptionsConfig[vocab][configKey].mandatory ? translations[content_lang][parts[0]][parts[1]][parts[2]] + "*" : translations[content_lang][parts[0]][parts[1]][parts[2]]);
+        // e.g. new.conceptType.label in the translations // 3 parts
+        return (vocabularyOptionsConfig[vocab][configKey].mandatory ? translations[langProperty][parts[0]][parts[1]][parts[2]] + "*" : translations[langProperty][parts[0]][parts[1]][parts[2]]);
       } else {
-        return (vocabularyOptionsConfig[vocab][configKey].mandatory ? translations[content_lang][parts[0]][parts[1]][parts[2]][parts[3]] + "*" : translations[content_lang][parts[0]][parts[1]][parts[2]][parts[3]]);
+        // e.g new.prefLabel.fi.label in the translations // 4 parts
+        return (vocabularyOptionsConfig[vocab][configKey].mandatory ? translations[langProperty][parts[0]][parts[1]][parts[2]][parts[3]] + "*" : translations[langProperty][parts[0]][parts[1]][parts[2]][parts[3]]);
       }
     },
-    setFieldLabelsByMandatoryStatus(propertyTag, fiOrSvOrOther) {
-      console.log(content_lang);
-      let translatedText = '';
-      this.propertyTagger = propertyTag;
-      const mandatoryCase = '';
-      const nonMandatoryCase = '';
-      console.log(propertyTag);
-      if (propertyTag === 'prefLabel') {
-        if (content_lang === 'fi' || content_lang === "sv"){
-          console.log(propertyTag);
-          this.mandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag][fiOrSvOrOther].label + "*";
-          this.nonMandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag][fiOrSvOrOther].label ;
-        } else {
-          // This part must be changed if the optional (the third) language is about to implement. Via the variables
-          console.log(propertyTag);
-          // content_lang and fiOrSvOrOther should be passed the correct language tag like se, en or alike.
-          // 'new.prefLabel.en.label'
-          this.mandatoryCase = this.preFormattedTranslations['fi'].new[propertyTag]['en'].label + "*";
-          this.nonMandatoryCase = this.preFormattedTranslations['fi'].new[propertyTag]['en'].label ;
-        }
-      } else {
-        this.mandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag].label + "*";
-        this.nonMandatoryCase = this.preFormattedTranslations[content_lang].new[propertyTag].label ;
-      }
-      const vocabularyConfig = this.configDataList[this.vocabId.toString()];
-      vocabularyConfig.primaryLang.mandatory ? translatedText = this.mandatoryCase : translatedText = this.nonMandatoryCase;
-      return translatedText;
-    }
   },
   data: () => {
     return {
