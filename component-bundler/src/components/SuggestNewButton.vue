@@ -247,7 +247,7 @@ export default {
 
       // UUSI ALKAA
 
-      // Loppuvaiheen refaktoroinnissa: Siirrä validationsCheckList options.js-tiedostoon ja importaa se oikein käyttöön tässä tiedostossa
+      // Loppuvaiheen refaktoroinnissa: Siirrä validationsCheckList options.js-tiedostoon ja importtaa se oikein käyttöön tässä tiedostossa
 
       this.validationsChecklist = {
         type: {
@@ -315,6 +315,7 @@ export default {
       if (this.configDataList[this.getVocabId()].secondaryLang.mandatory && !this.validationsChecklist.secondaryLang.condition) {
         this.secondaryLangError = this.$t('new.validation.secondaryLang');
         this.amountOfErrors += 1;
+        console.log(this);
       } else {
         this.secondaryLangError = '';
       }

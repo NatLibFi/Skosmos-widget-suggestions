@@ -27,7 +27,7 @@
         :language="'fi'"
         @input="$emit('update:primaryPrefLabel', $event)"
         :label="{text: addAsteriskIfNeeded('new.prefLabel.fi.label', 'primaryLang'), for: $t('new.prefLabel.fi.for')}" />
-        <p v-if="primaryLangError" class="error">{{ primaryLangError }}</p>
+        <p v-if="primaryLangError && $i18n.locale === 'fi' && configDataList[vocabId].primaryLang.show" class="error">{{ primaryLangError }}</p>
 
       <search-input v-if="$i18n.locale === 'fi' && configDataList[vocabId].secondaryLang.show"
         :value="d.prefLabel.secondary"
@@ -36,7 +36,7 @@
         :language="'sv'"
         @input="$emit('update:secondaryPrefLabel', $event)"
         :label="{text: addAsteriskIfNeeded('new.prefLabel.sv.label', 'secondaryLang'), for: $t('new.prefLabel.sv.for')}" />
-        <p v-if="secondaryLangError" class="error">{{ secondaryLangError }}</p>
+        <p v-if="secondaryLangError && $i18n.locale === 'fi' && configDataList[vocabId].secondaryLang.show" class="error">{{ secondaryLangError }}</p>
     </div>
 
     <div >
@@ -47,7 +47,7 @@
         :language="'sv'"
         @input="$emit('update:primaryPrefLabel', $event)"
         :label="{text: addAsteriskIfNeeded('new.prefLabel.sv.label', 'primaryLang'), for: $t('new.prefLabel.sv.for')}" />
-        <p v-if="primaryLangError" class="error">{{ primaryLangError }}</p>
+        <p v-if="primaryLangError && $i18n.locale === 'sv' && configDataList[vocabId].primaryLang.show" class="error">{{ primaryLangError }}</p>
 
       <search-input v-if="$i18n.locale === 'sv' && configDataList[vocabId].secondaryLang.show"
         :value="d.prefLabel.secondary"
@@ -56,7 +56,7 @@
         :language="'fi'"
         @input="$emit('update:secondaryPrefLabel', $event)"
         :label="{text: addAsteriskIfNeeded('new.prefLabel.fi.label', 'secondaryLang'), for: $t('new.prefLabel.fi.for')}" />
-        <p v-if="secondaryLangError" class="error">{{ secondaryLangError }}</p>
+        <p v-if="secondaryLangError && $i18n.locale === 'sv' && configDataList[vocabId].secondaryLang.show" class="error">{{ secondaryLangError }}</p>
     </div>
 
     <basic-input v-if="configDataList[vocabId].optionalLanguage.show"
