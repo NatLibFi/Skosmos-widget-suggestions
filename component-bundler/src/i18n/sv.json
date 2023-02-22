@@ -5,7 +5,7 @@
     "p1": "",
     "p2": "Du kan föreslå ändringar av begrepp som redan finns i vokabulären via begreppens egna sidor.",
     "conceptType": {
-      "label": "Typ: *",
+      "label": "Typ: ",
       "for": "typ av begrepp",
       "placeholder": "Välj typ av begrepp",
       "none": "Begreppstyper kan inte väljas",
@@ -18,7 +18,7 @@
         "for": "den föreslagna termen på finska"
       },
       "sv": {
-        "label": "Term/ämnesord på svenska: *",
+        "label": "Term/ämnesord på svenska: ",
         "for": "den föreslagna termen på svenska"
       },
       "en": {
@@ -60,12 +60,12 @@
       "for": "förklaring som preciserar betydelsen"
     },
     "explanation": {
-      "label": "Motiveringar till förslaget: *",
+      "label": "Motiveringar till förslaget: ",
       "for": "motiveringar till den föreslagna termen",
       "error": "Detta är obligatorisk information."
     },
     "neededFor": {
-      "label": "För vilket materials beskrivning behöver du begreppet (t.ex. titel eller URL): *",
+      "label": "För vilket materials beskrivning behöver du begreppet (t.ex. titel eller URL): ",
       "for": "för vilket material behövs termen",
       "error": "Detta är obligatorisk information."
     },
@@ -85,19 +85,35 @@
       "ifyse1": "Termen har redan föreslagits:",
       "ifyse2": ". Kommentera eller understöd förslaget via länken till förslagets hemsida."
     },
-    "submit": "Skicka förslaget"
+    "submit": "Skicka förslaget",    
+    "validation": {
+      "primaryLang": "Päätermin pitää sisältää vähintään kolme merkkiä",
+      "secondaryLang": "Päätermin pitää sisältää vähintään kolme merkkiä",
+      "type": "Valitse joko yleiskäsite tai maantieteellinen paikka",
+      "optionalLanguage": "Termin pitää sisältää vähintään kolme merkkiä",
+      "altLabels": "Lisää vähintään yksi altLabel",
+      "broaders": "Valitse vähintään yksi yläkäsite",
+      "narrowers": "Valitse vähintään yksi alakäsite",
+      "related": "Valitse vähintään yksi assosiatiivinen käsite",
+      "thematicGroups": "Valitse vähintään yksi temaattinen ryhmä",
+      "exactMatches": "Lisää vähintään yksi vastaava käsite ja siihen viittaava linkki muusta sanastosta",
+      "scopeNote": "Lisää tarkoitusta täsmentävä selite",
+      "explanation": "Lisää ehdotukselle perustelut",
+      "neededFor": "Kerro minkä aineiston kuvailussa tarvitsisit käsitettä",
+      "fromOrg": "Kerro mistä organisaatiosta olet" 
+    }
   },
   "edit": {
     "button": "Föreslå en ändring av begreppet",
     "header": "Föreslå en ändring av begreppet",
     "paragraph": "Vem som helst som använder ALLFO kan föreslå ändringar till vokabulären.",
     "description": {
-      "label": "Förslag till ändring: *",
+      "label": "Förslag till ändring: ",
       "for": "förslag till ändring",
       "error": "Detta är obligatorisk information."
     },
     "reason": {
-      "label": "Motiveringar till förslaget: *",
+      "label": "Motiveringar till förslaget: ",
       "for": "varför behövs ändringen",
       "error": "Detta är obligatorisk information."
     },

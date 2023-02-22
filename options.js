@@ -41,7 +41,7 @@ export const vocabularyOptionsConfig = {
       "show": true,
       "mandatory": true
     },
-    "scopeNote": {
+    "scopeNote": { // Käsitteen määritelmä
       "show": true,
       "mandatory": true
     },

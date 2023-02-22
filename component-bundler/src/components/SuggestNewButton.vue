@@ -315,7 +315,6 @@ export default {
       if (this.configDataList[this.getVocabId()].secondaryLang.mandatory && !this.validationsChecklist.secondaryLang.condition) {
         this.secondaryLangError = this.$t('new.validation.secondaryLang');
         this.amountOfErrors += 1;
-        console.log(this);
       } else {
         this.secondaryLangError = '';
       }
@@ -436,60 +435,43 @@ ${ this.configDataList[this.getVocabId()].type.show ? "**Käsitteen tyyppi**": '
 ${ this.configDataList[this.getVocabId()].type.show ? ontTypeInTargetSuggestionSystem : ''}
 
 **Ehdotettu termi suomeksi**
-
 ${ this.formData.prefLabel.fi.value }
 
 **Ehdotettu termi ruotsiksi**
-
 ${ this.formData.prefLabel.sv.value }
 
 **Ehdotettu termi englanniksi**
-
 ${ this.formData.prefLabel.en }
 
-**Tarkoitusta täsmentävä selite**
+${ this.configDataList[this.getVocabId()].scopeNote.show ? "**Käsitteen määritelmä**": ''}
+${ this.configDataList[this.getVocabId()].scopeNote.show ? this.formData.scopeNote : ''}
 
-${ this.formData.scopeNote }
+${ this.configDataList[this.getVocabId()].explanation.show ? "**Perustelut ehdotukselle**": ''}
+${ this.configDataList[this.getVocabId()].explanation.show ? this.formData.explanation : ''}
 
-**Perustelut ehdotukselle**
+${ this.configDataList[this.getVocabId()].broaders.show ? "**Ehdotettu yläkäsite YSOssa (LT)**": ''}
+${ this.configDataList[this.getVocabId()].broaders.show ? brdLabls : ''}
 
-${ this.formData.explanation }
+${ this.configDataList[this.getVocabId()].thematicGroups.show ? "**Ehdotetut temaattiset ryhmät**": ''}
+${ this.configDataList[this.getVocabId()].thematicGroups.show ? groups : ''}
 
-**Ehdotettu yläkäsite YSOssa (LT)**
+${ this.configDataList[this.getVocabId()].altLabels.show ? "**Vaihtoehtoiset termit**": ''}
+${ this.configDataList[this.getVocabId()].altLabels.show ? altTerms : ''}
 
-${ brdLabls }
+${ this.configDataList[this.getVocabId()].narrowers.show ? "**Alakäsitteet (RT)**": ''}
+${ this.configDataList[this.getVocabId()].narrowers.show ? nrrLabls : ''}
 
-**Ehdotetut temaattiset ryhmät**
+${ this.configDataList[this.getVocabId()].related.show ? "**Assosiatiiviset (RT)**": ''}
+${ this.configDataList[this.getVocabId()].related.show ? rltdLabls : ''}
 
-${ groups }
+${ this.configDataList[this.getVocabId()].exactMatches.show ? "**Vastaava käsite muussa sanastossa**": ''}
+${ this.configDataList[this.getVocabId()].exactMatches.show ? exctLabls : ''}
 
-**Vaihtoehtoiset termit**
+${ this.configDataList[this.getVocabId()].neededFor.show ? "**Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**": ''}
+${ this.configDataList[this.getVocabId()].neededFor.show ? this.formData.neededFor : ''}
 
-${ altTerms }
-
-**Alakäsitteet (RT)**
-
-${ nrrLabls }
-
-**Assosiatiiviset (RT)**
-
-${ rltdLabls }
-
-**Vastaava käsite muussa sanastossa**
-
-${ exctLabls }
-
-**Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**
-
-${ this.formData.neededFor }
-
-**Ehdottajan organisaatio**
-
-${ this.formData.fromOrg }
-
-${ 1 === 1 ? "ehdot toimivat" : "ehdot eivät toimi" }
-
-
+${ this.configDataList[this.getVocabId()].fromOrg.show ? "**Ehdottajan organisaatio**": ''}
+${ this.configDataList[this.getVocabId()].fromOrg.show ? this.formData.fromOrg : ''}
 
 `
 

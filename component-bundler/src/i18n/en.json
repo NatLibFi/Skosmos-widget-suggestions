@@ -5,7 +5,7 @@
     "p1": "All users can suggest changes to this vocabulary.",
     "p2": "Changes to the existing concepts can be suggested in the concept pages.",
     "conceptType": {
-      "label": "Type of suggestion: *",
+      "label": "Type of suggestion: ",
       "for": "type of suggestion",
       "placeholder": "Select the type of suggestion",
       "none": "Type of suggestion is not selectable",
@@ -14,7 +14,7 @@
     "prefLabel": {
       "error": "The main term should be unique",
       "fi": {
-        "label": "Main term (in Finnish): *",
+        "label": "Main term (in Finnish): ",
         "for": "suggested term in Finnish"
       },
       "sv": {
@@ -60,12 +60,12 @@
       "for": "A short description for a concept????"
     },
     "explanation": {
-      "label": "Describe and specify the suggestion: *",
+      "label": "Describe and specify the suggestion: ",
       "for": "describe and specify the suggestion",
       "error": "This information is mandatory."
     },
     "neededFor": {
-      "label": "What material does the concept describe? (e.g. Title or URL): *",
+      "label": "What material does the concept describe? (e.g. Title or URL): ",
       "for": "what material does the concept describe?",
       "error": "This information is mandatory."
     },
@@ -79,19 +79,35 @@
       "exists2": " was already found in YSO, YSO Places or YSE",
       "places": "YSO places"
     },
-    "submit": "Send the suggestion"
+    "submit": "Send the suggestion",
+    "validation": {
+      "primaryLang": "Päätermin pitää sisältää vähintään kolme merkkiä",
+      "secondaryLang": "Päätermin pitää sisältää vähintään kolme merkkiä",
+      "type": "Valitse joko yleiskäsite tai maantieteellinen paikka",
+      "optionalLanguage": "Termin pitää sisältää vähintään kolme merkkiä",
+      "altLabels": "Lisää vähintään yksi altLabel",
+      "broaders": "Valitse vähintään yksi yläkäsite",
+      "narrowers": "Valitse vähintään yksi alakäsite",
+      "related": "Valitse vähintään yksi assosiatiivinen käsite",
+      "thematicGroups": "Valitse vähintään yksi temaattinen ryhmä",
+      "exactMatches": "Lisää vähintään yksi vastaava käsite ja siihen viittaava linkki muusta sanastosta",
+      "scopeNote": "Lisää tarkoitusta täsmentävä selite",
+      "explanation": "Lisää ehdotukselle perustelut",
+      "neededFor": "Kerro minkä aineiston kuvailussa tarvitsisit käsitettä",
+      "fromOrg": "Kerro mistä organisaatiosta olet" 
+    }
   },
   "edit": {
     "button": "Suggest changes to the concept",
     "header": "Suggest changes to the concept",
     "paragraph": "Any user of the YSO and Allärs may suggest changes to the vocabulary.",
     "description": {
-      "label": "Suggested changes to be made: *",
+      "label": "Suggested changes to be made: ",
       "for": "suggested changes to be made",
       "error": "This information is mandatory."
     },
     "reason": {
-      "label": "Reasons why the changes are necessary: *",
+      "label": "Reasons why the changes are necessary: ",
       "for": "why are the changes necessary?",
       "error": "This information is mandatory."
     },

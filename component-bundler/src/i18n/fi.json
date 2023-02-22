@@ -56,8 +56,8 @@
 
     },
     "scopeNote": {
-      "label": "Tarkoitusta täsmentävä selite:",
-      "for": "tarkoitusta täsmentävä selite"
+      "label": "Käsitteen määritelmä:",
+      "for": "Käsitteen määritelmä"
     },
     "explanation": {
       "label": "Perustelut ehdotukselle:",
@@ -91,13 +91,13 @@
       "primaryLang": "Päätermin pitää sisältää vähintään kolme merkkiä",
       "secondaryLang": "Kirjoita vähintään kolme merkkiä",
       "optionalLanguage": "Kirjoita vähintään kolme merkkiä",
-      "altLabels": "Lisää vähintään yksi altLabel",
+      "altLabels": "Lisää vähintään yksi vaihtoehtoinen termi",
       "broaders": "Valitse vähintään yksi yläkäsite",
       "narrowers": "Valitse vähintään yksi alakäsite",
       "related": "Valitse vähintään yksi assosiatiivinen käsite",
       "thematicGroups": "Valitse vähintään yksi temaattinen ryhmä",
       "exactMatches": "Lisää vähintään yksi vastaava käsite ja siihen viittaava linkki muusta sanastosta",
-      "scopeNote": "Lisää tarkoitusta täsmentävä selite",
+      "scopeNote": "Lisää käsitteen määritelmä",
       "explanation": "Lisää ehdotukselle perustelut",
       "neededFor": "Kerro minkä aineiston kuvailussa tarvitsisit käsitettä",
       "fromOrg": "Kerro mistä organisaatiosta olet" 
