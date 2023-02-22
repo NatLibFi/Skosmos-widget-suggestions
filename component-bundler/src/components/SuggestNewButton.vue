@@ -36,6 +36,20 @@
         <new-suggestion id="newsuggestionform"
         v-if="!showSuccessMessage && !showFailureMessage"
         :d="formData"
+        :typeError="typeError"
+        :primaryLangError="primaryLangError"
+        :secondaryLangError="secondaryLangError"
+        :optionalLanguageError="optionalLanguageError"
+        :altLabelsError="altLabelsError"
+        :broadersError="broadersError"
+        :narrowersError="narrowersError"
+        :relatedError="relatedError"
+        :thematicGroupsError="thematicGroupsError"
+        :exactMatchesError="exactMatchesError"
+        :scopeNoteError="scopeNoteError"
+        :explanationError="explanationError"
+        :neededForError="neededForError"
+        :fromOrgError="fromOrgError"
         @update:vocabulary="formData.vocabulary = $event"
         @update:conceptType="formData.conceptType.value = $event"
         @update:primaryPrefLabel="formData.prefLabel.primary = $event"
@@ -53,6 +67,7 @@
         @update:fromOrg="formData.fromOrg = $event"
         @submitForm="submitForm()"
         />
+
         <!-- <p v-bind="testErrorMessage" class="error">{{ $t('new.prefLabel.error') }}</p> -->
         <!-- <p v-bind="testErrorMessage" class="error">{{ $t('new.prefLabel.error') }}</p> -->
 
@@ -94,6 +109,20 @@ export default {
   },
   data: () => {
     return {
+      typeError: '',
+      primaryLangError: '',
+      secondaryLangError: '',
+      optionalLanguageError: '',
+      altLabelsError: '',
+      broadersError: '',
+      narrowersError: '',
+      relatedError: '',
+      thematicGroupsError: '',
+      exactMatchesError: '',
+      scopeNoteError: '',
+      explanationError: '',
+      neededForError: '',
+      fromOrgError: '',
       amountOfErrors: 0,
       errorMessages: [],
       validationsChecklist: {},
@@ -218,16 +247,7 @@ export default {
 
       // UUSI ALKAA
 
-      var paragraph = document.getElementById("newsuggestionform");
-
-      console.log('Tarkistuksia varten');
-      console.log('this.formData.prefLabel.primary.length > 0');
-      console.log(this.formData.prefLabel.primary.length > 0);
-      console.log(this.formData.prefLabel.primary);
-      console.log('this.formData.prefLabel.secondary.length > 0');
-      console.log(this.formData.prefLabel.secondary.length > 0);
-      console.log(this.formData.prefLabel.secondary);
-
+      // Loppuvaiheen refaktoroinnissa: Siirrä validationsCheckList options.js-tiedostoon ja importaa se oikein käyttöön tässä tiedostossa
 
       this.validationsChecklist = {
         type: {
@@ -274,86 +294,110 @@ export default {
         }
       }
 
-      // console.log('this.formData.scopeNote.length');
-      // console.log(this.formData.scopeNote.length);
     
       // Add the correct number of errors (if occured) to the array that will eventually be used as a condition for sending the form. Expectation: zero errors
       this.amountOfErrors = 0;
       // type = yleiskäsite | maantieteellinen
       if (this.configDataList[this.getVocabId()].type.mandatory && !this.validationsChecklist.type.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.type')));
+        this.typeError = this.$t('new.validation.type');
         this.amountOfErrors += 1;
+      } else {
+        this.typeError = '';
       }
       // prefLabel (primaryLang) but the language specific validations should be implemented as well
       if (this.configDataList[this.getVocabId()].primaryLang.mandatory && !this.validationsChecklist.primaryLang.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.primaryLang')));
+        this.primaryLangError = this.$t('new.validation.primaryLang');
         this.amountOfErrors += 1;
+      } else {
+        this.primaryLangError = '';
       }
       // prefLabel (secondaryLang) but the language specific validations should be implemented as well
       if (this.configDataList[this.getVocabId()].secondaryLang.mandatory && !this.validationsChecklist.secondaryLang.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.secondaryLang')));
+        this.secondaryLangError = this.$t('new.validation.secondaryLang');
         this.amountOfErrors += 1;
+      } else {
+        this.secondaryLangError = '';
       }
       // prefLabel (Optional Language)
       if (this.configDataList[this.getVocabId()].optionalLanguage.mandatory && !this.validationsChecklist.optionalLanguage.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.optionalLanguage')));
+        this.optionalLanguageError = this.$t('new.validation.optionalLanguage');
         this.amountOfErrors += 1;
+      } else {
+        this.optionalLanguageError = '';
       }
       // altLabels
       if (this.configDataList[this.getVocabId()].altLabels.mandatory && !this.validationsChecklist.altLabels.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.altLabels')));
+        this.altLabelsError = this.$t('new.validation.altLabels');
         this.amountOfErrors += 1;
+      } else {
+        this.altLabelsError = '';
       }
       // broaders
       if (this.configDataList[this.getVocabId()].broaders.mandatory && !this.validationsChecklist.broaders.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.broaders')));
+        this.broadersError = this.$t('new.validation.broaders');
         this.amountOfErrors += 1;
+      } else {
+        this.broadersError = '';
       }
       // narrowers
       if (this.configDataList[this.getVocabId()].narrowers.mandatory && !this.validationsChecklist.narrowers.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.narrowers')));
+        this.narrowersError = this.$t('new.validation.narrowers');
         this.amountOfErrors += 1;
+      } else {
+        this.narrowersError = '';
       }
       // related
       if (this.configDataList[this.getVocabId()].related.mandatory && !this.validationsChecklist.related.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.related')));
+        this.relatedError = this.$t('new.validation.related');
         this.amountOfErrors += 1;
+      } else {
+        this.relatedError = '';
       }
       // thematicGroups
       if (this.configDataList[this.getVocabId()].thematicGroups.mandatory && !this.validationsChecklist.thematicGroups.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.thematicGroups')));
+        this.thematicGroupsError = this.$t('new.validation.thematicGroups');
         this.amountOfErrors += 1;
+      } else {
+        this.thematicGroupsError = '';
       }
       // exactMatches
       if (this.configDataList[this.getVocabId()].exactMatches.mandatory && !this.validationsChecklist.exactMatches.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.exactMatches')));
+        this.exactMatchesError = this.$t('new.validation.exactMatches');
         this.amountOfErrors += 1;
+      } else {
+        this.exactMatchesError = '';
       }
       // scopeNote
       if (this.configDataList[this.getVocabId()].scopeNote.mandatory && !this.validationsChecklist.scopeNote.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.scopeNote')));
+        this.scopeNoteError = this.$t('new.validation.scopeNote');
         this.amountOfErrors += 1;
+      } else {
+        this.scopeNoteError = '';
       }
       // explanation
       if (this.configDataList[this.getVocabId()].explanation.mandatory && !this.validationsChecklist.explanation.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.explanation')));
+        this.explanationError = this.$t('new.validation.explanation');
         this.amountOfErrors += 1;
+      } else {
+        this.explanationError = '';
       }
       // neededFor
       if (this.configDataList[this.getVocabId()].neededFor.mandatory && !this.validationsChecklist.neededFor.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.neededFor')));
+        this.neededForError = this.$t('new.validation.neededFor');
         this.amountOfErrors += 1;
+      } else {
+        this.neededForError = '';
       }
       // fromOrg
       if (this.configDataList[this.getVocabId()].fromOrg.mandatory && !this.validationsChecklist.fromOrg.condition) {
-        paragraph.appendChild(document.createTextNode(this.$t('new.validation.fromOrg')));
+        this.fromOrgError = this.$t('new.validation.fromOrg');
         this.amountOfErrors += 1;
+      } else {
+        this.fromOrgError = '';
       }
-
 
       console.log(this.amountOfErrors);
       this.amountOfErrors == 0 ? this.sendData() : '';
-    
     },
     async sendData () {
       this.handlePrefLabelLanguages();

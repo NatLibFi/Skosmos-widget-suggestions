@@ -87,10 +87,10 @@
     },
     "submit": "Lähetä käsite-ehdotus",
     "validation": {
-      "primaryLang": "Päätermin pitää sisältää vähintään kolme merkkiä",
-      "secondaryLang": "Päätermin pitää sisältää vähintään kolme merkkiä",
       "type": "Valitse joko yleiskäsite tai maantieteellinen paikka",
-      "optionalLanguage": "Termin pitää sisältää vähintään kolme merkkiä",
+      "primaryLang": "Päätermin pitää sisältää vähintään kolme merkkiä",
+      "secondaryLang": "Kirjoita vähintään kolme merkkiä",
+      "optionalLanguage": "Kirjoita vähintään kolme merkkiä",
       "altLabels": "Lisää vähintään yksi altLabel",
       "broaders": "Valitse vähintään yksi yläkäsite",
       "narrowers": "Valitse vähintään yksi alakäsite",
