@@ -55,7 +55,7 @@
     "lodash": "^4.17.21",
     "minimist": "^1.2.6",
     "node-fetch": "^2.6.7",
-    "npm": "^7.24.1",
+    "npm": "^8.11.0",
     "postcss-selector-parser": "^6.0.6",
     "prismjs": "^1.27.0",
     "regenerator-runtime": "^0.13.9",
