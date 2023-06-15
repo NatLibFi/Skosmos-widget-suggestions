@@ -4,7 +4,7 @@
       <span>
         <div id="vocab-info">
           <div>
-            <h3>{{ $t('new.button') }} AAA</h3>
+            <h3>{{ $t('new.button') }}</h3>
           </div>
         </div>
       </span>
