@@ -1,4 +1,5 @@
-<html><head>
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
 <title>npm-fund</title>
 <style>
 body {
@@ -145,9 +146,14 @@ npm command-line interface
 </section>
 
 <div id="_content"><h3 id="synopsis">Synopsis</h3>
-<pre lang="bash"><code>npm fund [&lt;pkg&gt;]
-npm fund [-w &lt;workspace-name&gt;]
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<pre lang="bash"><code>npm fund [[&lt;@scope&gt;/]&lt;pkg&gt;]
 </code></pre>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <h3 id="description">Description</h3>
 <p>This command retrieves information on how to fund the dependencies of a
 given project. If no package name is provided, it will list all
@@ -161,10 +167,10 @@ share the same url as a single entry. Thus, the list does not have the same
 shape of the output from <code>npm ls</code>.</p>
 <h4 id="example">Example</h4>
 <h3 id="workspaces-support">Workspaces support</h3>
-<p>It’s possible to filter the results to only include a single workspace and its
+<p>It's possible to filter the results to only include a single workspace and its
 dependencies using the <code>workspace</code> config option.</p>
 <h4 id="example2">Example:</h4>
-<p>Here’s an example running <code>npm fund</code> in a project with a configured
+<p>Here's an example running <code>npm fund</code> in a project with a configured
 workspace <code>a</code>:</p>
 <pre lang="bash"><code>$ npm fund
 test-workspaces-fund@1.0.0
@@ -236,8 +242,8 @@ this configuration option.</p>
 <ul>
 <li>Workspace names</li>
 <li>Path to a workspace directory</li>
-<li>Path to a parent workspace directory (will result to selecting all of the
-nested workspaces)</li>
+<li>Path to a parent workspace directory (will result in selecting all
+workspaces within that folder)</li>
 </ul>
 <p>When set for the <code>npm init</code> command, this may be set to the folder of a
 workspace which does not yet exist, to create the folder and set it up as a

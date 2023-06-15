@@ -1,14 +1,16 @@
-// Base class for npm.commands[cmd]
-const usageUtil = require('./utils/usage.js')
+// Base class for npm commands
+
+const { relative } = require('path')
+
 const ConfigDefinitions = require('./utils/config/definitions.js')
 const getWorkspaces = require('./workspaces/get-workspaces.js')
+
+const cmdAliases = require('./utils/cmd-list').aliases
 
 class BaseCommand {
   constructor (npm) {
     this.wrapWidth = 80
     this.npm = npm
-    this.workspaces = null
-    this.workspacePaths = null
   }
 
   get name () {
@@ -19,24 +21,48 @@ class BaseCommand {
     return this.constructor.description
   }
 
+  get ignoreImplicitWorkspace () {
+    return this.constructor.ignoreImplicitWorkspace
+  }
+
   get usage () {
-    let usage = `npm ${this.constructor.name}\n\n`
-    if (this.constructor.description)
-      usage = `${usage}${this.constructor.description}\n\n`
+    const usage = [
+      `${this.constructor.description}`,
+      '',
+      'Usage:',
+    ]
 
-    usage = `${usage}Usage:\n`
-    if (!this.constructor.usage)
-      usage = `${usage}npm ${this.constructor.name}`
-    else
-      usage = `${usage}${this.constructor.usage.map(u => `npm ${this.constructor.name} ${u}`).join('\n')}`
+    if (!this.constructor.usage) {
+      usage.push(`npm ${this.constructor.name}`)
+    } else {
+      usage.push(...this.constructor.usage.map(u => `npm ${this.constructor.name} ${u}`))
+    }
 
-    if (this.constructor.params)
-      usage = `${usage}\n\nOptions:\n${this.wrappedParams}`
+    if (this.constructor.params) {
+      usage.push('')
+      usage.push('Options:')
+      usage.push(this.wrappedParams)
+    }
 
-    // Mostly this just appends aliases, this could be more clear
-    usage = usageUtil(this.constructor.name, usage)
-    usage = `${usage}\n\nRun "npm help ${this.constructor.name}" for more info`
-    return usage
+    const aliases = Object.keys(cmdAliases).reduce((p, c) => {
+      if (cmdAliases[c] === this.constructor.name) {
+        p.push(c)
+      }
+      return p
+    }, [])
+
+    if (aliases.length === 1) {
+      usage.push('')
+      usage.push(`alias: ${aliases.join(', ')}`)
+    } else if (aliases.length > 1) {
+      usage.push('')
+      usage.push(`aliases: ${aliases.join(', ')}`)
+    }
+
+    usage.push('')
+    usage.push(`Run "npm help ${this.constructor.name}" for more info`)
+
+    return usage.join('\n')
   }
 
   get wrappedParams () {
@@ -45,7 +71,7 @@ class BaseCommand {
 
     for (const param of this.constructor.params) {
       const usage = `[${ConfigDefinitions[param].usage}]`
-      if (line.length && (line.length + usage.length) > this.wrapWidth) {
+      if (line.length && line.length + usage.length > this.wrapWidth) {
         results = [results, line].filter(Boolean).join('\n')
         line = ''
       }
@@ -55,27 +81,35 @@ class BaseCommand {
     return results
   }
 
-  usageError (msg) {
-    if (!msg) {
-      return Object.assign(new Error(`\nUsage: ${this.usage}`), {
-        code: 'EUSAGE',
-      })
+  usageError (prefix = '') {
+    if (prefix) {
+      prefix += '\n\n'
     }
-
-    return Object.assign(new Error(`\nUsage: ${msg}\n\n${this.usage}`), {
+    return Object.assign(new Error(`\n${prefix}${this.usage}`), {
       code: 'EUSAGE',
     })
   }
 
-  execWorkspaces (args, filters, cb) {
-    throw Object.assign(
-      new Error('This command does not support workspaces.'),
-      { code: 'ENOWORKSPACES' }
-    )
+  async execWorkspaces (args, filters) {
+    throw Object.assign(new Error('This command does not support workspaces.'), {
+      code: 'ENOWORKSPACES',
+    })
   }
 
   async setWorkspaces (filters) {
-    const ws = await getWorkspaces(filters, { path: this.npm.localPrefix })
+    if (this.isArboristCmd) {
+      this.includeWorkspaceRoot = false
+    }
+
+    const relativeFrom = relative(this.npm.localPrefix, process.cwd()).startsWith('..')
+      ? this.npm.localPrefix
+      : process.cwd()
+
+    const ws = await getWorkspaces(filters, {
+      path: this.npm.localPrefix,
+      includeWorkspaceRoot: this.includeWorkspaceRoot,
+      relativeFrom,
+    })
     this.workspaces = ws
     this.workspaceNames = [...ws.keys()]
     this.workspacePaths = [...ws.values()]

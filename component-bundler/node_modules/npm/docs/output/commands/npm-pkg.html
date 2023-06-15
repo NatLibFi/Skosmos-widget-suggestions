@@ -1,4 +1,5 @@
-<html><head>
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
 <title>npm-pkg</title>
 <style>
 body {
@@ -145,16 +146,24 @@ npm command-line interface
 </section>
 
 <div id="_content"><h3 id="synopsis">Synopsis</h3>
-<pre lang="bash"><code>npm pkg get [&lt;field&gt; [.&lt;subfield&gt; ...]]
-npm pkg set &lt;field&gt;=&lt;value&gt; [.&lt;subfield&gt;=&lt;value&gt; ...]
-npm pkg delete &lt;field&gt; [.&lt;subfield&gt; ...]
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<pre lang="bash"><code>npm pkg set &lt;key&gt;=&lt;value&gt; [&lt;key&gt;=&lt;value&gt; ...]
+npm pkg get [&lt;key&gt; [&lt;key&gt; ...]]
+npm pkg delete &lt;key&gt; [&lt;key&gt; ...]
+npm pkg set [&lt;array&gt;[&lt;index&gt;].&lt;key&gt;=&lt;value&gt; ...]
+npm pkg set [&lt;array&gt;[].&lt;key&gt;=&lt;value&gt; ...]
 </code></pre>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <h3 id="description">Description</h3>
 <p>A command that automates the management of <code>package.json</code> files.
 <code>npm pkg</code> provide 3 different sub commands that allow you to modify or retrieve
 values for given object keys in your <code>package.json</code>.</p>
 <p>The syntax to retrieve and set fields is a dot separated representation of
-the nested object properties to be found within your <code>package.json</code>, it’s the
+the nested object properties to be found within your <code>package.json</code>, it's the
 same notation used in <a href="../commands/npm-view.html"><code>npm view</code></a> to retrieve information
 from the registry manifest, below you can find more examples on how to use it.</p>
 <p>Returned values are always in <strong>json</strong> format.</p>
@@ -166,7 +175,7 @@ from the registry manifest, below you can find more examples on how to use it.</
 can run:</p>
 <pre lang="bash"><code>npm pkg get name
 </code></pre>
-<p>It’s also possible to retrieve multiple values at once:</p>
+<p>It's also possible to retrieve multiple values at once:</p>
 <pre lang="bash"><code>npm pkg get name version
 </code></pre>
 <p>You can view child fields by separating them with a period. To retrieve
@@ -182,6 +191,11 @@ the contributor emails for a package, you would run:</p>
 an item in an array field. To just get the email address of the first
 contributor in the list, you can run:</p>
 <pre lang="bash"><code>npm pkg get contributors[0].email
+</code></pre>
+<p>For complex fields you can also name a property in square brackets
+to specifically select a child field. This is especially helpful
+with the exports object:</p>
+<pre lang="bash"><code>npm pkg get "exports[.].require"
 </code></pre>
 </li>
 <li>
@@ -202,7 +216,7 @@ to a file <code>cli.js</code>:</p>
 <p>Setting multiple fields at once is also possible:</p>
 <pre lang="bash"><code>npm pkg set description='Awesome package' engines.node='&gt;=10'
 </code></pre>
-<p>It’s also possible to add to array values, for example to add a new
+<p>It's also possible to add to array values, for example to add a new
 contributor entry:</p>
 <pre lang="bash"><code>npm pkg set contributors[0].name='Foo' contributors[0].email='foo@bar.ca'
 </code></pre>
@@ -210,7 +224,7 @@ contributor entry:</p>
 empty bracket notation:</p>
 <pre lang="bash"><code>npm pkg set contributors[].name='Foo' contributors[].name='Bar'
 </code></pre>
-<p>It’s also possible to parse values as json prior to saving them to your
+<p>It's also possible to parse values as json prior to saving them to your
 <code>package.json</code> file, for example in order to set a <code>"private": true</code>
 property:</p>
 <pre lang="bash"><code>npm pkg set private=true --json
@@ -277,8 +291,9 @@ range (including SemVer-major changes).</li>
 <li>Allow conflicting peerDependencies to be installed in the root project.</li>
 <li>Implicitly set <code>--yes</code> during <code>npm init</code>.</li>
 <li>Allow clobbering existing values in <code>npm pkg</code></li>
+<li>Allow unpublishing of entire packages (not just a single version).</li>
 </ul>
-<p>If you don’t have a clear idea of what you want to do, it is strongly
+<p>If you don't have a clear idea of what you want to do, it is strongly
 recommended that you do not use this option!</p>
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
@@ -307,8 +322,8 @@ this configuration option.</p>
 <ul>
 <li>Workspace names</li>
 <li>Path to a workspace directory</li>
-<li>Path to a parent workspace directory (will result to selecting all of the
-nested workspaces)</li>
+<li>Path to a parent workspace directory (will result in selecting all
+workspaces within that folder)</li>
 </ul>
 <p>When set for the <code>npm init</code> command, this may be set to the folder of a
 workspace which does not yet exist, to create the folder and set it up as a
@@ -318,11 +333,19 @@ brand new workspace within the project.</p>
 <!-- raw HTML omitted -->
 <h4 id="workspaces"><code>workspaces</code></h4>
 <ul>
-<li>Default: false</li>
-<li>Type: Boolean</li>
+<li>Default: null</li>
+<li>Type: null or Boolean</li>
 </ul>
-<p>Enable running a command in the context of <strong>all</strong> the configured
+<p>Set to true to run the command in the context of <strong>all</strong> configured
 workspaces.</p>
+<p>Explicitly setting this to false will cause commands like <code>install</code> to
+ignore workspaces altogether. When not set explicitly:</p>
+<ul>
+<li>Commands that operate on the <code>node_modules</code> tree (install, update, etc.)
+will link workspaces into the <code>node_modules</code> folder. - Commands that do
+other things (test, exec, publish, etc.) will operate on the root project,
+<em>unless</em> one or more workspaces are specified in the <code>workspace</code> config.</li>
+</ul>
 <p>This value is not exported to the environment for child processes.</p>
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->

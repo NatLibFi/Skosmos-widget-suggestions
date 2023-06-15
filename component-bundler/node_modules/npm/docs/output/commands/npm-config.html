@@ -1,4 +1,5 @@
-<html><head>
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
 <title>npm-config</title>
 <style>
 body {
@@ -145,16 +146,20 @@ npm command-line interface
 </section>
 
 <div id="_content"><h3 id="synopsis">Synopsis</h3>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <pre lang="bash"><code>npm config set &lt;key&gt;=&lt;value&gt; [&lt;key&gt;=&lt;value&gt; ...]
 npm config get [&lt;key&gt; [&lt;key&gt; ...]]
 npm config delete &lt;key&gt; [&lt;key&gt; ...]
 npm config list [--json]
 npm config edit
-npm set &lt;key&gt;=&lt;value&gt; [&lt;key&gt;=&lt;value&gt; ...]
-npm get [&lt;key&gt; [&lt;key&gt; ...]]
 
 alias: c
 </code></pre>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <p>Note: This command is unaware of workspaces.</p>
 <h3 id="description">Description</h3>
 <p>npm gets its config settings from the command line, environment
@@ -218,8 +223,10 @@ saving them to your <code>package.json</code>.</li>
 <ul>
 <li>Default: false</li>
 <li>Type: Boolean</li>
+<li>DEPRECATED: <code>--global</code>, <code>--local</code> are deprecated. Use <code>--location=global</code>
+instead.</li>
 </ul>
-<p>Operates in “global” mode, so that packages are installed into the <code>prefix</code>
+<p>Operates in "global" mode, so that packages are installed into the <code>prefix</code>
 folder instead of the current working directory. See
 <a href="../configuring-npm/folders.html">folders</a> for more on the differences in behavior.</p>
 <ul>
@@ -232,8 +239,8 @@ of the current working directory.</li>
 <!-- raw HTML omitted -->
 <h4 id="editor"><code>editor</code></h4>
 <ul>
-<li>Default: The EDITOR or VISUAL environment variables, or ‘notepad.exe’ on
-Windows, or ‘vim’ on Unix systems</li>
+<li>Default: The EDITOR or VISUAL environment variables, or 'notepad.exe' on
+Windows, or 'vim' on Unix systems</li>
 <li>Type: String</li>
 </ul>
 <p>The command to run for <code>npm edit</code> and <code>npm config edit</code>.</p>
@@ -241,11 +248,20 @@ Windows, or ‘vim’ on Unix systems</li>
 <!-- raw HTML omitted -->
 <h4 id="location"><code>location</code></h4>
 <ul>
-<li>Default: “user” unless <code>--global</code> is passed, which will also set this value
-to “global”</li>
-<li>Type: “global”, “user”, or “project”</li>
+<li>Default: "user" unless <code>--global</code> is passed, which will also set this value
+to "global"</li>
+<li>Type: "global", "user", or "project"</li>
 </ul>
 <p>When passed to <code>npm config</code> this refers to which config file to use.</p>
+<p>When set to "global" mode, packages are installed into the <code>prefix</code> folder
+instead of the current working directory. See
+<a href="../configuring-npm/folders.html">folders</a> for more on the differences in behavior.</p>
+<ul>
+<li>packages are installed into the <code>{prefix}/lib/node_modules</code> folder, instead
+of the current working directory.</li>
+<li>bin files are linked to <code>{prefix}/bin</code></li>
+<li>man pages are linked to <code>{prefix}/share/man</code></li>
+</ul>
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
 <h4 id="long"><code>long</code></h4>
