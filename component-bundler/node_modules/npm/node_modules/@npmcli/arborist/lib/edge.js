@@ -92,7 +92,12 @@ class Edge {
       return false
     }
 
-    return depValid(node, this.spec, this.accept, this.from)
+    // NOTE: this condition means we explicitly do not support overriding
+    // bundled or shrinkwrapped dependencies
+    const spec = (node.hasShrinkwrap || node.inShrinkwrap || node.inBundle)
+      ? this.rawSpec
+      : this.spec
+    return depValid(node, spec, this.accept, this.from)
   }
 
   explain (seen = []) {
@@ -164,7 +169,11 @@ class Edge {
     if (this.overrides && this.overrides.value && this.overrides.name === this.name) {
       if (this.overrides.value.startsWith('$')) {
         const ref = this.overrides.value.slice(1)
-        const pkg = this.from.root.package
+        // we may be a virtual root, if we are we want to resolve reference overrides
+        // from the real root, not the virtual one
+        const pkg = this.from.sourceReference
+          ? this.from.sourceReference.root.package
+          : this.from.root.package
         const overrideSpec = (pkg.devDependencies && pkg.devDependencies[ref]) ||
             (pkg.optionalDependencies && pkg.optionalDependencies[ref]) ||
             (pkg.dependencies && pkg.dependencies[ref]) ||
