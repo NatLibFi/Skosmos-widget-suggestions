@@ -39,10 +39,10 @@
 </template>
 
 <script>
-import SvgIcon from '../icons/SvgIcon';
-import IconTriangle from '../icons/IconTriangle';
-import IconCross from '../icons/IconCross';
-import IconCheck from '../icons/IconCheck';
+import SvgIcon from '../icons/SvgIcon.vue';
+import IconTriangle from '../icons/IconTriangle.vue';
+import IconCross from '../icons/IconCross.vue';
+import IconCheck from '../icons/IconCheck.vue';
 import { directive as onClickaway } from 'vue-clickaway';
 import { lt } from 'semver';
 

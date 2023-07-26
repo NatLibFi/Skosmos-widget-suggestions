@@ -1,18 +1,9 @@
-version: 1
-update_configs:
-  - package_manager: "javascript"
+version: 2
+updates:
+  - package-ecosystem: "npm"
     directory: "/"
-    update_schedule: "live"
-    target_branch: "master"
-  - package_manager: "npm"
-    directory: "/"
-    update_schedule: "live"
-    target_branch: "master"
-  - package_manager: "javascript"
-    directory: "./component-bundler"
-    update_schedule: "live"
-    target_branch: "issue32-security-checks-20210818"
-  - package_manager: "npm"
-    directory: "./component-bundler"
-    update_schedule: "live"
-    target_branch: "issue32-security-checks-20210818"
+    schedule:
+      interval: "hourly"
+    branches:
+      - "feature/sec-updates-and-grandes-babel-changes-plus-json5-issue-fixed"
+      - "master"

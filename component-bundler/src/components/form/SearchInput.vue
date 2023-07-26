@@ -43,9 +43,9 @@
 </template>
 
 <script>
-import SvgIcon from '../icons/SvgIcon';
-import IconCross from '../icons/IconCross';
-import IconCheck from '../icons/IconCheck';
+import SvgIcon from '../icons/SvgIcon.vue';
+import IconCross from '../icons/IconCross.vue';
+import IconCheck from '../icons/IconCheck.vue';
 import { directive as onClickaway } from 'vue-clickaway';
 import axios from 'axios';
 import debounce from 'lodash/debounce';

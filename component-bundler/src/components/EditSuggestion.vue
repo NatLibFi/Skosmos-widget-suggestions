@@ -37,8 +37,7 @@
 </template>
 
 <script>
-import BasicInput from './form/BasicInput';
-
+import BasicInput from './form/BasicInput.vue';
 export default {
   components: {
     BasicInput

@@ -17,11 +17,11 @@ import VueCustomElement from 'vue-custom-element';
 Vue.use(VueCustomElement);
 
 // import and register your component(s)
-import SuggestNewButton from './components/SuggestNewButton';
+import SuggestNewButton from '@/components/SuggestNewButton.vue';
 SuggestNewButton.i18n = new VueI18n({ locale: 'fi', messages: translations });
 Vue.customElement('suggest-new-button', SuggestNewButton);
 
 // import and register your component(s)
-import SuggestChangeButton from './components/SuggestChangeButton';
+import SuggestChangeButton from '@/components/SuggestChangeButton.vue';
 SuggestChangeButton.i18n = new VueI18n({ locale: 'fi', messages: translations });
 Vue.customElement('suggest-change-button', SuggestChangeButton);
