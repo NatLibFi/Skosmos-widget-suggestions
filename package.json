@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "webpack-cli": "^4.8.0"
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "node-fetch": "^2.6.7"
