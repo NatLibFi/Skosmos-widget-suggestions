@@ -41,10 +41,10 @@
 </template>
 
 <script>
-import NewSuggestion from './NewSuggestion';
-import CenteredDialog from './common/CenteredDialog';
-import SuccessMessage from './common/SuccessMessage';
-import FailureMessage from './common/FailureMessage';
+import NewSuggestion from './NewSuggestion.vue';
+import CenteredDialog from './common/CenteredDialog.vue';
+import SuccessMessage from './common/SuccessMessage.vue';
+import FailureMessage from './common/FailureMessage.vue';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
 

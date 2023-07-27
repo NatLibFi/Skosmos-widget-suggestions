@@ -26,10 +26,10 @@
 </template>
 
 <script>
-import EditSuggestion from './EditSuggestion';
-import CenteredDialog from './common/CenteredDialog';
-import SuccessMessage from './common/SuccessMessage';
-import FailureMessage from './common/FailureMessage';
+import EditSuggestion from './EditSuggestion.vue';
+import CenteredDialog from './common/CenteredDialog.vue';
+import SuccessMessage from './common/SuccessMessage.vue';
+import FailureMessage from './common/FailureMessage.vue';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
 

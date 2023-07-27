@@ -147,13 +147,13 @@
 </template>
 
 <script>
-import BasicDropDown from './form/BasicDropDown';
-import SearchInput from './form/SearchInput';
-import SearchAutoComplete from './form/SearchAutoComplete';
-import BasicInput from './form/BasicInput';
-import TheMultipleBasicInput from './form/TheMultipleBasicInput';
-import SelectWithChips from './form/SelectWithChips';
-import TheExactMatchesInput from './form/TheExactMatchesInput';
+import BasicDropDown from './form/BasicDropDown.vue';
+import SearchInput from './form/SearchInput.vue';
+import SearchAutoComplete from './form/SearchAutoComplete.vue';
+import BasicInput from './form/BasicInput.vue';
+import TheMultipleBasicInput from './form/TheMultipleBasicInput.vue';
+import SelectWithChips from './form/SelectWithChips.vue';
+import TheExactMatchesInput from './form/TheExactMatchesInput.vue';
 
 export default {
   components: {

@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import SvgIcon from '../icons/SvgIcon';
-import IconCross from '../icons/IconCross';
+import SvgIcon from '../icons/SvgIcon.vue';
+import IconCross from '../icons/IconCross.vue';
 
 export default {
   components: {

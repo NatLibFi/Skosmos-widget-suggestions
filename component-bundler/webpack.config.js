@@ -1,18 +1,20 @@
-const path = require('path')
+const path = require('path');
+const { VueLoaderPlugin } = require('vue-loader');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+
 const webpack = require('webpack')
+/*const TerserPlugin = require('terser-webpack-plugin');*/
 
 module.exports = {
-  entry: ['babel-polyfill', './src/main.js'],
+  entry: ['./src/main.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'components.js'
   },
   resolve: {
-    extensions: ['.js', '.vue'],
     alias: {
-      'vue$': 'vue/dist/vue.common.js',
-      '@': path.resolve('src')
-    }
+      '@': path.resolve(__dirname, 'src'), // Replace 'src' with the actual path to your source directory
+    },
   },
   module: {
     rules: [
@@ -24,28 +26,25 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: 'babel-loader'
-      }
+      },
+      {
+        test: /\.css$/,
+        use: ['vue-style-loader', 'css-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: ['vue-style-loader', 'css-loader', 'sass-loader']
+      },
     ]
-  }
-}
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map';
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
+  },
+  optimization: {
+    minimizer: [new CssMinimizerPlugin()],
+  },
+  plugins: [
+    // ... other plugins ...
+    new VueLoaderPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: 'production'
-      }
+      'process.env.BUILD': JSON.stringify('web'),
     }),
-    module.exports = {
-      optimization: {
-        minimize: true, //Update this to true or false
-        minimizer: [new TerserPlugin()],
-      }
-    },
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
-  ])
+  ],
 }
