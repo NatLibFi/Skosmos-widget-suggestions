@@ -1,3 +1,92 @@
+import { createApp } from 'vue';
+import { createI18n } from 'vue-i18n';
+import translations from './i18n/i18n';
+import SuggestNewButton from '@/components/SuggestNewButton.vue';
+import SuggestChangeButton from '@/components/SuggestChangeButton.vue';
+
+const i18n = createI18n({
+    locale: 'fi',
+    messages: translations,
+});
+
+const app = createApp(SuggestNewButton);
+
+// Provide i18n instance to components
+app.provide('$t', i18n.global.t);
+app.provide('pageUrl', window.location.href);
+
+// Register global i18n
+app.use(i18n);
+
+// Register components globally if needed
+app.component('suggest-new-button', SuggestNewButton);
+app.component('suggest-change-button', SuggestChangeButton);
+
+// Define the custom elements
+customElements.define('suggest-new-button', class extends HTMLElement {
+    connectedCallback() {
+        const element = app.mount(document.createElement('div'));
+        this.appendChild(element.$el);
+    }
+});
+
+customElements.define('suggest-change-button', class extends HTMLElement {
+    connectedCallback() {
+        const element = app.component('suggest-change-button').mount(document.createElement('div'));
+        this.appendChild(element.$el);
+    }
+});
+
+
+// Check if 'suggest-new-button' is registered
+if (customElements.get('suggest-new-button')) {
+    console.log("'suggest-new-button' is registered.");
+} else {
+    console.log("'suggest-new-button' is NOT registered.");
+}
+
+
+
+
+/*
+// support for older browsers
+import 'document-register-element/build/document-register-element';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
+import { createApp } from 'vue'
+import { createI18n } from 'vue-i18n';
+import translations from './i18n/i18n';
+
+// import your component(s)
+import SuggestNewButton from '@/components/SuggestNewButton.vue';
+import SuggestChangeButton from '@/components/SuggestChangeButton.vue';
+
+const i18n = createI18n({
+    locale: 'fi',
+    messages: translations,
+});
+
+const app = createApp(SuggestNewButton);
+
+// Register global i18n
+app.use(i18n);
+
+// Register components globally if needed
+app.component('suggest-new-button', SuggestNewButton);
+app.component('suggest-change-button', SuggestChangeButton);
+
+console.log('Vue app:', app);
+
+app.mount('#app'); // Replace '#app' with your root element ID
+// app.mount('#suggestions-new');
+*/
+
+
+
+
+// The original before vue3
+/*
 // support for older browsers
 import 'document-register-element/build/document-register-element';
 import "core-js/stable";
@@ -25,3 +114,4 @@ Vue.customElement('suggest-new-button', SuggestNewButton);
 import SuggestChangeButton from '@/components/SuggestChangeButton.vue';
 SuggestChangeButton.i18n = new VueI18n({ locale: 'fi', messages: translations });
 Vue.customElement('suggest-change-button', SuggestChangeButton);
+*/
