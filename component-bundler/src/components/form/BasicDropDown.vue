@@ -1,90 +1,157 @@
 <template>
-<div class="input-container">
-  <label :for="label.for">{{ label.text }}</label>
-  <div
-    @click="isOpened = !isOpened"
-    :class="[isOpened ? 'opened' : '', 'select-button']">
-    <div class="select-content">
-      <span v-if="!value">{{ $t('new.conceptType.placeholder') }}</span>
-      <span v-if="value && value.length > 0" class="selected">{{ value }}</span>
+  <div class="input-container">
+    <label :for="label.for">{{ label.text }}</label>
+
+<!--    <div>
+      <button @click="isOpened = !isOpened ">
+        {{ isOpened }}
+      </button>
+    </div>-->
+
+
+    <div>
+      <p>value: {{ value }}</p>
+      <p>isOpended: {{ isOpened}}</p>
+      <p>options.length: {{ options.length }}</p>
+      <p>{{ $t('new.conceptType.placeholder') }}</p>
+<!--      <button @click="count++">
+        {{ count }}
+      </button>-->
+
+
     </div>
-    <svg-icon icon-name="triangle"><icon-triangle /></svg-icon>
-  </div>
-  <div
-    v-if="isOpened && options.length === 0"
-    class="drop-down-options empty-options"
-    v-on-clickaway="closeDropDown">
-    <div class="option" style="padding-left: 16px;">
-      <span>{{ noOptionsMessage }}</span>
+
+    <div @click="handleClick">jotain huttua</div>
+
+    <div
+        @click="isOpened = !isOpened"
+        :class="[isOpened ? 'opened' : '', 'select-button']">
+      <div class="select-content">
+        <span v-if="!value">{{ $t('new.conceptType.placeholder') }}</span>
+        <span v-if="value && value.length > 0" class="selected">{{ value }}</span>
+      </div>
+      <svg-icon icon-name="triangle"><icon-triangle /></svg-icon>
+    </div>
+    <div
+        v-if="isOpened && options.length === 0"
+        class="drop-down-options empty-options"
+        v-on-click-away="closeDropDown">
+      <div class="option" style="padding-left: 16px;">
+        <span>{{ noOptionsMessage }}</span>
+      </div>
+    </div>
+    <div v-if="isOpened && options.length > 0"
+         class="drop-down-options"
+         v-on-click-away="closeDropDown">
+      <div v-for="(option, i) in options"
+           :key="option.id"
+           @click="selectOption(i)"
+           :class="[isSelected(i) ? 'selected' : '', 'option']">
+        <svg-icon
+            :class="[isSelected(i) ? '' : 'hidden-checkmark']"
+            icon-name="check"><icon-check />
+        </svg-icon>
+<!--        <p>{{ option.value }}</p>-->
+        <p>{{ $t(option.value) }}</p>
+      </div>
     </div>
   </div>
-  <div v-if="isOpened && options.length > 0"
-    class="drop-down-options"
-    v-on-clickaway="closeDropDown">
-    <div v-for="(option, i) in options"
-      :key="option.id"
-      @click="selectOption(i)"
-      :class="[isSelected(i) ? 'selected' : '', 'option']">
-      <svg-icon
-        :class="[isSelected(i) ? '' : 'hidden-checkmark']"
-        icon-name="check"><icon-check />
-      </svg-icon>
-      <p>{{ option.value }}</p>
-    </div>
-  </div>
-</div>
 </template>
 
 <script>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import SvgIcon from '../icons/SvgIcon.vue';
 import IconTriangle from '../icons/IconTriangle.vue';
-import IconCross from '../icons/IconCross.vue';
 import IconCheck from '../icons/IconCheck.vue';
-// import { directive as onClickaway } from 'vue-clickaway';
-import { onClickaway } from "vue3-click-away";
+import { directive as onClickAway } from 'vue3-click-away';
 
 export default {
   components: {
     SvgIcon,
     IconTriangle,
-    IconCross,
     IconCheck
   },
   directives: {
-    onClickaway: onClickaway
+    onClickAway
   },
   props: {
     value: String,
     options: Array,
     label: Object
   },
-  data () {
-    return {
-      selectedIndex: -1,
-      isOpened: false,
-      noOptionsMessage: this.$t('new.conceptType.none')
-    }
-  },
-  methods: {
-    selectOption(index) {
-      this.selectedIndex = index;
-      this.isOpened = false;
-      this.$emit('changeVocabulary', this.options[index].vocab)
-      this.$emit('select', this.options[index].value);
-    },
-    isSelected(index) {
-      if (this.selectedIndex === index) {
+  setup(props, context) {
+    console.log(props.options[0].vocab)
+    console.log(props.options[0].value)
+    console.log(props.options[1].vocab)
+    console.log(props.options[1].value)
+
+
+
+    const selectedIndex = ref(-1);
+    const isOpened = ref(false);
+
+    const count = ref(0)
+
+    const noOptionsMessage = context.attrs['onUpdate:noOptionsMessage'] || 'No options available';
+
+    console.log("isOpened")
+    console.log(isOpened.value)
+    const selectOption = (index) => {
+      selectedIndex.value = index;
+      isOpened.value = false;
+      context.emit('changeVocabulary', props.options[index].vocab);
+      context.emit('select', props.options[index].value); // path
+    };
+
+    const handleClick = () => {
+      console.log('BEFORE: Clicked! isOpened:', isOpened.value);
+      isOpened.value = !isOpened.value;
+      console.log('AFTER: Clicked! isOpened:', isOpened.value);
+    };
+
+    // const isSelected = (index) => selectedIndex.value === index;
+    const isSelected = (index) => {
+      return selectedIndex.value === index;
+    };
+
+/*    const isSelected = (index) => {
+      if (selectedIndex.value === index) {
         return true;
       } else {
         return false;
       }
-    },
-    closeDropDown() {
-      this.isOpened = false;
-    }
+    };*/
+
+    const closeDropDown = () => {
+      isOpened.value = false;
+    };
+
+
+    // These two maybe, perhaps should be removed in the future
+/*    // Attach click-away event listeners when component is mounted
+    onMounted(() => {
+      window.addEventListener('click', closeDropDown);
+    });
+
+    // Remove click-away event listeners when component is unmounted
+    onBeforeUnmount(() => {
+      window.removeEventListener('click', closeDropDown);
+    });*/
+
+    return {
+      isOpened,
+      noOptionsMessage,
+      count,
+      selectOption,
+      isSelected,
+      closeDropDown,
+      handleClick
+    };
   }
 };
 </script>
+
+
 
 <style scoped>
 .input-container {

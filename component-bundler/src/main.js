@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 import translations from './i18n/i18n';
+// import Vuelidate from 'vuelidate';
+import { useVuelidate } from '@vuelidate/core'; // Import useVuelidate function
 import SuggestNewButton from '@/components/SuggestNewButton.vue';
 import SuggestChangeButton from '@/components/SuggestChangeButton.vue';
 
@@ -14,13 +16,10 @@ const app = createApp(SuggestNewButton);
 // Provide i18n instance to components
 app.provide('$t', i18n.global.t);
 app.provide('pageUrl', window.location.href);
+// app.provide('useVuelidate', useVuelidate);
 
-// Register global i18n
-app.use(i18n);
-
-// Register components globally if needed
-app.component('suggest-new-button', SuggestNewButton);
-app.component('suggest-change-button', SuggestChangeButton);
+app.use(i18n); // Register global i18n
+// app.use(useVuelidate); // Use Vuelidate plugin
 
 // Define the custom elements
 customElements.define('suggest-new-button', class extends HTMLElement {
@@ -32,11 +31,10 @@ customElements.define('suggest-new-button', class extends HTMLElement {
 
 customElements.define('suggest-change-button', class extends HTMLElement {
     connectedCallback() {
-        const element = app.component('suggest-change-button').mount(document.createElement('div'));
+        const element = createApp(SuggestChangeButton).mount(document.createElement('div'));
         this.appendChild(element.$el);
     }
 });
-
 
 // Check if 'suggest-new-button' is registered
 if (customElements.get('suggest-new-button')) {
@@ -44,6 +42,7 @@ if (customElements.get('suggest-new-button')) {
 } else {
     console.log("'suggest-new-button' is NOT registered.");
 }
+
 
 
 

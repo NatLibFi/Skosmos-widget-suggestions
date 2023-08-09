@@ -1,4 +1,5 @@
 <template>
+
 <div class="suggestion-container">
   <!-- Keep this as an option -->
   <!-- <button onclick="navigator.clipboard.writeText(window.location.href)">Kopioi leikepöydälle</button> -->
@@ -13,9 +14,9 @@
         :value="d.conceptType.value"
         :options="d.conceptType.options"
         @changeVocabulary="$emit('update:vocabulary', $event)"
-        @select="$emit('update:conceptType', $event)"
+        @select="emitEvent('update:conceptType', $event)"
         :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />
-      <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>
+<!--      <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>-->
 
       <div v-if="$i18n.locale === 'fi'">
         <search-input
@@ -23,16 +24,16 @@
           :conceptType="d.conceptType.value"
           :vocabulary="d.vocabulary"
           :language="'fi'"
-          @input="$emit('update:primaryPrefLabel', $event)"
+          @input="emitEvent('update:primaryPrefLabel', $event)"
           :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-        <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>
+<!--        <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>-->
 
         <search-input
           :value="d.prefLabel.secondary"
           :conceptType="d.conceptType.value"
           :vocabulary="d.vocabulary"
           :language="'sv'"
-          @input="$emit('update:secondaryPrefLabel', $event)"
+          @input="emitEvent('update:secondaryPrefLabel', $event)"
           :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
       </div>
 
@@ -42,35 +43,35 @@
           :vocabulary="d.vocabulary"
           :conceptType="d.conceptType.value"
           :language="'sv'"
-          @input="$emit('update:primaryPrefLabel', $event)"
+          @input="emitEvent('update:primaryPrefLabel', $event)"
           :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
-        <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>
+<!--        <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>-->
 
         <search-input
           :value="d.prefLabel.secondary"
           :vocabulary="d.vocabulary"
           :conceptType="d.conceptType.value"
           :language="'fi'"
-          @input="$emit('update:secondaryPrefLabel', $event)"
+          @input="emitEvent('update:secondaryPrefLabel', $event)"
           :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
       </div>
 
       <basic-input
         :value="d.prefLabel.en"
-        @input="$emit('update:enPrefLabel', $event)"
+        @input="emitEvent('update:enPrefLabel', $event)"
         :label="{text: $t('new.prefLabel.en.label'), for: $t('new.prefLabel.en.for')}"
         :isTextArea="false" />
 
       <the-multiple-basic-input
         :values="d.altLabels"
-        @input="$emit('update:altLabels', $event)"
+        @input="emitEvent('update:altLabels', $event)"
         :label="{text: $t('new.altLabels.label'), for: $t('new.altLabels.for')}" />
 
       <search-auto-complete
         :values="d.broaderLabels"
         :vocabulary="d.vocabulary"
         :language="$i18n.locale"
-        @input="$emit('update:broaderLabels', $event)"
+        @input="emitEvent('update:broaderLabels', $event)"
         :label="{text: $t('new.broaderLabels.label'), for: $t('new.broaderLabels.for')}"
         :hasUniqueValue="false" />
 
@@ -78,7 +79,7 @@
         :values="d.narrowerLabels"
         :vocabulary="d.vocabulary"
         :language="$i18n.locale"
-        @input="$emit('update:narrowerLabels', $event)"
+        @input="emitEvent('update:narrowerLabels', $event)"
         :label="{text: $t('new.narrowerLabels.label'), for: $t('new.narrowerLabels.for')}"
         :hasUniqueValue="false" />
 
@@ -86,7 +87,7 @@
         :values="d.relatedLabels"
         :vocabulary="d.vocabulary"
         :language="$i18n.locale"
-        @input="$emit('update:relatedLabels', $event)"
+        @input="emitEvent('update:relatedLabels', $event)"
         :label="{text: $t('new.relatedLabels.label'), for: this.$t('new.relatedLabels.for')}"
         :hasUniqueValue="false" />
 
@@ -94,7 +95,7 @@
         v-if="d.vocabulary !== $t('new.common.places')"
         :value="$t('new.groups.placeholder')"
         :options="d.groups.allGroups"
-        @select="$emit('update:groups', $event)"
+        @select="emitEvent('update:groups', $event)"
         :label="{text: $t('new.groups.label'), for: this.$t('new.groups.for')}" />
 
       <!-- <ul id="temp-list">
@@ -105,34 +106,34 @@
 
       <the-exact-matches-input
         :values="d.exactMatches"
-        @input="$emit('update:exactMatches', $event)"
+        @input="emitEvent('update:exactMatches', $event)"
         :label="{text: $t('new.exactMatches.label'), for: this.$t('new.exactMatches.for')}"
         />
 
       <basic-input
         :value="d.scopeNote"
-        @input="$emit('update:scopeNote', $event)"
+        @input="emitEvent('update:scopeNote', $event)"
         :label="{text: $t('new.scopeNote.label'), for: $t('new.scopeNote.for')}"
         :isTextArea="true" />
 
       <basic-input
         :value="d.explanation"
-        @input="$emit('update:explanation', $event)"
+        @input="emitEvent('update:explanation', $event)"
         :label="{text: $t('new.explanation.label'), for: $t('new.explanation.label')}"
         :isTextArea="true" />
-      <p v-if="v.$dirty && !v.explanation.required" class="error">{{ $t('new.explanation.error') }}</p>
+<!--      <p v-if="v.$dirty && !v.explanation.required" class="error">{{ $t('new.explanation.error') }}</p>-->
 
 <!-- isTextArea set true on 2022-02-01     -->
       <basic-input
         :value="d.neededFor"
-        @input="$emit('update:neededFor', $event)"
+        @input="emitEvent('update:neededFor', $event)"
         :label="{text: $t('new.neededFor.label'), for: $t('new.neededFor.for')}"
         :isTextArea="true" />
-      <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p>
+<!--      <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p>-->
 
       <basic-input
         :value="d.fromOrg"
-        @input="$emit('update:fromOrg', $event)"
+        @input="emitEvent('update:fromOrg', $event)"
         :label="{text: $t('new.fromOrg.label'), for: $t('new.fromOrg.for')}"
         :isTextArea="false" />
     </div>
@@ -147,6 +148,7 @@
 </template>
 
 <script>
+import { defineComponent, ref } from 'vue';
 import BasicDropDown from './form/BasicDropDown.vue';
 import SearchInput from './form/SearchInput.vue';
 import SearchAutoComplete from './form/SearchAutoComplete.vue';
@@ -155,7 +157,7 @@ import TheMultipleBasicInput from './form/TheMultipleBasicInput.vue';
 import SelectWithChips from './form/SelectWithChips.vue';
 import TheExactMatchesInput from './form/TheExactMatchesInput.vue';
 
-export default {
+export default defineComponent({
   components: {
     BasicDropDown,
     SearchInput,
@@ -163,21 +165,30 @@ export default {
     BasicInput,
     TheMultipleBasicInput,
     SelectWithChips,
-    TheExactMatchesInput
+    TheExactMatchesInput,
   },
   props: {
-    // Form Data:
     d: Object,
-    // Form Validations:
-    v: Object
+    v: Object,
   },
+  setup(props, context) {
+    // const v = ref();
 
-  methods: {
-    submitForm () {
-      this.$emit('submitForm');
-    },
-  }
-}
+    const emitEvent = (eventName, payload) => {
+      context.emit(eventName, payload);
+    };
+
+    const submitForm = () => {
+      context.emit('submitForm');
+    };
+
+    return {
+      // v,
+      emitEvent,
+      submitForm,
+    };
+  },
+});
 </script>
 
 <style scoped>

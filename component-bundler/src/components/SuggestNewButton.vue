@@ -1,6 +1,6 @@
 <template>
-  <div>
 
+  <div>
     <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl.split('#')[0]}#suggestion`">
       <span>
         <div id="vocab-info">
@@ -14,7 +14,6 @@
       <new-suggestion
           v-if="!showSuccessMessage && !showFailureMessage"
           :d="formData"
-          :v="$v.formData"
           @update:vocabulary="formData.vocabulary = $event"
           @update:conceptType="formData.conceptType.value = $event"
           @update:primaryPrefLabel="formData.prefLabel.primary = $event"
@@ -40,6 +39,7 @@
 </template>
 
 <script>
+// Versio ennen isoja muutoksia
 import { defineComponent, ref, reactive, watchEffect, inject } from 'vue';
 import NewSuggestion from './NewSuggestion.vue';
 import CenteredDialog from './common/CenteredDialog.vue';
@@ -47,6 +47,7 @@ import SuccessMessage from './common/SuccessMessage.vue';
 import FailureMessage from './common/FailureMessage.vue';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
+// import { useVuelidate } from '@vuelidate/core';
 
 export default defineComponent({
   components: {
@@ -58,7 +59,7 @@ export default defineComponent({
   props: {
     lang: String,
     vocab: String,
-    url: String,
+    // url: String,
   },
   setup(props) {
 
@@ -68,7 +69,7 @@ export default defineComponent({
 
     // Use $t for translations and pageUrl
     console.log($t('new.button'));
-    console.log(pageUrl);
+    // console.log(pageUrl);
 
     const isOpened = ref(false);
     const showSuccessMessage = ref(false);
@@ -119,8 +120,8 @@ export default defineComponent({
     };
 
     const submitForm = () => {
-      $v.$touch();
-      if (!$v.$invalid) {
+      // $v.$touch();
+      if (true) {
         sendData();
       } else {
         console.log('Data not sent: required data of the form was not provided.');
@@ -292,7 +293,7 @@ ${formData.fromOrg}
       formData.neededFor = '';
       formData.fromOrg = '';
       setDropDown();
-      $v.$reset();
+      // $v.$reset();
       getGroups();
     };
 
@@ -326,7 +327,7 @@ ${formData.fromOrg}
 
     // Call created hook
     getGroups();
-    getUrl();
+    // getUrl(); // Tarkista
 
     // Return the variables and methods you want to expose to the template
     return {
@@ -346,6 +347,7 @@ ${formData.fromOrg}
       closeDialog,
       getUrl,
       getGroups,
+      // v$: useVuelidate()
     };
   },
 });
