@@ -1,28 +1,6 @@
 <template>
   <div class="input-container">
     <label :for="label.for">{{ label.text }}</label>
-
-<!--    <div>
-      <button @click="isOpened = !isOpened ">
-        {{ isOpened }}
-      </button>
-    </div>-->
-
-
-    <div>
-      <p>value: {{ value }}</p>
-      <p>isOpended: {{ isOpened}}</p>
-      <p>options.length: {{ options.length }}</p>
-      <p>{{ $t('new.conceptType.placeholder') }}</p>
-<!--      <button @click="count++">
-        {{ count }}
-      </button>-->
-
-
-    </div>
-
-    <div @click="handleClick">jotain huttua</div>
-
     <div
         @click="isOpened = !isOpened"
         :class="[isOpened ? 'opened' : '', 'select-button']">
@@ -59,7 +37,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import {ref, onMounted, onBeforeUnmount, inject} from 'vue';
 import SvgIcon from '../icons/SvgIcon.vue';
 import IconTriangle from '../icons/IconTriangle.vue';
 import IconCheck from '../icons/IconCheck.vue';
@@ -80,27 +58,16 @@ export default {
     label: Object
   },
   setup(props, context) {
-    console.log(props.options[0].vocab)
-    console.log(props.options[0].value)
-    console.log(props.options[1].vocab)
-    console.log(props.options[1].value)
-
-
-
+    const $t = inject('$t');
     const selectedIndex = ref(-1);
     const isOpened = ref(false);
-
     const count = ref(0)
-
     const noOptionsMessage = context.attrs['onUpdate:noOptionsMessage'] || 'No options available';
-
-    console.log("isOpened")
-    console.log(isOpened.value)
     const selectOption = (index) => {
       selectedIndex.value = index;
       isOpened.value = false;
       context.emit('changeVocabulary', props.options[index].vocab);
-      context.emit('select', props.options[index].value); // path
+      context.emit('select', $t(props.options[index].value)); // path
     };
 
     const handleClick = () => {
@@ -113,14 +80,6 @@ export default {
     const isSelected = (index) => {
       return selectedIndex.value === index;
     };
-
-/*    const isSelected = (index) => {
-      if (selectedIndex.value === index) {
-        return true;
-      } else {
-        return false;
-      }
-    };*/
 
     const closeDropDown = () => {
       isOpened.value = false;
