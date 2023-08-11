@@ -4,37 +4,38 @@
     <div v-if="values && values.length > 0">
       <div v-for="(item, i) in values" :key="item.id" class="inputs">
         <input
-          :values="values[i].value"
-          @input="handleInput($event.target.value, i)"
-          type="text" />
+            :value="values[i].value"
+            @input="handleInput($event.target.value, i)"
+            type="text" />
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    values: Array,
-    label: {
-      text: String,
-      for: String
-    }
-  },
-  methods: {
-    handleInput: function(inputValue, index) {
-      let updatedValues = this.values;
-      if (!this.values[index].isTouched) {
-        this.values.push({value: '', isTouched: false});
-      }
-      updatedValues[index] = {
-        value: inputValue,
-        isTouched: true
-      };
-      this.$emit('input', updatedValues);
-    }
+<script setup>
+import { defineProps, defineEmits } from 'vue';
+
+const props = defineProps({
+  values: Array,
+  label: {
+    text: String,
+    for: String
   }
-}
+});
+
+const emit = defineEmits();
+
+const handleInput = (inputValue, index) => {
+  const updatedValues = [...props.values];
+  if (!props.values[index].isTouched) {
+    updatedValues.push({ value: '', isTouched: false });
+  }
+  updatedValues[index] = {
+    value: inputValue,
+    isTouched: true
+  };
+  emit('input-multi', updatedValues);
+};
 </script>
 
 <style scoped>

@@ -64,7 +64,7 @@
 
       <the-multiple-basic-input
         :values="d.altLabels"
-        @input="emitEvent('update:altLabels', $event)"
+        @input-multi="emitEvent('update:altLabels', $event)"
         :label="{text: $t('new.altLabels.label'), for: $t('new.altLabels.for')}" />
 
       <search-auto-complete
