@@ -4,18 +4,51 @@
     <input
       v-if="!isTextArea"
       :value="value"
-      @input="$emit('input', $event.target.value)"
+      @input="emitEvent('input:basic', $event.target.value)"
       type="text" />
     <textarea
       v-if="isTextArea"
       :value="value"
-      @input="$emit('input', $event.target.value)"
+      @input="emitEvent('input:basic', $event.target.value)"
       rows="3">
     </textarea>
   </div>
 </template>
 
 <script>
+import { defineProps } from 'vue';
+
+export default {
+  props: {
+    value: String,
+    label: {
+      type: Object,
+      required: true,
+      default: () => ({ text: '', for: '' })
+    },
+    isTextArea: Boolean
+  },
+  setup(props, context) {
+
+    // Access props using the `props` object
+    // For example: props.value, props.label, props.isTextArea
+
+    // You can return reactive variables or functions from the setup
+
+    const emitEvent = (eventName, payload) => {
+      console.log("BasicInput")
+      console.log('Emitting event:', eventName, 'with payload:', payload);
+      context.emit(eventName, payload);
+    };
+
+    return {
+      emitEvent,
+    };
+  }
+};
+</script>
+
+<!--<script>
 export default {
   props: {
     value: String,
@@ -33,7 +66,14 @@ export default {
 
   }
 }
-</script>
+</script>-->
+
+
+
+
+
+
+
 
 <style scoped>
 .input-container {

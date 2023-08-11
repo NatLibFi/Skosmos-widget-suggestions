@@ -47,6 +47,7 @@ import SuccessMessage from './common/SuccessMessage.vue';
 import FailureMessage from './common/FailureMessage.vue';
 import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
+import urlToPrx from "../prx.json";
 // import { useVuelidate } from '@vuelidate/core';
 
 export default defineComponent({
@@ -62,6 +63,11 @@ export default defineComponent({
     // url: String,
   },
   setup(props) {
+    setTimeout(() => {
+      console.log("formData")
+      console.log(formData)
+    }, 500)
+
 
     // Inject the i18n $t function and pageUrl variable
     const $t = inject('$t');
@@ -129,6 +135,7 @@ export default defineComponent({
     };
 
     const sendData = async () => {
+      console.log("Lähetetään!")
       handlePrefLabelLanguages();
       let ontTypeInTargetSuggestionSystem = '';
       const labelsInTargetSuggestionSystem = [];
@@ -233,21 +240,27 @@ ${formData.fromOrg}
         labels: labelsInTargetSuggestionSystem,
       };
       const payload = encodeURIComponent(JSON.stringify(dataBundle));
+      console.log("payload", payload)
       const headers = {
         'Access-Control-Allow-Origin': '*',
       };
       const urlToPrx = require('../prx.json');
       await axios
+      // https://finto.fi/plugins/suggestions/gh_prx.php
+      // https://api.github.com/repos/:owner/:repo
+      // https://github.com/Finto-ehdotus/YSE
           .post(`${urlToPrx[0].url}?payload=${payload}`, {}, { headers })
           .then((response) => {
+            console.log(`URL: ${urlToPrx[0].url}?payload=${payload}`);
+            console.log('Response:', response);
+            // toggleSuccessMessage(`https://github.com/Finto-ehdotus/YSE`);
             toggleSuccessMessage(`${response.data.url.replace('/repos', '').replace('api.', '')}`);
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
             toggleFailureMessage();
           });
     };
-
     const toggleSuccessMessage = (responseUrl) => {
       if (responseUrl && responseUrl.length > 0) {
         suggestionUrl.value = responseUrl;
@@ -255,7 +268,6 @@ ${formData.fromOrg}
       }
       showSuccessMessage.value = true;
     };
-
     const toggleFailureMessage = () => {
       showFailureMessage.value = true;
     };

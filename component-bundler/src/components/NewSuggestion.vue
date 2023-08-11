@@ -58,7 +58,7 @@
 
       <basic-input
         :value="d.prefLabel.en"
-        @input="emitEvent('update:enPrefLabel', $event)"
+        @input:basic="emitEvent('update:enPrefLabel', $event)"
         :label="{text: $t('new.prefLabel.en.label'), for: $t('new.prefLabel.en.for')}"
         :isTextArea="false" />
 
@@ -112,13 +112,13 @@
 
       <basic-input
         :value="d.scopeNote"
-        @input="emitEvent('update:scopeNote', $event)"
+        @input:basic="emitEvent('update:scopeNote', $event)"
         :label="{text: $t('new.scopeNote.label'), for: $t('new.scopeNote.for')}"
         :isTextArea="true" />
 
       <basic-input
         :value="d.explanation"
-        @input="emitEvent('update:explanation', $event)"
+        @input:basic="emitEvent('update:explanation', $event)"
         :label="{text: $t('new.explanation.label'), for: $t('new.explanation.label')}"
         :isTextArea="true" />
 <!--      <p v-if="v.$dirty && !v.explanation.required" class="error">{{ $t('new.explanation.error') }}</p>-->
@@ -126,14 +126,14 @@
 <!-- isTextArea set true on 2022-02-01     -->
       <basic-input
         :value="d.neededFor"
-        @input="emitEvent('update:neededFor', $event)"
+        @input:basic="emitEvent('update:neededFor', $event)"
         :label="{text: $t('new.neededFor.label'), for: $t('new.neededFor.for')}"
         :isTextArea="true" />
 <!--      <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p>-->
 
       <basic-input
         :value="d.fromOrg"
-        @input="emitEvent('update:fromOrg', $event)"
+        @input:basic="emitEvent('update:fromOrg', $event)"
         :label="{text: $t('new.fromOrg.label'), for: $t('new.fromOrg.for')}"
         :isTextArea="false" />
     </div>
@@ -173,8 +173,12 @@ export default defineComponent({
   },
   setup(props, context) {
     // const v = ref();
+    console.log("NewSuggestion.vue: d.prefLabel.en")
+    console.log(props.d.prefLabel.en)
 
     const emitEvent = (eventName, payload) => {
+      console.log("NewSuggestion")
+      console.log('Emitting event:', eventName, 'with payload:', payload);
       context.emit(eventName, payload);
     };
 
