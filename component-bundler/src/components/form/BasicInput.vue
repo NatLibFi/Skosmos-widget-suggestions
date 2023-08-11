@@ -2,50 +2,43 @@
   <div class="input-container">
     <label :for="label.for">{{ label.text }}</label>
     <input
-      v-if="!isTextArea"
-      :value="value"
-      @input="emitEvent('input:basic', $event.target.value)"
-      type="text" />
+        v-if="!isTextArea"
+        :value="value"
+        @input="emitEvent('input:basic', $event.target.value)"
+        type="text" />
     <textarea
-      v-if="isTextArea"
-      :value="value"
-      @input="emitEvent('input:basic', $event.target.value)"
-      rows="3">
+        v-if="isTextArea"
+        :value="value"
+        @input="emitEvent('input:basic', $event.target.value)"
+        rows="3">
     </textarea>
   </div>
 </template>
 
-<script>
-import { defineProps } from 'vue';
+<script setup>
+import { defineProps, defineEmits, defineExpose } from 'vue';
 
-export default {
-  props: {
-    value: String,
-    label: {
-      type: Object,
-      required: true,
-      default: () => ({ text: '', for: '' })
-    },
-    isTextArea: Boolean
+const props = defineProps({
+  value: String,
+  label: {
+    type: Object,
+    required: true,
+    default: () => ({ text: '', for: '' })
   },
-  setup(props, context) {
+  isTextArea: Boolean
+});
 
-    // Access props using the `props` object
-    // For example: props.value, props.label, props.isTextArea
-
-    // You can return reactive variables or functions from the setup
-
-    const emitEvent = (eventName, payload) => {
-      console.log("BasicInput")
-      console.log('Emitting event:', eventName, 'with payload:', payload);
-      context.emit(eventName, payload);
-    };
-
-    return {
-      emitEvent,
-    };
-  }
+const emitEvent = (eventName, payload) => {
+  console.log("BasicInput");
+  console.log('Emitting event:', eventName, 'with payload:', payload);
+  emit(eventName, payload);
 };
+
+const emit = defineEmits();
+
+defineExpose({
+  emitEvent,
+});
 </script>
 
 <!--<script>

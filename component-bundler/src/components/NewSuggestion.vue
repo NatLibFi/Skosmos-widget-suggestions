@@ -88,7 +88,7 @@
         :vocabulary="d.vocabulary"
         :language="$i18n.locale"
         @input="emitEvent('update:relatedLabels', $event)"
-        :label="{text: $t('new.relatedLabels.label'), for: this.$t('new.relatedLabels.for')}"
+        :label="{text: $t('new.relatedLabels.label'), for: $t('new.relatedLabels.for')}"
         :hasUniqueValue="false" />
 
       <select-with-chips
@@ -96,7 +96,7 @@
         :value="$t('new.groups.placeholder')"
         :options="d.groups.allGroups"
         @select="emitEvent('update:groups', $event)"
-        :label="{text: $t('new.groups.label'), for: this.$t('new.groups.for')}" />
+        :label="{text: $t('new.groups.label'), for: $t('new.groups.for')}" />
 
       <!-- <ul id="temp-list">
         <li v-for="item in d.groups.allGroups" :key="item.prefLabel">
@@ -107,7 +107,7 @@
       <the-exact-matches-input
         :values="d.exactMatches"
         @input="emitEvent('update:exactMatches', $event)"
-        :label="{text: $t('new.exactMatches.label'), for: this.$t('new.exactMatches.for')}"
+        :label="{text: $t('new.exactMatches.label'), for: $t('new.exactMatches.for')}"
         />
 
       <basic-input
@@ -147,8 +147,8 @@
 </div>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue';
+<script setup>
+import { defineProps, defineEmits } from 'vue';
 import BasicDropDown from './form/BasicDropDown.vue';
 import SearchInput from './form/SearchInput.vue';
 import SearchAutoComplete from './form/SearchAutoComplete.vue';
@@ -157,43 +157,33 @@ import TheMultipleBasicInput from './form/TheMultipleBasicInput.vue';
 import SelectWithChips from './form/SelectWithChips.vue';
 import TheExactMatchesInput from './form/TheExactMatchesInput.vue';
 
-export default defineComponent({
-  components: {
-    BasicDropDown,
-    SearchInput,
-    SearchAutoComplete,
-    BasicInput,
-    TheMultipleBasicInput,
-    SelectWithChips,
-    TheExactMatchesInput,
-  },
-  props: {
-    d: Object,
-    v: Object,
-  },
-  setup(props, context) {
-    // const v = ref();
-    console.log("NewSuggestion.vue: d.prefLabel.en")
-    console.log(props.d.prefLabel.en)
+const props = defineProps({
+  d: Object,
+  v: Object,
+});
 
-    const emitEvent = (eventName, payload) => {
-      console.log("NewSuggestion")
-      console.log('Emitting event:', eventName, 'with payload:', payload);
-      context.emit(eventName, payload);
-    };
+const emit = defineEmits();
 
-    const submitForm = () => {
-      context.emit('submitForm');
-    };
+console.log("NewSuggestion.vue: d.prefLabel.en");
+console.log(props.d.prefLabel.en);
 
-    return {
-      // v,
-      emitEvent,
-      submitForm,
-    };
-  },
+const emitEvent = (eventName, payload) => {
+  console.log("NewSuggestion");
+  console.log('Emitting event:', eventName, 'with payload:', payload);
+  emit(eventName, payload);
+};
+
+const submitForm = () => {
+  emit('submitForm');
+};
+
+defineExpose({
+  emitEvent,
+  submitForm,
 });
 </script>
+
+
 
 <style scoped>
 .suggestion-header {

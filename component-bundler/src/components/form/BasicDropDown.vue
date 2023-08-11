@@ -81,6 +81,14 @@ export default {
       return selectedIndex.value === index;
     };
 
+/*    const isSelected = (index) => {
+      if (selectedIndex.value === index) {
+        return true;
+      } else {
+        return false;
+      }
+    };*/
+
     const closeDropDown = () => {
       isOpened.value = false;
     };
