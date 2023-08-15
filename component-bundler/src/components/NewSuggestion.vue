@@ -106,7 +106,7 @@
 
       <the-exact-matches-input
         :values="d.exactMatches"
-        @input="emitEvent('update:exactMatches', $event)"
+        @inputexm="emitEvent('update:exactMatches', $event)"
         :label="{text: $t('new.exactMatches.label'), for: $t('new.exactMatches.for')}"
         />
 
