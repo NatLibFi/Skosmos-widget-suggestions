@@ -1,41 +1,41 @@
 <template>
-<div>
-  <label :for="label.for">{{ label.text }}</label>
-  <div v-if="selectedOptions && selectedOptions.length > 0" class="chip-list">
-    <div v-for="option in selectedOptions" @click="removeOption(option)" :key="option.id" class="chip">
-      <span>{{ option.prefLabel }}</span>
-      <svg-icon icon-name="cross"><icon-cross /></svg-icon>
+  <div>
+    <label :for="label.for">{{ label.text }}</label>
+    <div v-if="selectedOptions && selectedOptions.length > 0" class="chip-list">
+      <div v-for="option in selectedOptions" @click="removeOption(option)" :key="option.id" class="chip">
+        <span>{{ option.prefLabel }}</span>
+        <svg-icon icon-name="cross"><icon-cross /></svg-icon>
+      </div>
+    </div>
+    <div class="input-container">
+      <div
+          @click="isOpened = !isOpened"
+          :class="[isOpened ? 'opened' : '', 'select-button']">
+        <div class="select-content">
+          <span v-if="value && value.length > 0" class="selected">{{ value }}</span>
+        </div>
+        <svg-icon icon-name="triangle"><icon-triangle /></svg-icon>
+      </div>
+      <div
+          v-if="isOpened && selectableOptions.length === 0"
+          class="drop-down-options empty-options"
+          v-on-click-away="closeDropDown">
+        <div class="option" style="padding-left: 16px;">
+          <span>{{ noOptionsMessage }}</span>
+        </div>
+      </div>
+      <div v-if="isOpened && selectableOptions.length > 0"
+           class="drop-down-options"
+           v-on-click-away="closeDropDown">
+        <div v-for="option in selectableOptions"
+             :key="option.id"
+             @click="selectOption(option)"
+             class="option">
+          <p>{{ option.prefLabel }}</p>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="input-container">
-    <div
-      @click="isOpened = !isOpened"
-      :class="[isOpened ? 'opened' : '', 'select-button']">
-      <div class="select-content">
-        <span v-if="value && value.length > 0" class="selected">{{ value }}</span>
-      </div>
-      <svg-icon icon-name="triangle"><icon-triangle /></svg-icon>
-    </div>
-    <div
-      v-if="isOpened && selectableOptions.length === 0"
-      class="drop-down-options empty-options"
-      v-on-clickaway="closeDropDown">
-      <div class="option" style="padding-left: 16px;">
-        <span>{{ noOptionsMessage }}</span>
-      </div>
-    </div>
-    <div v-if="isOpened && selectableOptions.length > 0"
-      class="drop-down-options"
-      v-on-clickaway="closeDropDown">
-      <div v-for="option in selectableOptions"
-        :key="option.id"
-        @click="selectOption(option)"
-        class="option">
-        <p>{{ option.prefLabel }}</p>
-      </div>
-    </div>
-  </div>
-</div>
 </template>
 
 <script>
@@ -44,8 +44,10 @@ import IconTriangle from '../icons/IconTriangle.vue';
 import IconCross from '../icons/IconCross.vue';
 import IconCheck from '../icons/IconCheck.vue';
 // import { directive as onClickaway } from 'vue-clickaway';
-import { onClickaway } from "vue3-click-away";
+import { directive as onClickAway } from 'vue3-click-away'; // almost working
+import { VClickAway } from 'vue3-click-away';
 import { lt } from 'semver';
+import {ref, onMounted, inject} from 'vue';
 
 export default {
   components: {
@@ -55,49 +57,104 @@ export default {
     IconCheck
   },
   directives: {
-    onClickaway: onClickaway
+    onClickAway: onClickAway
   },
   props: {
     value: String,
     options: Array,
     label: Object
   },
-  data () {
+
+  setup (props, context) {
+    const $t = inject('$t')
+
+    let isOpened = ref(false)
+    const noOptionsMessage = ref($t('new.groups.none'))
+    let selectableOptions = ref([])
+    let selectedOptions = ref([])
+
+    onMounted(() => { selectableOptions.value = props.options })
+
+    const selectOption = (option) => {
+      context.selectedOptions.push(option);
+      if (context.selectableOptions && context.selectableOptions.length > 0) {
+        context.selectableOptions.splice(context.findOptionIndex(option, context.selectableOptions), 1);
+      }
+      context.isOpened = false;
+      context.emit('select', context.selectedOptions);
+    }
+
+    const removeOption = option => {
+      context.selectableOptions.push(option);
+      if (context.selectedOptions && context.selectedOptions.length > 0) {
+        context.selectedOptions.splice(context.findOptionIndex(option, context.selectedOptions), 1);
+      }
+      context.emit('select', context.selectedOptions);
+    }
+    const findOptionIndex = (option, optionList) => {
+      return optionList.indexOf(option);
+    }
+
+    const closeDropDown = () => {
+      isOpened = false;
+    }
+
+    // const onClickAwayDirective = onClickAway(closeDropDown)
+
+    return {
+      isOpened,
+      noOptionsMessage,
+      selectableOptions,
+      selectedOptions,
+      // onClickAwayDirective,
+      selectOption,
+      removeOption,
+      closeDropDown
+    }
+  }
+
+
+
+
+
+
+/*  data () {
     return {
       isOpened: false,
-      noOptionsMessage: this.$t('new.groups.none'),
+      noOptionsMessage: context.$t('new.groups.none'),
       selectableOptions: [],
       selectedOptions: []
     }
-  },
-  created () {
-    this.selectableOptions = this.options;
-  },
-  methods: {
+  },*/
+/*  created () {
+    context.selectableOptions = context.options;
+  },*/
+/*  methods: {
     selectOption(option) {
-      this.selectedOptions.push(option);
-      if (this.selectableOptions && this.selectableOptions.length > 0) {
-        this.selectableOptions.splice(this.findOptionIndex(option, this.selectableOptions), 1);
+      context.selectedOptions.push(option);
+      if (context.selectableOptions && context.selectableOptions.length > 0) {
+        context.selectableOptions.splice(context.findOptionIndex(option, context.selectableOptions), 1);
       }
-      this.isOpened = false;
-      this.$emit('select', this.selectedOptions);
+      context.isOpened = false;
+      context.$emit('select', context.selectedOptions);
     },
     removeOption(option) {
-      this.selectableOptions.push(option);
-      if (this.selectedOptions && this.selectedOptions.length > 0) {
-        this.selectedOptions.splice(this.findOptionIndex(option, this.selectedOptions), 1);
+      context.selectableOptions.push(option);
+      if (context.selectedOptions && context.selectedOptions.length > 0) {
+        context.selectedOptions.splice(context.findOptionIndex(option, context.selectedOptions), 1);
       }
-      this.$emit('select', this.selectedOptions);
+      context.$emit('select', context.selectedOptions);
     },
     findOptionIndex(option, optionList) {
       return optionList.indexOf(option);
     },
     closeDropDown() {
-      this.isOpened = false;
+      context.isOpened = false;
     }
-  }
+  }*/
 };
 </script>
+
 
 <style scoped>
 label {
@@ -248,3 +305,86 @@ label {
   }
 }
 </style>
+
+
+<!--
+<template>
+  <div>
+    <label :for="label.for">{{ label.text }}</label>
+    <div v-if="selectedOptions && selectedOptions.length > 0" class="chip-list">
+      <div v-for="option in selectedOptions" @click="removeOption(option)" :key="option.id" class="chip">
+        <span>{{ option.prefLabel }}</span>
+        <svg-icon icon-name="cross"><icon-cross /></svg-icon>
+      </div>
+    </div>
+    <div class="input-container">
+      <div
+          @click="isOpened = !isOpened"
+          :class="[isOpened ? 'opened' : '', 'select-button']">
+        <div class="select-content">
+          <span v-if="value && value.length > 0" class="selected">{{ value }}</span>
+        </div>
+        <svg-icon icon-name="triangle"><icon-triangle /></svg-icon>
+      </div>
+      <div
+          v-if="isOpened && selectableOptions.length === 0"
+          class="drop-down-options empty-options"
+          v-on-clickaway="closeDropDown">
+        <div class="option" style="padding-left: 16px;">
+          <span>{{ noOptionsMessage }}</span>
+        </div>
+      </div>
+      <div v-if="isOpened && selectableOptions.length > 0"
+           class="drop-down-options"
+           v-on-clickaway="closeDropDown">
+        <div v-for="option in selectableOptions"
+             :key="option.id"
+             @click="selectOption(option)"
+             class="option">
+          <p>{{ option.prefLabel }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive } from 'vue';
+import SvgIcon from '../icons/SvgIcon.vue';
+import IconTriangle from '../icons/IconTriangle.vue';
+import IconCross from '../icons/IconCross.vue';
+import IconCheck from '../icons/IconCheck.vue';
+import { directive as onClickaway } from 'vue-clickaway';
+
+const isOpened = ref(false);
+const noOptionsMessage = 'new.groups.none';
+const selectableOptions = ref([]);
+const selectedOptions = ref([]);
+
+const closeDropDown = () => {
+  isOpened.value = false;
+};
+
+const removeOption = (option) => {
+  selectableOptions.value.push(option);
+  const index = selectedOptions.value.findIndex((item) => item.id === option.id);
+  if (index !== -1) {
+    selectedOptions.value.splice(index, 1);
+  }
+};
+
+const selectOption = (option) => {
+  selectedOptions.value.push(option);
+  const index = selectableOptions.value.findIndex((item) => item.id === option.id);
+  if (index !== -1) {
+    selectableOptions.value.splice(index, 1);
+  }
+  isOpened.value = false;
+};
+
+// Initialization
+selectableOptions.value = options;
+
+const onClickawayDirective = onClickaway(closeDropDown);
+
+</script>-->
