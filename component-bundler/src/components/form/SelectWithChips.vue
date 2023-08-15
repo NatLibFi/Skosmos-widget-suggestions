@@ -76,21 +76,23 @@ export default {
     onMounted(() => { selectableOptions.value = props.options })
 
     const selectOption = (option) => {
-      context.selectedOptions.push(option);
-      if (context.selectableOptions && context.selectableOptions.length > 0) {
-        context.selectableOptions.splice(context.findOptionIndex(option, context.selectableOptions), 1);
+      const index = selectableOptions.value.findIndex((item) => item.id === option.id);
+      if (index !== -1) {
+        selectedOptions.value.push(selectableOptions.value[index]);
+        selectableOptions.value.splice(index, 1);
       }
-      context.isOpened = false;
-      context.emit('select', context.selectedOptions);
-    }
+      isOpened.value = false;
+    };
 
-    const removeOption = option => {
-      context.selectableOptions.push(option);
-      if (context.selectedOptions && context.selectedOptions.length > 0) {
-        context.selectedOptions.splice(context.findOptionIndex(option, context.selectedOptions), 1);
+    const removeOption = (option) => {
+      const index = selectedOptions.value.findIndex((item) => item.id === option.id);
+      if (index !== -1) {
+        selectableOptions.value.push(selectedOptions.value[index]);
+        selectedOptions.value.splice(index, 1);
       }
-      context.emit('select', context.selectedOptions);
-    }
+    };
+
+
     const findOptionIndex = (option, optionList) => {
       return optionList.indexOf(option);
     }
