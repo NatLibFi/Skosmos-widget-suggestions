@@ -12,29 +12,20 @@
         <input
             v-model.trim="searchString"
             class="auto-complete-input"
-            type="text" />
-        <div @click="searchString = ''" class="clear-input">
-          <svg-icon
-              v-if="searchString.length > 0"
-              icon-name="cross">
+            type="text"
+        />
+        <div @click="clearInput" class="clear-input">
+          <svg-icon v-if="searchString.length > 0" icon-name="cross">
             <icon-cross />
           </svg-icon>
         </div>
       </div>
-      <div v-if="isOpened && options.length > 0"
-           class="drop-down-options"
-           v-on-clickaway="closeDropDown">
-        <div v-for="option in options"
-             :key="option.id"
-             @click="addLabelSelection(option)"
-             class="option">
+      <div v-if="isOpened && options.length > 0" class="drop-down-options" v-on-click-away="closeDropDown">
+        <div v-for="option in options" :key="option.id" @click="addLabelSelection(option)" class="option">
           <p>{{ option.prefLabel }}</p>
         </div>
       </div>
-      <div
-          v-if="options.length == 0 && isOpened"
-          class="drop-down-options empty-options"
-          v-on-clickaway="closeDropDown">
+      <div v-if="options.length == 0 && isOpened" class="drop-down-options empty-options" v-on-click-away="closeDropDown">
         <div class="option" style="padding-left: 16px;">
           <span>{{ noOptionsMessage }}</span>
         </div>
@@ -43,95 +34,121 @@
   </div>
 </template>
 
-<script setup>
-import { defineProps, defineEmits, ref, inject } from 'vue';
+<script>
+import { ref, watch, onMounted } from 'vue';
 import SvgIcon from '../icons/SvgIcon.vue';
 import IconCross from '../icons/IconCross.vue';
 import IconCheck from '../icons/IconCheck.vue';
-import { onClickaway } from "vue3-click-away";
+import { directive as onClickAway } from 'vue3-click-away';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 
-// Inject the $t function from the parent component
-const $t = inject('$t');
+export default {
+  components: {
+    SvgIcon,
+    IconCross,
+    IconCheck,
+  },
+  directives: {
+    onClickAway
+  },
+  props: {
+    values: Array,
+    vocabulary: String,
+    language: String,
+    label: Object,
+    hasUniqueValue: Boolean,
+  },
+  setup(props, context) {
+    const isOpened = ref(false);
+    const noOptionsMessage = 'new.common.none'; // Provide the translation key
+    const options = ref([]);
+    const searchString = ref('');
+    const selectedOptions = ref([]);
 
-const props = defineProps({
-  values: Array,
-  vocabulary: String,
-  language: String,
-  label: Object,
-  hasUniqueValue: Boolean
-});
-
-const isOpened = ref(false);
-const noOptionsMessage = $t('new.common.none');
-const options = ref([]);
-const searchString = ref('');
-const selectedOptions = ref([]);
-
-const emit = defineEmits();
-
-const searchLabel = debounce(() => {
-  if (data.searchString.length >= 3) {
-    fetchResults(checkCapitalization(data.searchString));
-  } else {
-    data.isOpened = false;
-    data.options = [];
-  }
-}, 200);
-
-const fetchResults = async (inputValue) => {
-  try {
-    const response = await axios.get('https://api.finto.fi/rest/v1/search', {
-      params: {
-        vocab: props.vocabulary,
-        lang: props.language,
-        query: inputValue + '*'
+    const searchLabel = debounce(() => {
+      if (searchString.value.length >= 3) {
+        fetchResults(checkCapitalization(searchString.value));
+      } else {
+        isOpened.value = false;
+        options.value = [];
       }
+    }, 200);
+
+    const fetchResults = async (inputValue) => {
+      try {
+        const response = await axios.get('https://api.finto.fi/rest/v1/search', {
+          params: {
+            vocab: props.vocabulary,
+            lang: props.language,
+            query: inputValue + '*',
+          },
+        });
+        options.value = response.data.results;
+        isOpened.value = true;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const checkCapitalization = (inputValue) => {
+      if (inputValue && props.vocabulary === 'new.common.places') {
+        return inputValue.charAt(0).toUpperCase() + inputValue.substring(1);
+      }
+      return inputValue;
+    };
+
+    const addLabelSelection = (option) => {
+      isOpened.value = false;
+      const o = {
+        value: option.prefLabel,
+        uri: option.uri,
+      };
+      if (props.hasUniqueValue) {
+        selectedOptions.value = [];
+      }
+      if (!selectedOptions.value.some((item) => item.value === o.value)) {
+        selectedOptions.value.push(o);
+      }
+      searchString.value = '';
+      context.emit('update:selectedOptions', selectedOptions.value);
+    };
+
+    const removeLabelSelection = (option) => {
+      const index = selectedOptions.value.findIndex((item) => item.uri === option.uri);
+      if (index >= 0) {
+        selectedOptions.value.splice(index, 1);
+      }
+      context.emit('update:selectedOptions', selectedOptions.value);
+    };
+
+    const closeDropDown = () => {
+      isOpened.value = false;
+    };
+
+    const clearInput = () => {
+      searchString.value = '';
+    };
+
+    watch(searchString, searchLabel);
+
+    onMounted(() => {
+      // Initialize data or perform actions after initial render
     });
-    data.options = response.data.results;
-    data.isOpened = true;
-  } catch (error) {
-    console.log(error);
-  }
+
+    return {
+      isOpened,
+      noOptionsMessage,
+      options,
+      searchString,
+      selectedOptions,
+      addLabelSelection,
+      removeLabelSelection,
+      closeDropDown,
+      clearInput,
+    };
+  },
 };
-
-const checkCapitalization = (inputValue) => {
-  if (inputValue && props.vocabulary === $t('new.common.places')) {
-    return inputValue.charAt(0).toUpperCase() + inputValue.substring(1);
-  }
-  return inputValue;
-};
-
-const addLabelSelection = (option) => {
-  data.isOpened = false;
-  const o = {
-    value: option.prefLabel,
-    uri: option.uri
-  };
-  if (props.hasUniqueValue) {
-    data.selectedOptions = [];
-  }
-  if (!data.selectedOptions.some(item => item.value === o.value)) {
-    data.selectedOptions.push(o);
-  }
-  data.searchString = '';
-  emit('input', data.selectedOptions);
-};
-
-const removeLabelSelection = (option) => {
-  const index = data.selectedOptions.findIndex(item => item.uri === option.uri);
-  if (index >= 0) {
-    data.selectedOptions.splice(index, 1);
-  }
-  emit('input', data.selectedOptions);
-};
-
-const closeDropDown = () => {
-  data.isOpened = false;
-};
-
-
 </script>
 
 <style scoped>
@@ -274,3 +291,8 @@ label {
   }
 }
 </style>
+
+
+
+
+

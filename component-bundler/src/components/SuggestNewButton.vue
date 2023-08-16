@@ -65,7 +65,10 @@ export default defineComponent({
   setup(props) {
     setTimeout(() => {
       console.log("formData")
-      console.log(formData)
+      // console.log(formData)
+
+      console.dir(formData);
+
     }, 500)
 
 
@@ -151,6 +154,9 @@ export default defineComponent({
       formData.altLabels.forEach((item) => (item.value !== '' ? altTerms.push(` ${item.value}`) : null));
 
       const brdLabls = [];
+      console.log("In the SuggestNewButton")
+      console.log("typeof(formData.broaderLabels)")
+      console.log(typeof(formData.broaderLabels))
       formData.broaderLabels.forEach((item) =>
           item.value !== '' ? brdLabls.push(` [${item.value}](${item.uri})`) : null
       );
@@ -363,7 +369,7 @@ ${formData.fromOrg}
     };
   },
 });
-</script>-->
+</script>
 
 <style>
 .error {

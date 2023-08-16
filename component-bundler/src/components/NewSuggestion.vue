@@ -168,8 +168,14 @@ console.log("NewSuggestion.vue: d.prefLabel.en");
 console.log(props.d.prefLabel.en);
 
 const emitEvent = (eventName, payload) => {
-  console.log("NewSuggestion");
   console.log('Emitting event:', eventName, 'with payload:', payload);
+  console.log("Events in the NewSuggestion")
+  console.log("typeof(eventName)")
+  console.log(typeof(eventName))
+  console.log("typeof(payload)")
+  console.log(typeof(payload))
+  console.log("props.d")
+  console.log(props.d)
   emit(eventName, payload);
 };
 
