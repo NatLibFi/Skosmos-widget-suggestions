@@ -71,7 +71,7 @@
         :values="d.broaderLabels"
         :vocabulary="d.vocabulary"
         :language="$i18n.locale"
-        @input="emitEvent('update:broaderLabels', $event)"
+        @update:selectedOptions="emitEvent('update:broaderLabels', $event)"
         :label="{text: $t('new.broaderLabels.label'), for: $t('new.broaderLabels.for')}"
         :hasUniqueValue="false" />
 
@@ -79,7 +79,7 @@
         :values="d.narrowerLabels"
         :vocabulary="d.vocabulary"
         :language="$i18n.locale"
-        @input="emitEvent('update:narrowerLabels', $event)"
+        @update:selectedOptions="emitEvent('update:narrowerLabels', $event)"
         :label="{text: $t('new.narrowerLabels.label'), for: $t('new.narrowerLabels.for')}"
         :hasUniqueValue="false" />
 
@@ -87,7 +87,7 @@
         :values="d.relatedLabels"
         :vocabulary="d.vocabulary"
         :language="$i18n.locale"
-        @input="emitEvent('update:relatedLabels', $event)"
+        @update:selectedOptions="emitEvent('update:relatedLabels', $event)"
         :label="{text: $t('new.relatedLabels.label'), for: $t('new.relatedLabels.for')}"
         :hasUniqueValue="false" />
 
@@ -164,18 +164,18 @@ const props = defineProps({
 
 const emit = defineEmits();
 
-console.log("NewSuggestion.vue: d.prefLabel.en");
-console.log(props.d.prefLabel.en);
+/*console.log("NewSuggestion.vue: d.prefLabel.en");
+console.log(props.d.prefLabel.en);*/
 
 const emitEvent = (eventName, payload) => {
-  console.log('Emitting event:', eventName, 'with payload:', payload);
-  console.log("Events in the NewSuggestion")
+  // console.log('Emitting event:', eventName, 'with payload:', payload);
+/*  console.log("Events in the NewSuggestion")
   console.log("typeof(eventName)")
   console.log(typeof(eventName))
   console.log("typeof(payload)")
   console.log(typeof(payload))
   console.log("props.d")
-  console.log(props.d)
+  console.log(props.d)*/
   emit(eventName, payload);
 };
 

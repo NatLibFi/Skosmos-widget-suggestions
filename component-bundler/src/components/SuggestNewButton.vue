@@ -154,9 +154,9 @@ export default defineComponent({
       formData.altLabels.forEach((item) => (item.value !== '' ? altTerms.push(` ${item.value}`) : null));
 
       const brdLabls = [];
-      console.log("In the SuggestNewButton")
+/*      console.log("In the SuggestNewButton")
       console.log("typeof(formData.broaderLabels)")
-      console.log(typeof(formData.broaderLabels))
+      console.log(typeof(formData.broaderLabels))*/
       formData.broaderLabels.forEach((item) =>
           item.value !== '' ? brdLabls.push(` [${item.value}](${item.uri})`) : null
       );
