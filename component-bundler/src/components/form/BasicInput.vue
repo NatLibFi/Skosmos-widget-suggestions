@@ -29,8 +29,6 @@ const props = defineProps({
 });
 
 const emitEvent = (eventName, payload) => {
-  console.log("BasicInput");
-  console.log('Emitting event:', eventName, 'with payload:', payload);
   emit(eventName, payload);
 };
 

@@ -77,7 +77,7 @@ export default defineComponent({
     const pageUrl = inject('pageUrl');
 
     // Use $t for translations and pageUrl
-    console.log($t('new.button'));
+    // console.log($t('new.button'));
     // console.log(pageUrl);
 
     const isOpened = ref(false);
@@ -85,6 +85,38 @@ export default defineComponent({
     const showFailureMessage = ref(false);
     const suggestionUrl = ref('');
 
+  /*  const formData = reactive({
+      vocabulary: 'yso',
+      conceptType: {
+        value: 'Yleiskäsite',
+        options: [
+          { value: '', vocab: 'yso' },
+          { value: '', vocab: 'yso-paikat' },
+        ],
+      },
+      prefLabel: {
+        primary: 'qweqwe',
+        secondary: 'werwer',
+        fi: { value: 'ertert' },
+        sv: { value: 'rtyrty' },
+        en: 'tyutyu',
+      },
+      altLabels: [{ value: 'asd', isTouched: false }],
+      broaderLabels: [{ value: 'aaaaaaa', uri: '', isTouched: false }],
+      narrowerLabels: [{ value: 'ggggggg', uri: '', isTouched: false }],
+      relatedLabels: [{ value: 'ttttttt', uri: '', isTouched: false }],
+      groups: { allGroups: [], selectedGroups: ["a", "b"] },
+      exactMatches: [{ vocab: 'yso', value: 'wqe', isTouched: false }],
+      scopeNote: 'qweqwewqe',
+      explanation: 'qweqweqwe',
+      neededFor: 'qweqweqwe',
+      fromOrg: 'qweqweqwe',
+      tags: ["uusi"],
+    });*/
+
+
+
+    // Älä muuta vielä
     const formData = reactive({
       vocabulary: 'yso',
       conceptType: {
@@ -138,7 +170,7 @@ export default defineComponent({
     };
 
     const sendData = async () => {
-      console.log("Lähetetään!")
+      console.log("SendData: Lähetetään!")
       handlePrefLabelLanguages();
       let ontTypeInTargetSuggestionSystem = '';
       const labelsInTargetSuggestionSystem = [];

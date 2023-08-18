@@ -1,6 +1,57 @@
 <template>
+  <div class="template">
+    <div class="dialog-overlay"></div>
+    <div class="dialog-modal">
+      <div class="dialog-content">
+        <div class="dialog-close" @click="close">
+          <svg-icon icon-name="cross"><icon-cross /></svg-icon>
+        </div>
+        <slot></slot>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import SvgIcon from '../icons/SvgIcon.vue';
+import IconCross from '../icons/IconCross.vue';
+
+export default {
+  components: {
+    SvgIcon,
+    IconCross
+  },
+  setup(_, { emit }) {
+    const close = () => {
+      emit('close');
+    };
+
+    const handleEscKey = (e) => {
+      if (e.keyCode === 27) {
+        close();
+      }
+    };
+
+    onMounted(() => {
+      document.addEventListener('keydown', handleEscKey);
+    });
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('keydown', handleEscKey);
+    });
+
+    return {
+      close
+    };
+  }
+};
+</script>
+
+<!--vue 2 version-->
+<!--<template>
     <div class="template">
-      <!-- <div class="dialog-overlay" @click="close"> -->
+      &lt;!&ndash; <div class="dialog-overlay" @click="close"> &ndash;&gt;
       <div class="dialog-overlay">
       </div>
       <div class="dialog-modal">
@@ -36,7 +87,7 @@ export default {
     });
   }
 };
-</script>
+</script>-->
 
 <style scoped>
 h5 {

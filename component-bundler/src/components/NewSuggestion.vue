@@ -164,9 +164,6 @@ const props = defineProps({
 
 const emit = defineEmits();
 
-/*console.log("NewSuggestion.vue: d.prefLabel.en");
-console.log(props.d.prefLabel.en);*/
-
 const emitEvent = (eventName, payload) => {
   // console.log('Emitting event:', eventName, 'with payload:', payload);
 /*  console.log("Events in the NewSuggestion")
