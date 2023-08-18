@@ -64,10 +64,12 @@ export default defineComponent({
   },
   setup(props) {
     setTimeout(() => {
-      console.log("formData")
+      // console.log("formData")
       // console.log(formData)
 
-      console.dir(formData);
+      // console.dir(formData);
+
+
 
     }, 500)
 
@@ -161,6 +163,7 @@ export default defineComponent({
 
     watch(() => formData.prefLabel, (newValue) => {
       console.log('prefLabel changed:', newValue);
+      handlePrefLabelLanguages()
     }, { deep: true });
 
     watch(() => formData.altLabels, (newValue) => {
@@ -391,11 +394,20 @@ ${formData.fromOrg}
       showFailureMessage.value = true;
     };
 
+    // Se, ettei ehdotus lähde, liittyy tähän:
     const handlePrefLabelLanguages = () => {
-      if (props.lang === 'fi') {
+
+/*      console.log("window.lang")
+      console.log(window.lang)*/
+
+      formData.prefLabel.fi.value = formData.prefLabel.primary;
+      // ONGELMA ON TÄSSÄ
+      // if (props.lang === 'fi') {
+      if (window.lang === 'fi') {
         formData.prefLabel.fi.value = formData.prefLabel.primary;
         formData.prefLabel.sv.value = formData.prefLabel.secondary;
-      } else if (props.lang === 'sv') {
+      // } else if (props.lang === 'sv') {
+      } else if (window.lang === 'sv') {
         formData.prefLabel.sv.value = formData.prefLabel.primary;
         formData.prefLabel.fi.value = formData.prefLabel.secondary;
       }
