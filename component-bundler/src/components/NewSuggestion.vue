@@ -17,7 +17,7 @@
         @select="emitEvent('update:conceptType', $event)"
         :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />
 <!--      <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>-->
-
+      <div>{{ $i18n.locale }}</div>
       <div v-if="$i18n.locale === 'fi'">
         <search-input
           :value="d.prefLabel.primary"

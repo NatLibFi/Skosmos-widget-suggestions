@@ -40,7 +40,7 @@
 
 <script>
 // Versio ennen isoja muutoksia
-import { defineComponent, ref, reactive, watchEffect, inject } from 'vue';
+import { defineComponent, ref, reactive, watchEffect, inject, watch } from 'vue';
 import NewSuggestion from './NewSuggestion.vue';
 import CenteredDialog from './common/CenteredDialog.vue';
 import SuccessMessage from './common/SuccessMessage.vue';
@@ -145,6 +145,87 @@ export default defineComponent({
       fromOrg: '',
       tags: [],
     });
+
+    // Watchers for formData properties
+/*    watch(formData, (newValue) => {
+      console.log('formData changed:', newValue);
+    }, { deep: true });*/
+
+    watch(() => formData.vocabulary, (newValue) => {
+      console.log('vocabulary changed:', newValue);
+    });
+
+    watch(() => formData.conceptType, (newValue) => {
+      console.log('conceptType changed:', newValue);
+    }, { deep: true });
+
+    watch(() => formData.prefLabel, (newValue) => {
+      console.log('prefLabel changed:', newValue);
+    }, { deep: true });
+
+    watch(() => formData.altLabels, (newValue) => {
+      console.log('altLabels changed:', newValue);
+    }, { deep: true });
+
+    watch(() => formData.broaderLabels, (newValue) => {
+      console.log('broaderLabels changed:', newValue);
+    }, { deep: true });
+
+    watch(() => formData.narrowerLabels, (newValue) => {
+      console.log('narrowerLabels changed:', newValue);
+    }, { deep: true });
+
+    watch(() => formData.relatedLabels, (newValue) => {
+      console.log('relatedLabels changed:', newValue);
+    }, { deep: true });
+
+    watch(() => formData.groups, (newValue) => {
+      console.log('groups changed:', newValue);
+    }, { deep: true });
+
+    watch(() => formData.exactMatches, (newValue) => {
+      console.log('exactMatches changed:', newValue);
+    }, { deep: true });
+
+    watch(() => formData.scopeNote, (newValue) => {
+      console.log('scopeNote changed:', newValue);
+    });
+
+    watch(() => formData.explanation, (newValue) => {
+      console.log('explanation changed:', newValue);
+    });
+
+    watch(() => formData.neededFor, (newValue) => {
+      console.log('neededFor changed:', newValue);
+    });
+
+    watch(() => formData.fromOrg, (newValue) => {
+      console.log('fromOrg changed:', newValue);
+    });
+
+    watch(() => formData.tags, (newValue) => {
+      console.log('tags changed:', newValue);
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Methods
     const setDropDown = () => {
