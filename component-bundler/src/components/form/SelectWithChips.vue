@@ -64,7 +64,6 @@ export default {
 
   setup (props, context) {
     const $t = inject('$t')
-
     let isOpened = ref(false)
     const noOptionsMessage = ref($t('new.groups.none'))
     let selectableOptions = ref([])
@@ -72,17 +71,30 @@ export default {
 
     onMounted(() => { selectableOptions.value = props.options })
 
-    const selectOption = (option) => {
-      const index = selectableOptions.value.findIndex((item) => item.id === option.id);
-      if (index !== -1) {
-        selectedOptions.value.push(selectableOptions.value[index]);
-        selectableOptions.value.splice(index, 1);
-        console.log("selectedOptions.value")
-        console.log(selectedOptions.value)
+    // Periaatteessa toimiva, palauta jos kokeilu hajoaa
+    // const selectOption = (option) => {
+    //   const index = selectableOptions.value.findIndex((item) => item.id === option.id);
+    //   if (index !== -1) {
+    //     selectedOptions.value.push(selectableOptions.value[index]);
+    //     selectableOptions.value.splice(index, 1);
+    //     console.log("selectedOptions.value")
+    //     console.log(selectedOptions.value)
+    //   }
+    //   isOpened.value = false;
+    //   context.emit('select', selectedOptions);
+    // };
+
+    // Väliaikainen kokeilu
+    const selectOption = option => {
+      selectedOptions.value.push(option);
+      // if (selectableOptions && selectableOptions.length > 0) {
+      if (selectableOptions) {
+        selectableOptions.value.splice(findOptionIndex(option, selectableOptions.value), 1);
       }
-      isOpened.value = false;
+      isOpened = false;
       context.emit('select', selectedOptions);
-    };
+    }
+
 
     const removeOption = (option) => {
       const index = selectedOptions.value.findIndex((item) => item.id === option.id);
