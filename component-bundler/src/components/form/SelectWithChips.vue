@@ -77,8 +77,11 @@ export default {
       if (index !== -1) {
         selectedOptions.value.push(selectableOptions.value[index]);
         selectableOptions.value.splice(index, 1);
+        console.log("selectedOptions.value")
+        console.log(selectedOptions.value)
       }
       isOpened.value = false;
+      context.emit('select', selectedOptions);
     };
 
     const removeOption = (option) => {
@@ -87,6 +90,7 @@ export default {
         selectableOptions.value.push(selectedOptions.value[index]);
         selectedOptions.value.splice(index, 1);
       }
+      context.emit('select', selectedOptions);
     };
 
 

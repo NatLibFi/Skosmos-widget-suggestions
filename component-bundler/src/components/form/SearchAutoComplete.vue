@@ -41,7 +41,7 @@ import IconCheck from '../icons/IconCheck.vue';
 import { directive as onClickaway } from 'vue3-click-away';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
-import { ref, watch, onMounted, defineEmits} from 'vue';
+import {ref, watch, onMounted, defineEmits, inject} from 'vue';
 
 export default {
   components: {
@@ -60,8 +60,9 @@ export default {
     hasUniqueValue: Boolean,
   },
   setup(props, context) {
+    const $t = inject('$t');
     const isOpened = ref(false);
-    const noOptionsMessage = 'new.common.none'; // Provide the translation key
+    const noOptionsMessage = $t('new.common.none'); // Provide the translation key
     const options = ref([]);
     const searchString = ref('');
     const selectedOptions = ref([]);
