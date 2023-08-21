@@ -18,6 +18,7 @@
         :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />
 <!--      <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>-->
       <div>{{ $i18n.locale }}</div>
+      <div>{{ testLang }}</div>
       <div v-if="$i18n.locale === 'fi'">
         <search-input
           :value="d.prefLabel.primary"
@@ -148,7 +149,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, ref, computed } from 'vue';
 import BasicDropDown from './form/BasicDropDown.vue';
 import SearchInput from './form/SearchInput.vue';
 import SearchAutoComplete from './form/SearchAutoComplete.vue';
@@ -156,6 +157,12 @@ import BasicInput from './form/BasicInput.vue';
 import TheMultipleBasicInput from './form/TheMultipleBasicInput.vue';
 import SelectWithChips from './form/SelectWithChips.vue';
 import TheExactMatchesInput from './form/TheExactMatchesInput.vue';
+
+// import { useI18n, ref } from 'vue';
+//
+// const { t, locale } = useI18n(); // Destructure t for translation and locale for current locale
+
+const testLang = ref(window.lang);
 
 const props = defineProps({
   d: Object,

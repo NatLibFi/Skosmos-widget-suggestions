@@ -7,13 +7,15 @@ import SuggestNewButton from '@/components/SuggestNewButton.vue';
 import SuggestChangeButton from '@/components/SuggestChangeButton.vue';
 
 const i18n = createI18n({
-    locale: 'fi',
+    // locale: 'fi',
+    locale: window.lang,
     messages: translations,
 });
 
 const app = createApp(SuggestNewButton);
 
 // Provide i18n instance to components
+// app.provide('$t', i18n.global.t);
 app.provide('$t', i18n.global.t);
 app.provide('pageUrl', window.location.href);
 // app.provide('useVuelidate', useVuelidate);

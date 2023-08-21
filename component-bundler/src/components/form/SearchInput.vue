@@ -98,6 +98,13 @@ export default {
 
       for (var i = 0; i < vocs.length; i++) {
 
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        console.log(vocs[i])
+        console.log(props.language)
+        console.log(inputValue)
+
+
+
         const response = await axios({
           method: 'get',
           url: 'https://api.finto.fi/rest/v1/search',
