@@ -80,22 +80,43 @@ export default {
 
     watch(searchString, () => {
       searchLabel();
+      console.log(searchString.value)
     });
 
     const searchLabel = debounce(function() {
-      if (searchString.length >= 2) {
-        handleResult(checkCapitalization(searchString));
+      if (searchString.value.length >= 2) {
+        handleResult(checkCapitalization(searchString.value));
       } else {
-        context.emit('input', searchString);
+        context.emit('input', searchString.value);
       }
     }, 1500)
     const handleResult = async (inputValue) => {
 
-    if ((conceptType != "")) console.log("conceptType: %s", conceptType);
+      if ((props.conceptType != "")) console.log("conceptType: %s", props.conceptType);
 
       const vocs = ["yso-paikat", "yso", "yse"];
 
       for (var i = 0; i < vocs.length; i++) {
+
+        const response = await axios({
+          method: 'get',
+          url: 'https://api.finto.fi/rest/v1/search',
+          params: {
+            vocab: vocs[i],
+            lang: props.language,
+            query: inputValue
+          }
+        }).catch(error => console.log(error));
+        // For the future: this is assigned only if the term is found and is null otherwise
+        searchResult.value = response.data.results[0]
+        context.emit('input', searchString.value);
+        if (searchResult.value) {
+          context.emit('input', '');
+          break;
+        }
+      }
+
+/*      for (var i = 0; i < vocs.length; i++) {
         const response = await axios({
           method: 'get',
           url: 'https://api.finto.fi/rest/v1/search',
@@ -112,7 +133,11 @@ export default {
           context.emit('input', '');
           break;
         }
-      }
+      }*/
+
+
+
+
     }
 
     const capitalizeFirstLetter = (string) => {
@@ -120,7 +145,7 @@ export default {
     }
 
     const checkCapitalization = (inputValue) => {
-      if (inputValue && vocabulary === $t('new.common.places')) {
+      if (inputValue && props.vocabulary === $t('new.common.places')) {
         return inputValue.charAt(0).toUpperCase() + inputValue.substr(1);
       }
       return inputValue;

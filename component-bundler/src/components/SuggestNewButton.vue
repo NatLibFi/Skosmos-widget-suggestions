@@ -163,7 +163,7 @@ export default defineComponent({
 
     watch(() => formData.prefLabel, (newValue) => {
       console.log('prefLabel changed:', newValue);
-      handlePrefLabelLanguages()
+      // handlePrefLabelLanguages()
     }, { deep: true });
 
     watch(() => formData.altLabels, (newValue) => {
@@ -255,7 +255,7 @@ export default defineComponent({
 
     const sendData = async () => {
       console.log("SendData: Lähetetään!")
-      handlePrefLabelLanguages();
+      handlePrefLabelLanguages(); // palauta tämä mahdollisesti eli mieti, missä kohtaa tätä kutsuttaisiin
       let ontTypeInTargetSuggestionSystem = '';
       const labelsInTargetSuggestionSystem = [];
       if (formData.vocabulary === 'yso-paikat') {
@@ -402,14 +402,19 @@ ${formData.fromOrg}
 
       formData.prefLabel.fi.value = formData.prefLabel.primary;
       // ONGELMA ON TÄSSÄ
+      // console.log(window.lang)
       // if (props.lang === 'fi') {
       if (window.lang === 'fi') {
         formData.prefLabel.fi.value = formData.prefLabel.primary;
         formData.prefLabel.sv.value = formData.prefLabel.secondary;
+        console.log(formData.prefLabel.primary)
+        console.log(formData.prefLabel.secondary)
       // } else if (props.lang === 'sv') {
       } else if (window.lang === 'sv') {
         formData.prefLabel.sv.value = formData.prefLabel.primary;
         formData.prefLabel.fi.value = formData.prefLabel.secondary;
+        console.log(formData.prefLabel.primary)
+        console.log(formData.prefLabel.secondary)
       }
     };
 

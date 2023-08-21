@@ -165,14 +165,6 @@ const props = defineProps({
 const emit = defineEmits();
 
 const emitEvent = (eventName, payload) => {
-  // console.log('Emitting event:', eventName, 'with payload:', payload);
-/*  console.log("Events in the NewSuggestion")
-  console.log("typeof(eventName)")
-  console.log(typeof(eventName))
-  console.log("typeof(payload)")
-  console.log(typeof(payload))
-  console.log("props.d")
-  console.log(props.d)*/
   emit(eventName, payload);
 };
 
