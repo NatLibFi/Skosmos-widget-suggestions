@@ -450,14 +450,15 @@ ${formData.fromOrg}
     };
 
     const getGroups = async () => {
-      if (props.lang === 'sv') {
+/*      if (props.lang === 'sv') {
         // Note: 'this' is not available in the setup function.
         // Instead, you can use 'props' directly.
-      }
+      }*/
       await axios
           .get(`https://api.finto.fi/rest/v1/${formData.vocabulary}/groups`, {
             params: {
-              lang: props.lang,
+              // lang: props.lang,
+              lang: window.lang === 'en' ? 'fi' : window.lang
             },
           })
           .then((response) => (formData.groups.allGroups = response.data.groups));
@@ -465,10 +466,10 @@ ${formData.fromOrg}
 
     // Lifecycle hooks
     watchEffect(() => {
-      if (props.lang === 'sv') {
+  /*    if (props.lang === 'sv') {
         // Note: 'this' is not available in the setup function.
         // Instead, you can use 'props' directly.
-      }
+      }*/
       setDropDown();
       getGroups();
     });

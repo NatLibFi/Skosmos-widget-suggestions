@@ -44,7 +44,7 @@ import IconTriangle from '../icons/IconTriangle.vue';
 import IconCross from '../icons/IconCross.vue';
 import IconCheck from '../icons/IconCheck.vue';
 import { directive as onClickAway } from 'vue3-click-away'; // almost working
-import {ref, onMounted, inject} from 'vue';
+import { ref, onMounted, inject } from 'vue';
 
 export default {
   components: {
@@ -70,6 +70,8 @@ export default {
     let selectedOptions = ref([])
 
     onMounted(() => { selectableOptions.value = props.options })
+
+    console.log(props.options)
 
     // Periaatteessa toimiva, palauta jos kokeilu hajoaa
     // const selectOption = (option) => {
