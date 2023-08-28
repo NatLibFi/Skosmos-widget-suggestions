@@ -7,6 +7,21 @@
     <h4>{{ $t('new.header') }}</h4>
     <p>{{ $t('new.p1') }}</p>
     <p>{{ $t('new.p2') }}</p>
+
+
+    <p>{{ conceptTypeIsSelected }}</p>
+    <p>{{ prefLabelIsSelected }}</p>
+    <p>{{ explanationX }}</p>
+    <p>{{ neededForX }}</p>
+
+
+
+
+
+
+
+
+
   </div>
   <div class="suggestion-form">
     <div class="form-inputs">
@@ -14,8 +29,25 @@
         :value="d.conceptType.value"
         :options="d.conceptType.options"
         @changeVocabulary="$emit('update:vocabulary', $event)"
-        @select="emitEvent('update:conceptType', $event)"
-        :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}" />
+      @select="handleSelect($event)"
+        :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}"
+      />
+<!--
+      <div class="suggestion-form">
+        <div class="form-inputs">
+          <basic-drop-down
+              :value="d.conceptType.value"
+              :options="d.conceptType.options"
+              @changeVocabulary="$emit('update:vocabulary', $event)"
+          &lt;!&ndash;        @select="emitEvent('update:conceptType', $event)"&ndash;&gt;
+          @select="handleSelect($event)"
+          :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}"
+          &lt;!&ndash;        @select2="$emit('update:conceptTypeIsSelected', $event)"&ndash;&gt;
+          />-->
+
+
+<!--      Tee tähän maanantaina reaktiivinen muuttuja, joka tekee tarkistuksen ja estää tarvittaessa lähettämisen-->
+      <p v-if="!conceptTypeIsSelected" class="error">{{ $t('new.conceptType.error') }}</p>
 <!--      <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>-->
       <div>{{ $i18n.locale }}</div>
       <div>{{ testLang }}</div>
@@ -25,9 +57,9 @@
           :conceptType="d.conceptType.value"
           :vocabulary="d.vocabulary"
           :language="'fi'"
-          @input="emitEvent('update:primaryPrefLabel', $event)"
+          @input="handlePrefLabel($event)"
           :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-<!--        <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>-->
+        <p v-if="!prefLabelIsSelected" class="error">{{ $t('new.prefLabel.error') }}</p>
 
         <search-input
           :value="d.prefLabel.secondary"
@@ -44,9 +76,9 @@
           :vocabulary="d.vocabulary"
           :conceptType="d.conceptType.value"
           :language="'sv'"
-          @input="emitEvent('update:primaryPrefLabel', $event)"
+          @input="handlePrefLabel($event)"
           :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
-<!--        <p v-if="v.$dirty && !v.prefLabel.primary.required" class="error">{{ $t('new.prefLabel.error') }}</p>-->
+        <p v-if="!prefLabelIsSelected" class="error">{{ $t('new.prefLabel.error') }}</p>
 
         <search-input
           :value="d.prefLabel.secondary"
@@ -167,6 +199,10 @@ const testLang = ref(window.lang);
 const props = defineProps({
   d: Object,
   v: Object,
+  conceptTypeIsSelected: Boolean,
+  prefLabelIsSelected: Boolean,
+  explanationX: Boolean,
+  neededForX: Boolean
 });
 
 const emit = defineEmits();
@@ -174,6 +210,16 @@ const emit = defineEmits();
 const emitEvent = (eventName, payload) => {
   emit(eventName, payload);
 };
+
+const handleSelect = (value) => {
+  emitEvent('update:conceptType', value)
+  emitEvent('update:conceptTypeIsSelected', value)
+
+}
+const handlePrefLabel = (value) => {
+  emitEvent('update:primaryPrefLabel', value)
+  emitEvent('update:prefLabelIsSelected', value)
+}
 
 const submitForm = () => {
   emit('submitForm');

@@ -12,6 +12,17 @@
     </a>
     <centered-dialog v-if="isOpened" @close="closeDialog()">
       <new-suggestion
+
+          :conceptTypeIsSelected="conceptTypeIsSelected"
+          :prefLabelIsSelected="prefLabelIsSelected"
+          :explanationX="explanationX"
+          :neededForX="neededForX"
+
+        @update:conceptTypeIsSelected="conceptTypeIsSelected = true"
+        @update:prefLabelIsSelected="prefLabelIsSelected = true"
+        @update:explanationX="explanationX = true"
+        @update:neededForX="neededForX = true"
+
           v-if="!showSuccessMessage && !showFailureMessage"
           :d="formData"
           @update:vocabulary="formData.vocabulary = $event"
@@ -86,6 +97,11 @@ export default defineComponent({
     const showSuccessMessage = ref(false);
     const showFailureMessage = ref(false);
     const suggestionUrl = ref('');
+
+    let conceptTypeIsSelected = ref(false)
+    let prefLabelIsSelected = ref(false)
+    let explanationX = ref(false)
+    let neededForX = ref(false)
 
   /*  const formData = reactive({
       vocabulary: 'yso',
@@ -246,7 +262,33 @@ export default defineComponent({
 
     const submitForm = () => {
       // $v.$touch();
-      if (true) {
+
+      if (formData.conceptType.value && formData.conceptType.value.length > 1) {
+        conceptTypeIsSelected = true
+        console.log("AAAAAAA", formData.conceptType.value.length > 1)
+      }
+      if (formData.prefLabel.primary && formData.prefLabel.primary.length > 1) {
+        prefLabelIsSelected = true
+        console.log("AAAAAAA", formData.prefLabel.primary.length > 1)
+      }
+      if (formData.explanation && formData.explanation.length > 1) {
+        explanationX = true
+        console.log("AAAAAAA", formData.explanation.length > 1)
+      }
+      if (formData.neededFor && formData.neededFor.length > 1) {
+        neededForX = true
+        console.log("AAAAAAA", formData.neededFor.length > 1)
+      }
+
+      if (conceptTypeIsSelected && prefLabelIsSelected && explanationX && neededForX) {
+        console.log("BBBB", conceptTypeIsSelected)
+        console.log("BBBB", prefLabelIsSelected)
+        console.log("BBBB", explanationX)
+        console.log("BBBB", neededForX)
+        console.log("CCC", formData.conceptType.value.length)
+        console.log("CCC", formData.prefLabel.primary.length)
+        console.log("CCC", formData.explanation.length)
+        console.log("CCC", formData.neededFor.length)
         sendData();
       } else {
         console.log('Data not sent: required data of the form was not provided.');
@@ -254,7 +296,7 @@ export default defineComponent({
     };
 
     const sendData = async () => {
-      console.log("SendData: Lähetetään!")
+      // console.log("SendData: Lähetetään!")
       handlePrefLabelLanguages(); // palauta tämä mahdollisesti eli mieti, missä kohtaa tätä kutsuttaisiin
       let ontTypeInTargetSuggestionSystem = '';
       const labelsInTargetSuggestionSystem = [];
@@ -266,6 +308,13 @@ export default defineComponent({
         labelsInTargetSuggestionSystem.push('uusi');
         ontTypeInTargetSuggestionSystem = 'CONCEPT';
       }
+/*
+      if (formData.prefLabel.primary.length < 3) {
+        console.log("tsot stos")
+      }*/
+
+
+
       const altTerms = [];
       formData.altLabels.forEach((item) => (item.value !== '' ? altTerms.push(` ${item.value}`) : null));
 
@@ -486,6 +535,10 @@ ${formData.fromOrg}
       showFailureMessage,
       suggestionUrl,
       formData,
+      conceptTypeIsSelected,
+      prefLabelIsSelected,
+      explanationX,
+      neededForX,
       setDropDown,
       addHTTPOrHTTPS,
       submitForm,
