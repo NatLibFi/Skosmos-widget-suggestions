@@ -6,6 +6,7 @@
         <div id="vocab-info">
           <div>
             <h3>{{ $t('new.button') }}</h3>
+            <div>{{ prefLabelOkay }}</div>
           </div>
         </div>
       </span>
@@ -13,34 +14,34 @@
     <centered-dialog v-if="isOpened" @close="closeDialog()">
       <new-suggestion
 
-          :conceptTypeIsSelected="conceptTypeIsSelected"
-          :prefLabelIsSelected="prefLabelIsSelected"
-          :explanationX="explanationX"
-          :neededForX="neededForX"
+        :conceptTypeIsSelected="conceptTypeIsSelected"
+        :prefLabelOkay="prefLabelOkay"
+        :explanationOkay="explanationOkay"
+        :neededForOkay="neededForOkay"
 
         @update:conceptTypeIsSelected="conceptTypeIsSelected = true"
-        @update:prefLabelIsSelected="prefLabelIsSelected = true"
-        @update:explanationX="explanationX = true"
-        @update:neededForX="neededForX = true"
+        @update:prefLabelOkay="prefLabelOkay = true"
+        @update:explanationOkay="explanationOkay = true"
+        @update:neededForOkay="neededForOkay = true"
 
-          v-if="!showSuccessMessage && !showFailureMessage"
-          :d="formData"
-          @update:vocabulary="formData.vocabulary = $event"
-          @update:conceptType="formData.conceptType.value = $event"
-          @update:primaryPrefLabel="formData.prefLabel.primary = $event"
-          @update:secondaryPrefLabel="formData.prefLabel.secondary = $event"
-          @update:enPrefLabel="formData.prefLabel.en = $event"
-          @update:altLabels="formData.altLabels = $event"
-          @update:broaderLabels="formData.broaderLabels = $event"
-          @update:narrowerLabels="formData.narrowerLabels = $event"
-          @update:relatedLabels="formData.relatedLabels = $event"
-          @update:groups="formData.groups.selectedGroups = $event"
-          @update:exactMatches="formData.exactMatches = $event"
-          @update:scopeNote="formData.scopeNote = $event"
-          @update:explanation="formData.explanation = $event"
-          @update:neededFor="formData.neededFor = $event"
-          @update:fromOrg="formData.fromOrg = $event"
-          @submitForm="submitForm()"
+        v-if="!showSuccessMessage && !showFailureMessage"
+        :d="formData"
+        @update:vocabulary="formData.vocabulary = $event"
+        @update:conceptType="formData.conceptType.value = $event"
+        @update:primaryPrefLabel="formData.prefLabel.primary = $event"
+        @update:secondaryPrefLabel="formData.prefLabel.secondary = $event"
+        @update:enPrefLabel="formData.prefLabel.en = $event"
+        @update:altLabels="formData.altLabels = $event"
+        @update:broaderLabels="formData.broaderLabels = $event"
+        @update:narrowerLabels="formData.narrowerLabels = $event"
+        @update:relatedLabels="formData.relatedLabels = $event"
+        @update:groups="formData.groups.selectedGroups = $event"
+        @update:exactMatches="formData.exactMatches = $event"
+        @update:scopeNote="formData.scopeNote = $event"
+        @update:explanation="formData.explanation = $event"
+        @update:neededFor="formData.neededFor = $event"
+        @update:fromOrg="formData.fromOrg = $event"
+        @submitForm="submitForm()"
       />
 
       <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url" />
@@ -56,10 +57,8 @@ import NewSuggestion from './NewSuggestion.vue';
 import CenteredDialog from './common/CenteredDialog.vue';
 import SuccessMessage from './common/SuccessMessage.vue';
 import FailureMessage from './common/FailureMessage.vue';
-import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import urlToPrx from "../prx.json";
-// import { useVuelidate } from '@vuelidate/core';
 
 export default defineComponent({
   components: {
@@ -71,17 +70,9 @@ export default defineComponent({
   props: {
     lang: String,
     vocab: String,
-    // url: String,
   },
   setup(props) {
     setTimeout(() => {
-      // console.log("formData")
-      // console.log(formData)
-
-      // console.dir(formData);
-
-
-
     }, 500)
 
 
@@ -99,9 +90,12 @@ export default defineComponent({
     const suggestionUrl = ref('');
 
     let conceptTypeIsSelected = ref(false)
-    let prefLabelIsSelected = ref(false)
-    let explanationX = ref(false)
-    let neededForX = ref(false)
+    let prefLabelOkay = ref(false)
+    let explanationOkay = ref(false)
+    let neededForOkay = ref(false)
+
+    let dataCanBeSent = ref(true)
+    let dataCanBeSentArray = ref([])
 
   /*  const formData = reactive({
       vocabulary: 'yso',
@@ -164,87 +158,69 @@ export default defineComponent({
       tags: [],
     });
 
-    // Watchers for formData properties
-/*    watch(formData, (newValue) => {
-      console.log('formData changed:', newValue);
-    }, { deep: true });*/
+    watch(
+        () => [formData.conceptType.value, formData.conceptType.value.length],
+        (newValues, oldValues) => {
+          const conceptTypeLength = newValues[1];
 
-    watch(() => formData.vocabulary, (newValue) => {
-      console.log('vocabulary changed:', newValue);
-    });
+          if (conceptTypeLength > 0) {
+            conceptTypeIsSelected.value = true;
+            dataCanBeSentArray.value[0] = true
+          } else {
+            conceptTypeIsSelected.value = false;
+            dataCanBeSent.value = false;
+            dataCanBeSentArray.value[0] = false
+          }
+        },
+        { deep: true }
+    );
 
-    watch(() => formData.conceptType, (newValue) => {
-      console.log('conceptType changed:', newValue);
-    }, { deep: true });
+    watch(
+        () => [formData.prefLabel.primary, formData.prefLabel.primary.length],
+        (newValues, oldValues) => {
+          const primaryLabelLength = newValues[1];
+          if (primaryLabelLength > 2) {
+            prefLabelOkay.value = true;
+            dataCanBeSentArray.value[1] = true
+          } else {
+            prefLabelOkay.value = false;
+            dataCanBeSent.value = false;
+            dataCanBeSentArray.value[1] = false
+          }
+          prefLabelOkay.value ? console.log("Toimiiko?", prefLabelOkay.value) : console.log("hutiin meni");
+        },
+        { deep: true }
+    );
 
-    watch(() => formData.prefLabel, (newValue) => {
-      console.log('prefLabel changed:', newValue);
-      // handlePrefLabelLanguages()
-    }, { deep: true });
+    watch(
+        () => [formData.explanation, formData.explanation.length],
+        (newValues, oldValues) => {
+          const explanationLength = newValues[1];
+          if (explanationLength > 2) {
+            explanationOkay.value = true;
+            dataCanBeSentArray.value[2] = true;
+          } else {
+            explanationOkay.value = false;
+            dataCanBeSentArray.value[2] = false;
+          }
+        },
+        { deep: true }
+    );
 
-    watch(() => formData.altLabels, (newValue) => {
-      console.log('altLabels changed:', newValue);
-    }, { deep: true });
-
-    watch(() => formData.broaderLabels, (newValue) => {
-      console.log('broaderLabels changed:', newValue);
-    }, { deep: true });
-
-    watch(() => formData.narrowerLabels, (newValue) => {
-      console.log('narrowerLabels changed:', newValue);
-    }, { deep: true });
-
-    watch(() => formData.relatedLabels, (newValue) => {
-      console.log('relatedLabels changed:', newValue);
-    }, { deep: true });
-
-    watch(() => formData.groups, (newValue) => {
-      console.log('groups changed:', newValue);
-    }, { deep: true });
-
-    watch(() => formData.exactMatches, (newValue) => {
-      console.log('exactMatches changed:', newValue);
-    }, { deep: true });
-
-    watch(() => formData.scopeNote, (newValue) => {
-      console.log('scopeNote changed:', newValue);
-    });
-
-    watch(() => formData.explanation, (newValue) => {
-      console.log('explanation changed:', newValue);
-    });
-
-    watch(() => formData.neededFor, (newValue) => {
-      console.log('neededFor changed:', newValue);
-    });
-
-    watch(() => formData.fromOrg, (newValue) => {
-      console.log('fromOrg changed:', newValue);
-    });
-
-    watch(() => formData.tags, (newValue) => {
-      console.log('tags changed:', newValue);
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    watch(
+        () => [formData.neededFor, formData.neededFor.length],
+        (newValues, oldValues) => {
+          const needdForLength = newValues[1];
+          if (needdForLength > 2) {
+            neededForOkay.value = true;
+            dataCanBeSentArray.value[3] = true;
+          } else {
+            neededForOkay.value = false;
+            dataCanBeSentArray.value[3] = false;
+          }
+        },
+        { deep: true }
+    );
 
     // Methods
     const setDropDown = () => {
@@ -263,32 +239,21 @@ export default defineComponent({
     const submitForm = () => {
       // $v.$touch();
 
-      if (formData.conceptType.value && formData.conceptType.value.length > 1) {
-        conceptTypeIsSelected = true
-        console.log("AAAAAAA", formData.conceptType.value.length > 1)
-      }
-      if (formData.prefLabel.primary && formData.prefLabel.primary.length > 1) {
-        prefLabelIsSelected = true
-        console.log("AAAAAAA", formData.prefLabel.primary.length > 1)
-      }
-      if (formData.explanation && formData.explanation.length > 1) {
-        explanationX = true
-        console.log("AAAAAAA", formData.explanation.length > 1)
-      }
-      if (formData.neededFor && formData.neededFor.length > 1) {
-        neededForX = true
-        console.log("AAAAAAA", formData.neededFor.length > 1)
-      }
+      dataCanBeSentArray.value.forEach((value, index) => {
+        console.log(`Element at index ${index}: ${value}`);
+      });
 
-      if (conceptTypeIsSelected && prefLabelIsSelected && explanationX && neededForX) {
-        console.log("BBBB", conceptTypeIsSelected)
-        console.log("BBBB", prefLabelIsSelected)
-        console.log("BBBB", explanationX)
-        console.log("BBBB", neededForX)
-        console.log("CCC", formData.conceptType.value.length)
-        console.log("CCC", formData.prefLabel.primary.length)
-        console.log("CCC", formData.explanation.length)
-        console.log("CCC", formData.neededFor.length)
+      const countTrueValues = dataCanBeSentArray.value.reduce((count, currentValue) => {
+        if (currentValue === true) {
+          return count + 1;
+        } else {
+          return count;
+        }
+      }, 0);
+
+
+      console.log('countTrueValues', countTrueValues)
+      if (countTrueValues === 4) {
         sendData();
       } else {
         console.log('Data not sent: required data of the form was not provided.');
@@ -308,20 +273,11 @@ export default defineComponent({
         labelsInTargetSuggestionSystem.push('uusi');
         ontTypeInTargetSuggestionSystem = 'CONCEPT';
       }
-/*
-      if (formData.prefLabel.primary.length < 3) {
-        console.log("tsot stos")
-      }*/
-
-
 
       const altTerms = [];
       formData.altLabels.forEach((item) => (item.value !== '' ? altTerms.push(` ${item.value}`) : null));
 
       const brdLabls = [];
-/*      console.log("In the SuggestNewButton")
-      console.log("typeof(formData.broaderLabels)")
-      console.log(typeof(formData.broaderLabels))*/
       formData.broaderLabels.forEach((item) =>
           item.value !== '' ? brdLabls.push(` [${item.value}](${item.uri})`) : null
       );
@@ -536,9 +492,9 @@ ${formData.fromOrg}
       suggestionUrl,
       formData,
       conceptTypeIsSelected,
-      prefLabelIsSelected,
-      explanationX,
-      neededForX,
+      prefLabelOkay,
+      explanationOkay,
+      neededForOkay,
       setDropDown,
       addHTTPOrHTTPS,
       submitForm,
@@ -549,6 +505,8 @@ ${formData.fromOrg}
       closeDialog,
       getUrl,
       getGroups,
+      dataCanBeSent,
+      dataCanBeSentArray
       // v$: useVuelidate()
     };
   },

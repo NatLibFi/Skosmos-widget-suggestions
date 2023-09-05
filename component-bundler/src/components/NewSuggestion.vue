@@ -10,9 +10,9 @@
 
 
     <p>{{ conceptTypeIsSelected }}</p>
-    <p>{{ prefLabelIsSelected }}</p>
-    <p>{{ explanationX }}</p>
-    <p>{{ neededForX }}</p>
+    <p>{{ prefLabelOkay }}</p>
+    <p>{{ explanationOkay }}</p>
+    <p>{{ neededForOkay }}</p>
 
 
 
@@ -59,7 +59,7 @@
           :language="'fi'"
           @input="handlePrefLabel($event)"
           :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-        <p v-if="!prefLabelIsSelected" class="error">{{ $t('new.prefLabel.error') }}</p>
+        <p v-if="!prefLabelOkay" class="error">{{ $t('new.prefLabel.error') }}</p>
 
         <search-input
           :value="d.prefLabel.secondary"
@@ -78,7 +78,7 @@
           :language="'sv'"
           @input="handlePrefLabel($event)"
           :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
-        <p v-if="!prefLabelIsSelected" class="error">{{ $t('new.prefLabel.error') }}</p>
+        <p v-if="!prefLabelOkay" class="error">{{ $t('new.prefLabel.error') }}</p>
 
         <search-input
           :value="d.prefLabel.secondary"
@@ -151,18 +151,20 @@
 
       <basic-input
         :value="d.explanation"
-        @input:basic="emitEvent('update:explanation', $event)"
+        @input:basic="handleExplanation($event)"
         :label="{text: $t('new.explanation.label'), for: $t('new.explanation.label')}"
-        :isTextArea="true" />
-<!--      <p v-if="v.$dirty && !v.explanation.required" class="error">{{ $t('new.explanation.error') }}</p>-->
+      :isTextArea="true" />
+      <!--        @input:basic="emitEvent('update:explanation', $event)"-->
+      <p v-if="!explanationOkay" class="error">{{ $t('new.explanation.error') }}</p>
 
 <!-- isTextArea set true on 2022-02-01     -->
       <basic-input
         :value="d.neededFor"
-        @input:basic="emitEvent('update:neededFor', $event)"
+        @input:basic="handleNeededFor($event)"
         :label="{text: $t('new.neededFor.label'), for: $t('new.neededFor.for')}"
         :isTextArea="true" />
 <!--      <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p>-->
+            <p v-if="!neededForOkay" class="error">{{ $t('new.neededFor.error') }}</p>
 
       <basic-input
         :value="d.fromOrg"
@@ -200,9 +202,9 @@ const props = defineProps({
   d: Object,
   v: Object,
   conceptTypeIsSelected: Boolean,
-  prefLabelIsSelected: Boolean,
-  explanationX: Boolean,
-  neededForX: Boolean
+  prefLabelOkay: Boolean,
+  explanationOkay: Boolean,
+  neededForOkay: Boolean
 });
 
 const emit = defineEmits();
@@ -218,8 +220,19 @@ const handleSelect = (value) => {
 }
 const handlePrefLabel = (value) => {
   emitEvent('update:primaryPrefLabel', value)
-  emitEvent('update:prefLabelIsSelected', value)
+  emitEvent('update:prefLabelOkay', value)
 }
+
+const handleExplanation = (value) => {
+  emitEvent('update:explanation', value)
+  emitEvent('update:explanationOkay', value)
+}
+
+const handleNeededFor = (value) => {
+  emitEvent('update:neededFor', value)
+  emitEvent('update:neededForOkay', value)
+}
+
 
 const submitForm = () => {
   emit('submitForm');
