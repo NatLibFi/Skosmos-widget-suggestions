@@ -13,6 +13,7 @@
     <p>{{ prefLabelOkay }}</p>
     <p>{{ explanationOkay }}</p>
     <p>{{ neededForOkay }}</p>
+    <p>{{ sending }}</p>
 
 
 
@@ -47,7 +48,7 @@
 
 
 <!--      Tee tähän maanantaina reaktiivinen muuttuja, joka tekee tarkistuksen ja estää tarvittaessa lähettämisen-->
-      <p v-if="!conceptTypeIsSelected" class="error">{{ $t('new.conceptType.error') }}</p>
+      <p v-if="!conceptTypeIsSelected && sending" class="error">{{ $t('new.conceptType.error') }}</p>
 <!--      <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>-->
       <div>{{ $i18n.locale }}</div>
       <div>{{ testLang }}</div>
@@ -59,7 +60,7 @@
           :language="'fi'"
           @input="handlePrefLabel($event)"
           :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-        <p v-if="!prefLabelOkay" class="error">{{ $t('new.prefLabel.error') }}</p>
+        <p v-if="!prefLabelOkay && sending" class="error">{{ $t('new.prefLabel.error') }}</p>
 
         <search-input
           :value="d.prefLabel.secondary"
@@ -155,7 +156,7 @@
         :label="{text: $t('new.explanation.label'), for: $t('new.explanation.label')}"
       :isTextArea="true" />
       <!--        @input:basic="emitEvent('update:explanation', $event)"-->
-      <p v-if="!explanationOkay" class="error">{{ $t('new.explanation.error') }}</p>
+      <p v-if="!explanationOkay && sending" class="error">{{ $t('new.explanation.error') }}</p>
 
 <!-- isTextArea set true on 2022-02-01     -->
       <basic-input
@@ -164,7 +165,7 @@
         :label="{text: $t('new.neededFor.label'), for: $t('new.neededFor.for')}"
         :isTextArea="true" />
 <!--      <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p>-->
-            <p v-if="!neededForOkay" class="error">{{ $t('new.neededFor.error') }}</p>
+            <p v-if="!neededForOkay && sending" class="error">{{ $t('new.neededFor.error') }}</p>
 
       <basic-input
         :value="d.fromOrg"
@@ -204,7 +205,8 @@ const props = defineProps({
   conceptTypeIsSelected: Boolean,
   prefLabelOkay: Boolean,
   explanationOkay: Boolean,
-  neededForOkay: Boolean
+  neededForOkay: Boolean,
+  sending: Boolean
 });
 
 const emit = defineEmits();

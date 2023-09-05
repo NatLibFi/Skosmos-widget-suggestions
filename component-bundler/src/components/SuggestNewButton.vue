@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl.split('#')[0]}#suggestion`">
       <span>
@@ -13,17 +12,15 @@
     </a>
     <centered-dialog v-if="isOpened" @close="closeDialog()">
       <new-suggestion
-
         :conceptTypeIsSelected="conceptTypeIsSelected"
         :prefLabelOkay="prefLabelOkay"
         :explanationOkay="explanationOkay"
         :neededForOkay="neededForOkay"
-
+        :sending="sending"
         @update:conceptTypeIsSelected="conceptTypeIsSelected = true"
         @update:prefLabelOkay="prefLabelOkay = true"
         @update:explanationOkay="explanationOkay = true"
         @update:neededForOkay="neededForOkay = true"
-
         v-if="!showSuccessMessage && !showFailureMessage"
         :d="formData"
         @update:vocabulary="formData.vocabulary = $event"
@@ -51,7 +48,6 @@
 </template>
 
 <script>
-// Versio ennen isoja muutoksia
 import { defineComponent, ref, reactive, watchEffect, inject, watch } from 'vue';
 import NewSuggestion from './NewSuggestion.vue';
 import CenteredDialog from './common/CenteredDialog.vue';
@@ -75,60 +71,20 @@ export default defineComponent({
     setTimeout(() => {
     }, 500)
 
-
     // Inject the i18n $t function and pageUrl variable
     const $t = inject('$t');
     const pageUrl = inject('pageUrl');
-
-    // Use $t for translations and pageUrl
-    // console.log($t('new.button'));
-    // console.log(pageUrl);
-
     const isOpened = ref(false);
     const showSuccessMessage = ref(false);
     const showFailureMessage = ref(false);
     const suggestionUrl = ref('');
-
     let conceptTypeIsSelected = ref(false)
     let prefLabelOkay = ref(false)
     let explanationOkay = ref(false)
     let neededForOkay = ref(false)
-
-    let dataCanBeSent = ref(true)
     let dataCanBeSentArray = ref([])
+    let sending = ref(false)
 
-  /*  const formData = reactive({
-      vocabulary: 'yso',
-      conceptType: {
-        value: 'Yleiskäsite',
-        options: [
-          { value: '', vocab: 'yso' },
-          { value: '', vocab: 'yso-paikat' },
-        ],
-      },
-      prefLabel: {
-        primary: 'qweqwe',
-        secondary: 'werwer',
-        fi: { value: 'ertert' },
-        sv: { value: 'rtyrty' },
-        en: 'tyutyu',
-      },
-      altLabels: [{ value: 'asd', isTouched: false }],
-      broaderLabels: [{ value: 'aaaaaaa', uri: '', isTouched: false }],
-      narrowerLabels: [{ value: 'ggggggg', uri: '', isTouched: false }],
-      relatedLabels: [{ value: 'ttttttt', uri: '', isTouched: false }],
-      groups: { allGroups: [], selectedGroups: ["a", "b"] },
-      exactMatches: [{ vocab: 'yso', value: 'wqe', isTouched: false }],
-      scopeNote: 'qweqwewqe',
-      explanation: 'qweqweqwe',
-      neededFor: 'qweqweqwe',
-      fromOrg: 'qweqweqwe',
-      tags: ["uusi"],
-    });*/
-
-
-
-    // Älä muuta vielä
     const formData = reactive({
       vocabulary: 'yso',
       conceptType: {
@@ -168,7 +124,6 @@ export default defineComponent({
             dataCanBeSentArray.value[0] = true
           } else {
             conceptTypeIsSelected.value = false;
-            dataCanBeSent.value = false;
             dataCanBeSentArray.value[0] = false
           }
         },
@@ -184,7 +139,6 @@ export default defineComponent({
             dataCanBeSentArray.value[1] = true
           } else {
             prefLabelOkay.value = false;
-            dataCanBeSent.value = false;
             dataCanBeSentArray.value[1] = false
           }
           prefLabelOkay.value ? console.log("Toimiiko?", prefLabelOkay.value) : console.log("hutiin meni");
@@ -238,6 +192,7 @@ export default defineComponent({
 
     const submitForm = () => {
       // $v.$touch();
+      sending.value = true
 
       dataCanBeSentArray.value.forEach((value, index) => {
         console.log(`Element at index ${index}: ${value}`);
@@ -261,8 +216,7 @@ export default defineComponent({
     };
 
     const sendData = async () => {
-      // console.log("SendData: Lähetetään!")
-      handlePrefLabelLanguages(); // palauta tämä mahdollisesti eli mieti, missä kohtaa tätä kutsuttaisiin
+      handlePrefLabelLanguages();
       let ontTypeInTargetSuggestionSystem = '';
       const labelsInTargetSuggestionSystem = [];
       if (formData.vocabulary === 'yso-paikat') {
@@ -384,7 +338,6 @@ ${formData.fromOrg}
             toggleSuccessMessage(`${response.data.url.replace('/repos', '').replace('api.', '')}`);
           })
           .catch((error) => {
-            // console.log(error);
             toggleFailureMessage();
           });
     };
@@ -399,22 +352,13 @@ ${formData.fromOrg}
       showFailureMessage.value = true;
     };
 
-    // Se, ettei ehdotus lähde, liittyy tähän:
     const handlePrefLabelLanguages = () => {
-
-/*      console.log("window.lang")
-      console.log(window.lang)*/
-
       formData.prefLabel.fi.value = formData.prefLabel.primary;
-      // ONGELMA ON TÄSSÄ
-      // console.log(window.lang)
-      // if (props.lang === 'fi') {
       if (window.lang === 'fi') {
         formData.prefLabel.fi.value = formData.prefLabel.primary;
         formData.prefLabel.sv.value = formData.prefLabel.secondary;
         console.log(formData.prefLabel.primary)
         console.log(formData.prefLabel.secondary)
-      // } else if (props.lang === 'sv') {
       } else if (window.lang === 'sv') {
         formData.prefLabel.sv.value = formData.prefLabel.primary;
         formData.prefLabel.fi.value = formData.prefLabel.secondary;
@@ -448,6 +392,7 @@ ${formData.fromOrg}
       setDropDown();
       // $v.$reset();
       getGroups();
+      sending.value = false
     };
 
     const getUrl = async () => {
@@ -479,9 +424,7 @@ ${formData.fromOrg}
       getGroups();
     });
 
-    // Call created hook
     getGroups();
-    // getUrl(); // Tarkista
 
     // Return the variables and methods you want to expose to the template
     return {
@@ -505,9 +448,8 @@ ${formData.fromOrg}
       closeDialog,
       getUrl,
       getGroups,
-      dataCanBeSent,
-      dataCanBeSentArray
-      // v$: useVuelidate()
+      dataCanBeSentArray,
+      sending
     };
   },
 });
