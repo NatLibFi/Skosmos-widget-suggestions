@@ -13,6 +13,83 @@ const i18n = createI18n({
 });
 
 const app = createApp(SuggestNewButton);
+const app2 = createApp(SuggestChangeButton);
+
+// Provide i18n instance to components
+// app.provide('$t', i18n.global.t);
+app.provide('$t', i18n.global.t);
+app.provide('pageUrl', window.location.href);
+app2.provide('$t', i18n.global.t);
+app2.provide('pageUrlX', window.location.href);
+document.addEventListener('DOMContentLoaded', function () {
+    const element = document.getElementById('pref-label');
+    if (element) {
+        const labelText = element.textContent;
+        app2.provide('labelX', labelText);
+    }
+})
+
+document.addEventListener('DOMContentLoaded', function () {
+    const element = document.getElementById('uri-input-box');
+    if (element) {
+        const uriText = element.textContent;
+        app2.provide('uriX', uriText);
+    }
+})
+
+
+
+
+app.use(i18n); // Register global i18n
+app2.use(i18n); // Register global i18n
+// app.use(useVuelidate); // Use Vuelidate plugin
+
+// Define the custom elements
+customElements.define('suggest-new-button', class extends HTMLElement {
+    connectedCallback() {
+        const element = app.mount(document.createElement('div'));
+        this.appendChild(element.$el);
+    }
+});
+
+customElements.define('suggest-change-button', class extends HTMLElement {
+    connectedCallback() {
+        // const element = createApp(SuggestChangeButton).mount(document.createElement('div'));
+        const element = app2.mount(document.createElement('div'));
+        this.appendChild(element.$el);
+    }
+});
+
+// Check if 'suggest-new-button' is registered
+if (customElements.get('suggest-new-button')) {
+    console.log("'suggest-new-button' is registered.");
+} else {
+    console.log("'suggest-new-button' is NOT registered.");
+}
+
+if (customElements.get('suggest-change-button')) {
+    console.log("'suggest-change-button' is registered.");
+} else {
+    console.log("'suggest-change-button' is NOT registered.");
+}
+
+// Tämä on koodi, jossa uuden lähettäminen toimii kokonaan
+/*
+import { createApp } from 'vue';
+import { createI18n } from 'vue-i18n';
+import translations from './i18n/i18n';
+// import Vuelidate from 'vuelidate';
+import { useVuelidate } from '@vuelidate/core'; // Import useVuelidate function
+import SuggestNewButton from '@/components/SuggestNewButton.vue';
+import SuggestChangeButton from '@/components/SuggestChangeButton.vue';
+
+const i18n = createI18n({
+    // locale: 'fi',
+    locale: window.lang,
+    messages: translations,
+});
+
+const app = createApp(SuggestNewButton);
 
 // Provide i18n instance to components
 // app.provide('$t', i18n.global.t);
@@ -43,7 +120,33 @@ if (customElements.get('suggest-new-button')) {
     console.log("'suggest-new-button' is registered.");
 } else {
     console.log("'suggest-new-button' is NOT registered.");
-}
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,132 @@
 <template>
+  <div>
+    <div class="suggestion-header">
+      <h4>{{ $t('edit.header') }} <a :href="uri">{{ label }}</a></h4>
+      <p>{{ $t('edit.paragraph') }}</p>
+    </div>
+    <div class="suggestion-form">
+      <div>
+        <basic-input
+            :value="formData.description"
+            @input:basic="updateDescription"
+            :label="{ text: $t('edit.description.label'), for: $t('edit.description.label') }"
+            :isTextArea="true"
+        />
+         <p v-if="!descriptionCanBeSent && submitted" class="error">{{ $t('edit.description.error') }}</p>
+        <!-- <p v-if="v.$dirty && !v.description.required" class="error">{{ $t('edit.description.error') }}</p> -->
+
+        <basic-input
+            :value="formData.reason"
+            @input:basic="updateReason"
+            :label="{ text: $t('edit.reason.label'), for: $t('edit.reason.for') }"
+            :isTextArea="true"
+        />
+         <p v-if="!reasonCanBeSent && submitted" class="error">{{ $t('edit.reason.error') }}</p>
+        <!-- <p v-if="v.$dirty && !v.reason.required" class="error">{{ $t('edit.reason.error') }}</p> -->
+
+        <basic-input
+            :value="formData.fromOrg"
+            @input:basic="updateFromOrg"
+            :label="{ text: $t('edit.fromOrg.label'), for: $t('edit.fromOrg.for') }"
+            :isTextArea="false"
+        />
+      </div>
+
+      <div class="form-submit">
+        <a @click="submitForm">{{ $t('edit.submit') }}</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import BasicInput from './form/BasicInput.vue';
+import { defineComponent, ref, reactive, watchEffect, inject, watch } from 'vue';
+
+export default {
+  components: {
+    BasicInput,
+  },
+  props: {
+    // Form Data:
+    d: Object,
+    // Form Validations:
+    // v: Object,
+    label: String,
+    uri: String,
+  },
+  setup(props, { emit }) {
+    const formData = ref(props.d);
+    const descriptionCanBeSent = ref(false)
+    const reasonCanBeSent = ref(false)
+    const submitted = ref(false)
+
+    const updateDescription = (value) => {
+      formData.value.description = value;
+    };
+
+    const updateReason = (value) => {
+      formData.value.reason = value;
+    };
+
+    const updateFromOrg = (value) => {
+      formData.value.fromOrg = value;
+    };
+
+    watch(
+        () => [formData.value.description, formData.value.description.length],
+        (newValues, oldValues) => {
+          const descriptionLength = newValues[1];
+
+          if (descriptionLength > 2) {
+            descriptionCanBeSent.value = true
+          } else {
+            descriptionCanBeSent.value = false
+          }
+        },
+        { deep: true }
+    )
+
+    watch(
+        () => [formData.value.reason, formData.value.reason.length],
+        (newValues, oldValues) => {
+          const reasonLength = newValues[1];
+
+          if (reasonLength > 2) {
+            reasonCanBeSent.value = true
+          } else {
+            reasonCanBeSent.value = false
+          }
+        },
+        { deep: true }
+    )
+
+
+    const submitForm = () => {
+    submitted.value = true
+      if (descriptionCanBeSent.value == true && reasonCanBeSent.value == true) {
+        emit('submitForm')
+      }
+    };
+
+    return {
+      formData,
+      updateDescription,
+      updateReason,
+      updateFromOrg,
+      submitForm,
+      descriptionCanBeSent,
+      reasonCanBeSent,
+      submitted
+    };
+  },
+};
+</script>
+
+
+
+<!--Orig-->
+<!--<template>
 <div>
   <div class="suggestion-header">
     <h4>{{ $t('edit.header') }} <a :href="uri">{{ label }}</a></h4>
@@ -11,14 +139,14 @@
         @input="$emit('update:description', $event)"
         :label="{text: $t('edit.description.label'), for: $t('edit.description.label')}"
         :isTextArea="true" />
-      <p v-if="v.$dirty && !v.description.required" class="error">{{ $t('edit.description.error') }}</p>
+&lt;!&ndash;      <p v-if="v.$dirty && !v.description.required" class="error">{{ $t('edit.description.error') }}</p>&ndash;&gt;
 
       <basic-input
         :value="d.reason"
         @input="$emit('update:reason', $event)"
         :label="{text: $t('edit.reason.label'), for: $t('edit.reason.for')}"
         :isTextArea="true" />
-      <p v-if="v.$dirty && !v.reason.required" class="error">{{ $t('edit.reason.error') }}</p>
+&lt;!&ndash;      <p v-if="v.$dirty && !v.reason.required" class="error">{{ $t('edit.reason.error') }}</p>&ndash;&gt;
 
       <basic-input
         :value="d.fromOrg"
@@ -46,7 +174,7 @@ export default {
     // Form Data:
     d: Object,
     // Form Validations:
-    v: Object,
+    // v: Object,
     label: String,
     uri: String
   },
@@ -56,7 +184,7 @@ export default {
     }
   }
 }
-</script>
+</script>-->
 
 <style scoped>
 a {

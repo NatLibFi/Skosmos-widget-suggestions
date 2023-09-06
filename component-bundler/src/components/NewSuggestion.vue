@@ -47,7 +47,7 @@
           :language="'sv'"
           @input="handlePrefLabel($event)"
           :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
-        <p v-if="!prefLabelOkay" class="error">{{ $t('new.prefLabel.error') }}</p>
+        <p v-if="!prefLabelOkay && sending" class="error">{{ $t('new.prefLabel.error') }}</p>
 
         <search-input
           :value="d.prefLabel.secondary"
@@ -58,11 +58,38 @@
           :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
       </div>
 
-      <basic-input
-        :value="d.prefLabel.en"
-        @input:basic="emitEvent('update:enPrefLabel', $event)"
-        :label="{text: $t('new.prefLabel.en.label'), for: $t('new.prefLabel.en.for')}"
-        :isTextArea="false" />
+      <div v-if="$i18n.locale === 'en'">
+
+        <basic-input
+            :value="d.prefLabel.en"
+            @input:basic="emitEvent('update:enPrefLabel', $event)"
+            :label="{text: $t('new.prefLabel.en.label'), for: $t('new.prefLabel.en.for')}"
+            :isTextArea="false" />
+
+        <search-input
+            :value="d.prefLabel.primary"
+            :conceptType="d.conceptType.value"
+            :vocabulary="d.vocabulary"
+            :language="'fi'"
+            @input="handlePrefLabel($event)"
+            :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
+        <p v-if="!prefLabelOkay && sending" class="error">{{ $t('new.prefLabel.error') }}</p>
+
+        <search-input
+            :value="d.prefLabel.secondary"
+            :conceptType="d.conceptType.value"
+            :vocabulary="d.vocabulary"
+            :language="'sv'"
+            @input="emitEvent('update:secondaryPrefLabel', $event)"
+            :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
+
+      </div>
+
+
+
+
+
+
 
       <the-multiple-basic-input
         :values="d.altLabels"

@@ -21,7 +21,8 @@ SUGGESTIONS = {
             // "url": this.fetchUrl() ? this.fetchUrl() : '',
             "lang": lang ? lang : '',
             "vocab": vocab ? vocab : '',
-            "label": data.prefLabels[0].label ? data.prefLabels[0].label : '',
+            // "label": data.prefLabels[0].label ? data.prefLabels[0].label : '',
+            "label": 'joku laabeli',
             "uri": this.fetchUri(data) ? this.fetchUri(data) : ''
             }));
         await delay(2500);
