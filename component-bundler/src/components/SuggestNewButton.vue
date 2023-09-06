@@ -5,7 +5,6 @@
         <div id="vocab-info">
           <div>
             <h3>{{ $t('new.button') }}</h3>
-            <div>{{ prefLabelOkay }}</div>
           </div>
         </div>
       </span>
@@ -141,7 +140,6 @@ export default defineComponent({
             prefLabelOkay.value = false;
             dataCanBeSentArray.value[1] = false
           }
-          prefLabelOkay.value ? console.log("Toimiiko?", prefLabelOkay.value) : console.log("hutiin meni");
         },
         { deep: true }
     );
@@ -194,9 +192,9 @@ export default defineComponent({
       // $v.$touch();
       sending.value = true
 
-      dataCanBeSentArray.value.forEach((value, index) => {
+/*      dataCanBeSentArray.value.forEach((value, index) => {
         console.log(`Element at index ${index}: ${value}`);
-      });
+      });*/
 
       const countTrueValues = dataCanBeSentArray.value.reduce((count, currentValue) => {
         if (currentValue === true) {
@@ -206,8 +204,6 @@ export default defineComponent({
         }
       }, 0);
 
-
-      console.log('countTrueValues', countTrueValues)
       if (countTrueValues === 4) {
         sendData();
       } else {
@@ -321,7 +317,7 @@ ${formData.fromOrg}
         labels: labelsInTargetSuggestionSystem,
       };
       const payload = encodeURIComponent(JSON.stringify(dataBundle));
-      console.log("payload", payload)
+      // console.log("payload", payload)
       const headers = {
         'Access-Control-Allow-Origin': '*',
       };
@@ -332,8 +328,9 @@ ${formData.fromOrg}
       // https://github.com/Finto-ehdotus/YSE
           .post(`${urlToPrx[0].url}?payload=${payload}`, {}, { headers })
           .then((response) => {
-            console.log(`URL: ${urlToPrx[0].url}?payload=${payload}`);
-            console.log('Response:', response);
+            console.log('Response:', response)
+/*            console.log(`URL: ${urlToPrx[0].url}?payload=${payload}`);
+            console.log('Response:', response);*/
             // toggleSuccessMessage(`https://github.com/Finto-ehdotus/YSE`);
             toggleSuccessMessage(`${response.data.url.replace('/repos', '').replace('api.', '')}`);
           })
@@ -357,13 +354,9 @@ ${formData.fromOrg}
       if (window.lang === 'fi') {
         formData.prefLabel.fi.value = formData.prefLabel.primary;
         formData.prefLabel.sv.value = formData.prefLabel.secondary;
-        console.log(formData.prefLabel.primary)
-        console.log(formData.prefLabel.secondary)
       } else if (window.lang === 'sv') {
         formData.prefLabel.sv.value = formData.prefLabel.primary;
         formData.prefLabel.fi.value = formData.prefLabel.secondary;
-        console.log(formData.prefLabel.primary)
-        console.log(formData.prefLabel.secondary)
       }
     };
 

@@ -80,7 +80,6 @@ export default {
 
     watch(searchString, () => {
       searchLabel();
-      console.log(searchString.value)
     });
 
     const searchLabel = debounce(function() {
@@ -91,20 +90,8 @@ export default {
       }
     }, 1500)
     const handleResult = async (inputValue) => {
-
-      if ((props.conceptType != "")) console.log("conceptType: %s", props.conceptType);
-
       const vocs = ["yso-paikat", "yso", "yse"];
-
       for (var i = 0; i < vocs.length; i++) {
-
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-        console.log(vocs[i])
-        console.log(props.language)
-        console.log(inputValue)
-
-
-
         const response = await axios({
           method: 'get',
           url: 'https://api.finto.fi/rest/v1/search',
@@ -122,29 +109,6 @@ export default {
           break;
         }
       }
-
-/*      for (var i = 0; i < vocs.length; i++) {
-        const response = await axios({
-          method: 'get',
-          url: 'https://api.finto.fi/rest/v1/search',
-          params: {
-            vocab: vocs[i],
-            lang: language,
-            query: inputValue
-          }
-        }).catch(error => console.log(error));
-        // For the future: this is assigned only if the term is found and is null otherwise
-        searchResult = response.data.results[0]
-        context.emit('input', searchString);
-        if (searchResult) {
-          context.emit('input', '');
-          break;
-        }
-      }*/
-
-
-
-
     }
 
     const capitalizeFirstLetter = (string) => {
@@ -167,192 +131,8 @@ export default {
       handleResult
     }
   }
-
-
-/*  data () {
-    return {
-      searchString: '',
-      searchResult: null
-    }
-  },*/
-  // watch: {
-  //   searchString: function() { this.searchLabel() }
-  // },
-  // methods: {
-/*    searchLabel: debounce(function() {
-      if (this.searchString.length >= 2) {
-        this.handleResult(this.checkCapitalization(this.searchString));
-      } else {
-        this.$emit('input', this.searchString);
-      }
-    }, 1500),
-    handleResult: async function(inputValue) {
-
-      // concetpType is carried here as a property from the higher level component. It will be used
-      // to exclude Geographical Concept type out from the checklist.
-      if ((this.conceptType != "")) console.log("conceptType: %s", this.conceptType);
-
-      const vocs = ["yso-paikat", "yso", "yse"];
-      for (var i = 0; i < vocs.length; i++) {
-        const response = await axios({
-         method: 'get',
-         url: 'https://api.finto.fi/rest/v1/search',
-         params: {
-              vocab: vocs[i],
-              lang: this.language,
-              query: inputValue
-            }
-       }).catch(error => console.log(error));
-      // For the future: this is assigned only if the term is found and is null otherwise
-      this.searchResult = response.data.results[0]
-        this.$emit('input', this.searchString);
-        if (this.searchResult) {
-          this.$emit('input', '');
-          break;
-        }
-      }
-    },
-    capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    },
-    checkCapitalization(inputValue) {
-      if (inputValue && this.vocabulary === this.$t('new.common.places')) {
-        return inputValue.charAt(0).toUpperCase() + inputValue.substr(1);
-      }
-      return inputValue;
-    },*/
-  // }
 };
 </script>
-
-
-
-
-<!--<template>
-<div>
-  <label :for="label.for">{{ label.text }}</label>
-  <div v-if="searchResult
-    && searchResult.uri.length > 0
-    && searchString.toLowerCase() === searchResult.prefLabel.toLowerCase()">
-      <div v-if="searchResult.vocab === 'yse'">
-        <p>
-          {{ $t('new.common.ifyse1') }}
-          <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
-          {{ $t('new.common.ifyse2') }}
-        </p>
-      </div>
-    <div v-if="searchResult.vocab === 'yso'">
-      <p>
-        {{ $t('new.common.ifyso') }}
-        <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
-      </p>
-    </div>
-    <div v-if="searchResult.vocab === 'yso-paikat'">
-      <p>
-        {{ $t('new.common.ifysopaikat') }}
-        <strong><a target="_blank" :href="searchResult.uri">{{ searchResult.lang === this.language ? searchResult.prefLabel : ''}}</a></strong>
-      </p>
-    </div>
-  </div>
-  <div class="input-container">
-    <div class="auto-complete">
-      <input
-        v-model.trim="searchString"
-        class="auto-complete-input"
-        type="text" />
-      <div @click="searchString = ''" class="clear-input">
-        <svg-icon
-          v-if="searchString.length > 0"
-          icon-name="cross">
-          <icon-cross />
-        </svg-icon>
-      </div>
-    </div>
-  </div>
-</div>
-</template>
-
-<script>
-import SvgIcon from '../icons/SvgIcon.vue';
-import IconCross from '../icons/IconCross.vue';
-import IconCheck from '../icons/IconCheck.vue';
-// import { directive as onClickaway } from 'vue-clickaway';
-import { onClickaway } from "vue3-click-away";
-import axios from 'axios';
-import debounce from 'lodash/debounce';
-
-export default {
-  components: {
-    SvgIcon,
-    IconCross,
-    IconCheck
-  },
-  directives: {
-    onClickaway: onClickaway
-  },
-  props: {
-    values: Array,
-    vocabulary: String,
-    label: Object,
-    // vocabulary: String,
-    language: String,
-    conceptType: String
-  },
-  data () {
-    return {
-      searchString: '',
-      searchResult: null
-    }
-  },
-  watch: {
-    searchString: function() { this.searchLabel() }
-  },
-  methods: {
-    searchLabel: debounce(function() {
-      if (this.searchString.length >= 2) {
-        this.handleResult(this.checkCapitalization(this.searchString));
-      } else {
-        this.$emit('input', this.searchString);
-      }
-    }, 1500),
-    handleResult: async function(inputValue) {
-
-      // concetpType is carried here as a property from the higher level component. It will be used
-      // to exclude Geographical Concept type out from the checklist.
-      if ((this.conceptType != "")) console.log("conceptType: %s", this.conceptType);
-
-      const vocs = ["yso-paikat", "yso", "yse"];
-      for (var i = 0; i < vocs.length; i++) {
-        const response = await axios({
-         method: 'get',
-         url: 'https://api.finto.fi/rest/v1/search',
-         params: {
-              vocab: vocs[i],
-              lang: this.language,
-              query: inputValue
-            } 
-       }).catch(error => console.log(error));
-      // For the future: this is assigned only if the term is found and is null otherwise
-      this.searchResult = response.data.results[0]
-        this.$emit('input', this.searchString);
-        if (this.searchResult) {
-          this.$emit('input', '');
-          break;
-        }
-      }
-    },
-    capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    },
-    checkCapitalization(inputValue) {
-      if (inputValue && this.vocabulary === this.$t('new.common.places')) {
-        return inputValue.charAt(0).toUpperCase() + inputValue.substr(1);
-      }
-      return inputValue;
-    },
-  }
-};
-</script>-->
 
 <style scoped>
 a, a:hover, a:active, a:visited {

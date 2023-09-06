@@ -7,22 +7,6 @@
     <h4>{{ $t('new.header') }}</h4>
     <p>{{ $t('new.p1') }}</p>
     <p>{{ $t('new.p2') }}</p>
-
-
-    <p>{{ conceptTypeIsSelected }}</p>
-    <p>{{ prefLabelOkay }}</p>
-    <p>{{ explanationOkay }}</p>
-    <p>{{ neededForOkay }}</p>
-    <p>{{ sending }}</p>
-
-
-
-
-
-
-
-
-
   </div>
   <div class="suggestion-form">
     <div class="form-inputs">
@@ -33,23 +17,7 @@
       @select="handleSelect($event)"
         :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}"
       />
-<!--
-      <div class="suggestion-form">
-        <div class="form-inputs">
-          <basic-drop-down
-              :value="d.conceptType.value"
-              :options="d.conceptType.options"
-              @changeVocabulary="$emit('update:vocabulary', $event)"
-          &lt;!&ndash;        @select="emitEvent('update:conceptType', $event)"&ndash;&gt;
-          @select="handleSelect($event)"
-          :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}"
-          &lt;!&ndash;        @select2="$emit('update:conceptTypeIsSelected', $event)"&ndash;&gt;
-          />-->
-
-
-<!--      Tee tähän maanantaina reaktiivinen muuttuja, joka tekee tarkistuksen ja estää tarvittaessa lähettämisen-->
       <p v-if="!conceptTypeIsSelected && sending" class="error">{{ $t('new.conceptType.error') }}</p>
-<!--      <p v-if="v.$dirty && !v.conceptType.value.required" class="error">{{ $t('new.conceptType.error') }}</p>-->
       <div>{{ $i18n.locale }}</div>
       <div>{{ testLang }}</div>
       <div v-if="$i18n.locale === 'fi'">
@@ -132,12 +100,6 @@
         @select="emitEvent('update:groups', $event)"
         :label="{text: $t('new.groups.label'), for: $t('new.groups.for')}" />
 
-      <!-- <ul id="temp-list">
-        <li v-for="item in d.groups.allGroups" :key="item.prefLabel">
-          {{ item.prefLabel }}
-        </li>
-      </ul> -->
-
       <the-exact-matches-input
         :values="d.exactMatches"
         @inputexm="emitEvent('update:exactMatches', $event)"
@@ -155,16 +117,13 @@
         @input:basic="handleExplanation($event)"
         :label="{text: $t('new.explanation.label'), for: $t('new.explanation.label')}"
       :isTextArea="true" />
-      <!--        @input:basic="emitEvent('update:explanation', $event)"-->
       <p v-if="!explanationOkay && sending" class="error">{{ $t('new.explanation.error') }}</p>
 
-<!-- isTextArea set true on 2022-02-01     -->
       <basic-input
         :value="d.neededFor"
         @input:basic="handleNeededFor($event)"
         :label="{text: $t('new.neededFor.label'), for: $t('new.neededFor.for')}"
         :isTextArea="true" />
-<!--      <p v-if="v.$dirty && !v.neededFor.required" class="error">{{ $t('new.neededFor.error') }}</p>-->
             <p v-if="!neededForOkay && sending" class="error">{{ $t('new.neededFor.error') }}</p>
 
       <basic-input

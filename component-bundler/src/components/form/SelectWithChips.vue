@@ -17,16 +17,12 @@
         <svg-icon icon-name="triangle"><icon-triangle /></svg-icon>
       </div>
       <div
-          v-if="isOpened && selectableOptions.length === 0"
-          class="drop-down-options empty-options"
-          v-on-click-away="closeDropDown">
+          v-if="isOpened && selectableOptions.length === 0" class="drop-down-options empty-options" v-on-clickaway="closeDropDown">
         <div class="option" style="padding-left: 16px;">
           <span>{{ noOptionsMessage }}</span>
         </div>
       </div>
-      <div v-if="isOpened && selectableOptions.length > 0"
-           class="drop-down-options"
-           v-on-click-away="closeDropDown">
+      <div v-if="isOpened && selectableOptions.length > 0" class="drop-down-options" v-on-clickaway="closeDropDown">
         <div v-for="option in selectableOptions"
              :key="option.id"
              @click="selectOption(option)"
@@ -43,7 +39,7 @@ import SvgIcon from '../icons/SvgIcon.vue';
 import IconTriangle from '../icons/IconTriangle.vue';
 import IconCross from '../icons/IconCross.vue';
 import IconCheck from '../icons/IconCheck.vue';
-import { directive as onClickAway } from 'vue3-click-away'; // almost working
+import { directive as onClickaway } from 'vue3-click-away'; // almost working
 import { ref, onMounted, inject } from 'vue';
 
 export default {
@@ -54,7 +50,7 @@ export default {
     IconCheck
   },
   directives: {
-    onClickAway: onClickAway
+    onClickaway: onClickaway,
   },
   props: {
     value: String,
@@ -64,14 +60,12 @@ export default {
 
   setup (props, context) {
     const $t = inject('$t')
-    let isOpened = ref(false)
+    const isOpened = ref(false);
     const noOptionsMessage = ref($t('new.groups.none'))
     let selectableOptions = ref([])
     let selectedOptions = ref([])
 
     onMounted(() => { selectableOptions.value = props.options })
-
-    console.log(props.options)
 
     // Periaatteessa toimiva, palauta jos kokeilu hajoaa
     // const selectOption = (option) => {
@@ -93,7 +87,7 @@ export default {
       if (selectableOptions) {
         selectableOptions.value.splice(findOptionIndex(option, selectableOptions.value), 1);
       }
-      isOpened = false;
+      isOpened.value = false;
       context.emit('select', selectedOptions);
     }
 
@@ -113,7 +107,7 @@ export default {
     }
 
     const closeDropDown = () => {
-      isOpened = false;
+      isOpened.value = false;
     }
 
     return {
