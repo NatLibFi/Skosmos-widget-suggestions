@@ -1,4 +1,4 @@
-import { createApp } from 'vue';
+import { createApp, ref } from 'vue';
 import { createI18n } from 'vue-i18n';
 import translations from './i18n/i18n';
 // import Vuelidate from 'vuelidate';
@@ -19,13 +19,20 @@ const app2 = createApp(SuggestChangeButton);
 // app.provide('$t', i18n.global.t);
 app.provide('$t', i18n.global.t);
 app.provide('pageUrl', window.location.href);
+// const testVar = 'testiteksti'
 app2.provide('$t', i18n.global.t);
 app2.provide('pageUrlX', window.location.href);
+
+const testi = ref('This is a ref variable');
+app.provide('testi', testi);
+
 document.addEventListener('DOMContentLoaded', function () {
     const element = document.getElementById('pref-label');
     if (element) {
         const labelText = element.textContent;
         app2.provide('labelX', labelText);
+
+        app2.provide('testi', testi.value);
     }
 })
 
@@ -35,6 +42,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const uriText = element.textContent;
         app2.provide('uriX', uriText);
     }
+    // Better?
+    /*const element = document.querySelector('#uri-input-box');
+    if (element) {
+        const uriText = element.textContent;
+        app2.provide('uriX', uriText);
+    }*/
+
+
 })
 
 
@@ -48,17 +63,123 @@ app2.use(i18n); // Register global i18n
 customElements.define('suggest-new-button', class extends HTMLElement {
     connectedCallback() {
         const element = app.mount(document.createElement('div'));
-        this.appendChild(element.$el);
+        // this.appendChild(element.$el);
+        if (element) {
+            this.appendChild(element.$el);
+        } else {
+            console.log("The element not found")
+        }
     }
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const element = document.getElementById('uri-input-box');
+    if (element) {
+        const uriText = element.textContent;
+        app2.provide('uriX', uriText);
+    }
+})
+
+
+let element; // Define a variable outside the connectedCallback
+// Tässä luodaan suggest-change-button-html-elemntti
 customElements.define('suggest-change-button', class extends HTMLElement {
+
+    // Kustoimoiduille elementeille tarkoitettu Lifecycle-metodi, joka hyödyntää Web Components APIa. Sitä kutsutaan kun customoitu elementti
+    // (suggest-change-button) liitetään DOMiin, käytännössä lisätty dokumenttiin (window.document).
+    // Tässä vaiheessa olisi mahdollista toteuttaa alustavia toimenpiteitä tai vaikka asettaa
+    // event listenereitä, joiden halutaan olevan aktiivisia, kun elementti on dokumentissa.
     connectedCallback() {
-        // const element = createApp(SuggestChangeButton).mount(document.createElement('div'));
-        const element = app2.mount(document.createElement('div'));
-        this.appendChild(element.$el);
+        console.log("E - main.js, suggest-change-button")
+        // Aiemmin luotiin app2 eli const app2 = createApp(SuggestChangeButton);
+        // Alla siihen liitetään div-elementti, johon sovellus, SuggestChangeButtoniin perustuva app2 implementoi kaikki toimintonsa
+        // const element = app2.mount(document.createElement('div'));
+
+        if (!element) {
+            element = app2.mount(document.createElement('div'));
+        }
+
+        if (element) {
+            this.appendChild(element.$el);
+        } else {
+            console.log("The element not found");
+        }
+
+
+
+        if (typeof element == 'undefined') {
+            // const element = app2.mount(document.createElement('div'));
+            console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUndefined")
+
+/*            customElements.define('suggest-change-button', class extends HTMLElement {
+                connectedCallback() {
+                    console.log("E - main.js, suggest-change-button")
+                    const element = app2.mount(document.createElement('div'));
+                    console.log("element in main.js", element)
+                    this.appendChild(element.$el)
+                }
+            });*/
+        }
+
+        console.log("element in main.js", element);
+        // Tässä customElements.definessä määriteltyyn custom-elementtiin eli suggest-change-buttoniin pitää vielä liittää app2:n ja
+        // sen tarvitseman divin yhdistelmä eli element.
+        // Vuessa $el viittaa Vue-instanssin root-elementtiin (<div>).
+        // Kun vue-sovellus (app) on mountattu DOM-elementtiin (<div>), this.$el mahdollistaa suoran pääsyn kyseiseen root-elementtiin
+        // this.appendChild(element.$el);
+        // this.appendChild(element.$el);
+
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Säiliö melkein toimivasta
+/*customElements.define('suggest-change-button', class extends HTMLElement {
+    connectedCallback() {
+        console.log("E - main.js, suggest-change-button")
+        // console.log(prefLabels) AAA
+        // const element = createApp(SuggestChangeButton).mount(document.createElement('div')); // case 1: swäpätty alla olevan kanssa
+
+
+        // if (customElements.get('suggest-change-button')) {
+        //     console.log("toimii");
+        // } else {
+        //     console.log("ei toimi");
+        // }
+
+        // document.getElementsByName('suggest-change-button') ? "suggest-change-button löytyi" : "suggest-change-button ei löytynyt"
+
+        const element = app2.mount(document.createElement('div'));
+        console.log("element in main.js", element)
+                // if (element) {
+
+
+        this.appendChild(element.$el);
+                // } else {
+                //     console.log("The element not found")
+                // }
+
+        // setTimeout(() => {
+        //     // if (element) {
+        //     //     this.appendChild(element.$el);
+        //     // location.reload();
+        //     // } else {
+        //     //     console.log("The element not found")
+        //     // }
+        // }, 5000); // 5000 milliseconds = 5 seconds
+    }
+});*/
 
 // Check if 'suggest-new-button' is registered
 if (customElements.get('suggest-new-button')) {
@@ -72,6 +193,8 @@ if (customElements.get('suggest-change-button')) {
 } else {
     console.log("'suggest-change-button' is NOT registered.");
 }
+
+
 
 // Tämä on koodi, jossa uuden lähettäminen toimii kokonaan
 /*

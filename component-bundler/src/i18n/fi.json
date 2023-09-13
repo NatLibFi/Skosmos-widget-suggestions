@@ -65,7 +65,7 @@
       "error": "Tämä on pakollinen tieto."
     },
     "neededFor": {
-      "label": "Minkä aineiston kuvailussa tarvitsisit käsitettä? (esim. nimeke tai URL): *",
+      "label": "Minkä aineiston kuvailussa tarvitsit käsitettä? Julkaisun nimi, ISBN tai URL: *",
       "for": "mihin ehdotettua termiä tarvitaan",
       "error": "Tämä on pakollinen tieto."
     },

@@ -45,15 +45,21 @@ export default {
     label: String,
     uri: String,
     url: String,
+    moikkelis: String,
   },
   setup(props) {
+    console.log("D - SuggestChangeButton, setup")
 
+    // console.log(props.moikkelis)
+
+    const testi = inject('testi')
     const labelX = inject('labelX', null);
     const uriX = inject('uriX', null);
     const pageUrlX = inject('pageUrlX', null);
 
 //    console.log(lang)
 //    console.log(vocab)
+      console.log(testi)
       console.log(labelX)
       console.log(uriX)
 //    console.log(uri)
@@ -204,6 +210,8 @@ ${formData.fromOrg}
       handlePrefLabelLanguages,
       closeDialog,
       labelX,
+      testi
+      // moikkelis
     };
   },
   validations() {

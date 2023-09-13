@@ -67,11 +67,14 @@ export default defineComponent({
     vocab: String,
   },
   setup(props) {
+    console.log("Testi", testi)
+    console.log(pageUrl)
     setTimeout(() => {
     }, 500)
 
     // Inject the i18n $t function and pageUrl variable
     const $t = inject('$t');
+    const testi = inject('testi')
     const pageUrl = inject('pageUrl');
     const isOpened = ref(false);
     const showSuccessMessage = ref(false);
@@ -442,7 +445,8 @@ ${formData.fromOrg}
       getUrl,
       getGroups,
       dataCanBeSentArray,
-      sending
+      sending,
+      testi
     };
   },
 });
