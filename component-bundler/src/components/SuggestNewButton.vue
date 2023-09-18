@@ -355,7 +355,7 @@ ${formData.fromOrg}
 
     const handlePrefLabelLanguages = () => {
       formData.prefLabel.fi.value = formData.prefLabel.primary;
-      if (window.lang === 'fi') {
+      if (window.lang === 'fi' || window.lang === 'en') { // muutos 2023-09-18 lisättiin en ehto
         formData.prefLabel.fi.value = formData.prefLabel.primary;
         formData.prefLabel.sv.value = formData.prefLabel.secondary;
       } else if (window.lang === 'sv') {
