@@ -314,7 +314,8 @@ ${formData.fromOrg}
 `;
 
       let dataBundle = {
-        title: formData.prefLabel.sv.value !== '' ? formData.prefLabel.sv.value : formData.prefLabel.fi.value,
+        // title: formData.prefLabel.sv.value !== '' ? formData.prefLabel.sv.value : formData.prefLabel.fi.value,
+        title:  window.lang === 'sv' ? formData.prefLabel.sv.value : formData.prefLabel.fi.value,
         body: data,
         state: 'open',
         labels: labelsInTargetSuggestionSystem,
@@ -361,6 +362,8 @@ ${formData.fromOrg}
         formData.prefLabel.sv.value = formData.prefLabel.primary;
         formData.prefLabel.fi.value = formData.prefLabel.secondary;
       }
+      formData.prefLabel.fi.value ? console.log("formData.prefLabel.fi.value", formData.prefLabel.fi.value) : console.log("formData.prefLabel.fi.value X")
+      formData.prefLabel.sv.value ? console.log("formData.prefLabel.sv.value", formData.prefLabel.sv.value) : console.log("formData.prefLabel.sv.value X")
     };
 
     const closeDialog = () => {
