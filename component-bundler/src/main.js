@@ -111,11 +111,11 @@ customElements.define('suggest-change-button', class extends HTMLElement {
         // console.log('elementABC', elementABC[0])
         
 
-        elementABC.addEventListener('mouseover', function () {
-            console.log('AAAAAAAA ihan mitä vaan :-D')
-            console.log('AAAAA elementABC', elementABC)
-            // alert("Päivää1")
-        })
+        // elementABC.addEventListener('mouseover', function () {
+        //     console.log('AAAAAAAA ihan mitä vaan :-D')
+        //     console.log('AAAAA elementABC', elementABC)
+        //     // alert("Päivää1")
+        // })
 
         // const elementABC = document.getElementById('pref-label');
         // // console.log('elementABC', elementABC[0])
@@ -135,23 +135,23 @@ customElements.define('suggest-change-button', class extends HTMLElement {
         // Alla siihen liitetään div-elementti, johon sovellus, SuggestChangeButtoniin perustuva app2 implementoi kaikki toimintonsa
         // const element = app2.mount(document.createElement('div'));
 
-        // if (!element) {
+        if (!element) {
             /// QQ
             // const uriText = "qweqweqwe";
             
-            const app3 = createApp(SuggestChangeButton);
-            const elementUri = document.getElementById('uri-input-box');
-            console.log('XXXXXX elementUri', elementUri)
-            if (elementUri) {
-                const uriText = elementUri.textContent;
-                app3.provide('uriX', uriText);
-            }
-            app3.provide('$t', i18n.global.t);
-            app3.provide('pageUrlX', window.location.href);
-            // app3.provide('uriX', uriText);
-            app3.use(i18n); // Register global i18n
-            element = app3.mount(document.createElement('div'));
-        // }
+            // const app3 = createApp(SuggestChangeButton);
+            // const elementUri = document.getElementById('uri-input-box');
+            // console.log('XXXXXX elementUri', elementUri)
+            // if (elementUri) {
+            //     const uriText = elementUri.textContent;
+            //     app3.provide('uriX', uriText);
+            // }
+            // app3.provide('$t', i18n.global.t);
+            // app3.provide('pageUrlX', window.location.href);
+            // // app3.provide('uriX', uriText);
+            // app3.use(i18n); // Register global i18n
+            element = app2.mount(document.createElement('div'));
+        }
 
         if (element) {
             this.appendChild(element.$el);

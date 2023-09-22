@@ -31,7 +31,7 @@ import EditSuggestion from './EditSuggestion.vue';
 import CenteredDialog from './common/CenteredDialog.vue';
 import SuccessMessage from './common/SuccessMessage.vue';
 import FailureMessage from './common/FailureMessage.vue';
-// import { required } from 'vuelidate';
+import { required } from 'vuelidate';
 import axios from 'axios';
 import { defineComponent, ref, reactive, watchEffect, inject, watch } from 'vue';
 
@@ -90,7 +90,7 @@ export default {
 
     const getUrl = async () => {
       pageUrl.value = window.location.href;
-      console.log('pageUrl.value', pageUrl.value)
+      // console.log('pageUrl.value', pageUrl.value)
     };
 
     const submitForm = () => {
@@ -143,7 +143,7 @@ ${formData.fromOrg}
       await axios
           .post(`${urlToPrx[0].url}?payload=${payload}`)
           .then((response) => {
-            console('response.data.url', response.data.url)
+            // console('response.data.url', response.data.url)
             toggleSuccessMessage(`${response.data.url.replace('/repos', '').replace('api.', '')}`);
           })
           .catch((error) => {
