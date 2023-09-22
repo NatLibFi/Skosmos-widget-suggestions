@@ -2,7 +2,10 @@
   <div>
     <a role="button" @click="isOpened = !isOpened" id="fordirectmodify" :href="`${pageUrl.split('#')[0]}#suggestion`">
       <span>{{ $t('edit.button') }}</span>
+      <span>{{ url }}</span>
 <!--      <span>{{ "Ehdotus-button" }} {{ pageUrlX }}</span>-->
+      <span> || {{ pageUrl }}</span>
+      <span> || {{ pageUrlX }}</span>
     </a>
     <centered-dialog v-if="isOpened" @close="closeDialog()">
       <edit-suggestion
@@ -28,7 +31,7 @@ import EditSuggestion from './EditSuggestion.vue';
 import CenteredDialog from './common/CenteredDialog.vue';
 import SuccessMessage from './common/SuccessMessage.vue';
 import FailureMessage from './common/FailureMessage.vue';
-import { required } from 'vuelidate';
+// import { required } from 'vuelidate';
 import axios from 'axios';
 import { defineComponent, ref, reactive, watchEffect, inject, watch } from 'vue';
 
@@ -73,7 +76,8 @@ export default {
 
     const $t = inject('$t');
     // const pageUrl = ref('');
-    const pageUrl = ref(pageUrlX);
+    let pageUrl = ref(pageUrlX);
+    console.log('pageUrl at refs', pageUrl)
     const isOpened = ref(false);
     const showSuccessMessage = ref(false);
     const showFailureMessage = ref(false);
@@ -86,6 +90,7 @@ export default {
 
     const getUrl = async () => {
       pageUrl.value = window.location.href;
+      console.log('pageUrl.value', pageUrl.value)
     };
 
     const submitForm = () => {
@@ -138,10 +143,11 @@ ${formData.fromOrg}
       await axios
           .post(`${urlToPrx[0].url}?payload=${payload}`)
           .then((response) => {
+            console('response.data.url', response.data.url)
             toggleSuccessMessage(`${response.data.url.replace('/repos', '').replace('api.', '')}`);
           })
           .catch((error) => {
-            console.log(error);
+            //console.log(error);
             toggleFailureMessage();
           });
     };

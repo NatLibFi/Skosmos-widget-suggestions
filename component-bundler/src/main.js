@@ -73,6 +73,7 @@ customElements.define('suggest-new-button', class extends HTMLElement {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('Dom muuttuu')
     const element = document.getElementById('uri-input-box');
     if (element) {
         const uriText = element.textContent;
@@ -81,9 +82,13 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 
+// !!! Tämä saattaa olla ongelman alkujuuri eli se, että esitellään elements, vaikka se pitäisi myöhemmin rakentaa app2.mountissa
+
 let element; // Define a variable outside the connectedCallback
+
 // Tässä luodaan suggest-change-button-html-elemntti
 customElements.define('suggest-change-button', class extends HTMLElement {
+
 
     // Kustoimoiduille elementeille tarkoitettu Lifecycle-metodi, joka hyödyntää Web Components APIa. Sitä kutsutaan kun customoitu elementti
     // (suggest-change-button) liitetään DOMiin, käytännössä lisätty dokumenttiin (window.document).
@@ -91,13 +96,62 @@ customElements.define('suggest-change-button', class extends HTMLElement {
     // event listenereitä, joiden halutaan olevan aktiivisia, kun elementti on dokumentissa.
     connectedCallback() {
         console.log("E - main.js, suggest-change-button")
+
+
+        //// 2023-09-22 testausta
+
+        // fordirectmodify
+
+        // const elementIdTest = window.document.getElementById('fordirectmodify');
+        // console.log('EEEE elementIdTest', elementIdTest)
+
+
+
+        const elementABC = document.getElementById('pref-label');
+        // console.log('elementABC', elementABC[0])
+        
+
+        elementABC.addEventListener('mouseover', function () {
+            console.log('AAAAAAAA ihan mitä vaan :-D')
+            console.log('AAAAA elementABC', elementABC)
+            // alert("Päivää1")
+        })
+
+        // const elementABC = document.getElementById('pref-label');
+        // // console.log('elementABC', elementABC[0])
+
+        // elementABC.addEventListener('click', function () {
+        //     console.log('ihan mitä vaan :-D')
+        //     // alert("Päivää1")
+        // })
+
+
+
+
+        ////
+
+
         // Aiemmin luotiin app2 eli const app2 = createApp(SuggestChangeButton);
         // Alla siihen liitetään div-elementti, johon sovellus, SuggestChangeButtoniin perustuva app2 implementoi kaikki toimintonsa
         // const element = app2.mount(document.createElement('div'));
 
-        if (!element) {
-            element = app2.mount(document.createElement('div'));
-        }
+        // if (!element) {
+            /// QQ
+            // const uriText = "qweqweqwe";
+            
+            const app3 = createApp(SuggestChangeButton);
+            const elementUri = document.getElementById('uri-input-box');
+            console.log('XXXXXX elementUri', elementUri)
+            if (elementUri) {
+                const uriText = elementUri.textContent;
+                app3.provide('uriX', uriText);
+            }
+            app3.provide('$t', i18n.global.t);
+            app3.provide('pageUrlX', window.location.href);
+            // app3.provide('uriX', uriText);
+            app3.use(i18n); // Register global i18n
+            element = app3.mount(document.createElement('div'));
+        // }
 
         if (element) {
             this.appendChild(element.$el);

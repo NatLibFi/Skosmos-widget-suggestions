@@ -7,3 +7,4 @@ npx webpack --entry ./src/main.js  --mode production
 sleep 1
 cp -p dist/components.js ../components.js
 echo "components.js copied from dist folder to the root folder"
+date +'%Y-%m-%d %H:%M'
