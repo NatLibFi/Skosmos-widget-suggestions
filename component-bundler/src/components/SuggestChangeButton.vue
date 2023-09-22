@@ -62,8 +62,8 @@ export default {
 
 //    console.log(lang)
 //    console.log(vocab)
-      console.log(testi)
-      console.log(labelX)
+      // console.log(testi)
+      // console.log(labelX)
       console.log(uriX)
 //    console.log(uri)
 //    console.log(window.location.href)

@@ -26,21 +26,23 @@ app2.provide('pageUrlX', window.location.href);
 const testi = ref('This is a ref variable');
 app.provide('testi', testi);
 
-document.addEventListener('DOMContentLoaded', function () {
-    const element = document.getElementById('pref-label');
-    if (element) {
-        const labelText = element.textContent;
-        app2.provide('labelX', labelText);
+// document.addEventListener('DOMContentLoaded', function () {
+//     const element = document.getElementById('pref-label');
+//     if (element) {
+//         const labelText = element.textContent;
+//         app2.provide('labelX', labelText);
 
-        app2.provide('testi', testi.value);
-    }
-})
+//         app2.provide('testi', testi.value);
+//     }
+// })
 
 document.addEventListener('DOMContentLoaded', function () {
     const element = document.getElementById('uri-input-box');
     if (element) {
         const uriText = element.textContent;
         app2.provide('uriX', uriText);
+        console.log('DOMContentLoaded uriX', uriText)
+        console.log('- - - -app2.provide')
     }
     // Better?
     /*const element = document.querySelector('#uri-input-box');
@@ -135,23 +137,30 @@ customElements.define('suggest-change-button', class extends HTMLElement {
         // Alla siihen liitetään div-elementti, johon sovellus, SuggestChangeButtoniin perustuva app2 implementoi kaikki toimintonsa
         // const element = app2.mount(document.createElement('div'));
 
-        if (!element) {
+        // if (!element) {
             /// QQ
             // const uriText = "qweqweqwe";
             
-            // const app3 = createApp(SuggestChangeButton);
-            // const elementUri = document.getElementById('uri-input-box');
-            // console.log('XXXXXX elementUri', elementUri)
-            // if (elementUri) {
-            //     const uriText = elementUri.textContent;
-            //     app3.provide('uriX', uriText);
-            // }
-            // app3.provide('$t', i18n.global.t);
-            // app3.provide('pageUrlX', window.location.href);
-            // // app3.provide('uriX', uriText);
-            // app3.use(i18n); // Register global i18n
-            element = app2.mount(document.createElement('div'));
-        }
+            const app3 = createApp(SuggestChangeButton);
+            const elementUri = document.getElementById('uri-input-box');
+            console.log('XXXXXX elementUri', elementUri)
+            const prefElement = document.getElementById('pref-label');
+            if (prefElement) {
+                const labelText = prefElement.textContent;
+                app3.provide('labelX', labelText);
+                app3.provide('testi', testi.value);
+            }
+            if (elementUri) {
+                const uriText = elementUri.textContent;
+                app3.provide('uriX', uriText);
+                console.log('!elemnt-block >> uriX', uriText)
+            }
+            app3.provide('$t', i18n.global.t);
+            app3.provide('pageUrlX', window.location.href);
+            // app3.provide('uriX', uriText);
+            app3.use(i18n); // Register global i18n
+            element = app3.mount(document.createElement('div'));
+        // }
 
         if (element) {
             this.appendChild(element.$el);

@@ -11,6 +11,6 @@ secrets.json
 #../components.js
 .env
 prx.json
-dist/components.js
-../components.js
+#dist/components.js
+#../components.js
 
