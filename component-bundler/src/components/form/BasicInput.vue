@@ -39,33 +39,6 @@ defineExpose({
 });
 </script>
 
-<!--<script>
-export default {
-  props: {
-    value: String,
-    label: {
-      text: String,
-      for: String
-    },
-    isTextArea: Boolean
-  },
-  data () {
-    return {
-    }
-  },
-  methods: {
-
-  }
-}
-</script>-->
-
-
-
-
-
-
-
-
 <style scoped>
 .input-container {
   margin-bottom: 16px;

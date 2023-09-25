@@ -29,7 +29,6 @@
             :class="[isSelected(i) ? '' : 'hidden-checkmark']"
             icon-name="check"><icon-check />
         </svg-icon>
-<!--        <p>{{ option.value }}</p>-->
         <p>{{ $t(option.value) }}</p>
       </div>
     </div>
@@ -81,29 +80,9 @@ export default {
       return selectedIndex.value === index;
     };
 
-/*    const isSelected = (index) => {
-      if (selectedIndex.value === index) {
-        return true;
-      } else {
-        return false;
-      }
-    };*/
-
     const closeDropDown = () => {
       isOpened.value = false;
     };
-
-
-    // These two maybe, perhaps should be removed in the future
-/*    // Attach click-away event listeners when component is mounted
-    onMounted(() => {
-      window.addEventListener('click', closeDropDown);
-    });
-
-    // Remove click-away event listeners when component is unmounted
-    onBeforeUnmount(() => {
-      window.removeEventListener('click', closeDropDown);
-    });*/
 
     return {
       isOpened,

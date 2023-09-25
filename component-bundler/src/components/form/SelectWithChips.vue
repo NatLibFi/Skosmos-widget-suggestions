@@ -67,20 +67,6 @@ export default {
 
     onMounted(() => { selectableOptions.value = props.options })
 
-    // Periaatteessa toimiva, palauta jos kokeilu hajoaa
-    // const selectOption = (option) => {
-    //   const index = selectableOptions.value.findIndex((item) => item.id === option.id);
-    //   if (index !== -1) {
-    //     selectedOptions.value.push(selectableOptions.value[index]);
-    //     selectableOptions.value.splice(index, 1);
-    //     console.log("selectedOptions.value")
-    //     console.log(selectedOptions.value)
-    //   }
-    //   isOpened.value = false;
-    //   context.emit('select', selectedOptions);
-    // };
-
-    // Väliaikainen kokeilu
     const selectOption = option => {
       selectedOptions.value.push(option);
       // if (selectableOptions && selectableOptions.length > 0) {

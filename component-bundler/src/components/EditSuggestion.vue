@@ -13,7 +13,6 @@
             :isTextArea="true"
         />
          <p v-if="!descriptionCanBeSent && submitted" class="error">{{ $t('edit.description.error') }}</p>
-        <!-- <p v-if="v.$dirty && !v.description.required" class="error">{{ $t('edit.description.error') }}</p> -->
 
         <basic-input
             :value="formData.reason"
@@ -22,7 +21,6 @@
             :isTextArea="true"
         />
          <p v-if="!reasonCanBeSent && submitted" class="error">{{ $t('edit.reason.error') }}</p>
-        <!-- <p v-if="v.$dirty && !v.reason.required" class="error">{{ $t('edit.reason.error') }}</p> -->
 
         <basic-input
             :value="formData.fromOrg"
@@ -48,10 +46,7 @@ export default {
     BasicInput,
   },
   props: {
-    // Form Data:
     d: Object,
-    // Form Validations:
-    // v: Object,
     label: String,
     uri: String,
   },
@@ -122,69 +117,6 @@ export default {
   },
 };
 </script>
-
-
-
-<!--Orig-->
-<!--<template>
-<div>
-  <div class="suggestion-header">
-    <h4>{{ $t('edit.header') }} <a :href="uri">{{ label }}</a></h4>
-    <p>{{ $t('edit.paragraph') }}</p>
-  </div>
-  <div class="suggestion-form">
-    <div>
-      <basic-input
-        :value="d.description"
-        @input="$emit('update:description', $event)"
-        :label="{text: $t('edit.description.label'), for: $t('edit.description.label')}"
-        :isTextArea="true" />
-&lt;!&ndash;      <p v-if="v.$dirty && !v.description.required" class="error">{{ $t('edit.description.error') }}</p>&ndash;&gt;
-
-      <basic-input
-        :value="d.reason"
-        @input="$emit('update:reason', $event)"
-        :label="{text: $t('edit.reason.label'), for: $t('edit.reason.for')}"
-        :isTextArea="true" />
-&lt;!&ndash;      <p v-if="v.$dirty && !v.reason.required" class="error">{{ $t('edit.reason.error') }}</p>&ndash;&gt;
-
-      <basic-input
-        :value="d.fromOrg"
-        @input="$emit('update:fromOrg', $event)"
-        :label="{text: $t('edit.fromOrg.label'), for: $t('edit.fromOrg.for')}"
-        :isTextArea="false" />
-    </div>
-
-    <div class="form-submit">
-      <a @click="submitForm()">
-        {{ $t('edit.submit') }}
-      </a>
-    </div>
-  </div>
-</div>
-</template>
-
-<script>
-import BasicInput from './form/BasicInput.vue';
-export default {
-  components: {
-    BasicInput
-  },
-  props: {
-    // Form Data:
-    d: Object,
-    // Form Validations:
-    // v: Object,
-    label: String,
-    uri: String
-  },
-  methods: {
-    submitForm () {
-      this.$emit('submitForm');
-    }
-  }
-}
-</script>-->
 
 <style scoped>
 a {

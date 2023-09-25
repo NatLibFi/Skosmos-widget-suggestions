@@ -48,47 +48,6 @@ export default {
 };
 </script>
 
-<!--vue 2 version-->
-<!--<template>
-    <div class="template">
-      &lt;!&ndash; <div class="dialog-overlay" @click="close"> &ndash;&gt;
-      <div class="dialog-overlay">
-      </div>
-      <div class="dialog-modal">
-        <div class="dialog-content">
-          <div class="dialog-close" @click="close">
-            <svg-icon icon-name="cross"><icon-cross /></svg-icon>
-          </div>
-          <slot></slot>
-        </div>
-      </div>
-  </div>
-</template>
-
-<script>
-import SvgIcon from '../icons/SvgIcon.vue';
-import IconCross from '../icons/IconCross.vue';
-
-export default {
-  components: {
-    SvgIcon,
-    IconCross
-  },
-  methods: {
-    close: function() {
-      this.$emit('close');
-    }
-  },
-  mounted: function() {
-    document.addEventListener('keydown', e => {
-      if (e.keyCode == 27) {
-        this.close();
-      }
-    });
-  }
-};
-</script>-->
-
 <style scoped>
 h5 {
   font-weight: 500 !important;

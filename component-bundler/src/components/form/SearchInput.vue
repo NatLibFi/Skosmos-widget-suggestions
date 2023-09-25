@@ -58,9 +58,6 @@ export default {
     IconCross,
     IconCheck
   },
-  // directives: {
-  //   onClickaway: onClickaway
-  // },
   props: {
     values: Array,
     vocabulary: String,
@@ -76,7 +73,6 @@ export default {
 
     let searchString = ref('')
     let searchResult = ref(null)
-    // let searchLabel = ref('')
 
     watch(searchString, () => {
       searchLabel();

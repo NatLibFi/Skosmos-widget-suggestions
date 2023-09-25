@@ -67,8 +67,6 @@ export default defineComponent({
     vocab: String,
   },
   setup(props) {
-    console.log("Testi", testi)
-    console.log(pageUrl)
     setTimeout(() => {
     }, 500)
 
@@ -194,10 +192,6 @@ export default defineComponent({
     const submitForm = () => {
       // $v.$touch();
       sending.value = true
-
-/*      dataCanBeSentArray.value.forEach((value, index) => {
-        console.log(`Element at index ${index}: ${value}`);
-      });*/
 
       const countTrueValues = dataCanBeSentArray.value.reduce((count, currentValue) => {
         if (currentValue === true) {
@@ -332,9 +326,7 @@ ${formData.fromOrg}
       // https://github.com/Finto-ehdotus/YSE
           .post(`${urlToPrx[0].url}?payload=${payload}`, {}, { headers })
           .then((response) => {
-            console.log('Response:', response)
-/*            console.log(`URL: ${urlToPrx[0].url}?payload=${payload}`);
-            console.log('Response:', response);*/
+            // console.log('Response:', response)
             // toggleSuccessMessage(`https://github.com/Finto-ehdotus/YSE`);
             toggleSuccessMessage(`${response.data.url.replace('/repos', '').replace('api.', '')}`);
           })
@@ -362,8 +354,8 @@ ${formData.fromOrg}
         formData.prefLabel.sv.value = formData.prefLabel.primary;
         formData.prefLabel.fi.value = formData.prefLabel.secondary;
       }
-      formData.prefLabel.fi.value ? console.log("formData.prefLabel.fi.value", formData.prefLabel.fi.value) : console.log("formData.prefLabel.fi.value X")
-      formData.prefLabel.sv.value ? console.log("formData.prefLabel.sv.value", formData.prefLabel.sv.value) : console.log("formData.prefLabel.sv.value X")
+      // formData.prefLabel.fi.value ? console.log("formData.prefLabel.fi.value", formData.prefLabel.fi.value) : console.log("formData.prefLabel.fi.value X")
+      // formData.prefLabel.sv.value ? console.log("formData.prefLabel.sv.value", formData.prefLabel.sv.value) : console.log("formData.prefLabel.sv.value X")
     };
 
     const closeDialog = () => {
@@ -399,10 +391,6 @@ ${formData.fromOrg}
     };
 
     const getGroups = async () => {
-/*      if (props.lang === 'sv') {
-        // Note: 'this' is not available in the setup function.
-        // Instead, you can use 'props' directly.
-      }*/
       await axios
           .get(`https://api.finto.fi/rest/v1/${formData.vocabulary}/groups`, {
             params: {

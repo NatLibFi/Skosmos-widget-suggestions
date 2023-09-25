@@ -1,7 +1,6 @@
 <template>
 
 <div class="suggestion-container">
-  <!-- Keep this as an option -->
   <!-- <button onclick="navigator.clipboard.writeText(window.location.href)">Kopioi leikepöydälle</button> -->
   <div class="suggestion-header">
     <h4>{{ $t('new.header') }}</h4>
@@ -18,8 +17,8 @@
         :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}"
       />
       <p v-if="!conceptTypeIsSelected && sending" class="error">{{ $t('new.conceptType.error') }}</p>
-      <div>{{ $i18n.locale }}</div>
-      <div>{{ testLang }}</div>
+      <!-- <div>{{ $i18n.locale }}</div>
+      <div>{{ testLang }}</div> -->
       <div v-if="$i18n.locale === 'fi'">
         <search-input
           :value="d.prefLabel.primary"
@@ -74,11 +73,6 @@
 
       </div>
 
-
-
-
-
-
       <div v-if="$i18n.locale === 'en'">
 
         <basic-input
@@ -105,36 +99,6 @@
             :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
 
       </div>
-
-
-
-
-
-
-<!--        <basic-input
-            :value="d.prefLabel.en"
-            @input:basic="emitEvent('update:enPrefLabel', $event)"
-            :label="{text: $t('new.prefLabel.en.label'), for: $t('new.prefLabel.en.for')}"
-            :isTextArea="false" />
-
-        <search-input
-            :value="d.prefLabel.primary"
-            :conceptType="d.conceptType.value"
-            :vocabulary="d.vocabulary"
-            :language="'fi'"
-            @input="handlePrefLabel($event)"
-            :label="{text: $t('new.prefLabel.fi.label'), for: $t('new.prefLabel.fi.for')}" />
-        <p v-if="!prefLabelOkay && sending" class="error">{{ $t('new.prefLabel.error') }}</p>
-
-        <search-input
-            :value="d.prefLabel.secondary"
-            :conceptType="d.conceptType.value"
-            :vocabulary="d.vocabulary"
-            :language="'sv'"
-            @input="emitEvent('update:secondaryPrefLabel', $event)"
-            :label="{text: $t('new.prefLabel.sv.label'), for: $t('new.prefLabel.sv.for')}" />
-
-      </div>-->
 
       <the-multiple-basic-input
         :values="d.altLabels"
@@ -223,10 +187,6 @@ import BasicInput from './form/BasicInput.vue';
 import TheMultipleBasicInput from './form/TheMultipleBasicInput.vue';
 import SelectWithChips from './form/SelectWithChips.vue';
 import TheExactMatchesInput from './form/TheExactMatchesInput.vue';
-
-// import { useI18n, ref } from 'vue';
-//
-// const { t, locale } = useI18n(); // Destructure t for translation and locale for current locale
 
 const testLang = ref(window.lang);
 
