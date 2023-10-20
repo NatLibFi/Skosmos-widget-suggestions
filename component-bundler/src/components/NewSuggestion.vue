@@ -130,7 +130,7 @@
         :hasUniqueValue="false" />
 
       <select-with-chips
-        v-if="d.vocabulary !== $t('new.common.places')"
+        :class="{'hidden': d.vocabulary === $t('new.common.places')}"
         :value="$t('new.groups.placeholder')"
         :options="d.groups.allGroups"
         @select="emitEvent('update:groups', $event)"
@@ -240,6 +240,9 @@ defineExpose({
 
 
 <style scoped>
+.hidden {
+  display: none;
+}
 .suggestion-header {
   padding-bottom: 8px;
   border-bottom: 1px solid #eeeeee;
