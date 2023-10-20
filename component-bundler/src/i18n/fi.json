@@ -2,6 +2,7 @@
   "new": {
     "button": "Ehdota uutta käsitettä tähän sanastoon",
     "header": "Ehdota uutta käsitettä YSOon",
+    "header-geo": "Ehdota uutta käsitettä YSO-paikkoihin",
     "p1": "",
     "p2": "Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta",
     "conceptType": {

@@ -2,6 +2,7 @@
   "new": {
     "button": "Föreslå ett nytt begrepp till denna vokabulär",
     "header": "Föreslå ett nytt begrepp till ALLFO",
+    "header-geo": "Föreslå ett nytt begrepp till ALLFO-orter",
     "p1": "",
     "p2": "Du kan föreslå ändringar av begrepp som redan finns i vokabulären via begreppens egna sidor.",
     "conceptType": {

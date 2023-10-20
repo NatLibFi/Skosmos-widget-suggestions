@@ -3,7 +3,8 @@
 <div class="suggestion-container">
   <!-- <button onclick="navigator.clipboard.writeText(window.location.href)">Kopioi leikepöydälle</button> -->
   <div class="suggestion-header">
-    <h4>{{ $t('new.header') }}</h4>
+    <h4 v-if="vocab === 'yso'">{{ $t('new.header') }}</h4>
+    <h4 v-else-if="vocab === 'yso-paikat'">{{ $t('new.header-geo') }}</h4>
     <p>{{ $t('new.p1') }}</p>
     <p>{{ $t('new.p2') }}</p>
   </div>
@@ -17,8 +18,6 @@
         :label="{text: $t('new.conceptType.label'), for: $t('new.conceptType.for')}"
       />
       <p v-if="!conceptTypeIsSelected && sending" class="error">{{ $t('new.conceptType.error') }}</p>
-      <!-- <div>{{ $i18n.locale }}</div>
-      <div>{{ testLang }}</div> -->
       <div v-if="$i18n.locale === 'fi'">
         <search-input
           :value="d.prefLabel.primary"
@@ -187,6 +186,8 @@ import BasicInput from './form/BasicInput.vue';
 import TheMultipleBasicInput from './form/TheMultipleBasicInput.vue';
 import SelectWithChips from './form/SelectWithChips.vue';
 import TheExactMatchesInput from './form/TheExactMatchesInput.vue';
+
+const vocab = window.vocab
 
 const testLang = ref(window.lang);
 

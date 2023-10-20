@@ -2,6 +2,7 @@
   "new": {
     "button": "Suggest a new concept to the vocabulary:",
     "header": "Suggest a new concept to the YSO (General Finnish ontology)",
+    "header-geo": "Suggest a new concept to the YSO Places",
     "p1": "All users can suggest changes to this vocabulary.",
     "p2": "Changes to the existing concepts can be suggested in the concept pages.",
     "conceptType": {
