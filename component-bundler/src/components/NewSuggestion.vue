@@ -128,8 +128,9 @@
         :label="{text: $t('new.relatedLabels.label'), for: $t('new.relatedLabels.for')}"
         :hasUniqueValue="false" />
 
+        <!-- :class="{'hidden': d.vocabulary === $t('new.common.places')}" -->
       <select-with-chips
-        :class="{'hidden': d.vocabulary === $t('new.common.places')}"
+        :class="{'hidden': d.vocabulary === 'yso-paikat'}"
         :value="$t('new.groups.placeholder')"
         :options="d.groups.allGroups"
         @select="emitEvent('update:groups', $event)"
