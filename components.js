@@ -662,7 +662,7 @@ module.exports = JSON.parse('{"new":{"button":"Föreslå ett nytt begrepp till d
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('[{"url":"https://dev.finto.fi/plugins/suggestions/gh_prx.php"}]');
+module.exports = JSON.parse('[{"url":"https://finto.fi/plugins/suggestions/gh_prx.php"}]');
 
 /***/ })
 
