@@ -72,7 +72,13 @@
 
       </div>
 
-      <div v-if="$i18n.locale === 'en'">
+      <!--Testarea starts-->
+      <div v-if="$i18n.locale === 'se'">
+        <span>{{ $t('new.prefLabel.en.label') }}</span>
+      </div>
+      <!--Testarea ends-->
+
+      <div v-if="$i18n.locale === 'se'">
 
         <basic-input
             :value="d.prefLabel.en"
