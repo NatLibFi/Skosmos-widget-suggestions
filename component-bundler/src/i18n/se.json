@@ -1,0 +1,124 @@
+{
+  "new": {
+    "button": "Ehdota uutta käsitettä tähän sanastoon",
+    "header": "Ehdota uutta käsitettä YSOon",
+    "header-geo": "Ehdota uutta käsitettä YSO-paikkoihin",
+    "p1": "",
+    "p2": "Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta",
+    "conceptType": {
+      "label": "Tyyppi: *",
+      "for": "ehdotuksen tyyppi",
+      "placeholder": "Valitse ehdotuksen tyyppi",
+      "none": "Ehdotustyyppejä ei valittavissa",
+      "error": "Valitse ehdotukselle tyyppi."
+    },
+    "prefLabel": {
+      "error": "Päätermiksi tarvitaan uniikki termi.",
+      "fi": {
+        "label": "Päätermi/asiasana: *",
+        "for": "ehdotettava termi suomeksi"
+      },
+      "sv": {
+        "label": "Termi ruotsiksi:",
+        "for": "ehdotettava termi ruotsiksi"
+      },
+      "en": {
+        "label": "Termi englanniksi:",
+        "for": "ehdotettava termi englanniksi"
+      }
+    },
+    "altLabels": {
+      "label": "Vaihtoehtoiset termit ja ilmaisut:",
+      "for": "muut vastaavat käsitteet ehdotetulle termille"
+    },
+    "broaderLabels": {
+      "label": "Yläkäsite YSOssa (LT):",
+      "for": "yläkäsitteet ehdotetulle termille"
+    },
+    "narrowerLabels": {
+      "label": "Alakäsitteet (ST):",
+      "for": "alakäsitteet ehdotetulle termille"
+    },
+    "relatedLabels": {
+      "label": "Assosiatiiviset (RT):",
+      "for": "liittyvät käsitteet ehdotetulle termille"
+    },
+    "groups": {
+      "label": "YSA/YSO temaattinen ryhmä:",
+      "for": "ehdotettuun termiin liittyvät ryhmät",
+      "none": "Ei enempää ryhmiä valittavissa.",
+      "placeholder": "Valitse ryhmä(t) listalta"
+    },
+    "exactMatches": {
+      "label": "Vastaava käsite muussa sanastossa:",
+      "for": "vastaavat käsitteet muissa sanastoissa",
+      "vocab": "Sanasto (LCSH, Wikipedia tai vastaava)",
+      "uri": "URI tai termi"
+
+    },
+    "scopeNote": {
+      "label": "Tarkoitusta täsmentävä selite:",
+      "for": "tarkoitusta täsmentävä selite"
+    },
+    "explanation": {
+      "label": "Perustelut ehdotukselle: *",
+      "for": "perustelut ehdotetulle termille",
+      "error": "Tämä on pakollinen tieto."
+    },
+    "neededFor": {
+      "label": "Minkä aineiston kuvailussa tarvitsit käsitettä? Julkaisun nimi, ISBN tai URL: *",
+      "for": "mihin ehdotettua termiä tarvitaan",
+      "error": "Tämä on pakollinen tieto."
+    },
+    "fromOrg": {
+      "label": "Ehdottajan organisaatio:",
+      "for": "mitä organisaatiota ehdottaja edustaa"
+    },
+    "common": {
+      "none": "Termejä ei löydy hakusanalla",
+      "exists1": "Ehdottamasi termi ",
+      "exists2": " löytyy jo YSOsta, YSO-paikoista tai sanastoehdotuksista",
+      "places": "yso-paikat",
+      "concept": "Yleiskäsite",
+      "geo": "Maantieteellinen paikka",
+      "ifyso": "Termi löytyy jo YSOsta:",
+      "ifysopaikat": "Termi löytyy jo YSO-paikoista:",
+      "ifyse1": "Termistä on jo olemassa käsite-ehdotus:",
+      "ifyse2": ". Kommentoi tai kannata ehdotusta sen tiedoista löytyvän kotisivulinkin kautta"
+    },
+    "submit": "Lähetä käsite-ehdotus"
+  },
+  "edit": {
+    "button": "Ehdota muutosta käsitteeseen",
+    "header": "Ehdota muutosta käsitteeseen",
+    "paragraph": "Kuka tahansa YSOn käyttäjä saa ehdottaa muutoksia sanastoon.",
+    "description": {
+      "label": "Ehdotettu muutos: *",
+      "for": "perustelut ehdotetulle muutokselle",
+      "error": "Tämä on pakollinen tieto."
+    },
+    "reason": {
+      "label": "Perustelut ehdotukselle: *",
+      "for": "miksi muutosta tarvitaan",
+      "error": "Tämä on pakollinen tieto."
+    },
+    "fromOrg": {
+      "label": "Ehdottajan organisaatio:",
+      "for": "mitä organisaatiota ehdottaja edustaa"
+    },
+    "submit": "Lähetä muutosehdotus"
+  },
+  "messages": {
+    "success": {
+      "h2": "Ehdotus lähetetty onnistuneesti",
+      "p_1": "Ehdotuksesi siirtyy nyt YSO-kokouksen käsiteltäväksi.",
+      "p_2a": "Voit seurata ehdotuksesi käsittelyn etenemistä",
+      "p_2b": "täällä"
+    },
+    "failed": {
+      "h2": "Ehdotuksen lähettäminen ei onnistunut",
+      "p_1a": "Ehdotustasi ei valitettavasti pystytty vastaanottamaan.",
+      "p_1b": "Voit kokeilla ehdotuksen täyttämistä uudestaan tai ottaa yhteyttä Finton ylläpitäjiin Tietoja-välilehden kautta."
+    }
+  }
+}
