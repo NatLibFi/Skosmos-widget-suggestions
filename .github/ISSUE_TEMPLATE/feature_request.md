@@ -9,7 +9,9 @@ assignees: ''
 
 # Ehdotuswidgetin vaatimusmäärittely - uusi vaatimus
 
-Kun kehitysprosessin eri vaiheissa hahmotellaan ja sunnitellaan asiakkaiden tarpeista lähteviä ominaisuuksia, ne tulee aluksi kirjata erillisinä vaatimuksina. Yksittäisen vaatimuksen tarkkuutta ja kattavuutta ei ole määritelty, mutta olisi hyvä, jos vaatimuksesta löytyisi vähintään alla kuvatut tiedot. <u>GitHub-kohdan kommentointi on kuitenkin "pakollista"!</u>
+Kun kehitysprosessin eri vaiheissa hahmotellaan ja sunnitellaan asiakkaiden tarpeista lähteviä ominaisuuksia, ne tulee aluksi kirjata erillisinä vaatimuksina. Yksittäisen vaatimuksen tarkkuutta ja kattavuutta ei ole määritelty, mutta olisi hyvä, jos vaatimuksesta löytyisi vähintään alla kuvatut tiedot. 
+
+GitHub-kohdan kommentointi on kuitenkin "pakollista"!
 
 **Onko vaatimuksen täysin välttämätöntä toteutua ensimmäisessä julkaisuversiossa?**
 - [ ] Ensimmäisessä julkaisuversiossa
