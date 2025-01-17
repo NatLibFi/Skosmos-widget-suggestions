@@ -1,7 +1,7 @@
 ---
 name: Vaatimus
 about: Tulee osaksi uudistettavan ehdotuswidgetin vaatimusmäärittelyä
-title: "[Vaatimus]: "
+title: "Vaatimus: "
 labels: requirement
 assignees: ''
 
