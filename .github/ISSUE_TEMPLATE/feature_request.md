@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-# Ehdotuswidgetin vaatimusmäärittely - uusi vaatimus
+### Ehdotuswidgetin vaatimusmäärittely - uusi vaatimus
 
 Kun kehitysprosessin eri vaiheissa hahmotellaan ja sunnitellaan asiakkaiden tarpeista lähteviä ominaisuuksia, ne tulee aluksi kirjata erillisinä vaatimuksina. Yksittäisen vaatimuksen tarkkuutta ja kattavuutta ei ole määritelty, mutta olisi hyvä, jos vaatimuksesta löytyisi vähintään alla kuvatut tiedot. 
 
@@ -33,7 +33,6 @@ GitHub-kohdan kommentointi on kuitenkin "pakollista"!
 
 **Priorisointi** \
 JOS ominaisuuden kehittämistä on tarpeen priorisoida, miten se priorisoitaisiin suhteessa muihin vaatimuksiin/ominaisuuksiin? 
-
 
 ## Kuvaile tähän vaatimus ja muut huomiot:
 
