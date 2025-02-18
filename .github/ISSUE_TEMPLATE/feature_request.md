@@ -12,26 +12,24 @@ Kun kehitysprosessin eri vaiheissa hahmotellaan ja sunnitellaan asiakkaiden tarp
 
 GitHub-kohdan kommentointi on kuitenkin "pakollista"!
 
-1. **Onko vaatimuksen täysin välttämätöntä toteutua ensimmäisessä julkaisuversiossa?**
+1. **Kuvaile tähän vaatimus ja muut huomiot:**
+
+2. **Onko vaatimuksen täysin välttämätöntä toteutua ensimmäisessä julkaisuversiossa?**
 - [ ] Ensimmäisessä julkaisuversiossa
 - [ ] Myöhemmin
 
-2. **Liittyykö vaatimus ulkoasuun, käytettävyyteen tai toiminnallisuuksiin (voit valita useita)?**
+3. **Liittyykö vaatimus ulkoasuun, käytettävyyteen tai toiminnallisuuksiin (voit valita useita)?**
 - [ ] Ulkoasu
 - [ ] Käytettävyys
 - [ ] Toiminnallisuus
 
-3. **Ehdotukset GitHubissa (PAKOLLINEN)**
-- [ ] Vaatimus toteutuessaan vaikuttaa GitHubin ehdotusnäkymän (*issue*) ulkoasuun, muotoiluihin, toimintoihin tai muuhun käyttöön (*kuvaile kuvailuosiossa*).
+4. **Ehdotukset GitHubissa (PAKOLLINEN)**
+- [ ] Vaatimus toteutuessaan vaikuttaa GitHubin ehdotusnäkymän (*issue*) ulkoasuun, muotoiluihin, toimintoihin tai muuhun käyttöön (*kuvaile kohdassa 1*).
 
-4. **YSE-sanasto** 
-- [ ] Vaatimus toteutuessaan vaikuttaa YSE-sanastoon (*kuvaile kuvailuosiossa*).
-
-5. **Kieliominaisuudet**
-- [ ] Huomioitava erikseen kielisyysasioita, oletusarvoisia ominaisuuksia enemmän (*kuvaile kuvailuosiossa*).
+5. **YSE-sanasto** 
+- [ ] Vaatimus toteutuessaan vaikuttaa YSE-sanastoon (*kuvaile kohdassa 1*).
 
 6. **Priorisointi** \
 JOS ominaisuuden kehittämistä on tarpeen priorisoida, miten se priorisoitaisiin suhteessa muihin vaatimuksiin/ominaisuuksiin? 
 
-7. ## Kuvaile tähän vaatimus ja muut huomiot:
 
