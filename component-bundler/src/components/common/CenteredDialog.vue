@@ -1,20 +1,19 @@
 <template>
-    <div class="template">
-      <!-- <div class="dialog-overlay" @click="close"> -->
-      <div class="dialog-overlay">
-      </div>
-      <div class="dialog-modal">
-        <div class="dialog-content">
-          <div class="dialog-close" @click="close">
-            <svg-icon icon-name="cross"><icon-cross /></svg-icon>
-          </div>
-          <slot></slot>
+  <div class="template">
+    <div class="dialog-overlay"></div>
+    <div class="dialog-modal">
+      <div class="dialog-content">
+        <div class="dialog-close" @click="close">
+          <svg-icon icon-name="cross"><icon-cross /></svg-icon>
         </div>
+        <slot></slot>
       </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import SvgIcon from '../icons/SvgIcon.vue';
 import IconCross from '../icons/IconCross.vue';
 
@@ -23,17 +22,28 @@ export default {
     SvgIcon,
     IconCross
   },
-  methods: {
-    close: function() {
-      this.$emit('close');
-    }
-  },
-  mounted: function() {
-    document.addEventListener('keydown', e => {
-      if (e.keyCode == 27) {
-        this.close();
+  setup(_, { emit }) {
+    const close = () => {
+      emit('close');
+    };
+
+    const handleEscKey = (e) => {
+      if (e.keyCode === 27) {
+        close();
       }
+    };
+
+    onMounted(() => {
+      document.addEventListener('keydown', handleEscKey);
     });
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('keydown', handleEscKey);
+    });
+
+    return {
+      close
+    };
   }
 };
 </script>

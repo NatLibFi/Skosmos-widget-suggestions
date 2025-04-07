@@ -2,8 +2,8 @@ const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
-const webpack = require('webpack')
-/*const TerserPlugin = require('terser-webpack-plugin');*/
+// const webpack = require('webpack')
+const { DefinePlugin } = require('webpack');
 
 module.exports = {
   entry: ['./src/main.js'],
@@ -43,8 +43,9 @@ module.exports = {
   plugins: [
     // ... other plugins ...
     new VueLoaderPlugin(),
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       'process.env.BUILD': JSON.stringify('web'),
     }),
   ],
+  devtool: 'eval-source-map'
 }

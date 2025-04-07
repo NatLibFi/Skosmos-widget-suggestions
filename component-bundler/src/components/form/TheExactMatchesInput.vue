@@ -4,51 +4,54 @@
     <div v-if="values && values.length > 0">
       <div v-for="(item, i) in values" :key="item.id" class="input-pair">
         <input
-          :values="values[i].vocab"
-          @input="handleVocabInput($event.target.value, i)"
-          :placeholder="$t('new.exactMatches.vocab')"
-          type="text" />
+            :value="item.vocab"
+            @input="handleVocabInput($event.target.value, i)"
+            :placeholder="$t('new.exactMatches.vocab')"
+            type="text" />
         <input
-          :values="values[i].value"
-          @input="handleValueInput($event.target.value, i)"
-          :placeholder="$t('new.exactMatches.uri')"
-          type="text" />
+            :value="item.value"
+            @input="handleValueInput($event.target.value, i)"
+            :placeholder="$t('new.exactMatches.uri')"
+            type="text" />
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    values: Array,
-    label: {
-      text: String,
-      for: String
-    }
-  },
-  methods: {
-    handleVocabInput: function(inputVocab, index) {
-      let updatedValues = this.values;
-      if (!this.values[index].isTouched) {
-        this.values.push({vocab: '', value: '', isTouched: false});
-      }
-      updatedValues[index].vocab = inputVocab;
-      updatedValues[index].isTouched = true;
-      this.$emit('input', updatedValues);
-    },
-    handleValueInput: function(inputValue, index) {
-      let updatedValues = this.values;
-      if (!this.values[index].isTouched) {
-        this.values.push({vocab: '', value: '', isTouched: false});
-      }
-      updatedValues[index].value = inputValue;
-      updatedValues[index].isTouched = true;
-      this.$emit('input', updatedValues);
-    }
+<script setup>
+import { defineProps, defineEmits } from 'vue';
+
+const props = defineProps({
+  values: Array,
+  label: {
+    text: String,
+    for: String
   }
-}
+});
+
+const emit = defineEmits();
+
+const handleVocabInput = (inputVocab, index) => {
+  const updatedValues = [...props.values];
+  if (!props.values[index].isTouched) {
+    updatedValues.push({ vocab: '', value: '', isTouched: false });
+  }
+  updatedValues[index].vocab = inputVocab;
+  updatedValues[index].isTouched = true;
+  emit('inputexm', updatedValues);
+};
+
+const handleValueInput = (inputValue, index) => {
+  const updatedValues = [...props.values];
+  if (!props.values[index].isTouched) {
+    updatedValues.push({ vocab: '', value: '', isTouched: false });
+  }
+  updatedValues[index].value = inputValue;
+  updatedValues[index].isTouched = true;
+  emit('inputexm', updatedValues);
+};
 </script>
+
 
 <style scoped>
   .inputs-container {

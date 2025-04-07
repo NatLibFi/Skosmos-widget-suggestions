@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl.split('#')[0]}#suggestion`" >
+    <a role="button" @click="isOpened = !isOpened" id="fordirectnew" :href="`${pageUrl.split('#')[0]}#suggestion`">
       <span>
         <div id="vocab-info">
           <div>
@@ -9,13 +9,19 @@
         </div>
       </span>
     </a>
-    <centered-dialog
-      v-if="isOpened"
-      @close="closeDialog()">
+    <centered-dialog v-if="isOpened" @close="closeDialog()">
       <new-suggestion
+        :conceptTypeIsSelected="conceptTypeIsSelected"
+        :prefLabelOkay="prefLabelOkay"
+        :explanationOkay="explanationOkay"
+        :neededForOkay="neededForOkay"
+        :sending="sending"
+        @update:conceptTypeIsSelected="conceptTypeIsSelected = true"
+        @update:prefLabelOkay="prefLabelOkay = true"
+        @update:explanationOkay="explanationOkay = true"
+        @update:neededForOkay="neededForOkay = true"
         v-if="!showSuccessMessage && !showFailureMessage"
         :d="formData"
-        :v="$v.formData"
         @update:vocabulary="formData.vocabulary = $event"
         @update:conceptType="formData.conceptType.value = $event"
         @update:primaryPrefLabel="formData.prefLabel.primary = $event"
@@ -32,392 +38,431 @@
         @update:neededFor="formData.neededFor = $event"
         @update:fromOrg="formData.fromOrg = $event"
         @submitForm="submitForm()"
-        />
+      />
 
-        <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url"/>
-        <failure-message v-if="showFailureMessage" />
+      <success-message v-if="showSuccessMessage" :suggestionUrl="suggestionUrl" :url="url" />
+      <failure-message v-if="showFailureMessage" />
     </centered-dialog>
   </div>
 </template>
 
 <script>
+import { defineComponent, ref, reactive, watchEffect, inject, watch } from 'vue';
 import NewSuggestion from './NewSuggestion.vue';
 import CenteredDialog from './common/CenteredDialog.vue';
 import SuccessMessage from './common/SuccessMessage.vue';
 import FailureMessage from './common/FailureMessage.vue';
-import { required, minLength } from 'vuelidate/lib/validators';
 import axios from 'axios';
+import urlToPrx from "../prx.json";
 
-export default {
+export default defineComponent({
   components: {
     NewSuggestion,
     CenteredDialog,
     SuccessMessage,
-    FailureMessage
+    FailureMessage,
   },
   props: {
     lang: String,
     vocab: String,
-    url: String
   },
-  beforeMount: function () {
-    if (this.lang === 'sv') {
-      this.$i18n.locale = this.lang;
-    }
-    this.setDropDown();
-    this.getGroups();
-  },
-  data: () => {
-    return {
-      pageUrl : "",
-      isOpened: false,
-      showSuccessMessage: false,
-      showFailureMessage: false,
-      suggestionUrl: '',
-      formData: {
-        vocabulary: 'yso',
-        conceptType: {
-          value: '',
-          options: [
-            {
-              value: '',
-              vocab: 'yso'
-            },
-            {
-              value: '',
-              vocab: 'yso-paikat'
-            }
-          ]
-        },
-        prefLabel: {
-          primary: '',
-          secondary: '',
-          fi: {
-            value: ''
-          },
-          sv: {
-            value: ''
-          },
-          en: ''
-        },
-        altLabels: [{
-          value: '',
-          isTouched: false
-        }],
-        broaderLabels: [{
-          value: '',
-          uri: '',
-          isTouched: false
-        }],
-        narrowerLabels: [{
-          value: '',
-          uri: '',
-          isTouched: false
-        }],
-        relatedLabels: [{
-          value: '',
-          uri: '',
-          isTouched: false
-        }],
-        groups: {
-          allGroups: [],
-          selectedGroups: []
-        },
-        exactMatches: [{
-          vocab: '',
-          value: '',
-          isTouched: false
-        }],
-        scopeNote: '',
-        explanation: '',
-        neededFor: '',
-        fromOrg: '',
-        tags: []
-      }
-    }
-  },
-  created: function() {
-    this.getGroups();
-    this.getUrl();
-  },
-  methods: {
-    getUrl: async function () {
-      this.pageUrl = window.location.href;
-    },
-    getGroups: async function() {
-      if (this.lang === 'sv') {
-        this.$i18n.locale = this.lang;
-      }
-      await axios
-        .get(
-          // The next following should be a value from a config file - fix it - use key value pair
-          // 'http://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
-          'https://api.finto.fi/rest/v1/' + this.formData.vocabulary + '/groups', {
-            params: {
-              lang: this.$i18n.locale
-            }
+  setup(props) {
+    setTimeout(() => {
+    }, 500)
+
+    // Inject the i18n $t function and pageUrl variable
+    const $t = inject('$t');
+    const testi = inject('testi')
+    const pageUrl = inject('pageUrl');
+    const isOpened = ref(false);
+    const showSuccessMessage = ref(false);
+    const showFailureMessage = ref(false);
+    const suggestionUrl = ref('');
+    let conceptTypeIsSelected = ref(false)
+    let prefLabelOkay = ref(false)
+    let explanationOkay = ref(false)
+    let neededForOkay = ref(false)
+    let dataCanBeSentArray = ref([])
+    let sending = ref(false)
+
+    const formData = reactive({
+      vocabulary: 'yso',
+      conceptType: {
+        value: '',
+        options: [
+          { value: '', vocab: 'yso' },
+          { value: '', vocab: 'yso-paikat' },
+        ],
+      },
+      prefLabel: {
+        primary: '',
+        secondary: '',
+        fi: { value: '' },
+        sv: { value: '' },
+        en: '',
+      },
+      altLabels: [{ value: '', isTouched: false }],
+      broaderLabels: [{ value: '', uri: '', isTouched: false }],
+      narrowerLabels: [{ value: '', uri: '', isTouched: false }],
+      relatedLabels: [{ value: '', uri: '', isTouched: false }],
+      groups: { allGroups: [], selectedGroups: [] },
+      exactMatches: [{ vocab: '', value: '', isTouched: false }],
+      scopeNote: '',
+      explanation: '',
+      neededFor: '',
+      fromOrg: '',
+      tags: [],
+    });
+
+    watch(
+        () => [formData.conceptType.value, formData.conceptType.value.length],
+        (newValues, oldValues) => {
+          const conceptTypeLength = newValues[1];
+
+          if (conceptTypeLength > 0) {
+            conceptTypeIsSelected.value = true;
+            dataCanBeSentArray.value[0] = true
+          } else {
+            conceptTypeIsSelected.value = false;
+            dataCanBeSentArray.value[0] = false
           }
-        )
-        .then(response => this.formData.groups.allGroups = response.data.groups); // orig
-    },
+        },
+        { deep: true }
+    );
 
-setDropDown: function() {
-      this.formData.conceptType.options[0].value = this.$t('new.common.concept');
-      this.formData.conceptType.options[1].value = this.$t('new.common.geo');
-    },
+    watch(
+        () => [formData.prefLabel.primary, formData.prefLabel.primary.length],
+        (newValues, oldValues) => {
+          const primaryLabelLength = newValues[1];
+          if (primaryLabelLength > 2) {
+            prefLabelOkay.value = true;
+            dataCanBeSentArray.value[1] = true
+          } else {
+            prefLabelOkay.value = false;
+            dataCanBeSentArray.value[1] = false
+          }
+        },
+        { deep: true }
+    );
 
-    addHTTPOrHTTPS(str){
-      if(!(/(http(s?)):\/\//.test(str))){
+    watch(
+        () => [formData.explanation, formData.explanation.length],
+        (newValues, oldValues) => {
+          const explanationLength = newValues[1];
+          if (explanationLength > 2) {
+            explanationOkay.value = true;
+            dataCanBeSentArray.value[2] = true;
+          } else {
+            explanationOkay.value = false;
+            dataCanBeSentArray.value[2] = false;
+          }
+        },
+        { deep: true }
+    );
+
+    watch(
+        () => [formData.neededFor, formData.neededFor.length],
+        (newValues, oldValues) => {
+          const needdForLength = newValues[1];
+          if (needdForLength > 2) {
+            neededForOkay.value = true;
+            dataCanBeSentArray.value[3] = true;
+          } else {
+            neededForOkay.value = false;
+            dataCanBeSentArray.value[3] = false;
+          }
+        },
+        { deep: true }
+    );
+
+    // Methods
+    const setDropDown = () => {
+      formData.conceptType.options[0].value = 'new.common.concept';
+      formData.conceptType.options[1].value = 'new.common.geo';
+    };
+
+    const addHTTPOrHTTPS = (str) => {
+      if (!/^(http(s?)):\/\//.test(str)) {
         return `http://${str}`;
       } else {
         return `${str}`;
       }
-    },
+    };
 
-    submitForm () {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        this.sendData();
+    const submitForm = () => {
+      // $v.$touch();
+      sending.value = true
+
+      const countTrueValues = dataCanBeSentArray.value.reduce((count, currentValue) => {
+        if (currentValue === true) {
+          return count + 1;
+        } else {
+          return count;
+        }
+      }, 0);
+
+      if (countTrueValues === 4) {
+        sendData();
       } else {
         console.log('Data not sent: required data of the form was not provided.');
       }
-    },
-    async sendData () {
-      this.handlePrefLabelLanguages();
-      var ontTypeInTargetSuggestionSystem = '';
+    };
+
+    const sendData = async () => {
+      handlePrefLabelLanguages();
+      let ontTypeInTargetSuggestionSystem = '';
       const labelsInTargetSuggestionSystem = [];
-      if (this.formData.vocabulary === 'yso-paikat') {
-        labelsInTargetSuggestionSystem.push("uusi");
-        labelsInTargetSuggestionSystem.push("MAANTIETEELLINEN");
-        ontTypeInTargetSuggestionSystem = "GEO";
+      if (formData.vocabulary === 'yso-paikat') {
+        labelsInTargetSuggestionSystem.push('uusi');
+        labelsInTargetSuggestionSystem.push('MAANTIETEELLINEN');
+        ontTypeInTargetSuggestionSystem = 'GEO';
       } else {
-        labelsInTargetSuggestionSystem.push("uusi");
-        ontTypeInTargetSuggestionSystem = "CONCEPT";
+        labelsInTargetSuggestionSystem.push('uusi');
+        ontTypeInTargetSuggestionSystem = 'CONCEPT';
       }
-      const altTerms = []
-      this.formData.altLabels.forEach(item => item.value !== "" ? altTerms.push(` ${item.value}`) : null);
 
-      const brdLabls = []
-      this.formData.broaderLabels.forEach(item => item.value !== "" ? brdLabls.push(` [${ item.value }](${item.uri})`) : null);
+      const altTerms = [];
+      formData.altLabels.forEach((item) => (item.value !== '' ? altTerms.push(` ${item.value}`) : null));
 
-      const groups = []
-      this.formData.groups.selectedGroups.forEach(item => item.prefLabel !== "" ? groups.push(` [${ item.prefLabel }](${item.uri})`) : null);
+      const brdLabls = [];
+      formData.broaderLabels.forEach((item) =>
+          item.value !== '' ? brdLabls.push(` [${item.value}](${item.uri})`) : null
+      );
 
-      const nrrLabls = []
-      this.formData.narrowerLabels.forEach(item => item.value !== "" ? nrrLabls.push(` [${ item.value }](${item.uri})`) : null);
+      const groups = [];
+      formData.groups.selectedGroups.forEach((item) =>
+          item.prefLabel !== '' ? groups.push(` [${item.prefLabel}](${item.uri})`) : null
+      );
 
+      const nrrLabls = [];
+      formData.narrowerLabels.forEach((item) =>
+          item.value !== '' ? nrrLabls.push(` [${item.value}](${item.uri})`) : null
+      );
 
-      const rltdLabls = []
-      this.formData.relatedLabels.forEach(item => item.value !== "" ? rltdLabls.push(` [${ item.value }](${item.uri})`) : null);
+      const rltdLabls = [];
+      formData.relatedLabels.forEach((item) =>
+          item.value !== '' ? rltdLabls.push(` [${item.value}](${item.uri})`) : null
+      );
 
-      const exctLabls = []
-      this.formData.exactMatches.forEach(item => item.value !== "" ? exctLabls.push(` [${ item.vocab }](${this.addHTTPOrHTTPS(item.value)})`) : null);
-// Very strange newlines, taken from the GitHub issue body by "blind" copying
+      const exctLabls = [];
+      formData.exactMatches.forEach((item) =>
+          item.value !== '' ? exctLabls.push(` [${item.vocab}](${addHTTPOrHTTPS(item.value)})`) : null
+      );
+
       let data = `
 **Käsitteen tyyppi**
 
-${ ontTypeInTargetSuggestionSystem }
+${ontTypeInTargetSuggestionSystem}
 
 **Ehdotettu termi suomeksi**
 
-${ this.formData.prefLabel.fi.value }
+${formData.prefLabel.fi.value}
 
 **Ehdotettu termi ruotsiksi**
 
-${ this.formData.prefLabel.sv.value }
+${formData.prefLabel.sv.value}
 
 **Ehdotettu termi englanniksi**
 
-${ this.formData.prefLabel.en }
+${formData.prefLabel.en}
 
 **Tarkoitusta täsmentävä selite**
 
-${ this.formData.scopeNote }
+${formData.scopeNote}
 
 **Perustelut ehdotukselle**
 
-${ this.formData.explanation }
+${formData.explanation}
 
 **Ehdotettu yläkäsite YSOssa (LT)**
 
-${ brdLabls }
+${brdLabls}
 
 **Ehdotetut temaattiset ryhmät**
 
-${ groups }
+${groups}
 
 **Vaihtoehtoiset termit**
 
-${ altTerms }
+${altTerms}
 
 **Alakäsitteet (RT)**
 
-${ nrrLabls }
+${nrrLabls}
 
 **Assosiatiiviset (RT)**
 
-${ rltdLabls }
+${rltdLabls}
 
 **Vastaava käsite muussa sanastossa**
 
-${ exctLabls }
+${exctLabls}
 
 **Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**
 
-${ this.formData.neededFor }
+${formData.neededFor}
 
 **Ehdottajan organisaatio**
 
-${ this.formData.fromOrg }
-`
+${formData.fromOrg}
+`;
 
       let dataBundle = {
-        "title": (this.$i18n.locale === 'sv' ? this.formData.prefLabel.sv.value : this.formData.prefLabel.fi.value),
-        "body": data,
-        "state": "open",
-        "labels": labelsInTargetSuggestionSystem
+        // title: formData.prefLabel.sv.value !== '' ? formData.prefLabel.sv.value : formData.prefLabel.fi.value,
+        title:  window.lang === 'sv' ? formData.prefLabel.sv.value : formData.prefLabel.fi.value,
+        body: data,
+        state: 'open',
+        labels: labelsInTargetSuggestionSystem,
       };
-      var urlencode = require('urlencode');
       const payload = encodeURIComponent(JSON.stringify(dataBundle));
+      // console.log("payload", payload)
       const headers = {
-          'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
       };
-      var urlToPrx = require('../prx.json');
-      await axios.post(`${urlToPrx[0].url}?payload=${payload}`).then(response => {
-        this.toggleSuccessMessage(`${response.data.url.replace("/repos", "").replace("api.", "")}`);
-      })
-      .catch(error => {
-        console.log(error)
-        this.toggleFailureMessage();
-      });
-
-    },
-    toggleSuccessMessage(responseUrl) {
+      const urlToPrx = require('../prx.json');
+      await axios
+      // https://finto.fi/plugins/suggestions/gh_prx.php
+      // https://api.github.com/repos/:owner/:repo
+      // https://github.com/Finto-ehdotus/YSE
+          .post(`${urlToPrx[0].url}?payload=${payload}`, {}, { headers })
+          .then((response) => {
+            // console.log('Response:', response)
+            // toggleSuccessMessage(`https://github.com/Finto-ehdotus/YSE`);
+            toggleSuccessMessage(`${response.data.url.replace('/repos', '').replace('api.', '')}`);
+          })
+          .catch((error) => {
+            toggleFailureMessage();
+          });
+    };
+    const toggleSuccessMessage = (responseUrl) => {
       if (responseUrl && responseUrl.length > 0) {
-        this.suggestionUrl = responseUrl;
-        this.showSuccessMessage = true;
+        suggestionUrl.value = responseUrl;
+        showSuccessMessage.value = true;
       }
-      this.showSuccessMessage = true;
-    },
-    toggleFailureMessage() {
-      this.showFailureMessage = true;
-    },
-    handlePrefLabelLanguages () {
-      if (this.$i18n.locale === 'fi') {
-        this.formData.prefLabel.fi.value = this.formData.prefLabel.primary;
-        this.formData.prefLabel.sv.value = this.formData.prefLabel.secondary;
-      } else if (this.$i18n.locale === 'sv') {
-        this.formData.prefLabel.sv.value = this.formData.prefLabel.primary;
-        this.formData.prefLabel.fi.value = this.formData.prefLabel.secondary;
+      showSuccessMessage.value = true;
+    };
+    const toggleFailureMessage = () => {
+      showFailureMessage.value = true;
+    };
+
+    const handlePrefLabelLanguages = () => {
+      formData.prefLabel.fi.value = formData.prefLabel.primary;
+      if (window.lang === 'fi' || window.lang === 'en') { // muutos 2023-09-18 lisättiin en ehto
+        formData.prefLabel.fi.value = formData.prefLabel.primary;
+        formData.prefLabel.sv.value = formData.prefLabel.secondary;
+      } else if (window.lang === 'sv') {
+        formData.prefLabel.sv.value = formData.prefLabel.primary;
+        formData.prefLabel.fi.value = formData.prefLabel.secondary;
       }
-    },
-    closeDialog () {
-      this.isOpened = !this.isOpened;
-      this.showSuccessMessage = false;
-      this.showFailureMessage = false;
-      this.suggestionUrl = '';
-      this.formData = {
-        vocabulary: 'yso',
-        conceptType: {
-          value: '',
-          options: [
-            {
-              value: '',
-              vocab: 'yso'
+      // formData.prefLabel.fi.value ? console.log("formData.prefLabel.fi.value", formData.prefLabel.fi.value) : console.log("formData.prefLabel.fi.value X")
+      // formData.prefLabel.sv.value ? console.log("formData.prefLabel.sv.value", formData.prefLabel.sv.value) : console.log("formData.prefLabel.sv.value X")
+    };
+
+    const closeDialog = () => {
+      isOpened.value = !isOpened.value;
+      showSuccessMessage.value = false;
+      showFailureMessage.value = false;
+      suggestionUrl.value = '';
+      formData.vocabulary = 'yso';
+      formData.conceptType.value = '';
+      formData.prefLabel.primary = '';
+      formData.prefLabel.secondary = '';
+      formData.prefLabel.fi.value = '';
+      formData.prefLabel.sv.value = '';
+      formData.prefLabel.en = '';
+      formData.altLabels = [{ value: '', isTouched: false }];
+      formData.broaderLabels = [{ value: '', uri: '', isTouched: false }];
+      formData.narrowerLabels = [{ value: '', uri: '', isTouched: false }];
+      formData.relatedLabels = [{ value: '', uri: '', isTouched: false }];
+      formData.groups.selectedGroups = [];
+      formData.exactMatches = [{ vocab: '', value: '', isTouched: false }];
+      formData.scopeNote = '';
+      formData.explanation = '';
+      formData.neededFor = '';
+      formData.fromOrg = '';
+      setDropDown();
+      // $v.$reset();
+      getGroups();
+      sending.value = false
+    };
+
+    const getUrl = async () => {
+      pageUrl.value = window.location.href;
+    };
+
+    const getGroups = async () => {
+      await axios
+          .get(`https://api.finto.fi/rest/v1/${formData.vocabulary}/groups`, {
+            params: {
+              // lang: props.lang,
+              lang: window.lang === 'en' ? 'fi' : window.lang
             },
-            {
-              value: '',
-              vocab: 'yso-paikat'
-            }
-          ]
-        },
-        prefLabel: {
-          primary: '',
-          secondary: '',
-          fi: {
-            value: ''
-          },
-          sv: {
-            value: ''
-          },
-          en: ''
-        },
-        altLabels: [{
-          value: '',
-          isTouched: false
-        }],
-        broaderLabels: [{
-          value: '',
-          uri: '',
-          isTouched: false
-        }],
-        narrowerLabels: [{
-          value: '',
-          uri: '',
-          isTouched: false
-        }],
-        relatedLabels: [{
-          value: '',
-          uri: '',
-          isTouched: false
-        }],
-        groups: {
-          allGroups: [],
-          selectedGroups: []
-        },
-        exactMatches: [{
-          vocab: '',
-          value: '',
-          isTouched: false
-        }],
-        scopeNote: '',
-        explanation: '',
-        neededFor: '',
-        fromOrg: ''
-      };
-      this.setDropDown();
-      this.$v.$reset();
-      this.getGroups();
-    }
+          })
+          .then((response) => (formData.groups.allGroups = response.data.groups));
+    };
+
+    // Lifecycle hooks
+    watchEffect(() => {
+  /*    if (props.lang === 'sv') {
+        // Note: 'this' is not available in the setup function.
+        // Instead, you can use 'props' directly.
+      }*/
+      setDropDown();
+      getGroups();
+    });
+
+    getGroups();
+
+    // Return the variables and methods you want to expose to the template
+    return {
+      pageUrl,
+      isOpened,
+      showSuccessMessage,
+      showFailureMessage,
+      suggestionUrl,
+      formData,
+      conceptTypeIsSelected,
+      prefLabelOkay,
+      explanationOkay,
+      neededForOkay,
+      setDropDown,
+      addHTTPOrHTTPS,
+      submitForm,
+      sendData,
+      toggleSuccessMessage,
+      toggleFailureMessage,
+      handlePrefLabelLanguages,
+      closeDialog,
+      getUrl,
+      getGroups,
+      dataCanBeSentArray,
+      sending,
+      testi
+    };
   },
-  validations: {
-    formData: {
-      conceptType: { value: { required } },
-      prefLabel: { primary: { required, minLength: minLength(1) }},
-      explanation: { required },
-      neededFor: { required }
-    }
-  }
-}
+});
 </script>
 
 <style>
-  .error {
-    color: #e83a30;
-    text-indent: 2px;
-    font-size: 13px;
-    margin-top: -10px;
-    margin-bottom: 16px;
-  }
-  ::placeholder {
-    color: #5ea8B7;
-    opacity: 1;
-  }
+.error {
+  color: #e83a30;
+  text-indent: 2px;
+  font-size: 13px;
+  margin-top: -10px;
+  margin-bottom: 16px;
+}
+::placeholder {
+  color: #5ea8B7;
+  opacity: 1;
+}
 
-  :-ms-input-placeholder {
-    color: #5ea8B7;
-    opacity: 1;
-  }
+:-ms-input-placeholder {
+  color: #5ea8B7;
+  opacity: 1;
+}
 
-  ::-ms-input-placeholder {
-    color: #5ea8B7;
-    opacity: 1;
-  }
-</style>
-
-<style scoped>
-  a {
-    cursor: pointer;
-    cursor: hand;
-  }
+::-ms-input-placeholder {
+  color: #5ea8B7;
+  opacity: 1;
+}
 </style>

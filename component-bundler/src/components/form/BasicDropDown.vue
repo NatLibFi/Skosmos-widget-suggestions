@@ -1,89 +1,103 @@
 <template>
-<div class="input-container">
-  <label :for="label.for">{{ label.text }}</label>
-  <div
-    @click="isOpened = !isOpened"
-    :class="[isOpened ? 'opened' : '', 'select-button']">
-    <div class="select-content">
-      <span v-if="!value">{{ $t('new.conceptType.placeholder') }}</span>
-      <span v-if="value && value.length > 0" class="selected">{{ value }}</span>
+  <div class="input-container">
+    <label :for="label.for">{{ label.text }}</label>
+    <div
+        @click="isOpened = !isOpened"
+        :class="[isOpened ? 'opened' : '', 'select-button']">
+      <div class="select-content">
+        <span v-if="!value">{{ $t('new.conceptType.placeholder') }}</span>
+        <span v-if="value && value.length > 0" class="selected">{{ value }}</span>
+      </div>
+      <svg-icon icon-name="triangle"><icon-triangle /></svg-icon>
     </div>
-    <svg-icon icon-name="triangle"><icon-triangle /></svg-icon>
-  </div>
-  <div
-    v-if="isOpened && options.length === 0"
-    class="drop-down-options empty-options"
-    v-on-clickaway="closeDropDown">
-    <div class="option" style="padding-left: 16px;">
-      <span>{{ noOptionsMessage }}</span>
+    <div
+        v-if="isOpened && options.length === 0"
+        class="drop-down-options empty-options"
+        v-on-click-away="closeDropDown">
+      <div class="option" style="padding-left: 16px;">
+        <span>{{ noOptionsMessage }}</span>
+      </div>
+    </div>
+    <div v-if="isOpened && options.length > 0"
+         class="drop-down-options"
+         v-on-click-away="closeDropDown">
+      <div v-for="(option, i) in options"
+           :key="option.id"
+           @click="selectOption(i)"
+           :class="[isSelected(i) ? 'selected' : '', 'option']">
+        <svg-icon
+            :class="[isSelected(i) ? '' : 'hidden-checkmark']"
+            icon-name="check"><icon-check />
+        </svg-icon>
+        <p>{{ $t(option.value) }}</p>
+      </div>
     </div>
   </div>
-  <div v-if="isOpened && options.length > 0"
-    class="drop-down-options"
-    v-on-clickaway="closeDropDown">
-    <div v-for="(option, i) in options"
-      :key="option.id"
-      @click="selectOption(i)"
-      :class="[isSelected(i) ? 'selected' : '', 'option']">
-      <svg-icon
-        :class="[isSelected(i) ? '' : 'hidden-checkmark']"
-        icon-name="check"><icon-check />
-      </svg-icon>
-      <p>{{ option.value }}</p>
-    </div>
-  </div>
-</div>
 </template>
 
 <script>
+import {ref, onMounted, onBeforeUnmount, inject} from 'vue';
 import SvgIcon from '../icons/SvgIcon.vue';
 import IconTriangle from '../icons/IconTriangle.vue';
-import IconCross from '../icons/IconCross.vue';
 import IconCheck from '../icons/IconCheck.vue';
-import { directive as onClickaway } from 'vue-clickaway';
+import { directive as onClickAway } from 'vue3-click-away';
 
 export default {
   components: {
     SvgIcon,
     IconTriangle,
-    IconCross,
     IconCheck
   },
   directives: {
-    onClickaway: onClickaway
+    onClickAway
   },
   props: {
     value: String,
     options: Array,
     label: Object
   },
-  data () {
+  setup(props, context) {
+    const $t = inject('$t');
+    const selectedIndex = ref(-1);
+    const isOpened = ref(false);
+    const count = ref(0)
+    const noOptionsMessage = context.attrs['onUpdate:noOptionsMessage'] || 'No options available';
+    const selectOption = (index) => {
+      selectedIndex.value = index;
+      isOpened.value = false;
+      context.emit('changeVocabulary', props.options[index].vocab);
+      context.emit('select', $t(props.options[index].value)); // path
+    };
+
+    const handleClick = () => {
+      console.log('BEFORE: Clicked! isOpened:', isOpened.value);
+      isOpened.value = !isOpened.value;
+      console.log('AFTER: Clicked! isOpened:', isOpened.value);
+    };
+
+    // const isSelected = (index) => selectedIndex.value === index;
+    const isSelected = (index) => {
+      return selectedIndex.value === index;
+    };
+
+    const closeDropDown = () => {
+      isOpened.value = false;
+    };
+
     return {
-      selectedIndex: -1,
-      isOpened: false,
-      noOptionsMessage: this.$t('new.conceptType.none')
-    }
-  },
-  methods: {
-    selectOption(index) {
-      this.selectedIndex = index;
-      this.isOpened = false;
-      this.$emit('changeVocabulary', this.options[index].vocab)
-      this.$emit('select', this.options[index].value);
-    },
-    isSelected(index) {
-      if (this.selectedIndex === index) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    closeDropDown() {
-      this.isOpened = false;
-    }
+      isOpened,
+      noOptionsMessage,
+      count,
+      selectOption,
+      isSelected,
+      closeDropDown,
+      handleClick
+    };
   }
 };
 </script>
+
+
 
 <style scoped>
 .input-container {

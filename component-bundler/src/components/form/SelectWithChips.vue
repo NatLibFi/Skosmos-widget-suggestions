@@ -1,41 +1,37 @@
 <template>
-<div>
-  <label :for="label.for">{{ label.text }}</label>
-  <div v-if="selectedOptions && selectedOptions.length > 0" class="chip-list">
-    <div v-for="option in selectedOptions" @click="removeOption(option)" :key="option.id" class="chip">
-      <span>{{ option.prefLabel }}</span>
-      <svg-icon icon-name="cross"><icon-cross /></svg-icon>
-    </div>
-  </div>
-  <div class="input-container">
-    <div
-      @click="isOpened = !isOpened"
-      :class="[isOpened ? 'opened' : '', 'select-button']">
-      <div class="select-content">
-        <span v-if="value && value.length > 0" class="selected">{{ value }}</span>
-      </div>
-      <svg-icon icon-name="triangle"><icon-triangle /></svg-icon>
-    </div>
-    <div
-      v-if="isOpened && selectableOptions.length === 0"
-      class="drop-down-options empty-options"
-      v-on-clickaway="closeDropDown">
-      <div class="option" style="padding-left: 16px;">
-        <span>{{ noOptionsMessage }}</span>
+  <div>
+    <label :for="label.for">{{ label.text }}</label>
+    <div v-if="selectedOptions && selectedOptions.length > 0" class="chip-list">
+      <div v-for="option in selectedOptions" @click="removeOption(option)" :key="option.id" class="chip">
+        <span>{{ option.prefLabel }}</span>
+        <svg-icon icon-name="cross"><icon-cross /></svg-icon>
       </div>
     </div>
-    <div v-if="isOpened && selectableOptions.length > 0"
-      class="drop-down-options"
-      v-on-clickaway="closeDropDown">
-      <div v-for="option in selectableOptions"
-        :key="option.id"
-        @click="selectOption(option)"
-        class="option">
-        <p>{{ option.prefLabel }}</p>
+    <div class="input-container">
+      <div
+          @click="isOpened = !isOpened"
+          :class="[isOpened ? 'opened' : '', 'select-button']">
+        <div class="select-content">
+          <span v-if="value && value.length > 0" class="selected">{{ value }}</span>
+        </div>
+        <svg-icon icon-name="triangle"><icon-triangle /></svg-icon>
+      </div>
+      <div
+          v-if="isOpened && selectableOptions.length === 0" class="drop-down-options empty-options" v-on-clickaway="closeDropDown">
+        <div class="option" style="padding-left: 16px;">
+          <span>{{ noOptionsMessage }}</span>
+        </div>
+      </div>
+      <div v-if="isOpened && selectableOptions.length > 0" class="drop-down-options" v-on-clickaway="closeDropDown">
+        <div v-for="option in selectableOptions"
+             :key="option.id"
+             @click="selectOption(option)"
+             class="option">
+          <p>{{ option.prefLabel }}</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -43,8 +39,8 @@ import SvgIcon from '../icons/SvgIcon.vue';
 import IconTriangle from '../icons/IconTriangle.vue';
 import IconCross from '../icons/IconCross.vue';
 import IconCheck from '../icons/IconCheck.vue';
-import { directive as onClickaway } from 'vue-clickaway';
-import { lt } from 'semver';
+import { directive as onClickaway } from 'vue3-click-away'; // almost working
+import { ref, onMounted, inject } from 'vue';
 
 export default {
   components: {
@@ -54,45 +50,61 @@ export default {
     IconCheck
   },
   directives: {
-    onClickaway: onClickaway
+    onClickaway: onClickaway,
   },
   props: {
     value: String,
     options: Array,
     label: Object
   },
-  data () {
-    return {
-      isOpened: false,
-      noOptionsMessage: this.$t('new.groups.none'),
-      selectableOptions: [],
-      selectedOptions: []
+
+  setup (props, context) {
+    const $t = inject('$t')
+    const isOpened = ref(false);
+    const noOptionsMessage = ref($t('new.groups.none'))
+    let selectableOptions = ref([])
+    let selectedOptions = ref([])
+
+    onMounted(() => { selectableOptions.value = props.options })
+
+    const selectOption = option => {
+      selectedOptions.value.push(option);
+      // if (selectableOptions && selectableOptions.length > 0) {
+      if (selectableOptions) {
+        selectableOptions.value.splice(findOptionIndex(option, selectableOptions.value), 1);
+      }
+      isOpened.value = false;
+      context.emit('select', selectedOptions);
     }
-  },
-  created () {
-    this.selectableOptions = this.options;
-  },
-  methods: {
-    selectOption(option) {
-      this.selectedOptions.push(option);
-      if (this.selectableOptions && this.selectableOptions.length > 0) {
-        this.selectableOptions.splice(this.findOptionIndex(option, this.selectableOptions), 1);
+
+
+    const removeOption = (option) => {
+      const index = selectedOptions.value.findIndex((item) => item.id === option.id);
+      if (index !== -1) {
+        selectableOptions.value.push(selectedOptions.value[index]);
+        selectedOptions.value.splice(index, 1);
       }
-      this.isOpened = false;
-      this.$emit('select', this.selectedOptions);
-    },
-    removeOption(option) {
-      this.selectableOptions.push(option);
-      if (this.selectedOptions && this.selectedOptions.length > 0) {
-        this.selectedOptions.splice(this.findOptionIndex(option, this.selectedOptions), 1);
-      }
-      this.$emit('select', this.selectedOptions);
-    },
-    findOptionIndex(option, optionList) {
+      context.emit('select', selectedOptions);
+    };
+
+
+    const findOptionIndex = (option, optionList) => {
       return optionList.indexOf(option);
-    },
-    closeDropDown() {
-      this.isOpened = false;
+    }
+
+    const closeDropDown = () => {
+      isOpened.value = false;
+    }
+
+    return {
+      isOpened,
+      noOptionsMessage,
+      selectableOptions,
+      selectedOptions,
+      // onClickAwayDirective,
+      selectOption,
+      removeOption,
+      closeDropDown
     }
   }
 };
@@ -247,3 +259,4 @@ label {
   }
 }
 </style>
+

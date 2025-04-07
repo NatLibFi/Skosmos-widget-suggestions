@@ -2,37 +2,41 @@
   <div class="input-container">
     <label :for="label.for">{{ label.text }}</label>
     <input
-      v-if="!isTextArea"
-      :value="value"
-      @input="$emit('input', $event.target.value)"
-      type="text" />
+        v-if="!isTextArea"
+        :value="value"
+        @input="emitEvent('input:basic', $event.target.value)"
+        type="text" />
     <textarea
-      v-if="isTextArea"
-      :value="value"
-      @input="$emit('input', $event.target.value)"
-      rows="3">
+        v-if="isTextArea"
+        :value="value"
+        @input="emitEvent('input:basic', $event.target.value)"
+        rows="3">
     </textarea>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    value: String,
-    label: {
-      text: String,
-      for: String
-    },
-    isTextArea: Boolean
-  },
-  data () {
-    return {
-    }
-  },
-  methods: {
+<script setup>
+import { defineProps, defineEmits, defineExpose } from 'vue';
 
-  }
-}
+const props = defineProps({
+  value: String,
+  label: {
+    type: Object,
+    required: true,
+    default: () => ({ text: '', for: '' })
+  },
+  isTextArea: Boolean
+});
+
+const emitEvent = (eventName, payload) => {
+  emit(eventName, payload);
+};
+
+const emit = defineEmits();
+
+defineExpose({
+  emitEvent,
+});
 </script>
 
 <style scoped>

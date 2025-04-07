@@ -1,146 +1,157 @@
 <template>
-<div>
-  <label :for="label.for">{{ label.text }}</label>
-  <div v-if="selectedOptions && selectedOptions.length > 0" class="chip-list">
-    <div v-for="option in selectedOptions" @click="removeLabelSelection(option)" :key="option.id" class="chip">
-      <span>{{ option.value }}</span>
-      <svg-icon icon-name="cross"><icon-cross /></svg-icon>
-    </div>
-  </div>
-  <div class="input-container">
-    <div class="auto-complete">
-      <input
-        v-model.trim="searchString"
-        class="auto-complete-input"
-        type="text" />
-      <div @click="searchString = ''" class="clear-input">
-        <svg-icon
-          v-if="searchString.length > 0"
-          icon-name="cross">
-          <icon-cross />
-        </svg-icon>
+  <div>
+    <label :for="label.for">{{ label.text }}</label>
+    <div v-if="selectedOptions && selectedOptions.length > 0" class="chip-list">
+      <div v-for="option in selectedOptions" @click="removeLabelSelection(option)" :key="option.id" class="chip">
+        <span>{{ option.value }}</span>
+        <svg-icon icon-name="cross"><icon-cross /></svg-icon>
       </div>
     </div>
-    <div v-if="isOpened && options.length > 0"
-      class="drop-down-options"
-      v-on-clickaway="closeDropDown">
-      <div v-for="option in options"
-        :key="option.id"
-        @click="addLabelSelection(option)"
-        class="option">
-        <p>{{ option.prefLabel }}</p>
+    <div class="input-container">
+      <div class="auto-complete">
+        <input
+            v-model.trim="searchString"
+            class="auto-complete-input"
+            type="text"
+        />
+        <div @click="clearInput" class="clear-input">
+          <svg-icon v-if="searchString.length > 0" icon-name="cross">
+            <icon-cross />
+          </svg-icon>
+        </div>
       </div>
-    </div>
-    <div
-      v-if="options.length == 0 && isOpened"
-      class="drop-down-options empty-options"
-      v-on-clickaway="closeDropDown">
-      <div class="option" style="padding-left: 16px;">
-        <span>{{ noOptionsMessage }}</span>
+      <div v-if="isOpened && options.length > 0" class="drop-down-options" v-on-clickaway="closeDropDown">
+        <div v-for="option in options" :key="option.id" @click="addLabelSelection(option)" class="option">
+          <p>{{ option.prefLabel }}</p>
+        </div>
+      </div>
+      <div v-if="options.length == 0 && isOpened" class="drop-down-options empty-options" v-on-clickaway="closeDropDown">
+        <div class="option" style="padding-left: 16px;">
+          <span>{{ noOptionsMessage }}</span>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
 import SvgIcon from '../icons/SvgIcon.vue';
 import IconCross from '../icons/IconCross.vue';
 import IconCheck from '../icons/IconCheck.vue';
-import { directive as onClickaway } from 'vue-clickaway';
+import { directive as onClickaway } from 'vue3-click-away';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
+import {ref, watch, onMounted, defineEmits, inject} from 'vue';
 
 export default {
   components: {
     SvgIcon,
     IconCross,
-    IconCheck
+    IconCheck,
   },
   directives: {
-    onClickaway: onClickaway
+    onClickaway: onClickaway,
   },
   props: {
     values: Array,
     vocabulary: String,
     language: String,
     label: Object,
-    hasUniqueValue: Boolean
+    hasUniqueValue: Boolean,
   },
-  data () {
-    return {
-      isOpened: false,
-      noOptionsMessage: this.$t('new.common.none'),
-      options: [],
-      searchString: '',
-      selectedOptions: []
-    }
-  },
-  watch: {
-    searchString: function() { this.searchLabel() }
-  },
-  methods: {
-    searchLabel: debounce(function() {
-      if (this.searchString.length >= 3) {
-        this.fetchResults(this.checkCapitalization(this.searchString));
+  setup(props, context) {
+    const $t = inject('$t');
+    const isOpened = ref(false);
+    const noOptionsMessage = $t('new.common.none'); // Provide the translation key
+    const options = ref([]);
+    const searchString = ref('');
+    const selectedOptions = ref([]);
+
+    const searchLabel = debounce(() => {
+      if (searchString.value.length >= 3) {
+        fetchResults(checkCapitalization(searchString.value));
       } else {
-        this.isOpened = false;
-        this.options = [];
+        isOpened.value = false;
+        options.value = [];
       }
-    }, 200),
-    fetchResults: async function(inputValue) {
-      await axios
-        .get(
-          // 'http://api.finto.fi/rest/v1/search', {
-          'https://api.finto.fi/rest/v1/search', {
-            params: {
-              vocab: this.vocabulary,
-              lang: this.language,
-              // lang: 'sv', // Original was lang: 'fi'
-              query: inputValue + '*'
-            }
-          }
-        )
-        .then(response => (this.options = response.data.results))
-        .catch(error => console.log(error));
-        this.isOpened = true;
-    },
-    checkCapitalization(inputValue) {
-      if (inputValue && this.vocabulary === this.$t('new.common.places')) {
+    }, 200);
+
+    const fetchResults = async (inputValue) => {
+      try {
+        const response = await axios.get('https://api.finto.fi/rest/v1/search', {
+          params: {
+            vocab: props.vocabulary,
+            lang: props.language,
+            query: inputValue + '*',
+          },
+        });
+        options.value = response.data.results;
+        isOpened.value = true;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const checkCapitalization = (inputValue) => {
+      if (inputValue && props.vocabulary === 'new.common.places') {
         return inputValue.charAt(0).toUpperCase() + inputValue.substring(1);
       }
       return inputValue;
-    },
-    addLabelSelection(option) {
-      this.isOpened = false;
-      let o = {
+    };
+
+    const addLabelSelection = (option) => {
+      isOpened.value = false;
+      const o = {
         value: option.prefLabel,
-        uri: option.uri
+        uri: option.uri,
+      };
+      if (props.hasUniqueValue) {
+        selectedOptions.value = [];
       }
-      if (this.hasUniqueValue) {
-        this.selectedOptions = [];
+      if (!selectedOptions.value.some((item) => item.value === o.value)) {
+        selectedOptions.value.push(o);
       }
-      if (!this.selectedOptions.some(item => item.value === o.value)) {
-        this.selectedOptions.push(o);
-      }
-      this.searchString = '';
-      this.$emit('input', this.selectedOptions);
-    },
-    removeLabelSelection(option) {
-      let index = this.selectedOptions.findIndex(
-        item => item.uri === option.uri
-      );
+      searchString.value = '';
+      context.emit('update:selectedOptions', selectedOptions.value);
+    };
+
+    const removeLabelSelection = (option) => {
+      const index = selectedOptions.value.findIndex((item) => item.uri === option.uri);
       if (index >= 0) {
-        this.selectedOptions.splice(index, 1);
+        selectedOptions.value.splice(index, 1);
       }
-      this.$emit('input', this.selectedOptions);
-    },
-    closeDropDown() {
-      this.isOpened = false;
-    }
-  }
+      context.emit('update:selectedOptions', selectedOptions.value); // Emit the event
+    };
+
+    const closeDropDown = () => {
+      isOpened.value = false;
+    };
+
+    const clearInput = () => {
+      searchString.value = '';
+    };
+
+    watch(searchString, searchLabel);
+
+    onMounted(() => {
+      // Initialize data or perform actions after initial render
+    });
+
+    return {
+      isOpened,
+      noOptionsMessage,
+      options,
+      searchString,
+      selectedOptions,
+      addLabelSelection,
+      removeLabelSelection,
+      closeDropDown,
+      clearInput,
+    };
+  },
 };
 </script>
+
 
 <style scoped>
 label {
@@ -282,3 +293,8 @@ label {
   }
 }
 </style>
+
+
+
+
+

@@ -16,12 +16,14 @@ SUGGESTIONS = {
         }
     },
 
+
     renderChange: async function(data) {
         $(".concept-main").append(Handlebars.compile( $("#suggestions-change").html())({
             // "url": this.fetchUrl() ? this.fetchUrl() : '',
             "lang": lang ? lang : '',
             "vocab": vocab ? vocab : '',
             "label": data.prefLabels[0].label ? data.prefLabels[0].label : '',
+            // "label": 'joku laabeli',
             "uri": this.fetchUri(data) ? this.fetchUri(data) : ''
             }));
         await delay(2500);
@@ -35,6 +37,7 @@ SUGGESTIONS = {
 $(function() {
     window.suggestionsWidget = function(data) {
         $('#vocab-info').length > 0 ? SUGGESTIONS.renderNew() : '';
+
         $('.concept-main').length > 0 ? SUGGESTIONS.renderChange(data) : '';
     };
 });

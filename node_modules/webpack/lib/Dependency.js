@@ -17,6 +17,8 @@ const memoize = require("./util/memoize");
 /** @typedef {import("./ModuleGraphConnection").ConnectionState} ConnectionState */
 /** @typedef {import("./RuntimeTemplate")} RuntimeTemplate */
 /** @typedef {import("./WebpackError")} WebpackError */
+/** @typedef {import("./serialization/ObjectMiddleware").ObjectDeserializerContext} ObjectDeserializerContext */
+/** @typedef {import("./serialization/ObjectMiddleware").ObjectSerializerContext} ObjectSerializerContext */
 /** @typedef {import("./util/Hash")} Hash */
 /** @typedef {import("./util/runtime").RuntimeSpec} RuntimeSpec */
 
@@ -91,6 +93,8 @@ class Dependency {
 		this._parentModule = undefined;
 		/** @type {DependenciesBlock} */
 		this._parentDependenciesBlock = undefined;
+		/** @type {number} */
+		this._parentDependenciesBlockIndex = -1;
 		// TODO check if this can be moved into ModuleDependency
 		/** @type {boolean} */
 		this.weak = false;
@@ -168,6 +172,23 @@ class Dependency {
 			this._locN = undefined;
 		}
 		this._loc = loc;
+	}
+
+	setLoc(startLine, startColumn, endLine, endColumn) {
+		this._locSL = startLine;
+		this._locSC = startColumn;
+		this._locEL = endLine;
+		this._locEC = endColumn;
+		this._locI = undefined;
+		this._locN = undefined;
+		this._loc = undefined;
+	}
+
+	/**
+	 * @returns {string | undefined} a request context
+	 */
+	getContext() {
+		return undefined;
 	}
 
 	/**
@@ -273,6 +294,9 @@ class Dependency {
 		return getIgnoredModule();
 	}
 
+	/**
+	 * @param {ObjectSerializerContext} context context
+	 */
 	serialize({ write }) {
 		write(this.weak);
 		write(this.optional);
@@ -284,6 +308,9 @@ class Dependency {
 		write(this._locN);
 	}
 
+	/**
+	 * @param {ObjectDeserializerContext} context context
+	 */
 	deserialize({ read }) {
 		this.weak = read();
 		this.optional = read();

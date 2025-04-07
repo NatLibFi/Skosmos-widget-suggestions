@@ -46,6 +46,7 @@ const compareModuleIterables = compareIterables(compareModulesByIdentifier);
 
 /** @typedef {(c: Chunk, chunkGraph: ChunkGraph) => boolean} ChunkFilterPredicate */
 /** @typedef {(m: Module) => boolean} ModuleFilterPredicate */
+/** @typedef {[Module, Entrypoint | undefined]} EntryModuleWithChunkGroup */
 
 /**
  * @typedef {Object} ChunkSizeOptions
@@ -84,14 +85,17 @@ const getModuleRuntimes = chunks => {
 };
 
 /**
- * @param {SortableSet<Module>} set the set
- * @returns {Map<string, SortableSet<Module>>} modules by source type
+ * @param {WeakMap<Module, Set<string>> | undefined} sourceTypesByModule sourceTypesByModule
+ * @returns {function (SortableSet<Module>): Map<string, SortableSet<Module>>} modules by source type
  */
-const modulesBySourceType = set => {
+const modulesBySourceType = sourceTypesByModule => set => {
 	/** @type {Map<string, SortableSet<Module>>} */
 	const map = new Map();
 	for (const module of set) {
-		for (const sourceType of module.getSourceTypes()) {
+		const sourceTypes =
+			(sourceTypesByModule && sourceTypesByModule.get(module)) ||
+			module.getSourceTypes();
+		for (const sourceType of sourceTypes) {
 			let innerSet = map.get(sourceType);
 			if (innerSet === undefined) {
 				innerSet = new SortableSet();
@@ -109,6 +113,7 @@ const modulesBySourceType = set => {
 	}
 	return map;
 };
+const defaultModulesBySourceType = modulesBySourceType(undefined);
 
 /** @type {WeakMap<Function, any>} */
 const createOrderedArrayFunctionMap = new WeakMap();
@@ -200,6 +205,8 @@ class ChunkGraphChunk {
 	constructor() {
 		/** @type {SortableSet<Module>} */
 		this.modules = new SortableSet();
+		/** @type {WeakMap<Module, Set<string>> | undefined} */
+		this.sourceTypesByModule = undefined;
 		/** @type {Map<Module, Entrypoint>} */
 		this.entryModules = new Map();
 		/** @type {SortableSet<RuntimeModule>} */
@@ -212,6 +219,8 @@ class ChunkGraphChunk {
 		this.runtimeRequirements = undefined;
 		/** @type {Set<string>} */
 		this.runtimeRequirementsInTree = new Set();
+
+		this._modulesBySourceType = defaultModulesBySourceType;
 	}
 }
 
@@ -235,16 +244,6 @@ class ChunkGraph {
 		this._hashFunction = hashFunction;
 
 		this._getGraphRoots = this._getGraphRoots.bind(this);
-
-		// Caching
-		this._cacheChunkGraphModuleKey1 = undefined;
-		this._cacheChunkGraphModuleValue1 = undefined;
-		this._cacheChunkGraphModuleKey2 = undefined;
-		this._cacheChunkGraphModuleValue2 = undefined;
-		this._cacheChunkGraphChunkKey1 = undefined;
-		this._cacheChunkGraphChunkValue1 = undefined;
-		this._cacheChunkGraphChunkKey2 = undefined;
-		this._cacheChunkGraphChunkValue2 = undefined;
 	}
 
 	/**
@@ -253,19 +252,11 @@ class ChunkGraph {
 	 * @returns {ChunkGraphModule} internal module
 	 */
 	_getChunkGraphModule(module) {
-		if (this._cacheChunkGraphModuleKey1 === module)
-			return this._cacheChunkGraphModuleValue1;
-		if (this._cacheChunkGraphModuleKey2 === module)
-			return this._cacheChunkGraphModuleValue2;
 		let cgm = this._modules.get(module);
 		if (cgm === undefined) {
 			cgm = new ChunkGraphModule();
 			this._modules.set(module, cgm);
 		}
-		this._cacheChunkGraphModuleKey2 = this._cacheChunkGraphModuleKey1;
-		this._cacheChunkGraphModuleValue2 = this._cacheChunkGraphModuleValue1;
-		this._cacheChunkGraphModuleKey1 = module;
-		this._cacheChunkGraphModuleValue1 = cgm;
 		return cgm;
 	}
 
@@ -275,19 +266,11 @@ class ChunkGraph {
 	 * @returns {ChunkGraphChunk} internal chunk
 	 */
 	_getChunkGraphChunk(chunk) {
-		if (this._cacheChunkGraphChunkKey1 === chunk)
-			return this._cacheChunkGraphChunkValue1;
-		if (this._cacheChunkGraphChunkKey2 === chunk)
-			return this._cacheChunkGraphChunkValue2;
 		let cgc = this._chunks.get(chunk);
 		if (cgc === undefined) {
 			cgc = new ChunkGraphChunk();
 			this._chunks.set(chunk, cgc);
 		}
-		this._cacheChunkGraphChunkKey2 = this._cacheChunkGraphChunkKey1;
-		this._cacheChunkGraphChunkValue2 = this._cacheChunkGraphChunkValue1;
-		this._cacheChunkGraphChunkKey1 = chunk;
-		this._cacheChunkGraphChunkValue1 = cgc;
 		return cgc;
 	}
 
@@ -340,6 +323,8 @@ class ChunkGraph {
 		const cgm = this._getChunkGraphModule(module);
 		const cgc = this._getChunkGraphChunk(chunk);
 		cgc.modules.delete(module);
+		// No need to invalidate cgc._modulesBySourceType because we modified cgc.modules anyway
+		if (cgc.sourceTypesByModule) cgc.sourceTypesByModule.delete(module);
 		cgm.chunks.delete(chunk);
 	}
 
@@ -593,9 +578,82 @@ class ChunkGraph {
 	getChunkModulesIterableBySourceType(chunk, sourceType) {
 		const cgc = this._getChunkGraphChunk(chunk);
 		const modulesWithSourceType = cgc.modules
-			.getFromUnorderedCache(modulesBySourceType)
+			.getFromUnorderedCache(cgc._modulesBySourceType)
 			.get(sourceType);
 		return modulesWithSourceType;
+	}
+
+	/**
+	 * @param {Chunk} chunk chunk
+	 * @param {Module} module chunk module
+	 * @param {Set<string>} sourceTypes source types
+	 */
+	setChunkModuleSourceTypes(chunk, module, sourceTypes) {
+		const cgc = this._getChunkGraphChunk(chunk);
+		if (cgc.sourceTypesByModule === undefined) {
+			cgc.sourceTypesByModule = new WeakMap();
+		}
+		cgc.sourceTypesByModule.set(module, sourceTypes);
+		// Update cgc._modulesBySourceType to invalidate the cache
+		cgc._modulesBySourceType = modulesBySourceType(cgc.sourceTypesByModule);
+	}
+
+	/**
+	 * @param {Chunk} chunk chunk
+	 * @param {Module} module chunk module
+	 * @returns {Set<string>} source types
+	 */
+	getChunkModuleSourceTypes(chunk, module) {
+		const cgc = this._getChunkGraphChunk(chunk);
+		if (cgc.sourceTypesByModule === undefined) {
+			return module.getSourceTypes();
+		}
+		return cgc.sourceTypesByModule.get(module) || module.getSourceTypes();
+	}
+
+	/**
+	 * @param {Module} module module
+	 * @returns {Set<string>} source types
+	 */
+	getModuleSourceTypes(module) {
+		return (
+			this._getOverwrittenModuleSourceTypes(module) || module.getSourceTypes()
+		);
+	}
+
+	/**
+	 * @param {Module} module module
+	 * @returns {Set<string> | undefined} source types
+	 */
+	_getOverwrittenModuleSourceTypes(module) {
+		let newSet = false;
+		let sourceTypes;
+		for (const chunk of this.getModuleChunksIterable(module)) {
+			const cgc = this._getChunkGraphChunk(chunk);
+			if (cgc.sourceTypesByModule === undefined) return;
+			const st = cgc.sourceTypesByModule.get(module);
+			if (st === undefined) return;
+			if (!sourceTypes) {
+				sourceTypes = st;
+				continue;
+			} else if (!newSet) {
+				for (const type of st) {
+					if (!newSet) {
+						if (!sourceTypes.has(type)) {
+							newSet = true;
+							sourceTypes = new Set(sourceTypes);
+							sourceTypes.add(type);
+						}
+					} else {
+						sourceTypes.add(type);
+					}
+				}
+			} else {
+				for (const type of st) sourceTypes.add(type);
+			}
+		}
+
+		return sourceTypes;
 	}
 
 	/**
@@ -618,7 +676,7 @@ class ChunkGraph {
 	getOrderedChunkModulesIterableBySourceType(chunk, sourceType, comparator) {
 		const cgc = this._getChunkGraphChunk(chunk);
 		const modulesWithSourceType = cgc.modules
-			.getFromUnorderedCache(modulesBySourceType)
+			.getFromUnorderedCache(cgc._modulesBySourceType)
 			.get(sourceType);
 		if (modulesWithSourceType === undefined) return undefined;
 		modulesWithSourceType.sortWith(comparator);
@@ -1206,8 +1264,6 @@ class ChunkGraph {
 		return cgc.dependentHashModules;
 	}
 
-	/** @typedef {[Module, Entrypoint | undefined]} EntryModuleWithChunkGroup */
-
 	/**
 	 * @param {Chunk} chunk the chunk
 	 * @returns {Iterable<EntryModuleWithChunkGroup>} iterable of modules (do not modify)
@@ -1499,8 +1555,11 @@ Caller might not support runtime-dependent code generation (opt-out via optimiza
 		}
 		const graphHash = cgm.graphHashes.provide(runtime, () => {
 			const hash = createHash(this._hashFunction);
-			hash.update(`${cgm.id}`);
-			hash.update(`${this.moduleGraph.isAsync(module)}`);
+			hash.update(`${cgm.id}${this.moduleGraph.isAsync(module)}`);
+			const sourceTypes = this._getOverwrittenModuleSourceTypes(module);
+			if (sourceTypes !== undefined) {
+				for (const type of sourceTypes) hash.update(type);
+			}
 			this.moduleGraph.getExportsInfo(module).updateHash(hash, runtime);
 			return BigInt(`0x${/** @type {string} */ (hash.digest("hex"))}`);
 		});
