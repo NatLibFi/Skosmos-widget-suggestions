@@ -1,5 +1,0 @@
-{
-    "js": ["widget.js?v=3", "components.js"],
-    "callback": ["suggestionsWidget"],
-    "templates": ["new.html", "change.html"]
-}
