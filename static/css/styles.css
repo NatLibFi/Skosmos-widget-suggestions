@@ -31,6 +31,7 @@ body {
 
 #suggestion-form label {
   margin-bottom: 0.5rem;
+  cursor: text;
 }
 
 #suggestion-form legend {
@@ -91,7 +92,7 @@ body {
 }
 
 #suggestion-subtitle {
-  color: var(--secondary-dark-color);
+  color: var(--dark-color);
   margin-bottom: 3rem;
 }
 
@@ -143,8 +144,7 @@ body {
 }
 
 .suggestion-term-label {
-  color: var(--secondary-dark-color);
-  font-weight: bold;
+  color: var(--dark-color);
 }
 
 .suggestion-chip-list {
@@ -222,6 +222,7 @@ body {
 
 .suggestion-dropdown a {
   color: var(--dark-color) !important;
+  font-weight: normal !important;
 }
 
 .suggestion-dropdown a:hover {
@@ -233,7 +234,7 @@ body {
 }
 
 #suggestion-handling {
-  color: var(--secondary-dark-color);
+  color: var(--dark-color);
   margin-bottom: 5rem;
 }
 
