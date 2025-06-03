@@ -1,7 +1,7 @@
 :root {
   --dark-color: #002855;
   --secondary-dark-color: #5d7999;
-  --medium-color: #1980b3;
+  --medium-color: #1b709d;
   --secondary-medium-color: #b8c9db;
   --light-color: #dfe5ed;
   --secondary-light-color: #f2f5f7;
@@ -30,6 +30,11 @@ body {
 }
 
 #suggestion-form label {
+  margin-bottom: 0.5rem;
+}
+
+#suggestion-form legend {
+  font-size: 16px;
   margin-bottom: 0.5rem;
 }
 
@@ -182,7 +187,7 @@ body {
   border: none;
   border-radius: 0;
   background-color: var(--light-color);
-  color: var(--secondary-dark-color);
+  color: var(--dark-color);
   text-align: left;
   height: 40px;
   margin-bottom: 1rem;
@@ -190,7 +195,7 @@ body {
 
 .suggestion-dropdown button:hover, .suggestion-dropdown button:active, .suggestion-dropdown button:focus-visible, .suggestion-dropdown button.show {
   background-color: var(--light-color) !important;
-  color: var(--secondary-dark-color) !important;
+  color: var(--dark-color) !important;
 }
 
 .suggestion-dropdown button::after {

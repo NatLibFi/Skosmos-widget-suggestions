@@ -13,14 +13,14 @@
       <div id="suggestion-dialog-container">
         <div id="suggestion-dialog-top" class="row">
           <div id="suggestion-dialog-handle" class="col">
-            <i class="fa-solid fa-grip-vertical align-middle"></i>
+            <i class="fa-solid fa-grip-vertical align-middle" aria-hidden="true"></i>
           </div>
           <div id="suggestion-dialog-close" class="col text-end">
-            <i class="fa-solid fa-xmark align-middle"></i>
+            <i class="fa-solid fa-xmark align-middle" aria-label="Close" role="button"></i>
           </div>
         </div>
         <div id="suggestion-content" class="p-3">
-          <div id="suggestion-form">
+          <div id="suggestion-form" role="form">
             <div id="suggestion-form-inputs">
               <div id="suggestion-header">
                 <h4 id="suggestion-title">
@@ -34,7 +34,7 @@
               <div class="suggestion-input-container">
                 <label class="suggestion-input-label" for="suggestion-change">Ehdotettu muutos:</label>
                 <div class="suggestion-clear-input suggestion-clear-textarea">
-                  <i class="fa-solid fa-xmark"></i>
+                  <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                 </div>
                 <textarea id="suggestion-change" class="suggestion-input" rows="3"></textarea>
               </div>
@@ -42,7 +42,7 @@
               <div class="suggestion-input-container">
                 <label class="suggestion-input-label" for="suggestion-change-info">Perustelut ehdotukselle:</label>
                 <div class="suggestion-clear-input suggestion-clear-textarea">
-                  <i class="fa-solid fa-xmark"></i>
+                  <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                 </div>
                 <textarea id="suggestion-change-info" class="suggestion-input" rows="3"></textarea>
               </div>
@@ -51,7 +51,7 @@
                 <label class="suggestion-input-label" for="suggestion-organization">Ehdottajan organisaatio:</label>
                 <input id="suggestion-organization" class="suggestion-input" type="text" />
                 <div class="suggestion-clear-input">
-                  <i class="fa-solid fa-xmark"></i>
+                  <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                 </div>
               </div>
 
@@ -60,7 +60,7 @@
               </div>
             </div>
             <div id="suggestion-form-submit" class="d-flex justify-content-end">
-              <button id="suggestion-form-submit-button">
+              <button id="suggestion-form-submit-button" role="button">
                 Lähetä käsite-ehdotus
               </button>
             </div>

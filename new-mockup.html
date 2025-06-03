@@ -13,10 +13,10 @@
       <div id="suggestion-dialog-container">
         <div id="suggestion-dialog-top" class="row">
           <div id="suggestion-dialog-handle" class="col">
-            <i class="fa-solid fa-grip-vertical align-middle"></i>
+            <i class="fa-solid fa-grip-vertical align-middle" aria-hidden="true"></i>
           </div>
           <div id="suggestion-dialog-close" class="col text-end">
-            <i class="fa-solid fa-xmark align-middle"></i>
+            <i class="fa-solid fa-xmark align-middle" aria-label="Close" role="button"></i>
           </div>
         </div>
         <div id="suggestion-content" class="p-3">
@@ -28,49 +28,52 @@
               Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta
             </p>
           </div>
-          <div id="suggestion-form">
+          <div id="suggestion-form" role="form">
             <div id="suggestion-form-inputs">
 
               <div class="suggestion-input-container">
-                <label class="suggestion-input-label" for="suggestion-vocab-wrapper">Kohdesanasto:</label>
-                <div id="suggestion-vocab-wrapper">
-                  <input id="suggestion-vocab-yso" type="radio" name="suggestion-radio" value="1" />
-                  <label for="suggestion-vocab-yso">YSO</label>
+                <fieldset id="suggestion-vocab-wrapper">
+                  <legend class="suggestion-input-label" for="suggestion-vocab-wrapper">Kohdesanasto:</legend>
+                  
+                  <div >
+                    <input id="suggestion-vocab-yso" type="radio" name="suggestion-radio" value="1" />
+                    <label for="suggestion-vocab-yso">YSO</label>
 
-                  <input id="suggestion-vocab-yso-places" type="radio" name="suggestion-radio" value="2" />
-                  <label for="suggestion-vocab-yso-places">YSO-paikat</label>
+                    <input id="suggestion-vocab-yso-places" type="radio" name="suggestion-radio" value="2" />
+                    <label for="suggestion-vocab-yso-places">YSO-paikat</label>
 
-                  <input id="suggestion-vocab-slm" type="radio" name="suggestion-radio" value="3" />
-                  <label for="suggestion-vocab-slm">SLM</label>
-                </div>
+                    <input id="suggestion-vocab-slm" type="radio" name="suggestion-radio" value="3" />
+                    <label for="suggestion-vocab-slm">SLM</label>
+                  </div>
+                </fieldset>
               </div>
 
               <div class="suggestion-input-container">
-                <label class="suggestion-input-label" for="suggestion-term-fi">Termi suomeksi:</label>
+                <label class="suggestion-input-label" id="suggestion-term-fi-label">Termi suomeksi:</label>
 
                 <p>Termi löytyy jo YSOsta: <a href="">kissa</a></p>
 
-                <div id="suggestion-term-fi">
+                <div aria-labelledby="suggestion-term-fi-label">
                   <div class="row">
                     <label class="suggestion-term-label col-lg-3 pt-lg-2" for="suggestion-preflabel-fi">Päätermi</label>
                     <div class="col-lg-9">
                       <input id="suggestion-preflabel-fi" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
                     </div>
                   </div>
 
                   <div class="row">
                     <label class="suggestion-term-label col-lg-3 pt-lg-2" for="suggestion-altlabel-fi">Vaihtoehtoinen termi</label>
-                    <div id="suggestion-altlabel-fi" class="col-lg-9">
-                      <input class="suggestion-input" type="text" />
+                    <div class="col-lg-9">
+                      <input id="suggestion-altlabel-fi" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
-                      <input class="suggestion-input" type="text" />
+                      <input id="suggestion-altlabel-fi" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
                     </div>
                   </div>
@@ -78,31 +81,31 @@
               </div>
 
               <div class="suggestion-input-container">
-                <label class="suggestion-input-label" for="suggestion-term-sv">Termi ruotsiksi:</label>
+                <label class="suggestion-input-label" id="suggestion-term-sv-label">Termi ruotsiksi:</label>
 
                 <p>Termi löytyy jo YSOsta: <a href="">kissa</a></p>
 
-                <div id="suggestion-term-sv">
+                <div aria-labelledby="suggestion-term-sv-label">
                   <div class="row">
                     <label class="suggestion-term-label col-lg-3 pt-lg-2" for="suggestion-preflabel-sv">Päätermi</label>
                     <div class="col-lg-9">
                       <input id="suggestion-preflabel-sv" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
                     </div>
                   </div>
 
                   <div class="row">
                     <label class="suggestion-term-label col-lg-3 pt-lg-2" for="suggestion-altlabel-sv">Vaihtoehtoinen termi</label>
-                    <div id="suggestion-altlabel-sv" class="col-lg-9">
-                      <input class="suggestion-input" type="text" />
+                    <div class="col-lg-9">
+                      <input id="suggestion-altlabel-sv" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
-                      <input class="suggestion-input" type="text" />
+                      <input id="suggestion-altlabel-sv" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
                     </div>
                   </div>
@@ -110,31 +113,31 @@
               </div>
 
               <div class="suggestion-input-container">
-                <label class="suggestion-input-label" for="suggestion-term-en">Termi englanniksi:</label>
+                <label class="suggestion-input-label" id="suggestion-term-en-label">Termi englanniksi:</label>
 
                 <p>Termi löytyy jo YSOsta: <a href="">kissa</a></p>
 
-                <div id="suggestion-term-en">
+                <div aria-labelledby="suggestion-term-en-label">
                   <div class="row">
                     <label class="suggestion-term-label col-lg-3 pt-lg-2" for="suggestion-preflabel-en">Päätermi</label>
                     <div class="col-lg-9">
                       <input id="suggestion-preflabel-en" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
                     </div>
                   </div>
 
                   <div class="row">
                     <label class="suggestion-term-label col-lg-3 pt-lg-2" for="suggestion-altlabel-en">Vaihtoehtoinen termi</label>
-                    <div id="suggestion-altlabel-en" class="col-lg-9">
-                      <input class="suggestion-input" type="text" />
+                    <div class="col-lg-9">
+                      <input id="suggestion-altlabel-en" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
-                      <input class="suggestion-input" type="text" />
+                      <input id="suggestion-altlabel-en" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
                     </div>
                   </div>
@@ -142,31 +145,31 @@
               </div>
 
               <div class="suggestion-input-container">
-                <label class="suggestion-input-label" for="suggestion-term-se">Termi pohjoissaameksi:</label>
+                <label class="suggestion-input-label" id="suggestion-term-se-label">Termi pohjoissaameksi:</label>
 
                 <p>Termi löytyy jo YSOsta: <a href="">kissa</a></p>
 
-                <div id="suggestion-term-se">
+                <div aria-labelledby="suggestion-term-se-label">
                   <div class="row">
                     <label class="suggestion-term-label col-lg-3 pt-lg-2" for="suggestion-preflabel-se">Päätermi</label>
                     <div class="col-lg-9">
                       <input id="suggestion-preflabel-se" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
                     </div>
                   </div>
 
                   <div class="row">
                     <label class="suggestion-term-label col-lg-3 pt-lg-2" for="suggestion-altlabel-se">Vaihtoehtoinen termi</label>
-                    <div id="suggestion-altlabel-se" class="col-lg-9">
-                      <input class="suggestion-input" type="text" />
+                    <div class="col-lg-9">
+                      <input id="suggestion-altlabel-se" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
-                      <input class="suggestion-input" type="text" />
+                      <input id="suggestion-altlabel-se" class="suggestion-input" type="text" />
                       <div class="suggestion-clear-input">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                       </div>
                     </div>
                   </div>
@@ -179,16 +182,16 @@
                 <div class="suggestion-chip-list">
                   <div class="suggestion-chip">
                     <span>kissa</span>
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                   </div>
                   <div class="suggestion-chip">
                     <span>koira</span>
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                   </div>
                 </div>
 
                 <div class="suggestion-search-wrapper suggestion-dropdown">
-                  <input id="suggestion-broader" class="suggestion-input" type="text">
+                  <input id="suggestion-broader" class="suggestion-input" type="text" role="searchbox" aria-expanded="true">
                   <ul class="dropdown-menu show">
                     <li><a class="dropdown-item" href="">00 Yleistermit</a></li>
                     <li><a class="dropdown-item" href="">00 Yleistermit</a></li>
@@ -204,7 +207,7 @@
                     <li><a class="dropdown-item" href="">00 Yleistermit</a></li>
                   </ul>
                   <div class="suggestion-clear-input">
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                   </div>
                 </div>
               </div>
@@ -215,21 +218,21 @@
                 <div class="suggestion-chip-list">
                   <div class="suggestion-chip">
                     <span>kissa</span>
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                   </div>
                   <div class="suggestion-chip">
                     <span>koira</span>
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                   </div>
                 </div>
 
                 <div class="suggestion-search-wrapper suggestion-dropdown">
-                  <input id="suggestion-narrower" class="suggestion-input" type="text">
+                  <input id="suggestion-narrower" class="suggestion-input" type="text" role="searchbox" aria-expanded="false">
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="">00 Yleistermit</a></li>
                   </ul>
                   <div class="suggestion-clear-input">
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                   </div>
                 </div>
               </div>
@@ -240,40 +243,40 @@
                 <div class="suggestion-chip-list">
                   <div class="suggestion-chip">
                     <span>kissa</span>
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                   </div>
                   <div class="suggestion-chip">
                     <span>koira</span>
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                   </div>
                 </div>
 
                 <div class="suggestion-search-wrapper suggestion-dropdown">
-                  <input id="suggestion-associative" class="suggestion-input" type="text">
+                  <input id="suggestion-associative" class="suggestion-input" type="text" role="searchbox" aria-expanded="false">
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="">00 Yleistermit</a></li>
                   </ul>
                   <div class="suggestion-clear-input">
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                   </div>
                 </div>
               </div>
 
               <div class="suggestion-input-container">
-                <label class="suggestion-input-label" for="suggestion-group">YSOn temaattinen ryhmä:</label>
+                <label id="suggestion-group-label" class="suggestion-input-label">YSOn temaattinen ryhmä:</label>
 
                 <div class="suggestion-chip-list">
                   <div class="suggestion-chip">
                     <span>00 Yleistermit</span>
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                   </div>
                 </div>
 
-                <div class="suggestion-dropdown btn-group">
+                <div class="suggestion-dropdown btn-group" aria-labelledby="suggestion-group-label">
                   <button id="suggestion-group" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-bs-display="static" aria-expanded="false">
                     Valitse ryhmät listalta
                   </button>
-                  <ul class="dropdown-menu">
+                  <ul class="dropdown-menu" aria-labelledby="suggestion-group">
                     <li><a class="dropdown-item" href="">00 Yleistermit</a></li>
                     <li><a class="dropdown-item" href="">02 Filosofia</a></li>
                     <li><a class="dropdown-item" href="">04 Matematiikka. Tilastotiede</a></li>
@@ -284,7 +287,7 @@
                     <li><a class="dropdown-item" href="">06 Tähtitiede. Astronomia. Avaruustutkimus</a></li>
                     <li><a class="dropdown-item" href="">06 Tähtitiede. Astronomia. Avaruustutkimus</a></li>
                   </ul>
-                  <i class="fa-solid fa-chevron-down"></i>
+                  <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
                 </div>
               </div>
 
@@ -292,18 +295,16 @@
                 <label class="suggestion-input-label" for="suggestion-match">
                   Vastaava käsite muussa sanastossa (esim. <a href="">LCSH</a>, <a href="">SAO</a> tai <a href="">Wikipedia</a>):
                 </label>
-                <div id="suggestion-match">
-                  <input class="suggestion-input" type="text" placeholder="Linkki käsitteeseen" />
-                  <div class="suggestion-clear-input">
-                    <i class="fa-solid fa-xmark"></i>
-                  </div>
+                <input id="suggestion-match" class="suggestion-input" type="text" placeholder="Linkki käsitteeseen" />
+                <div class="suggestion-clear-input">
+                  <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                 </div>
               </div>
 
               <div class="suggestion-input-container">
                 <label class="suggestion-input-label" for="suggestion-info">Lisätietoa tai perusteluja ehdotukselle:</label>
                 <div class="suggestion-clear-input suggestion-clear-textarea">
-                  <i class="fa-solid fa-xmark"></i>
+                  <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                 </div>
                 <textarea id="suggestion-info" class="suggestion-input" rows="3"></textarea>
               </div>
@@ -312,9 +313,9 @@
                 <label class="suggestion-input-label" for="suggestion-material">
                   Minkä aineiston kuvailussa tarvitsit käsitettä? Julkaisun nimi, ISBN tai linkki:
                 </label>
-                <input class="suggestion-input" type="text" />
+                <input id="suggestion-material" class="suggestion-input" type="text" />
                 <div class="suggestion-clear-input">
-                  <i class="fa-solid fa-xmark"></i>
+                  <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                 </div>
               </div>
 
@@ -322,7 +323,7 @@
                 <label class="suggestion-input-label" for="suggestion-organization">Ehdottajan organisaatio:</label>
                 <input id="suggestion-organization" class="suggestion-input" type="text" />
                 <div class="suggestion-clear-input">
-                  <i class="fa-solid fa-xmark"></i>
+                  <i class="fa-solid fa-xmark" aria-label="Clear" role="button"></i>
                 </div>
               </div>
 
@@ -332,7 +333,7 @@
 
             </div>
             <div id="suggestion-form-submit" class="d-flex justify-content-end">
-              <button id="suggestion-form-submit-button">
+              <button id="suggestion-form-submit-button" role="button">
                 Lähetä käsite-ehdotus
               </button>
             </div>
