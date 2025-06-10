@@ -89,6 +89,7 @@ body {
 
 #suggestion-title {
   font-weight: bold;
+  font-size: 1.5rem;
 }
 
 #suggestion-subtitle {
@@ -121,6 +122,10 @@ body {
 .suggestion-input-label {
   display: block;
   font-weight: bold;
+}
+
+h3.suggestion-input-label {
+  font-size: 1rem;
 }
 
 .suggestion-input {
