@@ -1,0 +1,382 @@
+:root {
+  --suggestion-dark-color: #002855;
+  --suggestion-secondary-dark-color: #5d7999;
+  --suggestion-medium-color: #1b709d;
+  --suggestion-secondary-medium-color: #b8c9db;
+  --suggestion-light-color: #dfe5ed;
+  --suggestion-secondary-light-color: #f2f5f7;
+  --suggestion-alert-color: #a0270a;
+  --suggestion-accent-color: #fae196;
+  --suggestion-white-color: #ffffff;
+
+  --font-size: 1em; /* same as the browser default font size, often 16px */
+  --font-family: 'Public Sans', sans-serif;
+  --font-family-heading: 'EB Garamond', serif;
+}
+
+body {
+  color: var(--suggestion-dark-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+}
+
+.container {
+  max-width: 800px;
+}
+
+.suggestion-link h2 {
+  display: inline;
+  width: auto;
+  margin-bottom: 0;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.suggestion-link:hover h2 {
+  text-decoration: underline;
+}
+
+.suggestion-link.suggestion-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--suggestion-accent-color);
+  color: var(--suggestion-dark-color) !important;
+}
+
+.suggestion-link i {
+  display: inline;
+  width: auto;
+  margin: auto 0;
+  padding: 0;
+  font-size: 1.2rem;
+  color: var(--suggestion-dark-color) !important;
+}
+
+.suggestion-dialog-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  z-index: 10000;
+}
+
+.suggestion-dialog-modal {
+  font-size: 14px;
+  color: var(--suggestion-dark-color);
+  background-color: var(--suggestion-white-color);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-height: 60px;
+  max-height: calc(100% - 80px);
+  width: 650px;
+  overflow-y: auto;
+  z-index: 10001;
+  padding: 0;
+}
+
+#suggestion-dialog-top {
+  padding: 1rem;
+  margin: 0;
+  background-color: var(--suggestion-dark-color);
+  color: var(--suggestion-white-color);
+  cursor: move;
+}
+
+#suggestion-dialog-top i {
+  font-size: 1.5rem;
+}
+
+#suggestion-dialog-top .fa-xmark {
+  cursor: pointer;
+}
+
+#suggestion-form a {
+  color: var(--suggestion-medium-color);
+  font-weight: bold;
+}
+
+#suggestion-form label {
+  margin-bottom: 0.5rem;
+  cursor: text;
+}
+
+#suggestion-form legend {
+  font-size: 16px;
+  margin-bottom: 0.5rem;
+}
+
+#suggestion-form input[type=text] {
+  overflow: hidden;
+  width: 100%;
+  color: var(--suggestion-dark-color);
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  padding-right: 2.5rem;
+}
+
+#suggestion-form input[type="radio"] {
+    accent-color: var(--suggestion-dark-color);
+}
+
+#suggestion-form input:focus {
+  outline: none;
+}
+
+#suggestion-form input::placeholder {
+  color: var(--suggestion-secondary-dark-color);
+}
+
+#suggestion-form textarea {
+  width: 100%;
+  color: var(--suggestion-dark-color);
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  padding-right: 2rem;
+}
+
+#suggestion-form textarea:focus {
+  outline: none;
+}
+
+#suggestion-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+#suggestion-subtitle {
+  color: var(--suggestion-dark-color);
+  margin-bottom: 3rem;
+}
+
+#suggestion-vocab-wrapper {
+  margin-bottom: 0.5rem;
+  font-size: 0;
+}
+
+#suggestion-vocab-wrapper label {
+  appearance: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  padding-left: 0.25rem;
+  font-size: initial;
+}
+
+#suggestion-vocab-wrapper input {
+  cursor: pointer;
+}
+
+#suggestion-vocab-wrapper input:checked {
+  background-color: var(--suggestion-medium-color);
+  border-color: var(--suggestion-dark-color);
+}
+
+.suggestion-input-label {
+  display: block;
+  font-weight: bold;
+}
+
+h3.suggestion-input-label {
+  font-size: 1rem;
+}
+
+.suggestion-input {
+  border: none;
+  background-color: var(--suggestion-light-color);
+}
+
+.suggestion-clear-input {
+  position: relative;
+  cursor: pointer;
+}
+
+.suggestion-clear-input i {
+  position: absolute;
+  top: -43px;
+  right: 15px;
+}
+
+.suggestion-clear-textarea i {
+  top: 13px !important;
+}
+
+.suggestion-term-label {
+  color: var(--suggestion-dark-color);
+}
+
+.suggestion-chip-list {
+  margin-bottom: 0.5rem;
+}
+
+.suggestion-chip {
+  position: relative;
+  display: inline-block;
+  background-color: var(--suggestion-dark-color);
+  color: var(--suggestion-white-color);
+  padding: 10px 30px 10px 10px;
+  margin-right: 0.25rem;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.suggestion-chip i {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+}
+
+.suggestion-search-wrapper {
+  position:relative;
+}
+
+.suggestion-search-wrapper ul {
+  inset: 38px auto auto 0px !important;
+  width: 100%;
+  padding: 0;
+}
+
+.suggestion-dropdown {
+  width: 100%;
+}
+
+.suggestion-dropdown button {
+  border: none;
+  border-radius: 0;
+  background-color: var(--suggestion-light-color);
+  color: var(--suggestion-dark-color);
+  text-align: left;
+  height: 40px;
+  margin-bottom: 1rem;
+}
+
+.suggestion-dropdown button:hover, .suggestion-dropdown button:active, .suggestion-dropdown button:focus-visible, .suggestion-dropdown button.show {
+  background-color: var(--suggestion-light-color) !important;
+  color: var(--suggestion-dark-color) !important;
+}
+
+.suggestion-dropdown button::after {
+  content: none;
+}
+
+.suggestion-dropdown i.fa-chevron-down {
+  position: absolute;
+  right: 13px;
+  top: 12px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.suggestion-dropdown ul {
+  inset: 38px auto auto 0px !important;
+  border: 1px solid var(--suggestion-light-color);
+  border-radius: 0;
+  padding: 0;
+  width: 100%;
+  max-height: 226px;
+  overflow-y: scroll;
+}
+
+.suggestion-dropdown a {
+  color: var(--suggestion-dark-color) !important;
+  font-weight: normal !important;
+}
+
+.suggestion-dropdown a:hover {
+  background-color: var(--suggestion-secondary-light-color);
+}
+
+.suggestion-dropdown a:active {
+  background-color: var(--suggestion-secondary-dark-color);
+}
+
+#suggestion-handling {
+  color: var(--suggestion-dark-color);
+  margin-bottom: 5rem;
+}
+
+#suggestion-form-submit button {
+  border: none;
+  background-color: var(--suggestion-dark-color);
+  color: var(--suggestion-white-color);
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+}
+
+/* Setting scrollbar style separately in Firefox */
+@-moz-document url-prefix() {
+  #suggestion-content {
+    scrollbar-color: var(--suggestion-secondary-dark-color) var(--suggestion-secondary-light-color);
+  }
+
+  #suggestion-content textarea {
+    scrollbar-color: var(--suggestion-secondary-dark-color) var(--suggestion-light-color);
+  }
+} 
+
+/* Setting scrollbar styles for Webkit based browsers (Chrome, Safari, Edge, etc) */
+#suggestion-content::-webkit-scrollbar {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+#suggestion-content::-webkit-scrollbar:vertical {
+    width: 15px;
+}
+
+#suggestion-content::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    border: 1px solid var(--suggestion-secondary-dark-color);
+    background-color: var(--suggestion-secondary-dark-color);
+}
+
+#suggestion-content::-webkit-scrollbar-track { 
+    background-color: var(--suggestion-secondary-light-color); 
+    border-radius: 0px; 
+}
+
+#suggestion-form textarea::-webkit-scrollbar {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+#suggestion-form textarea::-webkit-scrollbar:vertical {
+    width: 5px;
+}
+
+#suggestion-form textarea::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    border: 1px solid var(--suggestion-secondary-dark-color);
+    background-color: var(--suggestion-secondary-dark-color);
+}
+
+#suggestion-form textarea::-webkit-scrollbar-track { 
+    background-color: var(--suggestion-light-color); 
+    border-radius: 0px; 
+}
+
+#suggestion-content .dropdown-menu::-webkit-scrollbar {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+#suggestion-content .dropdown-menu::-webkit-scrollbar:vertical {
+    width: 15px;
+}
+
+#suggestion-content .dropdown-menu::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    border: 1px solid var(--suggestion-secondary-dark-color);
+    background-color: var(--suggestion-secondary-dark-color);
+}
+
+#suggestion-content .dropdown-menu::-webkit-scrollbar-track { 
+    background-color: var(--suggestion-secondary-light-color); 
+    border-radius: 0px; 
+}
