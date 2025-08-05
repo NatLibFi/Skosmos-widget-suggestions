@@ -9,7 +9,7 @@ describe('Concept page', () => {
     // Click link
     cy.get('@new-link').click()
     // Check that form opens and has correct content
-    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'New')
+    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon ')
     // Check that url is updated
     cy.url().should('include', '/yso/en/page/p8318#suggestion')
   })
@@ -24,7 +24,7 @@ describe('Concept page', () => {
     // Click link
     cy.get('@change-link').click()
     // Check that form opens and has correct content
-    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Change')
+    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota muutosta käsitteeseen ')
     // Check that url is updated
     cy.url().should('include', '/yso/en/page/p8318#suggestion')
   })

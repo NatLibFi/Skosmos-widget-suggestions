@@ -9,7 +9,7 @@ describe('Vocab page', () => {
     // Click button
     cy.get('@new-button').click()
     // Check that form opens and has correct content
-    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Nw')
+    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon ')
     // Check that url is updated
     cy.url().should('include', '/yso/en/#suggestion')
   })
@@ -18,7 +18,7 @@ describe('Vocab page', () => {
     // Go to YSO vocab home suggestion page
     cy.visit('/yso/en/#suggestion')
     // Check that form opens and has correct content
-    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'New')
+    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon ')
   })
 
   it('has all correct suggestion form fields', () => {
