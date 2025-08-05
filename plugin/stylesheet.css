@@ -311,32 +311,32 @@ h3.suggestion-input-label {
 
 /* Setting scrollbar style separately in Firefox */
 @-moz-document url-prefix() {
-  #suggestion-content {
+  #suggestion-dialog-content {
     scrollbar-color: var(--suggestion-secondary-dark-color) var(--suggestion-secondary-light-color);
   }
 
-  #suggestion-content textarea {
+  #suggestion-dialog-content textarea {
     scrollbar-color: var(--suggestion-secondary-dark-color) var(--suggestion-light-color);
   }
 } 
 
 /* Setting scrollbar styles for Webkit based browsers (Chrome, Safari, Edge, etc) */
-#suggestion-content::-webkit-scrollbar {
+#suggestion-dialog-content::-webkit-scrollbar {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
-#suggestion-content::-webkit-scrollbar:vertical {
+#suggestion-dialog-content::-webkit-scrollbar:vertical {
     width: 15px;
 }
 
-#suggestion-content::-webkit-scrollbar-thumb {
+#suggestion-dialog-content::-webkit-scrollbar-thumb {
     border-radius: 0px;
     border: 1px solid var(--suggestion-secondary-dark-color);
     background-color: var(--suggestion-secondary-dark-color);
 }
 
-#suggestion-content::-webkit-scrollbar-track { 
+#suggestion-dialog-content::-webkit-scrollbar-track { 
     background-color: var(--suggestion-secondary-light-color); 
     border-radius: 0px; 
 }
@@ -361,22 +361,22 @@ h3.suggestion-input-label {
     border-radius: 0px; 
 }
 
-#suggestion-content .dropdown-menu::-webkit-scrollbar {
+#suggestion-dialog-content .dropdown-menu::-webkit-scrollbar {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
-#suggestion-content .dropdown-menu::-webkit-scrollbar:vertical {
+#suggestion-dialog-content .dropdown-menu::-webkit-scrollbar:vertical {
     width: 15px;
 }
 
-#suggestion-content .dropdown-menu::-webkit-scrollbar-thumb {
+#suggestion-dialog-content .dropdown-menu::-webkit-scrollbar-thumb {
     border-radius: 0px;
     border: 1px solid var(--suggestion-secondary-dark-color);
     background-color: var(--suggestion-secondary-dark-color);
 }
 
-#suggestion-content .dropdown-menu::-webkit-scrollbar-track { 
+#suggestion-dialog-content .dropdown-menu::-webkit-scrollbar-track { 
     background-color: var(--suggestion-secondary-light-color); 
     border-radius: 0px; 
 }

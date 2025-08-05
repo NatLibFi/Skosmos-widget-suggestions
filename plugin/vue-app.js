@@ -46,9 +46,20 @@ SUGGESTION_PLUGIN.createVueApp = function(pageType) {
           <h2>Ehdota uutta käsitettä tähän sanastoon</h2>
         </a>
         <template v-if="showDialog">
-          <suggestion-dialog @close-dialog="showDialog = false">
-            <div>New</div>
-          </suggestion-dialog>
+          <draggable-dialog @close-dialog="showDialog = false">
+            <div id="suggestion-header">
+              <h2 id="suggestion-title">
+                Ehdota uutta käsitettä sanastoon
+              </h2>
+              <p id="suggestion-subtitle">
+                Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta
+              </p>
+            </div>
+            <div id="suggestion-form" role="form">
+              <div id="suggestion-form-inputs">
+              </div>
+            </div>
+          </draggable-dialog>
         </template>
       </div>
     `
@@ -72,15 +83,26 @@ SUGGESTION_PLUGIN.createVueApp = function(pageType) {
           <h2>Ehdota muutosta käsitteeseen</h2>
         </a>
         <template v-if="showDialog">
-          <suggestion-dialog @close-dialog="showDialog = false">
-            <div>Change</div>
-          </suggestion-dialog>
+          <draggable-dialog @close-dialog="showDialog = false">
+            <div id="suggestion-header">
+              <h2 id="suggestion-title">
+                Ehdota muutosta käsitteeseen {{ }}
+              </h2>
+              <p id="suggestion-subtitle">
+                Kuka tahansa sanaston käyttäjä saa ehdottaa muutoksia sanastoon
+              </p>
+            </div>
+            <div id="suggestion-form" role="form">
+              <div id="suggestion-form-inputs">
+              </div>
+            </div>
+          </draggable-dialog>
         </template>
       </div>
     `
   })
 
-  vueApp.component('suggestion-dialog', this.dialogComponent)
+  vueApp.component('draggable-dialog', this.draggableDialogComponent)
   vueApp.component('basic-input', this.basicInputComponent)
   vueApp.component('clear-input', this.clearInputComponent)
 
