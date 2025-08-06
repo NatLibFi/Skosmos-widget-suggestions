@@ -1,11 +1,10 @@
 SUGGESTION_PLUGIN.suggestionNewComponent = {
-  props: ['pageType'],
   data() {
     return {
       showDialog: false
     }
   },
-  inject: ['pageUrl'],
+  inject: ['pageUrl', 'pageType'],
   mounted() {
     if (this.pageUrl.includes("#suggestion") && this.pageType === 'vocab-home'){
       console.log('open new')
@@ -33,10 +32,7 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
               Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta
             </p>
           </div>
-          <div id="suggestion-form" role="form">
-            <div id="suggestion-form-inputs">
-            </div>
-          </div>
+          <suggestion-new-form></suggestion-new-form>
         </draggable-dialog>
       </template>
     </div>

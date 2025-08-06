@@ -1,13 +1,15 @@
-SUGGESTION_PLUGIN.createVueApp = function(pageType) {
+SUGGESTION_PLUGIN.createVueApp = function(params) {
   const vueApp = Vue.createApp({
     data() {
       return {
-        pageType: pageType,
+        pageType: params.pageType,
       }
     },
     provide() {
       return {
-        pageUrl: window.location.href
+        pageUrl: window.location.href,
+        pageType: params.pageType,
+        prefLabels: params.prefLabels
       }
     },
     template: `
@@ -15,13 +17,15 @@ SUGGESTION_PLUGIN.createVueApp = function(pageType) {
         <suggestion-change></suggestion-change>
       </template>
       <template v-if="pageType === 'vocab-home' || pageType === 'concept'">
-        <suggestion-new :page-type="pageType"></suggestion-new>
+        <suggestion-new></suggestion-new>
       </template>
     `
   })
 
   vueApp.component('suggestion-new', this.suggestionNewComponent)
   vueApp.component('suggestion-change', this.suggestionChangeComponent)
+  vueApp.component('suggestion-new-form', this.suggestionNewFormComponent)
+  vueApp.component('suggestion-change-form', this.suggestionChangeFormComponent)
   vueApp.component('draggable-dialog', this.draggableDialogComponent)
   vueApp.component('basic-input', this.basicInputComponent)
   vueApp.component('clear-input', this.clearInputComponent)

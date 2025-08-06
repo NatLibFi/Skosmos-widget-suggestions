@@ -4,7 +4,7 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
       showDialog: false
     }
   },
-  inject: ['pageUrl'],
+  inject: ['pageUrl', 'prefLabels'],
   template: `
     <div class="p-0 my-2">
       <a role="button" class="suggestion-link"
@@ -19,16 +19,13 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
         <draggable-dialog @close-dialog="showDialog = false">
           <div id="suggestion-header">
             <h2 id="suggestion-title">
-              Ehdota muutosta käsitteeseen {{ }}
+              Ehdota muutosta käsitteeseen {{ prefLabels[0].label }}
             </h2>
             <p id="suggestion-subtitle">
               Kuka tahansa sanaston käyttäjä saa ehdottaa muutoksia sanastoon
             </p>
           </div>
-          <div id="suggestion-form" role="form">
-            <div id="suggestion-form-inputs">
-            </div>
-          </div>
+          <suggestion-change-form></suggestion-change-form>
         </draggable-dialog>
       </template>
     </div>

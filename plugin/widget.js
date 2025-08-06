@@ -1,6 +1,6 @@
 const SUGGESTION_PLUGIN = {
   vueApp: null,
-  render: function(pageType) {
+  render: function(params) {
     const mountPoint = document.getElementById('suggestion-plugin')
     if (mountPoint) {
       // Unmount the Vue app if it exists
@@ -21,7 +21,7 @@ const SUGGESTION_PLUGIN = {
     parentElement.appendChild(newMountPoint)
   
     // Create a new Vue app instance and mount it to the new mount point
-    this.vueApp = this.createVueApp(pageType)
+    this.vueApp = this.createVueApp(params)
     this.vueApp.mount('#suggestion-plugin')
   },
   remove: function() {
@@ -35,7 +35,7 @@ const SUGGESTION_PLUGIN = {
 document.addEventListener('DOMContentLoaded', function() {
   window.suggestionCallback = function(params) {
     if (params.pageType === 'concept' || params.pageType === 'vocab-home') {
-      SUGGESTION_PLUGIN.render(params.pageType)
+      SUGGESTION_PLUGIN.render(params)
     } else {
       SUGGESTION_PLUGIN.remove()
     }
