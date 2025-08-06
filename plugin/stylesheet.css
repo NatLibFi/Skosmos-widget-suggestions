@@ -70,13 +70,9 @@ body {
   color: var(--suggestion-dark-color);
   background-color: var(--suggestion-white-color);
   position: fixed;
-  top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
   min-height: 60px;
-  max-height: calc(100% - 80px);
   width: 650px;
-  overflow-y: auto;
   z-index: 10001;
   padding: 0;
 }
@@ -95,6 +91,11 @@ body {
 
 #suggestion-dialog-top .fa-xmark {
   cursor: pointer;
+}
+
+#suggestion-dialog-content {
+  max-height: calc(100vh - 150px);
+  overflow-y: scroll;
 }
 
 #suggestion-form a {

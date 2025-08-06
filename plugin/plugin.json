@@ -1,5 +1,5 @@
 {
-  "js": ["widget.js", "vue-app.js", "components/basic-input.js", "components/clear-input.js", "components/draggable-dialog.js" ],
+  "js": ["widget.js", "vue-app.js", "components/basic-input.js", "components/clear-input.js", "components/draggable-dialog.js", "components/suggestion-new.js", "components/suggestion-change.js" ],
   "css": ["stylesheet.css"],
   "callback": ["suggestionCallback"]
 }
