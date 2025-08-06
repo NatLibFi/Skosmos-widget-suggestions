@@ -6,6 +6,11 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
       organization: ''
     }
   },
+  methods: {
+    submit () {
+      console.log('submit', this.change, this.explanation, this.organization)
+    }
+  },
   template: `
     <div id="suggestion-form" role="form">
       <div id="suggestion-form-inputs">
@@ -22,6 +27,10 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
           v-model:text="organization"
         ></basic-input>
       </div>
+      <submit-button
+        :text="'Lähetä muutosehdotus'"
+        @submit="submit()"
+      ></submit-button>
     </div>
   `
 }

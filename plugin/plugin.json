@@ -6,6 +6,7 @@
     "components/basic-input.js",
     "components/clear-input.js",
     "components/draggable-dialog.js",
+    "components/submit-button.js",
     "components/suggestion-new.js",
     "components/suggestion-change.js",
     "components/suggestion-new-form.js",

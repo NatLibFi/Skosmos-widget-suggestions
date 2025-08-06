@@ -30,6 +30,7 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
   vueApp.component('basic-input', this.basicInputComponent)
   vueApp.component('basic-textarea', this.basicTextareaComponent)
   vueApp.component('clear-input', this.clearInputComponent)
+  vueApp.component('submit-button', this.submitButtonComponent)
 
   vueApp.directive('drag', {
     beforeMount: (el, binding) => {

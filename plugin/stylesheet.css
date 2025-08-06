@@ -146,6 +146,10 @@ body {
   outline: none;
 }
 
+#suggestion-form-inputs {
+  margin-bottom: 2rem;
+}
+
 #suggestion-title {
   font-weight: bold;
   font-size: 1.5rem;
