@@ -1,7 +1,7 @@
 SUGGESTION_PLUGIN.basicTextareaComponent = {
   props: {
-    'text': String,
-    'label': Object
+    text: String,
+    label: Object
   },
   emits: ['update:text'],
   methods: {
