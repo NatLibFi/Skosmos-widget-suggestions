@@ -6,9 +6,36 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
       organization: ''
     }
   },
+  inject:['prefLabels', 'uri'],
   methods: {
     submit () {
-      console.log('submit', this.change, this.explanation, this.organization)
+      const data = `
+**Käsitteen tyyppi**
+
+Muutos olemassa olevaan käsitteeseen
+
+**prefabel**
+
+[${this.prefLabels[0].label}](${this.uri})
+
+**Tila**
+
+Käsittelyssä
+
+**Ehdotettu muutos**
+
+${this.change}
+
+**Perustelut ehdotukselle**
+
+${this.explanation}
+
+**Ehdottajan organisaatio**
+
+${this.organization}
+`
+      console.log(data)
+
     }
   },
   template: `

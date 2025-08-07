@@ -9,7 +9,8 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
       return {
         pageUrl: window.location.href,
         pageType: params.pageType,
-        prefLabels: params.prefLabels
+        prefLabels: params.prefLabels,
+        uri: params.uri
       }
     },
     template: `
