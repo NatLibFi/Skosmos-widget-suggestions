@@ -3,7 +3,10 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
     return {
       change: '',
       explanation: '',
-      organization: ''
+      organization: '',
+      changeIsValid: false,
+      explanationIsValid: false,
+      submitted: false
     }
   },
   inject:['prefLabels', 'uri'],
@@ -34,8 +37,12 @@ ${this.explanation}
 
 ${this.organization}
 `
-      console.log(data)
-
+      if(this.changeIsValid && this.explanationIsValid) {
+        console.log('submitted:\n', data)
+      } else {
+        console.log('Required fields missing')
+        this.submitted = true
+      }
     }
   },
   template: `
@@ -43,11 +50,15 @@ ${this.organization}
       <div id="suggestion-form-inputs">
         <basic-textarea
           v-model:text="change"
-          :label="{text: 'Ehdotettu muutos:', id: 'suggestion-change'}"
+          v-model:isValid="changeIsValid"
+          :label="{text: 'Ehdotettu muutos: *', id: 'suggestion-change'}"
+          :submitted="submitted"
         ></basic-textarea>
         <basic-textarea
           v-model:text="explanation"
-          :label="{text: 'Perustelut ehdotukselle:', id: 'suggestion-explanation'}"
+          v-model:isValid="explanationIsValid"
+          :label="{text: 'Perustelut ehdotukselle: *', id: 'suggestion-explanation'}"
+          :submitted="submitted"
         ></basic-textarea>
         <basic-input
           v-model:text="organization"

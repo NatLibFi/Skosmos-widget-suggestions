@@ -122,6 +122,10 @@ body {
   padding-right: 2.5rem;
 }
 
+#suggestion-form input[type=text].suggestion-error {
+  margin-bottom: 3px;
+}
+
 #suggestion-form input[type="radio"] {
     accent-color: var(--suggestion-dark-color);
 }
@@ -144,6 +148,14 @@ body {
 
 #suggestion-form textarea:focus {
   outline: none;
+}
+
+#suggestion-form textarea.suggestion-error {
+  margin-bottom: 0;
+}
+
+#suggestion-form p.suggestion-error {
+  color: var(--suggestion-alert-color);
 }
 
 #suggestion-form-inputs {

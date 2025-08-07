@@ -1,12 +1,25 @@
 SUGGESTION_PLUGIN.basicInputComponent = {
   props: {
     text: String,
-    label: Object
+    label: Object,
+    isValid: {
+      type: Boolean,
+      default: false
+    },
+    submitted: {
+      type: Boolean,
+      default: false
+    }
   },
-  emits: ['update:text'],
+  emits: ['update:text', 'update:isValid'],
   methods: {
     updateText(value) {
       this.$emit('update:text', value)
+      if(value.length > 2) {
+        this.$emit('update:isValid', true)
+      } else {
+        this.$emit('update:isValid', false)
+      }
     }
   },
   template: `
@@ -17,6 +30,7 @@ SUGGESTION_PLUGIN.basicInputComponent = {
         {{ label.text }}
       </label>
       <input class="suggestion-input" type="text"
+        :class="{ 'suggestion-error': !isValid && submitted }"
         :id="label.id"
         :value="text"
         @input="updateText($event.target.value)"
@@ -25,6 +39,9 @@ SUGGESTION_PLUGIN.basicInputComponent = {
         v-if="text"
         @clear-input="updateText('')"
       ></clear-input>
+      <p class="suggestion-error"
+        v-if="!isValid && submitted"
+      >Tämä on pakollinen tieto.</p>
     </div>
   `
 }
