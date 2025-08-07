@@ -18,13 +18,13 @@ SUGGESTION_PLUGIN.basicTextareaComponent = {
       </label>
       <clear-input
         v-if="text"
-        @clear-input="updateText('')"
         :for-textarea="true"
+        @clear-input="updateText('')"
       ></clear-input>
       <textarea class="suggestion-input" rows="3"
-        @input="updateText($event.target.value)"
-        :value="text"
         :id="label.id"
+        :value="text"
+        @input="updateText($event.target.value)"
       ></textarea>
     </div>
   `

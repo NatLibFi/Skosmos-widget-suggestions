@@ -17,9 +17,9 @@ SUGGESTION_PLUGIN.basicInputComponent = {
         {{ label.text }}
       </label>
       <input class="suggestion-input" type="text"
-        @input="updateText($event.target.value)"
-        :value="text"
         :id="label.id"
+        :value="text"
+        @input="updateText($event.target.value)"
       >
       <clear-input
         v-if="text"

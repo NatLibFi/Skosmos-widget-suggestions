@@ -22,6 +22,7 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
     `
   })
 
+  // Register components
   vueApp.component('suggestion-new', this.suggestionNewComponent)
   vueApp.component('suggestion-change', this.suggestionChangeComponent)
   vueApp.component('suggestion-new-form', this.suggestionNewFormComponent)
@@ -32,6 +33,7 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
   vueApp.component('clear-input', this.clearInputComponent)
   vueApp.component('submit-button', this.submitButtonComponent)
 
+  // Register custom directives
   vueApp.directive('drag', {
     beforeMount: (el, binding) => {
       el.dragEvent = event => {

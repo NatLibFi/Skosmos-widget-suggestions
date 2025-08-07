@@ -14,10 +14,10 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
   template: `
     <div class="p-0 my-2">
       <a role="button" class="suggestion-link"
-        @click="showDialog = true"
+        ref="button"
         :href="pageUrl.split('#')[0] + '#suggestion'"
         :class="{ 'suggestion-button': pageType === 'vocab-home' }"
-        ref="button"
+        @click="showDialog = true"
       >
         <i class="fa-solid fa-pen-to-square"></i>&nbsp;
         <h2>Ehdota uutta käsitettä tähän sanastoon</h2>

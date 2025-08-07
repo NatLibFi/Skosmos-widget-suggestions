@@ -7,7 +7,9 @@ SUGGESTION_PLUGIN.clearInputComponent = {
   },
   emits: ['clear-input'],
   template: `
-    <div class="suggestion-clear-input" :class="{ 'suggestion-clear-textarea': forTextarea }">
+    <div class="suggestion-clear-input"
+      :class="{ 'suggestion-clear-textarea': forTextarea }"
+    >
       <i class="fa-solid fa-xmark" aria-label="Clear" role="button"
         @click="$emit('clear-input')"
       ></i>
