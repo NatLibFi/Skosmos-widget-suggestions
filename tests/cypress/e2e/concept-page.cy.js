@@ -9,7 +9,7 @@ describe('Concept page', () => {
     // Click link
     cy.get('@new-link').click()
     // Check that form opens and has correct content
-    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon ')
+    cy.get('#suggestion-title').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon')
     // Check that url is updated
     cy.url().should('include', '/yso/en/page/p8318#suggestion')
   })
@@ -23,17 +23,24 @@ describe('Concept page', () => {
     cy.get('@change-link').invoke('text').should('contain', 'Ehdota muutosta käsitteeseen')
     // Click link
     cy.get('@change-link').click()
-    // Check that form opens and has correct content
-    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota muutosta käsitteeseen ')
+    // Check that form opens and has correct title
+    cy.get('#suggestion-title').invoke('text').should('contain', 'Ehdota muutosta käsitteeseen abstract objects')
     // Check that url is updated
     cy.url().should('include', '/yso/en/page/p8318#suggestion')
   })
 
-  it('has all correct change suggestion form fields', () => {
-
+  it('has all correct change form fields', () => {
+    // Go to abstract objects concept page in YSO vocab
+    cy.visit('/yso/en/page/p8318')
+    // Click the change link
+    cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
+    // Check that form has correct fields
+    cy.get('#suggestion-dialog-content .suggestion-input-label').eq(0).invoke('text').should('contain', 'Ehdotettu muutos: *')
+    cy.get('#suggestion-dialog-content .suggestion-input-label').eq(1).invoke('text').should('contain', 'Perustelut ehdotukselle: *')
+    cy.get('#suggestion-dialog-content .suggestion-input-label').eq(2).invoke('text').should('contain', 'Ehdottajan organisaatio:')
   })
 
   it('change suggestion dialog moves when dragging with mouse', () => {
-
+    
   })
 })
