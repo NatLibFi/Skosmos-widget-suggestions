@@ -1,3 +1,5 @@
+import { testBasicInput, testBasicTextarea } from '../support/form-field-tests'
+
 describe('Concept page', () => {
   it('shows a clickable new link', () => {
     // Go to abstract objects concept page in YSO vocab
@@ -34,10 +36,16 @@ describe('Concept page', () => {
     cy.visit('/yso/en/page/p8318')
     // Click the change link
     cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
-    // Check that form has correct fields
-    cy.get('#suggestion-dialog-content .suggestion-input-label').eq(0).invoke('text').should('contain', 'Ehdotettu muutos: *')
-    cy.get('#suggestion-dialog-content .suggestion-input-label').eq(1).invoke('text').should('contain', 'Perustelut ehdotukselle: *')
-    cy.get('#suggestion-dialog-content .suggestion-input-label').eq(2).invoke('text').should('contain', 'Ehdottajan organisaatio:')
+    // Check that form fields are correct
+    testBasicTextarea('Ehdotettu muutos: *', 0)
+    testBasicTextarea('Perustelut ehdotukselle: *', 1)
+    testBasicInput('Ehdottajan organisaatio:', 2)
+    // Click submit button with empty fields
+    cy.get('#suggestion-form-submit-button').click()
+    // Check that fields are validated correctly
+    cy.get('.suggestion-input-container').eq(0).find('.suggestion-error').should('be.visible')
+    cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('be.visible')
+    cy.get('.suggestion-input-container').eq(2).find('.suggestion-error').should('be.not.exist')
   })
 
   it('change suggestion dialog moves when dragging with mouse', () => {
