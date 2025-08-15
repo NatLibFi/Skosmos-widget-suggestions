@@ -28,6 +28,9 @@ SUGGESTION_PLUGIN.termInputComponent = {
         const vocabs = [this.vocab, ...['yso' ,'yso-paikat', 'slm', 'yse'].filter(v => v !== this.vocab)] // All vocabs with selected vocab first
         this.search(value, vocabs)
           .then(res => {
+            // Only continue if the value matches current prefLabel to prevent a race condition
+            if (value !== this.prefLabel) return
+
             if (res) {
               this.$emit('update:isValid', false)
               this.concept = res
