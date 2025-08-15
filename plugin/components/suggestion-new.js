@@ -8,13 +8,12 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
   mounted() {
     if (this.pageUrl.includes("#suggestion") && this.pageType === 'vocab-home'){
       console.log('open new')
-      this.$refs.button.click()
+      this.showDialog = true
     }
   },
   template: `
     <div class="p-0 my-2">
       <a role="button" class="suggestion-link"
-        ref="button"
         :href="pageUrl.split('#')[0] + '#suggestion'"
         :class="{ 'suggestion-button': pageType === 'vocab-home' }"
         @click="showDialog = true"

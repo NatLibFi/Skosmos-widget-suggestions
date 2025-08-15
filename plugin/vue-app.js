@@ -10,7 +10,8 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
         pageUrl: window.location.href,
         pageType: params.pageType,
         prefLabels: params.prefLabels,
-        uri: params.uri
+        uri: params.uri,
+        vocab: window.SKOSMOS.vocab // This should be added to params in Skosmos
       }
     },
     template: `
@@ -31,6 +32,7 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
   vueApp.component('draggable-dialog', this.draggableDialogComponent)
   vueApp.component('basic-input', this.basicInputComponent)
   vueApp.component('basic-textarea', this.basicTextareaComponent)
+  vueApp.component('term-input', this.termInputComponent)
   vueApp.component('clear-input', this.clearInputComponent)
   vueApp.component('submit-button', this.submitButtonComponent)
 

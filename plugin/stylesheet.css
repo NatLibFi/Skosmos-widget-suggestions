@@ -14,13 +14,13 @@
   --font-family-heading: 'EB Garamond', serif;
 }
 
-body {
+#suggestion-plugin {
   color: var(--suggestion-dark-color);
   font-family: var(--font-family);
   font-size: var(--font-size);
 }
 
-.container {
+#suggestion-plugin .container {
   max-width: 800px;
 }
 
@@ -66,7 +66,6 @@ body {
 }
 
 .suggestion-dialog-modal {
-  font-size: 14px;
   color: var(--suggestion-dark-color);
   background-color: var(--suggestion-white-color);
   position: fixed;
@@ -158,6 +157,10 @@ body {
   color: var(--suggestion-alert-color);
 }
 
+#suggestion-form p.suggestion-existing-concept {
+  margin-bottom: 0.5rem;
+}
+
 #suggestion-form-inputs {
   margin-bottom: 2rem;
 }
@@ -215,7 +218,7 @@ h3.suggestion-input-label {
 
 .suggestion-clear-input i {
   position: absolute;
-  top: -40px;
+  top: -43px;
   right: 15px;
 }
 

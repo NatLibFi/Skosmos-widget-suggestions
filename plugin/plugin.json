@@ -10,7 +10,8 @@
     "components/suggestion-new.js",
     "components/suggestion-change.js",
     "components/suggestion-new-form.js",
-    "components/suggestion-change-form.js"
+    "components/suggestion-change-form.js",
+    "components/term-input.js"
   ],
   "css": ["stylesheet.css"],
   "callback": ["suggestionCallback"]
