@@ -31,7 +31,6 @@ SUGGESTION_PLUGIN.basicTextareaComponent = {
       </label>
       <clear-input
         v-if="text"
-        :for-textarea="true"
         @clear-input="updateText('')"
       ></clear-input>
       <textarea class="suggestion-input" rows="3"

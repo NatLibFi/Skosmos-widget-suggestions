@@ -107,16 +107,16 @@ SUGGESTION_PLUGIN.termInputComponent = {
             :for="'suggestion-preflabel-' + lang"
           >Päätermi</label>
           <div class="col-lg-8">
+            <clear-input
+              v-if="prefLabel"
+              @clear-input="updatePrefLabel('')"
+            ></clear-input>
             <input class="suggestion-input" type="text"
               :class="{ 'suggestion-error': !isValid && submitted }"
               :id="'suggestion-preflabel-' + lang"
               :value="prefLabel"
               @input="updatePrefLabel($event.target.value)"
             >
-            <clear-input
-              v-if="prefLabel"
-              @clear-input="updatePrefLabel('')"
-            ></clear-input>
             <p class="suggestion-error"
               v-if="!isValid && submitted"
             >{{ concept ? 'Päätermiksi tarvitaan uniikki termi.' : 'Tämä on pakollinen tieto.'}}</p>
@@ -126,28 +126,28 @@ SUGGESTION_PLUGIN.termInputComponent = {
         <div class="row">
           <label class="suggestion-term-label col-lg-4 pt-lg-2" for="suggestion-altlabel-fi-0">Vaihtoehtoinen termi</label>
           <div class="col-lg-8">
-            <input id="suggestion-altlabel-fi-0" class="suggestion-input" type="text"
-              :value="altLabels[0]"
-              @input="updateAltLabels(0, $event.target.value)"
-            >
             <clear-input
               v-if="altLabels[0]"
               @clear-input="updateAltLabels(0, '')"
             ></clear-input>
+            <input id="suggestion-altlabel-fi-0" class="suggestion-input" type="text"
+              :value="altLabels[0]"
+              @input="updateAltLabels(0, $event.target.value)"
+            >
             <template v-if="altLabels.length > 1">
               <template v-for="(l, i) in altLabels.slice(1)">
                 <label class="suggestion-term-label col-lg-3 pt-lg-2 sr-only"
                   :for="'suggestion-altlabel-fi-' + (i + 1)"
                 >Vaihtoehtoinen termi</label>
+                <clear-input
+                  v-if="altLabels[i + 1]"
+                  @clear-input="updateAltLabels(i + 1, '')"
+                ></clear-input>
                 <input class="suggestion-input" type="text"
                   :id="'suggestion-altlabel-fi-' + (i + 1)"
                   :value="l"
                   @input="updateAltLabels(i + 1, $event.target.value)"
                 >
-                <clear-input
-                  v-if="altLabels[i + 1]"
-                  @clear-input="updateAltLabels(i + 1, '')"
-                ></clear-input>
               </template>
             </template>
           </div>

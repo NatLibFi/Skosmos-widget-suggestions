@@ -218,12 +218,8 @@ h3.suggestion-input-label {
 
 .suggestion-clear-input i {
   position: absolute;
-  top: -43px;
+  top: 13px;
   right: 15px;
-}
-
-.suggestion-clear-textarea i {
-  top: 13px !important;
 }
 
 .suggestion-term-label {

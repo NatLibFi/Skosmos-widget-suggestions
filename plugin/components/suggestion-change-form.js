@@ -41,8 +41,8 @@ ${this.organization}
         console.log('submitted:\n', data)
       } else {
         console.log('Required fields missing')
-        this.submitted = true
       }
+      this.submitted = true
     }
   },
   template: `

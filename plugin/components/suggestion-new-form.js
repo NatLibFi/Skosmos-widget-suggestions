@@ -11,7 +11,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   inject: ['vocab'],
   methods: {
     submit () {
-      console.log('submit', this.selectedVocab, this.prefLabelFi, this.altLabelsFi)
+      console.log('submit', this.selectedVocab, this.prefLabelFi, this.altLabelsFi, this.prefLabelIsValidFi, this.submitted)
       this.submitted = true
     }
   },
@@ -40,10 +40,10 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         <term-input
           v-model:prefLabel="prefLabelFi"
           v-model:altLabels="altLabelsFi"
+          v-model:isValid="prefLabelIsValidFi"
           :label="{text: 'Termi suomeksi:', id: 'suggestion-term-fi-label'}"
           :vocab="selectedVocab"
           :lang="'fi'"
-          :isValid="prefLabelIsValidFi"
           :submitted="submitted"
         ></term-input>
       </div>
