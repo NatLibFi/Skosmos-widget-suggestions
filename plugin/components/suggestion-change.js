@@ -5,6 +5,11 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
     }
   },
   inject: ['pageUrl', 'prefLabels'],
+  methods: {
+    handleSubmitEvent() {
+      this.$refs.changeForm.submit()
+    }
+  },
   template: `
     <div class="p-0 my-2">
       <a role="button" class="suggestion-link"
@@ -17,15 +22,23 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
       </a>
       <template v-if="showDialog">
         <draggable-dialog @close-dialog="showDialog = false">
-          <div id="suggestion-header">
-            <h2 id="suggestion-title">
-              Ehdota muutosta käsitteeseen {{ prefLabels[0].label }}
-            </h2>
-            <p id="suggestion-subtitle">
-              Kuka tahansa sanaston käyttäjä saa ehdottaa muutoksia sanastoon
-            </p>
-          </div>
-          <suggestion-change-form></suggestion-change-form>
+          <template #content>
+            <div id="suggestion-header">
+              <h2 id="suggestion-title">
+                Ehdota muutosta käsitteeseen {{ prefLabels[0].label }}
+              </h2>
+              <p id="suggestion-subtitle">
+                Kuka tahansa sanaston käyttäjä saa ehdottaa muutoksia sanastoon
+              </p>
+            </div>
+            <suggestion-change-form ref="changeForm"></suggestion-change-form>
+          </template>
+          <template #footer>
+            <submit-button
+              :text="'Lähetä muutosehdotus'"
+              @submit="handleSubmitEvent()"
+            ></submit-button>
+          </template>
         </draggable-dialog>
       </template>
     </div>

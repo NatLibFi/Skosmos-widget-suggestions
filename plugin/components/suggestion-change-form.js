@@ -65,10 +65,6 @@ ${this.organization}
           :label="{text: 'Ehdottajan organisaatio:', id: 'suggestion-organization'}"
         ></basic-input>
       </div>
-      <submit-button
-        :text="'Lähetä muutosehdotus'"
-        @submit="submit()"
-      ></submit-button>
     </div>
   `
 }
