@@ -12,6 +12,10 @@ SUGGESTION_PLUGIN.termInputComponent = {
     submitted: {
       type: Boolean,
       default: false
+    },
+    required: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -22,7 +26,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
   },
   emits: ['update:prefLabel', 'update:altLabels', 'update:isValid'],
   methods: {
-    updatePrefLabel(value) {
+    updatePrefLabel (value) {
       this.$emit('update:prefLabel', value)
       if (value.length > 2) {
         const vocabs = [this.vocab, ...['yso' ,'yso-paikat', 'slm', 'yse'].filter(v => v !== this.vocab)] // All vocabs with selected vocab first
@@ -44,18 +48,17 @@ SUGGESTION_PLUGIN.termInputComponent = {
         this.concept = null
       }
     },
-    updateAltLabels(idx, value) {
+    updateAltLabels (i, value, createNew = true) {
       let newLabels = [...this.altLabels]
-
-      newLabels = newLabels.map((l, i) => i === idx ? value : l)
+      newLabels[i] = value
       this.$emit('update:altLabels', newLabels)
 
       // If updating last label, add a new one to the end of the array
-      if (idx === newLabels.length - 1) {
+      if (i === newLabels.length - 1 && createNew) {
         this.$emit('update:altLabels', [ ...newLabels, '' ])
       }
     },
-    search(query, vocabs) {
+    search (query, vocabs) {
       // Abort any previous fetch request before starting a new one
       this.controller.abort()
       this.controller = new AbortController()
@@ -87,6 +90,10 @@ SUGGESTION_PLUGIN.termInputComponent = {
             console.log('Fetch failed:', error)
           }
         })
+    },
+    removeAltLabelInput (i) {
+      this.updateAltLabels(i, '')
+      this.$emit('update:altLabels', this.altLabels.filter((l, idx) => idx !== i))
     }
   },
   template: `
@@ -100,7 +107,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
           Termistä on jo olemassa käsite-ehdotus: <a :href="concept.uri">{{ concept.prefLabel }}</a>. Kommentoi tai kannata ehdotusta sen tiedoista löytyvän kotisivulinkin kautta.
         </template>
         <template v-else>
-          Termi löytyy jo {{ vocab }}: <a :href="concept.uri">{{ concept.prefLabel }}</a>
+          Termi löytyy jo {{ concept.vocab }}: <a :href="concept.uri">{{ concept.prefLabel }}</a>
         </template>
       </p>
 
@@ -108,46 +115,49 @@ SUGGESTION_PLUGIN.termInputComponent = {
         <div class="row">
           <label class="suggestion-term-label col-lg-4 pt-lg-2"
             :for="'suggestion-preflabel-' + lang"
-          >Päätermi</label>
+          >Päätermi:{{ required ? ' *' : '' }}</label>
           <div class="col-lg-8">
             <clear-input
               v-if="prefLabel"
               @clear-input="updatePrefLabel('')"
             ></clear-input>
             <input class="suggestion-input" type="text"
-              :class="{ 'suggestion-error': !isValid && submitted }"
+              :class="{ 'suggestion-error': (!isValid && submitted && required) || (submitted && concept) }"
               :id="'suggestion-preflabel-' + lang"
               :value="prefLabel"
               @input="updatePrefLabel($event.target.value)"
             >
             <p class="suggestion-error"
-              v-if="!isValid && submitted"
-            >{{ concept ? 'Päätermiksi tarvitaan uniikki termi.' : 'Tämä on pakollinen tieto.'}}</p>
+              v-if="(!isValid && submitted && required) || (submitted && concept)"
+            >{{ !concept && required ? 'Tämä on pakollinen tieto.' : concept ? 'Päätermiksi tarvitaan uniikki termi.' : '' }}</p>
           </div>
         </div>
 
         <div class="row">
-          <label class="suggestion-term-label col-lg-4 pt-lg-2" for="suggestion-altlabel-fi-0">Vaihtoehtoinen termi</label>
+          <label class="suggestion-term-label col-lg-4 pt-lg-2"
+            :for="'suggestion-altlabel-' + lang + '-0'"
+          >Vaihtoehtoinen termi:</label>
           <div class="col-lg-8">
             <clear-input
               v-if="altLabels[0]"
-              @clear-input="updateAltLabels(0, '')"
+              @clear-input="updateAltLabels(0, '', false)"
             ></clear-input>
-            <input id="suggestion-altlabel-fi-0" class="suggestion-input" type="text"
+            <input class="suggestion-input" type="text"
+              :id="'suggestion-altlabel-' + lang + '-0'" 
               :value="altLabels[0]"
               @input="updateAltLabels(0, $event.target.value)"
             >
             <template v-if="altLabels.length > 1">
               <template v-for="(l, i) in altLabels.slice(1)">
                 <label class="suggestion-term-label col-lg-3 pt-lg-2 sr-only"
-                  :for="'suggestion-altlabel-fi-' + (i + 1)"
-                >Vaihtoehtoinen termi</label>
+                  :for="'suggestion-altlabel-' + lang + '-' + (i + 1)"
+                >Vaihtoehtoinen termi:</label>
                 <clear-input
-                  v-if="altLabels[i + 1]"
-                  @clear-input="updateAltLabels(i + 1, '')"
+                  v-if="altLabels[i + 1] || true"
+                  @clear-input="removeAltLabelInput(i + 1)"
                 ></clear-input>
                 <input class="suggestion-input" type="text"
-                  :id="'suggestion-altlabel-fi-' + (i + 1)"
+                  :id="'suggestion-altlabel-' + lang + '-' + (i + 1)"
                   :value="l"
                   @input="updateAltLabels(i + 1, $event.target.value)"
                 >

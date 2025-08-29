@@ -11,6 +11,11 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
       this.showDialog = true
     }
   },
+  methods: {
+    handleSubmitEvent() {
+      this.$refs.newForm.submit()
+    }
+  },
   template: `
     <div class="p-0 my-2">
       <a role="button" class="suggestion-link"
@@ -23,15 +28,23 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
       </a>
       <template v-if="showDialog">
         <draggable-dialog @close-dialog="showDialog = false">
-          <div id="suggestion-header">
-            <h2 id="suggestion-title">
-              Ehdota uutta käsitettä sanastoon
-            </h2>
-            <p id="suggestion-subtitle">
-              Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta
-            </p>
-          </div>
-          <suggestion-new-form></suggestion-new-form>
+          <template #content>
+            <div id="suggestion-header">
+              <h2 id="suggestion-title">
+                Ehdota uutta käsitettä sanastoon
+              </h2>
+              <p id="suggestion-subtitle">
+                Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta
+              </p>
+            </div>
+            <suggestion-new-form ref="newForm"></suggestion-new-form>
+          </template>
+          <template #footer>
+            <submit-button
+              :text="'Lähetä käsite-ehdotus'"
+              @submit="handleSubmitEvent()"
+            ></submit-button>
+          </template>
         </draggable-dialog>
       </template>
     </div>

@@ -161,10 +161,6 @@
   margin-bottom: 0.5rem;
 }
 
-#suggestion-form-inputs {
-  margin-bottom: 2rem;
-}
-
 #suggestion-title {
   font-weight: bold;
   font-size: 1.5rem;
@@ -315,6 +311,10 @@ h3.suggestion-input-label {
 #suggestion-handling {
   color: var(--suggestion-dark-color);
   margin-bottom: 5rem;
+}
+
+#suggestion-dialog-footer {
+  background-color: var(--suggestion-secondary-dark-color);
 }
 
 #suggestion-form-submit button {

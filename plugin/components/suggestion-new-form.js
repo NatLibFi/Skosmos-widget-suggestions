@@ -2,16 +2,51 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   data() {
     return {
       selectedVocab: this.vocab,
-      prefLabelFi: '',
-      altLabelsFi: [''],
-      prefLabelIsValidFi: false,
-      submitted: false
+      terms: {
+        fi: {
+          prefLabel: '',
+          altLabels: [''],
+          prefLabelIsValid: false,
+        },
+        sv: {
+          prefLabel: '',
+          altLabels: [''],
+          prefLabelIsValid: false,
+        },
+        en: {
+          prefLabel: '',
+          altLabels: [''],
+          prefLabelIsValid: false,
+        },
+        se: {
+          prefLabel: '',
+          altLabels: [''],
+          prefLabelIsValid: false,
+        },
+      },
+      submitted: false,
+      renderKey: 0
     }
   },
   inject: ['vocab'],
+  watch: {
+    selectedVocab() {
+      // When selected vocab is changed, reset terms data
+      Object.keys(this.terms).forEach(x => {
+        this.terms[x] = {
+          prefLabel: '',
+          altLabels: [''],
+          prefLabelIsValid: false,
+        }
+      })
+      this.submitted = false
+      // Rerender all field components
+      this.renderKey += 1
+    }
+  },
   methods: {
     submit () {
-      console.log('submit', this.selectedVocab, this.prefLabelFi, this.altLabelsFi, this.prefLabelIsValidFi, this.submitted)
+      console.log('submit', this.selectedVocab, this.terms, this.submitted)
       this.submitted = true
     }
   },
@@ -38,19 +73,46 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           </fieldset>
         </div>
         <term-input
-          v-model:prefLabel="prefLabelFi"
-          v-model:altLabels="altLabelsFi"
-          v-model:isValid="prefLabelIsValidFi"
+          v-model:prefLabel="terms.fi.prefLabel"
+          v-model:altLabels="terms.fi.altLabels"
+          v-model:isValid="terms.fi.prefLabelIsValid"
           :label="{text: 'Termi suomeksi:', id: 'suggestion-term-fi-label'}"
           :vocab="selectedVocab"
           :lang="'fi'"
           :submitted="submitted"
+          :required="true"
+          :key="renderKey"
+        ></term-input>
+        <term-input
+          v-model:prefLabel="terms.sv.prefLabel"
+          v-model:altLabels="terms.sv.altLabels"
+          :label="{text: 'Termi ruotsiksi:', id: 'suggestion-term-sv-label'}"
+          :vocab="selectedVocab"
+          :lang="'sv'"
+          :submitted="submitted"
+          :key="renderKey"
+        ></term-input>
+        <term-input
+          v-if="selectedVocab === 'yso' || selectedVocab === 'yso-paikat'"
+          v-model:prefLabel="terms.en.prefLabel"
+          v-model:altLabels="terms.en.altLabels"
+          :label="{text: 'Termi englanniksi:', id: 'suggestion-term-en-label'}"
+          :vocab="selectedVocab"
+          :lang="'en'"
+          :submitted="submitted"
+          :key="renderKey"
+        ></term-input>
+        <term-input
+          v-if="selectedVocab === 'yso'"
+          v-model:prefLabel="terms.se.prefLabel"
+          v-model:altLabels="terms.se.altLabels"
+          :label="{text: 'Termi pohjoissaameksi:', id: 'suggestion-term-se-label'}"
+          :vocab="selectedVocab"
+          :lang="'se'"
+          :submitted="submitted"
+          :key="renderKey"
         ></term-input>
       </div>
-      <submit-button
-        :text="'Lähetä käsite-ehdotus'"
-        @submit="submit()"
-      ></submit-button>
     </div>
   `
 }

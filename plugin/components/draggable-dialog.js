@@ -55,7 +55,10 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
           </div>
         </div>
         <div id="suggestion-dialog-content" class="p-3">
-          <slot></slot>
+          <slot name="content"></slot>
+        </div>
+        <div id="suggestion-dialog-footer" class="px-3 py-2">
+          <slot name="footer"></slot>
         </div>
       </div>
     </div>
