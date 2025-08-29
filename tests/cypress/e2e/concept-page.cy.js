@@ -45,7 +45,7 @@ describe('Concept page', () => {
     // Check that fields are validated correctly
     cy.get('.suggestion-input-container').eq(0).find('.suggestion-error').should('be.visible')
     cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('be.visible')
-    cy.get('.suggestion-input-container').eq(2).find('.suggestion-error').should('be.not.exist')
+    cy.get('.suggestion-input-container').eq(2).find('.suggestion-error').should('not.exist')
   })
 
   it('change suggestion dialog moves when dragging with mouse', () => {
