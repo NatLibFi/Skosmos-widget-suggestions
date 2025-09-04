@@ -6,22 +6,26 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         fi: {
           prefLabel: '',
           altLabels: [''],
-          prefLabelIsValid: false,
+          isValid: true,
+          required: false,
         },
         sv: {
           prefLabel: '',
           altLabels: [''],
-          prefLabelIsValid: false,
+          isValid: true,
+          required: false,
         },
         en: {
           prefLabel: '',
           altLabels: [''],
-          prefLabelIsValid: false,
+          isValid: true,
+          required: false,
         },
         se: {
           prefLabel: '',
           altLabels: [''],
-          prefLabelIsValid: false,
+          isValid: true,
+          required: false,
         },
       },
       submitted: false,
@@ -29,16 +33,23 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
     }
   },
   inject: ['vocab'],
+  mounted () {
+    this.terms[window.SKOSMOS.content_lang].isValid = false
+    this.terms[window.SKOSMOS.content_lang].required = true
+  },
   watch: {
     selectedVocab() {
-      // When selected vocab is changed, reset terms data
+      // When selected vocab is changed, reset form data
       Object.keys(this.terms).forEach(x => {
         this.terms[x] = {
           prefLabel: '',
           altLabels: [''],
-          prefLabelIsValid: false,
+          isValid: true,
+          required: false
         }
       })
+      this.terms[window.SKOSMOS.content_lang].isValid = false
+      this.terms[window.SKOSMOS.content_lang].required = true
       this.submitted = false
       // Rerender all field components
       this.renderKey += 1
@@ -75,41 +86,47 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         <term-input
           v-model:prefLabel="terms.fi.prefLabel"
           v-model:altLabels="terms.fi.altLabels"
-          v-model:isValid="terms.fi.prefLabelIsValid"
+          v-model:isValid="terms.fi.isValid"
           :label="{text: 'Termi suomeksi:', id: 'suggestion-term-fi-label'}"
           :vocab="selectedVocab"
           :lang="'fi'"
           :submitted="submitted"
-          :required="true"
+          :required="terms.fi.required"
           :key="renderKey"
         ></term-input>
         <term-input
           v-model:prefLabel="terms.sv.prefLabel"
           v-model:altLabels="terms.sv.altLabels"
+          v-model:isValid="terms.sv.isValid"
           :label="{text: 'Termi ruotsiksi:', id: 'suggestion-term-sv-label'}"
           :vocab="selectedVocab"
           :lang="'sv'"
           :submitted="submitted"
+          :required="terms.sv.required"
           :key="renderKey"
         ></term-input>
         <term-input
           v-if="selectedVocab === 'yso' || selectedVocab === 'yso-paikat'"
           v-model:prefLabel="terms.en.prefLabel"
           v-model:altLabels="terms.en.altLabels"
+          v-model:isValid="terms.en.isValid"
           :label="{text: 'Termi englanniksi:', id: 'suggestion-term-en-label'}"
           :vocab="selectedVocab"
           :lang="'en'"
           :submitted="submitted"
+          :required="terms.en.required"
           :key="renderKey"
         ></term-input>
         <term-input
           v-if="selectedVocab === 'yso'"
           v-model:prefLabel="terms.se.prefLabel"
           v-model:altLabels="terms.se.altLabels"
+          v-model:isValid="terms.se.isValid"
           :label="{text: 'Termi pohjoissaameksi:', id: 'suggestion-term-se-label'}"
           :vocab="selectedVocab"
           :lang="'se'"
           :submitted="submitted"
+          :required="terms.se.required"
           :key="renderKey"
         ></term-input>
       </div>

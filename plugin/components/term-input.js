@@ -18,7 +18,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       controller: new AbortController(),
       concept: null
@@ -28,7 +28,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
   methods: {
     updatePrefLabel (value) {
       this.$emit('update:prefLabel', value)
-      if (value.length > 2) {
+      if (value.length > 1) {
         const vocabs = [this.vocab, ...['yso' ,'yso-paikat', 'slm', 'yse'].filter(v => v !== this.vocab)] // All vocabs with selected vocab first
         this.search(value, vocabs)
           .then(res => {
@@ -44,7 +44,11 @@ SUGGESTION_PLUGIN.termInputComponent = {
             }
           })
       } else {
-        this.$emit('update:isValid', false)
+        if (!this.required) {
+          this.$emit('update:isValid', true)
+        } else {
+          this.$emit('update:isValid', false)
+        }
         this.concept = null
       }
     },
