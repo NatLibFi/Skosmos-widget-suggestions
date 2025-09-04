@@ -24,6 +24,22 @@ SUGGESTION_PLUGIN.termInputComponent = {
       concept: null
     }
   },
+  computed: {
+    showError () {
+      return (!this.isValid && this.submitted && this.required) || this.concept
+    },
+    errorString () {
+      if (!this.concept && this.required) {
+        return 'Tämä on pakollinen tieto.'
+      } else if (this.concept) {
+        if (this.concept.vocab === 'yse') {
+          return `Termistä on jo olemassa käsite-ehdotus: <a href="${this.concept.uri}">${this.concept.prefLabel}</a>. Kommentoi tai kannata ehdotusta sen tiedoista löytyvän kotisivulinkin kautta.`
+        } else {
+          return `Termi löytyy jo ${this.concept.vocab}: <a href="${this.concept.uri}">${this.concept.prefLabel}</a>`
+        }
+      }
+    }
+  },
   emits: ['update:prefLabel', 'update:altLabels', 'update:isValid'],
   methods: {
     updatePrefLabel (value) {
@@ -106,15 +122,6 @@ SUGGESTION_PLUGIN.termInputComponent = {
         :id="label.id"
       >{{ label.text }}</h3>
 
-      <p class="suggestion-existing-concept" v-if="concept">
-        <template v-if="concept.vocab === 'yse'">
-          Termistä on jo olemassa käsite-ehdotus: <a :href="concept.uri">{{ concept.prefLabel }}</a>. Kommentoi tai kannata ehdotusta sen tiedoista löytyvän kotisivulinkin kautta.
-        </template>
-        <template v-else>
-          Termi löytyy jo {{ concept.vocab }}: <a :href="concept.uri">{{ concept.prefLabel }}</a>
-        </template>
-      </p>
-
       <div :aria-labelledby="label.id">
         <div class="row">
           <label class="suggestion-term-label col-lg-4 pt-lg-2"
@@ -126,14 +133,15 @@ SUGGESTION_PLUGIN.termInputComponent = {
               @clear-input="updatePrefLabel('')"
             ></clear-input>
             <input class="suggestion-input" type="text"
-              :class="{ 'suggestion-error': (!isValid && submitted && required) || (submitted && concept) }"
+              :class="{ 'suggestion-error': showError }"
               :id="'suggestion-preflabel-' + lang"
               :value="prefLabel"
               @input="updatePrefLabel($event.target.value)"
             >
             <p class="suggestion-error"
-              v-if="(!isValid && submitted && required) || (submitted && concept)"
-            >{{ !concept && required ? 'Tämä on pakollinen tieto.' : concept ? 'Päätermiksi tarvitaan uniikki termi.' : '' }}</p>
+              v-if="showError"
+              v-html="errorString"
+            ></p>
           </div>
         </div>
 
