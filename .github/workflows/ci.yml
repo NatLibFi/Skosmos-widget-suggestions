@@ -1,18 +1,46 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
 jobs:
-  Explore-GitHub-Actions:
+  run-docker:
     runs-on: ubuntu-latest
+
+    services:
+      my_service:
+        image: quay.io/natlibfi/skosmos
+        ports:
+          - 9090:80
+        volumes:
+          - ${{ github.workspace }}/tests/testconfig.ttl:/var/www/html/config.ttl
+          - ${{ github.workspace }}/plugin:/var/www/html/plugins/suggestion-plugin/
+        options: >-
+          --health-cmd="curl --fail http://localhost:80 || exit 1"
+          --health-interval=30s
+          --health-timeout=10s
+          --health-retries=5
+
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v5
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          npm install
+
+      - name: Wait for the service to be healthy
+        run: |
+          echo "Waiting for the service to be ready..."
+          sleep 30
+
+      - name: Run Cypress tests
+        run: |
+          npx cypress run
