@@ -218,6 +218,10 @@ h3.suggestion-input-label {
   right: 15px;
 }
 
+.suggestion-clear-input i.spinner {
+  right: 12px;
+}
+
 .suggestion-term-label {
   color: var(--suggestion-dark-color);
 }

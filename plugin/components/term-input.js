@@ -21,7 +21,8 @@ SUGGESTION_PLUGIN.termInputComponent = {
   data () {
     return {
       controller: new AbortController(),
-      concept: null
+      concept: null,
+      loading: false
     }
   },
   computed: {
@@ -44,6 +45,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
   methods: {
     updatePrefLabel (value) {
       this.$emit('update:prefLabel', value)
+      this.loading = true
       if (value.length > 1) {
         const vocabs = [this.vocab, ...['yso' ,'yso-paikat', 'slm', 'yse'].filter(v => v !== this.vocab)] // All vocabs with selected vocab first
         this.search(value, vocabs)
@@ -58,6 +60,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
               this.$emit('update:isValid', true)
               this.concept = null
             }
+            this.loading = false
           })
       } else {
         if (!this.required) {
@@ -66,6 +69,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
           this.$emit('update:isValid', false)
         }
         this.concept = null
+        this.loading = false
       }
     },
     updateAltLabels (i, value, createNew = true) {
@@ -129,9 +133,12 @@ SUGGESTION_PLUGIN.termInputComponent = {
           >Päätermi:{{ required ? ' *' : '' }}</label>
           <div class="col-lg-8">
             <clear-input
-              v-if="prefLabel"
+              v-if="prefLabel && !loading"
               @clear-input="updatePrefLabel('')"
             ></clear-input>
+            <div class="suggestion-clear-input" v-if="loading" @click="updatePrefLabel('')">
+              <i class="spinner fa-solid fa-spinner fa-spin-pulse"></i>
+            </div>
             <input class="suggestion-input" type="text"
               :class="{ 'suggestion-error': showError }"
               :id="'suggestion-preflabel-' + lang"
