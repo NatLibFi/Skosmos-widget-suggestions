@@ -9,38 +9,20 @@ jobs:
   run-docker:
     runs-on: ubuntu-latest
 
-    services:
-      my_service:
-        image: quay.io/natlibfi/skosmos
-        ports:
-          - 9090:80
-        volumes:
-          - ${{ github.workspace }}/tests/testconfig.ttl:/var/www/html/config.ttl
-          - ${{ github.workspace }}/plugin:/var/www/html/plugins/suggestion-plugin/
-        options: >-
-          --health-cmd="curl --fail http://localhost:80 || exit 1"
-          --health-interval=30s
-          --health-timeout=10s
-          --health-retries=5
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Run Docker container
+        run: ./start_container.sh
+
+      - name: Install Node
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: 20.x
 
-      - name: Install dependencies
-        run: |
-          npm install
-
-      - name: Wait for the service to be healthy
-        run: |
-          echo "Waiting for the service to be ready..."
-          sleep 30
+      - name: Install JavaScript dependencies
+        run: npm install
 
       - name: Run Cypress tests
-        run: |
-          npx cypress run
+        run: npx cypress run
