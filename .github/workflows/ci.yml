@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-docker:
+  cypress-test:
     runs-on: ubuntu-latest
 
     steps:
