@@ -34,8 +34,10 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   },
   inject: ['vocab'],
   mounted () {
-    this.terms[window.SKOSMOS.content_lang].isValid = false
-    this.terms[window.SKOSMOS.content_lang].required = true
+    // Make required term field Swedish if UI language is Swedish, otherwise make it Finnish
+    const lang = window.SKOSMOS.lang === 'sv' ? 'sv' : 'fi'
+    this.terms[lang].isValid = false
+    this.terms[lang].required = true
   },
   watch: {
     selectedVocab() {
@@ -48,9 +50,13 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           required: false
         }
       })
-      this.terms[window.SKOSMOS.content_lang].isValid = false
-      this.terms[window.SKOSMOS.content_lang].required = true
+
+      const lang = window.SKOSMOS.lang === 'sv' ? 'sv' : 'fi'
+      this.terms[lang].isValid = false
+      this.terms[lang].required = true
+
       this.submitted = false
+
       // Rerender all field components
       this.renderKey += 1
     }
