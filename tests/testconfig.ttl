@@ -1,0 +1,203 @@
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wv: <http://vocab.org/waiver/terms/norms> .
+@prefix schema: <http://schema.org/> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://purl.org/net/skosmos#> .
+@prefix isothes: <http://purl.org/iso25964/skos-thes#> .
+@prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
+@prefix wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix rdaa: <http://rdaregistry.info/Elements/a/> .
+@prefix rdau: <http://rdaregistry.info/Elements/u/> .
+@prefix : <#> .
+
+
+:config a skosmos:Configuration ;
+    # SPARQL endpoint
+    # a local Fuseki server is usually on localhost:3030
+    skosmos:sparqlEndpoint <https://api.dev.finto.fi/sparql> ;
+    # sparql-query extension, or "Generic" for plain SPARQL 1.1
+    # set to "JenaText" instead if you use Fuseki with jena-text index
+    skosmos:sparqlDialect "JenaText" ;
+    # whether to enable collation in sparql queries
+    skosmos:sparqlCollationEnabled true ;
+    # HTTP client configuration
+    skosmos:sparqlTimeout 20 ;
+    skosmos:httpTimeout 10 ;
+    # customize the service name
+    skosmos:serviceName "DevFinto" ;
+    # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
+    # skosmos:baseHref "http://localhost/Skosmos/" ;
+    # interface languages available, and the corresponding system locales
+    skosmos:languages (
+        [ rdfs:label "fi" ; rdf:value "fi_FI.utf8" ]
+        [ rdfs:label "sv" ; rdf:value "sv_SE.utf8" ]
+        [ rdfs:label "en" ; rdf:value "en_GB.utf8" ]
+	[ rdfs:label "se" ; rdf:value "se_NO" ]
+    ) ;
+    # how many results (maximum) to load at a time on the search results page
+    skosmos:searchResultsSize 20 ;
+    # how many items (maximum) to retrieve in transitive property queries
+    skosmos:transitiveLimit 1000 ;
+    # whether or not to log caught exceptions
+    skosmos:logCaughtExceptions false ;
+    # set to TRUE to enable logging into browser console
+    skosmos:logBrowserConsole true ;
+    # set to a logfile path to enable logging into log file
+    # skosmos:logFileName "" ;
+    # a default location for Twig template rendering
+    skosmos:templateCache "/tmp/dev.finto.fi-template-cache" ;
+    # customize the css by adding your own stylesheet
+    skosmos:customCss "resource/css/finto.css" ;
+    # default email address where to send the feedback
+    skosmos:feedbackAddress "" ;
+    # email address to set as the sender for feedback messages
+    skosmos:feedbackSender "" ;
+    # email address to set as the envelope sender for feedback messages
+    skosmos:feedbackEnvelopeSender "" ;
+    # whether to display the ui language selection as a dropdown (useful for cases where there are more than 3 languages)
+    skosmos:uiLanguageDropdown false ;
+    # whether to enable the spam honey pot or not, enabled by default
+    skosmos:uiHoneypotEnabled true ;
+    # default time a user must wait before submitting a form
+    skosmos:uiHoneypotTime 5 .
+
+# Skosmos vocabularies
+
+:yso a skosmos:Vocabulary, void:Dataset ;
+	dc:title "YSO - Yleinen suomalainen ontologia"@fi,
+		"ALLFO - Allmän finländsk ontologi"@sv,
+		"YSO - General Finnish ontology"@en ,
+		"YSO - Almmolaš suopmelaš ontologiija"@se ;
+	skosmos:shortName "YSO"@fi, "ALLFO"@sv, "YSO"@en, "YSO"@se ;
+	skosmos:marcSourceCode "yso/fin"@fi, "yso/swe"@sv, "yso/eng"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.yso.fi/onto/yso/";
+	skosmos:language "fi", "sv", "se", "en";
+	skosmos:defaultLanguage "fi";
+	skosmos:showTopConcepts "true";
+	skosmos:groupClass isothes:ConceptGroup ;
+	skosmos:arrayClass isothes:ThesaurusArray ;
+	skosmos:showChangeList "true" ;
+	skosmos:showDeprecatedChanges "true" ;
+        skosmos:showPropertyInSearch skos:note ;
+	skosmos:useModifiedDate "true";
+	void:dataDump <https://dev.finto.fi/download/yso/yso-skos.ttl> ;
+	void:dataDump <https://dev.finto.fi/download/yso/yso-skos.rdf> ;
+	void:dataDump <https://dev.finto.fi/download/yso/yso-fin.mrcx> ;
+	void:dataDump <https://dev.finto.fi/download/yso/yso-swe.mrcx> ;
+	void:sparqlEndpoint <https://api.dev.finto.fi/sparql> ;
+	skosmos:sparqlGraph <http://www.yso.fi/onto/yso/> ;
+	skosmos:mainConceptScheme <http://www.yso.fi/onto/yso/> ;
+        skosmos:vocabularyPlugins ( "suggestion-plugin" ) .
+
+<https://dev.finto.fi/download/yso/yso-fin.mrcx>
+        dct:format "application/marcxml+xml";
+        dct:language "fi" .
+
+<https://dev.finto.fi/download/yso/yso-swe.mrcx>
+        dct:format "application/marcxml+xml";
+        dct:language "sv" .
+
+
+  :yso-paikat a skosmos:Vocabulary, void:Dataset ;
+	dc:title "YSO-paikat"@fi ,
+		"ALLFO-orter"@sv,
+		"YSO places"@en ;
+	dc:subject :cat_geo ;
+	skosmos:marcSourceCode "yso/fin"@fi, "yso/swe"@sv, "yso/eng"@en ;
+	void:uriSpace "http://www.yso.fi/onto/yso/";
+	skosmos:language "fi", "sv", "en";
+	skosmos:defaultLanguage "fi";
+	skosmos:useModifiedDate "true";
+	skosmos:propertyOrder :yso-paikat-order ;
+	void:dataDump <https://dev.finto.fi/download/yso-paikat/yso-paikat-skos.ttl> ;
+	void:dataDump <https://dev.finto.fi/download/yso-paikat/yso-paikat-skos.rdf> ;
+	void:dataDump <https://dev.finto.fi/download/yso/yso-paikat-fin.mrcx> ;
+	void:dataDump <https://dev.finto.fi/download/yso/yso-paikat-swe.mrcx> ;
+	void:sparqlEndpoint <https://api.dev.finto.fi/sparql> ;
+	skosmos:sparqlGraph <http://www.yso.fi/onto/yso-paikat/> ;
+        skosmos:vocabularyPlugins ( "suggestion-plugin" ) .
+
+<https://dev.finto.fi/download/yso-paikat/yso-paikat-fin.mrcx>
+        dct:format "application/marcxml+xml";
+        dct:language "fi" .
+
+<https://dev.finto.fi/download/yso-paikat/yso-paikat-swe.mrcx>
+        dct:format "application/marcxml+xml";
+        dct:language "sv" .
+
+:yso-paikat-order a skosmos:PropertyOrder ;
+    rdf:value (
+        rdf:type
+        dc:isReplacedBy
+        skos:definition
+        isothes:broaderPartitive
+        skos:broader
+        isothes:narrowerPartitive
+        skos:narrower
+        skos:related
+        skos:altLabel
+        skosmos:memberOf
+        skos:note
+        skos:scopeNote
+        skos:historyNote
+        rdfs:comment
+        dc:source
+        skos:prefLabel
+        wgs84:lat
+        wgs84:long
+    ) .
+
+
+:slm a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Suomalainen lajityyppi- ja muotosanasto"@fi , "Finländsk genre- och formlista"@sv ;
+	skosmos:shortName "SLM";
+	skosmos:marcSourceCode "slm" ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://urn.fi/URN:NBN:fi:au:slm:";
+	skosmos:language "fi", "sv";
+        skosmos:useModifiedDate "true";
+	skosmos:defaultLanguage "fi";
+	skosmos:showTopConcepts "true";
+       	skosmos:showChangeList "true" ;
+	skosmos:useModifiedDate "true";
+	void:dataDump <https://dev.finto.fi/download/slm/slm-skos.ttl> ;
+	void:dataDump <https://dev.finto.fi/download/slm/slm-skos.rdf> ;
+	void:dataDump <https://dev.finto.fi/download/slm/slm-fin.mrcx> ;
+	void:dataDump <https://dev.finto.fi/download/slm/slm-swe.mrcx> ;
+	void:sparqlEndpoint <https://api.dev.finto.fi/sparql> ;
+        skosmos:mainConceptScheme <http://urn.fi/URN:NBN:fi:au:slm:> ;
+	skosmos:sparqlGraph <http://urn.fi/URN:NBN:fi:au:slm:> ;
+        skosmos:vocabularyPlugins ( "suggestion-plugin" ) .
+
+<https://dev.finto.fi/download/slm/slm-fin.mrcx>
+        dct:format "application/marcxml+xml";
+        dct:language "fi" .
+
+<https://dev.finto.fi/download/slm/slm-swe.mrcx>
+        dct:format "application/marcxml+xml";
+        dct:language "sv" .
+
+
+:yse a skosmos:Vocabulary, void:Dataset ;
+	dc:title "YSOn käsite-ehdotukset"@fi,
+		"YSOn käsite-ehdotukset"@sv,
+		"YSOn käsite-ehdotukset"@en ;
+	skosmos:shortName "YSE";
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.yso.fi/onto/ysa/";
+	skosmos:groupClass isothes:ConceptGroup;
+	skosmos:language "fi";
+        skosmos:useModifiedDate "true";
+	skosmos:showChangeList "true" ;
+	void:dataDump <https://dev.finto.fi/download/yse/yse-skos.ttl> ;
+	void:sparqlEndpoint <https://api.dev.finto.fi/sparql> ;
+	skosmos:sparqlGraph <http://www.yso.fi/onto/yse/> .
