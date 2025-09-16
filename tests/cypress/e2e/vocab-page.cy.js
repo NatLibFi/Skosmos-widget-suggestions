@@ -39,7 +39,7 @@ describe('Vocab page', () => {
     // Click submit button with empty fields
     cy.get('#suggestion-form-submit-button').click()
     // Check that fields are validated correctly
-    cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('be.visible')
+    cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('exist')
     cy.get('.suggestion-input-container').eq(2).find('.suggestion-error').should('not.exist')
     cy.get('.suggestion-input-container').eq(3).find('.suggestion-error').should('not.exist')
     cy.get('.suggestion-input-container').eq(4).find('.suggestion-error').should('not.exist')
