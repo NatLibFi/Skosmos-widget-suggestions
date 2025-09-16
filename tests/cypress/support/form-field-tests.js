@@ -29,19 +29,22 @@ export const testTermInput = (label, i, lang, vocab, text) => {
   cy.get('@container').find('.suggestion-input-label').invoke('text').should('contain', label)
   // Check inputting existing concept
   cy.get('@container').find(`#suggestion-preflabel-${lang}`).type(text)
-  cy.get('@container').find('.suggestion-existing-concept').invoke('text').should('contain', `Termi löytyy jo ${vocab}: ${text}`)
+  cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('not.exist')
+  cy.get('@container').find('.suggestion-error').invoke('text').should('contain', `Termi löytyy jo ${vocab}: ${text}`)
   // Check clearing prefLabel
   cy.get('@container').find('#suggestion-preflabel-' + lang).should('have.value', text)
   cy.get('@container').find('.suggestion-clear-input i').eq(0).click()
   cy.get('@container').find('#suggestion-preflabel-' + lang).should('have.value', '')
-  cy.get('@container').find('.suggestion-existing-concept').should('not.exist')
-  // Check adding and removing altlabel inputs
+  cy.get('@container').find('.suggestion-error').should('not.exist')
+  // Check adding and removing altLabel inputs
   cy.get('@container').find(`#suggestion-altlabel-${lang}-1`).should('not.exist')
   cy.get('@container').find(`#suggestion-altlabel-${lang}-0`).type('test')
+  cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('not.exist')
   cy.get('@container').find(`#suggestion-altlabel-${lang}-1`).should('exist')
   cy.get('@container').find('.suggestion-clear-input i').eq(1).click()
   cy.get('@container').find(`#suggestion-altlabel-${lang}-1`).should('not.exist')
   // Check clearing altLabel
   cy.get('@container').find('.suggestion-clear-input i').eq(0).click()
   cy.get('@container').find(`#suggestion-altlabel-${lang}-0`).should('have.value', '')
+  cy.get('@container').find(`#suggestion-altlabel-${lang}-1`).should('not.exist')
 }

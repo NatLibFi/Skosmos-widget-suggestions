@@ -26,7 +26,7 @@ describe('Vocab page', () => {
   it('YSO form has all correct fields', () => {
     // Go to YSO vocab home page
     cy.visit('/yso/en/')
-    // Click the change link
+    // Click the new link
     cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
     // Check that the correct vocab is selected
     cy.get('.suggestion-input-container').eq(0).find('input').eq(0).should('be.checked')
