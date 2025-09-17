@@ -1,11 +1,13 @@
 SUGGESTION_PLUGIN.submitButtonComponent = {
   props: {
-    text: String
+    text: String,
+    disabled: Boolean
   },
   emits: ['submit'],
   template: `
-    <div id="suggestion-form-submit" class="d-flex justify-content-end">
-      <button id="suggestion-form-submit-button" role="button"
+    <div id="suggestion-form-submit">
+      <button role="button"
+        :class="{ 'disabled': disabled }"
         @click="$emit('submit')"
       >
         {{ text }}

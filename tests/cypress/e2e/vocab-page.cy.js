@@ -36,13 +36,17 @@ describe('Vocab page', () => {
     testTermInput('Termi ruotsiksi:', 2, 'sv', 'yso', 'katt', 'test')
     testTermInput('Termi englanniksi:', 3, 'en', 'yso', 'cat', 'test')
     testTermInput('Termi pohjoissaameksi:', 4, 'se', 'yso', 'bussá', 'test')
-    // Click submit button with empty fields
-    cy.get('#suggestion-form-submit-button').click()
+    // Click submit button with empty fields and check that it is disabled
+    cy.get('#suggestion-form-submit button').should('have.class', 'disabled')
+    cy.get('#suggestion-form-submit button').click()
     // Check that fields are validated correctly
     cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('exist')
     cy.get('.suggestion-input-container').eq(2).find('.suggestion-error').should('not.exist')
     cy.get('.suggestion-input-container').eq(3).find('.suggestion-error').should('not.exist')
     cy.get('.suggestion-input-container').eq(4).find('.suggestion-error').should('not.exist')
+    // Check that submit button is not disabled with valid inputs
+    cy.get('.suggestion-input-container').eq(1).find('#suggestion-preflabel-fi').type('test')
+    cy.get('#suggestion-form-submit button').should('not.have.class', 'disabled')
   })
 
   it('new suggestion dialog moves when dragging with mouse', () => {

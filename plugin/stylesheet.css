@@ -157,8 +157,9 @@
   color: var(--suggestion-alert-color);
 }
 
-#suggestion-form p.suggestion-existing-concept {
-  margin-bottom: 0.5rem;
+#suggestion-form p.suggestion-error a {
+  color: var(--suggestion-alert-color);
+  text-decoration: underline;
 }
 
 #suggestion-title {
@@ -321,12 +322,21 @@ h3.suggestion-input-label {
   background-color: var(--suggestion-secondary-dark-color);
 }
 
+#suggestion-dialog-footer span {
+  color: var(--suggestion-white-color);
+}
+
 #suggestion-form-submit button {
   border: none;
   background-color: var(--suggestion-dark-color);
   color: var(--suggestion-white-color);
   font-weight: bold;
   padding: 0.5rem 1rem;
+}
+
+#suggestion-form-submit button.disabled {
+  opacity: 0.65;
+  cursor: default;
 }
 
 /* Setting scrollbar style separately in Firefox */

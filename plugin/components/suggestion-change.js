@@ -1,12 +1,14 @@
 SUGGESTION_PLUGIN.suggestionChangeComponent = {
   data() {
     return {
-      showDialog: false
+      showDialog: false,
+      formIsValid: false
     }
   },
   inject: ['pageUrl', 'prefLabels'],
   methods: {
     handleSubmitEvent() {
+      // Call submit method inside changeForm component
       this.$refs.changeForm.submit()
     }
   },
@@ -31,11 +33,15 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
                 Kuka tahansa sanaston käyttäjä saa ehdottaa muutoksia sanastoon
               </p>
             </div>
-            <suggestion-change-form ref="changeForm"></suggestion-change-form>
+            <suggestion-change-form
+              ref="changeForm"
+              @update-form-is-valid="(e) => this.formIsValid = e"
+            ></suggestion-change-form>
           </template>
           <template #footer>
             <submit-button
               :text="'Lähetä muutosehdotus'"
+              :disabled="!formIsValid"
               @submit="handleSubmitEvent()"
             ></submit-button>
           </template>

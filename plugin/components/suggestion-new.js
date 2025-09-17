@@ -1,7 +1,8 @@
 SUGGESTION_PLUGIN.suggestionNewComponent = {
   data() {
     return {
-      showDialog: false
+      showDialog: false,
+      formIsValid: false
     }
   },
   inject: ['pageUrl', 'pageType'],
@@ -13,6 +14,7 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
   },
   methods: {
     handleSubmitEvent() {
+      // Call submit method inside newForm component
       this.$refs.newForm.submit()
     }
   },
@@ -37,11 +39,15 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
                 Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta
               </p>
             </div>
-            <suggestion-new-form ref="newForm"></suggestion-new-form>
+            <suggestion-new-form
+              ref="newForm"
+              @update-form-is-valid="(e) => this.formIsValid = e"
+            ></suggestion-new-form>
           </template>
           <template #footer>
             <submit-button
               :text="'Lähetä käsite-ehdotus'"
+              :disabled="!formIsValid"
               @submit="handleSubmitEvent()"
             ></submit-button>
           </template>

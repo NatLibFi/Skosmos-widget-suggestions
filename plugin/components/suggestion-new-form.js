@@ -32,8 +32,14 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       renderKey: 0
     }
   },
+  computed: {
+    formIsValid () {
+      return Object.values(this.terms).every(v => v.isValid)
+    }
+  },
+  emits: ['updateFormIsValid'],
   inject: ['vocab'],
-  mounted () {
+  created () {
     // Make required term field Swedish if UI language is Swedish, otherwise make it Finnish
     const lang = window.SKOSMOS.lang === 'sv' ? 'sv' : 'fi'
     this.terms[lang].isValid = false
@@ -59,11 +65,15 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
 
       // Rerender all field components
       this.renderKey += 1
+    },
+    formIsValid () {
+      this.$emit('updateFormIsValid', this.formIsValid)
     }
   },
   methods: {
     submit () {
-      console.log('submit', this.selectedVocab, this.terms, this.submitted)
+      // This method is called by the parent component 'suggestion-new'
+      console.log('submit', this.selectedVocab, this.terms, this.submitted, this.formIsValid)
       this.submitted = true
     }
   },

@@ -9,9 +9,21 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
       submitted: false
     }
   },
+  computed: {
+    formIsValid () {
+      return this.changeIsValid && this.explanationIsValid
+    }
+  },
+  emits: ['updateFormIsValid'],
   inject:['prefLabels', 'uri'],
+  watch: {
+    formIsValid () {
+      this.$emit('updateFormIsValid', this.formIsValid)
+    }
+  },
   methods: {
     submit () {
+      // This method is called by the parent component 'suggestion-change'
       const data = `
 **Käsitteen tyyppi**
 
