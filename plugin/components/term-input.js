@@ -90,7 +90,8 @@ SUGGESTION_PLUGIN.termInputComponent = {
       const tryNext = (i) => {
         if (i >= vocabs.length) return null // No match found
 
-        return fetch('rest/v1/' + vocabs[i] + '/search/?lang=' + this.lang + '&query=' + query, { signal: this.controller.signal })
+        const params = new URLSearchParams({ lang: this.lang, query: query })
+        return fetch('rest/v1/' + vocabs[i] + '/search/?' + params.toString(), { signal: this.controller.signal })
           .then(res => res.json())
           .then(data => {
             if (data.results[0] && data.results[0].prefLabel.toLowerCase() === query.toLowerCase()) {
