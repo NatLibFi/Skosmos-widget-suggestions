@@ -2,6 +2,12 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   data() {
     return {
       selectedVocab: this.vocab,
+      termLabels: { // This is used until translation framework is implemented
+        'fi': 'Termi suomeksi:',
+        'sv': 'Termi ruotsiksi:',
+        'en': 'Termi englanniksi:',
+        'se': 'Termi pohjoissaameksi:'
+      },
       terms: {
         fi: {
           prefLabel: '',
@@ -35,7 +41,19 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   computed: {
     formIsValid () {
       return Object.values(this.terms).every(v => v.isValid)
-    }
+    },
+    filteredTerms () {
+      const vocabMap = {
+        'slm': ['fi', 'sv'],
+        'yso-paikat': ['fi', 'sv', 'en'],
+        'yso': ['fi', 'sv', 'en', 'se']
+      }
+
+      // Return only the term fields that are allowed for the selected vocab
+      return Object.fromEntries(
+        Object.entries(this.terms).filter(([key]) => vocabMap[this.selectedVocab].includes(key))
+      )
+    },
   },
   emits: ['updateFormIsValid'],
   inject: ['vocab'],
@@ -99,52 +117,19 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
             </div>
           </fieldset>
         </div>
-        <term-input
-          v-model:prefLabel="terms.fi.prefLabel"
-          v-model:altLabels="terms.fi.altLabels"
-          v-model:isValid="terms.fi.isValid"
-          :label="{text: 'Termi suomeksi:', id: 'suggestion-term-fi-label'}"
-          :vocab="selectedVocab"
-          :lang="'fi'"
-          :submitted="submitted"
-          :required="terms.fi.required"
-          :key="renderKey"
-        ></term-input>
-        <term-input
-          v-model:prefLabel="terms.sv.prefLabel"
-          v-model:altLabels="terms.sv.altLabels"
-          v-model:isValid="terms.sv.isValid"
-          :label="{text: 'Termi ruotsiksi:', id: 'suggestion-term-sv-label'}"
-          :vocab="selectedVocab"
-          :lang="'sv'"
-          :submitted="submitted"
-          :required="terms.sv.required"
-          :key="renderKey"
-        ></term-input>
-        <term-input
-          v-if="selectedVocab === 'yso' || selectedVocab === 'yso-paikat'"
-          v-model:prefLabel="terms.en.prefLabel"
-          v-model:altLabels="terms.en.altLabels"
-          v-model:isValid="terms.en.isValid"
-          :label="{text: 'Termi englanniksi:', id: 'suggestion-term-en-label'}"
-          :vocab="selectedVocab"
-          :lang="'en'"
-          :submitted="submitted"
-          :required="terms.en.required"
-          :key="renderKey"
-        ></term-input>
-        <term-input
-          v-if="selectedVocab === 'yso'"
-          v-model:prefLabel="terms.se.prefLabel"
-          v-model:altLabels="terms.se.altLabels"
-          v-model:isValid="terms.se.isValid"
-          :label="{text: 'Termi pohjoissaameksi:', id: 'suggestion-term-se-label'}"
-          :vocab="selectedVocab"
-          :lang="'se'"
-          :submitted="submitted"
-          :required="terms.se.required"
-          :key="renderKey"
-        ></term-input>
+        <div v-for="(term, key) in filteredTerms" :key="key">
+          <term-input
+            v-model:prefLabel="term.prefLabel"
+            v-model:altLabels="term.altLabels"
+            v-model:isValid="term.isValid"
+            :label="{text: termLabels[key], id: 'suggestion-term-' + key + '-label'}"
+            :vocab="selectedVocab"
+            :lang="key"
+            :submitted="submitted"
+            :required="term.required"
+            :key="renderKey"
+          ></term-input>
+        </div>
       </div>
     </div>
   `
