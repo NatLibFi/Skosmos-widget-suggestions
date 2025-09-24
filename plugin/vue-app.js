@@ -12,7 +12,7 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
         prefLabels: params.prefLabels,
         uri: params.uri,
         vocab: window.SKOSMOS.vocab, // This should be added to params in Skosmos
-        lang: window.SKOSMOS.lang // This should be added to params in Skosmos
+        UILang: window.SKOSMOS.lang // This should be added to params in Skosmos
       }
     },
     template: `

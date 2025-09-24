@@ -2,6 +2,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
   props: {
     label: Object,
     vocab: String,
+    lang: String,
     selectedConcepts: Array
   },
   data () {
@@ -14,7 +15,6 @@ SUGGESTION_PLUGIN.relationInputComponent = {
     }
   },
   emits: ['update:selectedConcepts'],
-  inject: ['lang'],
   watch: {
     searchTerm () {
       if (this.searchTerm.length > 1) {

@@ -1,6 +1,7 @@
 SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   data() {
     return {
+      lang: '',
       selectedVocab: this.vocab,
       termLabels: { // This is used until translation framework is implemented
         'fi': 'Termi suomeksi:',
@@ -59,12 +60,12 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
     },
   },
   emits: ['updateFormIsValid'],
-  inject: ['vocab', 'lang'],
+  inject: ['vocab', 'UILang'],
   created () {
     // Make required term field Swedish if UI language is Swedish, otherwise make it Finnish
-    const l = this.lang === 'sv' ? 'sv' : 'fi'
-    this.terms[l].isValid = false
-    this.terms[l].required = true
+    this.lang = this.UILang === 'sv' ? 'sv' : 'fi'
+    this.terms[this.lang].isValid = false
+    this.terms[this.lang].required = true
   },
   watch: {
     selectedVocab() {
@@ -77,9 +78,8 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           required: false
         }
       })
-      const l = this.lang === 'sv' ? 'sv' : 'fi'
-      this.terms[l].isValid = false
-      this.terms[l].required = true
+      this.terms[this.lang].isValid = false
+      this.terms[this.lang].required = true
 
       this.broader = []
       this.narrower = []
@@ -139,18 +139,21 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         <relation-input
           v-model:selectedConcepts="broader"
           :label="{text: 'Yläkäsite (LT):', id: 'suggestion-broader'}"
+          :lang="lang"
           :vocab="selectedVocab"
           :key="renderKey"
         ></relation-input>
         <relation-input
           v-model:selectedConcepts="narrower"
           :label="{text: 'Alakäsitteet (ST):', id: 'suggestion-narrower'}"
+          :lang="lang"
           :vocab="selectedVocab"
           :key="renderKey"
         ></relation-input>
         <relation-input
           v-model:selectedConcepts="associative"
           :label="{text: 'Assosiatiiviset käsitteet (RT):', id: 'suggestion-associative'}"
+          :lang="lang"
           :vocab="selectedVocab"
           :key="renderKey"
         ></relation-input>
