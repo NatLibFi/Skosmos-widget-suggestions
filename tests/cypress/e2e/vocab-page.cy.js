@@ -1,4 +1,4 @@
-import { testBasicInput, testBasicTextarea, testTermInput } from '../support/form-field-tests'
+import { testBasicInput, testBasicTextarea, testTermInput, testRelationInput } from '../support/form-field-tests'
 
 describe('Vocab page', () => {
   it('shows a clickable new button', () => {
@@ -25,17 +25,21 @@ describe('Vocab page', () => {
 
   it('YSO form has all correct fields', () => {
     // Go to YSO vocab home page
-    cy.visit('/yso/en/')
+    cy.visit('/yso/fi/')
     // Click the new link
     cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
     // Check that the correct vocab is selected
     cy.get('.suggestion-input-container').eq(0).find('input').eq(0).should('be.checked')
     cy.get('.suggestion-input-container').eq(1).find('input').eq(0).should('not.be.checked')
     // Check that term input fields are correct
-    testTermInput('Termi suomeksi:', 1, 'fi', 'yso', 'kissa', 'test')
-    testTermInput('Termi ruotsiksi:', 2, 'sv', 'yso', 'katt', 'test')
-    testTermInput('Termi englanniksi:', 3, 'en', 'yso', 'cat', 'test')
-    testTermInput('Termi pohjoissaameksi:', 4, 'se', 'yso', 'bussá', 'test')
+    testTermInput('Termi suomeksi:', 1, 'fi', 'yso', 'kissa')
+    testTermInput('Termi ruotsiksi:', 2, 'sv', 'yso', 'katt')
+    testTermInput('Termi englanniksi:', 3, 'en', 'yso', 'cat')
+    testTermInput('Termi pohjoissaameksi:', 4, 'se', 'yso', 'bussá')
+    // Check that relation input fields are correct
+    testRelationInput('Yläkäsite (LT):', 5, 'broader', 'kissa', 'kissa')
+    testRelationInput('Alakäsitteet (ST):', 6, 'narrower', 'kissa', 'kissa')
+    testRelationInput('Assosiatiiviset käsitteet (RT):', 7, 'associative', 'kissa', 'kissa')
     // Click submit button with empty fields and check that it is disabled
     cy.get('#suggestion-form-submit button').should('have.class', 'disabled')
     cy.get('#suggestion-form-submit button').click()
