@@ -34,6 +34,9 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           required: false,
         },
       },
+      broader: [],
+      narrower: [],
+      associative: [],
       submitted: false,
       renderKey: 0
     }
@@ -56,12 +59,12 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
     },
   },
   emits: ['updateFormIsValid'],
-  inject: ['vocab'],
+  inject: ['vocab', 'lang'],
   created () {
     // Make required term field Swedish if UI language is Swedish, otherwise make it Finnish
-    const lang = window.SKOSMOS.lang === 'sv' ? 'sv' : 'fi'
-    this.terms[lang].isValid = false
-    this.terms[lang].required = true
+    const l = this.lang === 'sv' ? 'sv' : 'fi'
+    this.terms[l].isValid = false
+    this.terms[l].required = true
   },
   watch: {
     selectedVocab() {
@@ -74,10 +77,13 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           required: false
         }
       })
+      const l = this.lang === 'sv' ? 'sv' : 'fi'
+      this.terms[l].isValid = false
+      this.terms[l].required = true
 
-      const lang = window.SKOSMOS.lang === 'sv' ? 'sv' : 'fi'
-      this.terms[lang].isValid = false
-      this.terms[lang].required = true
+      this.broader = []
+      this.narrower = []
+      this.associative = []
 
       this.submitted = false
 
@@ -91,7 +97,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   methods: {
     submit () {
       // This method is called by the parent component 'suggestion-new'
-      console.log('submit', this.selectedVocab, this.terms, this.submitted, this.formIsValid)
+      console.log('submit', this.selectedVocab, this.terms, this.broader, this.narrower, this.associative, this.submitted, this.formIsValid)
       this.submitted = true
     }
   },
@@ -130,6 +136,24 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
             :key="renderKey"
           ></term-input>
         </div>
+        <relation-input
+          v-model:selectedConcepts="broader"
+          :label="{text: 'Yläkäsite (LT):', id: 'suggestion-broader'}"
+          :vocab="selectedVocab"
+          :key="renderKey"
+        ></relation-input>
+        <relation-input
+          v-model:selectedConcepts="narrower"
+          :label="{text: 'Alakäsitteet (ST):', id: 'suggestion-narrower'}"
+          :vocab="selectedVocab"
+          :key="renderKey"
+        ></relation-input>
+        <relation-input
+          v-model:selectedConcepts="associative"
+          :label="{text: 'Assosiatiiviset käsitteet (RT):', id: 'suggestion-associative'}"
+          :vocab="selectedVocab"
+          :key="renderKey"
+        ></relation-input>
       </div>
     </div>
   `

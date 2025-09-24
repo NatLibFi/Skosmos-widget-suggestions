@@ -228,7 +228,7 @@ h3.suggestion-input-label {
 }
 
 .suggestion-chip-list {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .suggestion-chip {
@@ -238,6 +238,7 @@ h3.suggestion-input-label {
   color: var(--suggestion-white-color);
   padding: 10px 30px 10px 10px;
   margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
   border-radius: 15px;
   cursor: pointer;
   font-weight: bold;
@@ -245,7 +246,7 @@ h3.suggestion-input-label {
 
 .suggestion-chip i {
   position: absolute;
-  top: 15px;
+  top: 14px;
   right: 10px;
 }
 
@@ -303,14 +304,11 @@ h3.suggestion-input-label {
 .suggestion-dropdown a {
   color: var(--suggestion-dark-color) !important;
   font-weight: normal !important;
+  white-space: wrap;
 }
 
-.suggestion-dropdown a:hover {
+.suggestion-dropdown a:hover, .suggestion-dropdown a:focus, .suggestion-dropdown a:active {
   background-color: var(--suggestion-secondary-light-color);
-}
-
-.suggestion-dropdown a:active {
-  background-color: var(--suggestion-secondary-dark-color);
 }
 
 #suggestion-handling {

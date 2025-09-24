@@ -11,7 +11,8 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
         pageType: params.pageType,
         prefLabels: params.prefLabels,
         uri: params.uri,
-        vocab: window.SKOSMOS.vocab // This should be added to params in Skosmos
+        vocab: window.SKOSMOS.vocab, // This should be added to params in Skosmos
+        lang: window.SKOSMOS.lang // This should be added to params in Skosmos
       }
     },
     template: `
@@ -33,6 +34,8 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
   vueApp.component('basic-input', this.basicInputComponent)
   vueApp.component('basic-textarea', this.basicTextareaComponent)
   vueApp.component('term-input', this.termInputComponent)
+  vueApp.component('relation-input', this.relationInputComponent)
+  vueApp.component('chip-list', this.chipListComponent)
   vueApp.component('clear-input', this.clearInputComponent)
   vueApp.component('submit-button', this.submitButtonComponent)
 
@@ -58,6 +61,21 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
     },
     unmounted: el => {
       window.removeEventListener("mouseup", el.dragStopEvent)
+    }
+  })
+
+  vueApp.directive('click-outside', {
+    beforeMount: (el, binding) => {
+      el.clickOutsideEvent = event => {
+        // Ensure the click was outside the element
+        if (!(el === event.target || el.contains(event.target))) {
+          binding.value(event) // Call the method provided in the directive's value
+        }
+      }
+      window.addEventListener('click', el.clickOutsideEvent)
+    },
+    unmounted: el => {
+      window.removeEventListener('click', el.clickOutsideEvent)
     }
   })
 
