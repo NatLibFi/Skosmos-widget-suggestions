@@ -197,6 +197,7 @@
 .suggestion-input-label {
   display: block;
   font-weight: bold;
+  width: fit-content;
 }
 
 h3.suggestion-input-label {

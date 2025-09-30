@@ -24,22 +24,30 @@ SUGGESTION_PLUGIN.relationInputComponent = {
 
         this.loading = true
 
-        const params = new URLSearchParams({ lang: this.lang, query: this.searchTerm + '*', unique: true })
+        const query = this.searchTerm
+
+        const params = new URLSearchParams({ lang: this.lang, query: query + '*', unique: true })
         return fetch('rest/v1/' + this.vocab + '/search/?' + params.toString(), { signal: this.controller.signal })
           .then(res => res.json())
           .then(data => {
-            console.log(data)
-            this.searchResults = data.results
             this.loading = false
+
+            // Only continue if the query matches current search term to prevent a race condition
+            if (query !== this.searchTerm) return
+
+            this.searchResults = data.results
           })
           .catch(error => {
             if (error.name === 'AbortError') {
-              console.log('Fetch was aborted', this.controller.signal)
+              console.log('Fetch was aborted')
             } else {
               console.log('Fetch failed:', error)
               this.loading = false
             }
           })
+      } else {
+        this.searchResults = []
+        this.loading = false
       }
     }
   },
