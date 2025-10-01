@@ -38,6 +38,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       broader: [],
       narrower: [],
       associative: [],
+      groups: [],
       submitted: false,
       renderKey: 0
     }
@@ -85,6 +86,8 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       this.narrower = []
       this.associative = []
 
+      this.groups = []
+
       this.submitted = false
 
       // Rerender all field components
@@ -97,7 +100,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   methods: {
     submit () {
       // This method is called by the parent component 'suggestion-new'
-      console.log('submit', this.selectedVocab, this.terms, this.broader, this.narrower, this.associative, this.submitted, this.formIsValid)
+      console.log('submit', this.selectedVocab, this.terms, this.broader, this.narrower, this.associative, this.groups, this.submitted, this.formIsValid)
       this.submitted = true
     }
   },
@@ -157,6 +160,12 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           :vocab="selectedVocab"
           :key="renderKey"
         ></relation-input>
+        <group-input
+          v-if="selectedVocab === 'yso'"
+          v-model:selectedGroups="groups"
+          :lang="lang"
+          :key="renderKey"
+        ></group-input>
       </div>
     </div>
   `

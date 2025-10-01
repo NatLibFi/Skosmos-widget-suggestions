@@ -27,7 +27,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
         const query = this.searchTerm
 
         const params = new URLSearchParams({ lang: this.lang, query: query + '*', unique: true })
-        return fetch('rest/v1/' + this.vocab + '/search/?' + params.toString(), { signal: this.controller.signal })
+        fetch('rest/v1/' + this.vocab + '/search/?' + params.toString(), { signal: this.controller.signal })
           .then(res => res.json())
           .then(data => {
             this.loading = false

@@ -33,6 +33,7 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
   vueApp.component('draggable-dialog', this.draggableDialogComponent)
   vueApp.component('basic-input', this.basicInputComponent)
   vueApp.component('basic-textarea', this.basicTextareaComponent)
+  vueApp.component('group-input', this.groupInputComponent)
   vueApp.component('term-input', this.termInputComponent)
   vueApp.component('relation-input', this.relationInputComponent)
   vueApp.component('chip-list', this.chipListComponent)

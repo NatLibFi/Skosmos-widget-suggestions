@@ -7,6 +7,7 @@
     "components/chip-list.js",
     "components/clear-input.js",
     "components/draggable-dialog.js",
+    "components/group-input.js",
     "components/relation-input.js",
     "components/submit-button.js",
     "components/suggestion-new.js",
