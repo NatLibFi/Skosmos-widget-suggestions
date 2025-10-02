@@ -65,5 +65,22 @@ export const testRelationInput = (label, i, type, text, result) => {
   cy.get('@container').find('.suggestion-chip-list .suggestion-chip').invoke('text').should('contain', result)
   cy.get('@container').find('.suggestion-chip-list .suggestion-chip').click()
   cy.get('@container').find('.suggestion-chip-list').should('not.exist')
+}
 
+export const testGroupInput = (label, i) => {
+  // Find correct input container
+  cy.get('#suggestion-dialog-content .suggestion-input-container').eq(i).as('container')
+  // Check label
+  cy.get('@container').find('.suggestion-input-label').invoke('text').should('contain', label)
+  // Check opening group list
+  cy.get('@container').find('#suggestion-group').click()
+  cy.get('@container').find('.dropdown-menu').should('have.class', 'show')
+  cy.get('@container').find('.dropdown-menu .dropdown-item').should('have.length', 61)
+  cy.get('@container').find('.dropdown-menu .dropdown-item').eq(0).invoke('text').should('contain', '00 Yleistermit')
+  // Check adding and removing groups from chip list
+  cy.get('@container').find('.dropdown-menu .dropdown-item').eq(0).click()
+  cy.get('@container').find('.suggestion-chip-list .suggestion-chip').invoke('text').should('contain', '00 Yleistermit')
+  cy.get('@container').find('.suggestion-chip-list .suggestion-chip').click()
+  cy.get('@container').find('.suggestion-chip-list').should('not.exist')
+  cy.get('@container').find('.dropdown-menu .dropdown-item').eq(0).invoke('text').should('contain', '00 Yleistermit')
 }
