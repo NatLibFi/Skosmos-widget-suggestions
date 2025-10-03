@@ -100,6 +100,7 @@
 #suggestion-form a {
   color: var(--suggestion-medium-color);
   font-weight: bold;
+  text-decoration: underline !important;
 }
 
 #suggestion-form label {

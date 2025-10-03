@@ -39,6 +39,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       narrower: [],
       associative: [],
       groups: [],
+      exactMatches: [],
       submitted: false,
       renderKey: 0
     }
@@ -87,6 +88,8 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       this.associative = []
 
       this.groups = []
+
+      this.exactMatches = []
 
       this.submitted = false
 
@@ -166,6 +169,18 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           :lang="lang"
           :key="renderKey"
         ></group-input>
+        <exact-match-input
+          v-if="selectedVocab === 'slm'"
+          v-model:matches="exactMatches"
+          :links="[{url: '', text: 'LCGFT'}, {url: '', text: 'SAOGF'}]"
+          :key="renderKey"
+        ></exact-match-input>
+        <exact-match-input
+          v-if="selectedVocab === 'yso' || selectedVocab === 'yso-paikat'"
+          v-model:matches="exactMatches"
+          :links="[{url: '', text: 'LCSH'}, {url: '', text: 'SAO'}, {url: '', text: 'Wikipedia'}]"
+          :key="renderKey"
+        ></exact-match-input>
       </div>
     </div>
   `

@@ -4,6 +4,7 @@
     "vue-app.js",
     "components/basic-textarea.js",
     "components/basic-input.js",
+    "components/exact-match-input.js",
     "components/chip-list.js",
     "components/clear-input.js",
     "components/draggable-dialog.js",
