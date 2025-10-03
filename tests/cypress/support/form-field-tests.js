@@ -39,7 +39,6 @@ export const testTermInput = (label, i, lang, vocab, text) => {
   // Check adding and removing altLabel inputs
   cy.get('@container').find(`#suggestion-altlabel-${lang}-1`).should('not.exist')
   cy.get('@container').find(`#suggestion-altlabel-${lang}-0`).type('test')
-  cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('not.exist')
   cy.get('@container').find(`#suggestion-altlabel-${lang}-1`).should('exist')
   cy.get('@container').find('.suggestion-clear-input i').eq(1).click()
   cy.get('@container').find(`#suggestion-altlabel-${lang}-1`).should('not.exist')
@@ -83,4 +82,21 @@ export const testGroupInput = (label, i) => {
   cy.get('@container').find('.suggestion-chip-list .suggestion-chip').click()
   cy.get('@container').find('.suggestion-chip-list').should('not.exist')
   cy.get('@container').find('.dropdown-menu .dropdown-item').eq(0).invoke('text').should('contain', '00 Yleistermit')
+}
+
+export const testExactMatchInput = (label, i) => {
+  // Find correct input container
+  cy.get('#suggestion-dialog-content .suggestion-input-container').eq(i).as('container')
+  // Check label
+  cy.get('@container').find('.suggestion-input-label').invoke('text').should('contain', label)
+  // Check adding and removing link inputs
+  cy.get('@container').find('#suggestion-match-input-1').should('not.exist')
+  cy.get('@container').find('#suggestion-match-input-0').type('test')
+  cy.get('@container').find('#suggestion-match-input-1').should('exist')
+  cy.get('@container').find('.suggestion-clear-input i').eq(1).click()
+  cy.get('@container').find('#suggestion-match-input-1').should('not.exist')
+  // Check clearing first link input
+  cy.get('@container').find('.suggestion-clear-input i').eq(0).click()
+  cy.get('@container').find('#suggestion-match-input-0').should('have.value', '')
+  cy.get('@container').find('#suggestion-match-input-1').should('not.exist')
 }

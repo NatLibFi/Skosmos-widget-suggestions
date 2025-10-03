@@ -1,4 +1,4 @@
-import { testBasicInput, testBasicTextarea, testTermInput, testRelationInput, testGroupInput } from '../support/form-field-tests'
+import { testBasicInput, testBasicTextarea, testTermInput, testRelationInput, testGroupInput, testExactMatchInput } from '../support/form-field-tests'
 
 describe('Vocab page', () => {
   it('shows a clickable new button', () => {
@@ -42,6 +42,8 @@ describe('Vocab page', () => {
     testRelationInput('Assosiatiiviset käsitteet (RT):', 7, 'associative', 'kissa', 'kissa')
     // Check that group input field is correct
     testGroupInput('YSOn temaattinen ryhmä:', 8)
+    // Check that exact match input field is correct
+    testExactMatchInput('Vastaava käsite muussa sanastossa (esim. LCSH, SAO, Wikipedia):', 9)
     // Click submit button with empty fields and check that it is disabled
     cy.get('#suggestion-form-submit button').should('have.class', 'disabled')
     cy.get('#suggestion-form-submit button').click()
