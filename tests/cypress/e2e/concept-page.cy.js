@@ -38,18 +38,17 @@ describe('Concept page', () => {
     cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
     // Check that form fields are correct
     testBasicTextarea('Ehdotettu muutos: *', 0)
-    testBasicTextarea('Perustelut ehdotukselle: *', 1)
+    testBasicTextarea('Lisätietoa tai perusteluja ehdotukselle:', 1)
     testBasicInput('Ehdottajan organisaatio:', 2)
     // Click submit button with empty fields and check that it is disabled
     cy.get('#suggestion-form-submit button').should('have.class', 'disabled')
     cy.get('#suggestion-form-submit button').click()
     // Check that fields are validated correctly
     cy.get('.suggestion-input-container').eq(0).find('.suggestion-error').should('be.visible')
-    cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('be.visible')
+    cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('not.exist')
     cy.get('.suggestion-input-container').eq(2).find('.suggestion-error').should('not.exist')
     // Check that submit button is not disabled with valid inputs
     cy.get('.suggestion-input-container').eq(0).find('textarea').type('test')
-    cy.get('.suggestion-input-container').eq(1).find('textarea').type('test')
     cy.get('#suggestion-form-submit button').should('not.have.class', 'disabled')
   })
 
