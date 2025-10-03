@@ -40,13 +40,17 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       associative: [],
       groups: [],
       exactMatches: [],
+      explanation: '',
+      neededFor: '',
+      neededForIsValid: false,
+      organization: '',
       submitted: false,
       renderKey: 0
     }
   },
   computed: {
     formIsValid () {
-      return Object.values(this.terms).every(v => v.isValid)
+      return Object.values(this.terms).every(v => v.isValid) && this.neededForIsValid
     },
     filteredTerms () {
       const vocabMap = {
@@ -91,6 +95,13 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
 
       this.exactMatches = []
 
+      this.explanation = ''
+
+      this.neededFor = ''
+      this.neededForIsValid = false
+
+      this.organization = ''
+
       this.submitted = false
 
       // Rerender all field components
@@ -103,7 +114,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   methods: {
     submit () {
       // This method is called by the parent component 'suggestion-new'
-      console.log('submit', this.selectedVocab, this.terms, this.broader, this.narrower, this.associative, this.groups, this.submitted, this.formIsValid)
+      console.log('submit', this.$data)
       this.submitted = true
     }
   },
@@ -181,6 +192,20 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           :links="[{url: '', text: 'LCSH'}, {url: '', text: 'SAO'}, {url: '', text: 'Wikipedia'}]"
           :key="renderKey"
         ></exact-match-input>
+        <basic-textarea
+          v-model:text="explanation"
+          :label="{text: 'Lisätietoa tai perusteluja ehdotukselle:', id: 'suggestion-explanation'}"
+        ></basic-textarea>
+        <basic-input
+          v-model:text="neededFor"
+          v-model:isValid="neededForIsValid"
+          :submitted="submitted"
+          :label="{text: 'Minkä aineiston kuvailussa tarvitsit käsitettä? Julkaisun nimi, ISBN tai linkki: *', id: 'suggestion-needed-for'}"
+        ></basic-input>
+        <basic-input
+          v-model:text="organization"
+          :label="{text: 'Ehdottajan organisaatio:', id: 'suggestion-organization'}"
+        ></basic-input>
       </div>
     </div>
   `

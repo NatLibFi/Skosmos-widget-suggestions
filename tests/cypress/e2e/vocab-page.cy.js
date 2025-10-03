@@ -44,6 +44,10 @@ describe('Vocab page', () => {
     testGroupInput('YSOn temaattinen ryhmä:', 8)
     // Check that exact match input field is correct
     testExactMatchInput('Vastaava käsite muussa sanastossa (esim. LCSH, SAO, Wikipedia):', 9)
+    // Check that explanation, needed for and organization fields are correct
+    testBasicTextarea('Lisätietoa tai perusteluja ehdotukselle:', 10)
+    testBasicInput('Minkä aineiston kuvailussa tarvitsit käsitettä? Julkaisun nimi, ISBN tai linkki: *', 11)
+    testBasicInput('Ehdottajan organisaatio:', 12)
     // Click submit button with empty fields and check that it is disabled
     cy.get('#suggestion-form-submit button').should('have.class', 'disabled')
     cy.get('#suggestion-form-submit button').click()
@@ -52,8 +56,17 @@ describe('Vocab page', () => {
     cy.get('.suggestion-input-container').eq(2).find('.suggestion-error').should('not.exist')
     cy.get('.suggestion-input-container').eq(3).find('.suggestion-error').should('not.exist')
     cy.get('.suggestion-input-container').eq(4).find('.suggestion-error').should('not.exist')
+    cy.get('.suggestion-input-container').eq(5).find('.suggestion-error').should('not.exist')
+    cy.get('.suggestion-input-container').eq(6).find('.suggestion-error').should('not.exist')
+    cy.get('.suggestion-input-container').eq(7).find('.suggestion-error').should('not.exist')
+    cy.get('.suggestion-input-container').eq(8).find('.suggestion-error').should('not.exist')
+    cy.get('.suggestion-input-container').eq(9).find('.suggestion-error').should('not.exist')
+    cy.get('.suggestion-input-container').eq(10).find('.suggestion-error').should('not.exist')
+    cy.get('.suggestion-input-container').eq(11).find('.suggestion-error').should('exist')
+    cy.get('.suggestion-input-container').eq(12).find('.suggestion-error').should('not.exist')
     // Check that submit button is not disabled with valid inputs
     cy.get('.suggestion-input-container').eq(1).find('#suggestion-preflabel-fi').type('test')
+    cy.get('.suggestion-input-container').eq(11).find('#suggestion-needed-for').type('test')
     cy.get('#suggestion-form-submit button').should('not.have.class', 'disabled')
   })
 
