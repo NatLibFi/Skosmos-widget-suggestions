@@ -117,8 +117,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
         })
     },
     removeAltLabelInput (i) {
-      this.updateAltLabels(i, '')
-      this.$emit('update:altLabels', this.altLabels.filter((l, idx) => idx !== i))
+      this.$emit('update:altLabels', this.altLabels.filter((_, idx) => idx !== i))
     }
   },
   template: `
@@ -172,10 +171,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
                 <label class="suggestion-term-label col-lg-3 pt-lg-2 sr-only"
                   :for="'suggestion-altlabel-' + lang + '-' + (i + 1)"
                 >Vaihtoehtoinen termi:</label>
-                <clear-input
-                  v-if="altLabels[i + 1] || true"
-                  @clear-input="removeAltLabelInput(i + 1)"
-                ></clear-input>
+                <clear-input @clear-input="removeAltLabelInput(i + 1)"></clear-input>
                 <input class="suggestion-input" type="text"
                   :id="'suggestion-altlabel-' + lang + '-' + (i + 1)"
                   :value="l"
