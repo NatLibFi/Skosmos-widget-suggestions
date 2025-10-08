@@ -75,6 +75,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
     this.terms[this.lang].isValid = false
     this.terms[this.lang].required = true
 
+    // Parse YSO meeting dates from util/meeting-dates.js
     const deadline = new Date(Date.parse(SUGGESTION_PLUGIN.deadlineDate))
     const meeting = new Date(Date.parse(SUGGESTION_PLUGIN.meetingDate))
 
@@ -124,6 +125,14 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       // This method is called by the parent component 'suggestion-new'
       console.log('submit', this.$data)
       this.submitted = true
+
+      // Scroll the topmost invalid field into view after DOM has updated
+      this.$nextTick(() => {
+        const firstError = document.querySelector('.suggestion-error')
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      })
     }
   },
   template: `
@@ -211,7 +220,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           v-model:text="organization"
           :label="{text: 'Ehdottajan organisaatio:', id: 'suggestion-organization'}"
         ></basic-input>
-        <div id="suggestion-handling">
+        <div id="suggestion-handling" v-if="selectedVocab === 'yso'">
           <p>{{ deadlineDate }} mennessä tehdyt ehdotukset otetaan asialistalle {{ meetingDate }} sanastokokouksessa.</p>
         </div>
       </div>
