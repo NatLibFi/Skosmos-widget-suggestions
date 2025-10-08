@@ -45,6 +45,8 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       neededForIsValid: false,
       organization: '',
       submitted: false,
+      deadlineDate: '',
+      meetingDate: '',
       renderKey: 0
     }
   },
@@ -72,6 +74,12 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
     this.lang = this.UILang === 'sv' ? 'sv' : 'fi'
     this.terms[this.lang].isValid = false
     this.terms[this.lang].required = true
+
+    const deadline = new Date(Date.parse(SUGGESTION_PLUGIN.deadlineDate))
+    const meeting = new Date(Date.parse(SUGGESTION_PLUGIN.meetingDate))
+
+    this.deadlineDate = `${deadline.getDate()}.${deadline.getMonth() + 1}.${deadline.getFullYear()}`
+    this.meetingDate = `${meeting.getDate()}.${meeting.getMonth() + 1}.${meeting.getFullYear()}`
   },
   watch: {
     selectedVocab() {
@@ -156,28 +164,25 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         <relation-input
           v-model:selectedConcepts="broader"
           :label="{text: 'Yläkäsite (LT):', id: 'suggestion-broader'}"
-          :lang="lang"
           :vocab="selectedVocab"
           :key="renderKey"
         ></relation-input>
         <relation-input
           v-model:selectedConcepts="narrower"
           :label="{text: 'Alakäsitteet (ST):', id: 'suggestion-narrower'}"
-          :lang="lang"
           :vocab="selectedVocab"
           :key="renderKey"
         ></relation-input>
         <relation-input
           v-model:selectedConcepts="associative"
           :label="{text: 'Assosiatiiviset käsitteet (RT):', id: 'suggestion-associative'}"
-          :lang="lang"
           :vocab="selectedVocab"
           :key="renderKey"
         ></relation-input>
         <group-input
           v-if="selectedVocab === 'yso'"
           v-model:selectedGroups="groups"
-          :lang="lang"
+          :lang="UILang"
           :key="renderKey"
         ></group-input>
         <exact-match-input
@@ -206,6 +211,9 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           v-model:text="organization"
           :label="{text: 'Ehdottajan organisaatio:', id: 'suggestion-organization'}"
         ></basic-input>
+        <div id="suggestion-handling">
+          <p>{{ deadlineDate }} mennessä tehdyt ehdotukset otetaan asialistalle {{ meetingDate }} sanastokokouksessa.</p>
+        </div>
       </div>
     </div>
   `

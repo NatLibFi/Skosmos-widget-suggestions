@@ -2,7 +2,6 @@ SUGGESTION_PLUGIN.relationInputComponent = {
   props: {
     label: Object,
     vocab: String,
-    lang: String,
     selectedConcepts: Array
   },
   data () {
@@ -14,7 +13,19 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       loading: false
     }
   },
+  computed: {
+    lang () {
+      if (this.vocab === 'slm') {
+        return this.UILang === 'sv' ? 'sv' : 'fi'
+      } else if (this.vocab === 'yso-paikat') {
+        return this.UILang === 'se' ? 'fi': this.UILang
+      } else {
+        return this.UILang
+      }
+    }
+  },
   emits: ['update:selectedConcepts'],
+  inject: ['UILang'],
   watch: {
     searchTerm () {
       if (this.searchTerm.length > 1) {

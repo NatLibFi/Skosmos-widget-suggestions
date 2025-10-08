@@ -2,6 +2,7 @@
   "js": [
     "widget.js",
     "vue-app.js",
+    "util/meeting-dates.js",
     "components/basic-textarea.js",
     "components/basic-input.js",
     "components/exact-match-input.js",

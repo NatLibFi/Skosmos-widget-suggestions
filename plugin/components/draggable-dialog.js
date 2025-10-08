@@ -45,10 +45,10 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
         <div id="suggestion-dialog-top" class="row"
           @mousedown="handleDragStartEvent"
         >
-          <div id="suggestion-dialog-handle" class="col">
+          <div id="suggestion-dialog-handle" class="col ps-0">
             <i class="fa-solid fa-grip-vertical align-middle" aria-hidden="true"></i>
           </div>
-          <div id="suggestion-dialog-close" class="col text-end">
+          <div id="suggestion-dialog-close" class="col text-end pe-0">
             <i class="fa-solid fa-xmark align-middle" aria-label="Close" role="button"
               @click="this.$emit('close-dialog')"
             ></i>

@@ -23,7 +23,7 @@ describe('Vocab page', () => {
     cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon ')
   })
 
-  it('YSO form has all correct fields', () => {
+  it('has all correct fields in YSO form', () => {
     // Go to YSO vocab home page
     cy.visit('/yso/fi/')
     // Click the new link
@@ -68,6 +68,16 @@ describe('Vocab page', () => {
     cy.get('.suggestion-input-container').eq(1).find('#suggestion-preflabel-fi').type('test')
     cy.get('.suggestion-input-container').eq(11).find('#suggestion-needed-for').type('test')
     cy.get('#suggestion-form-submit button').should('not.have.class', 'disabled')
+  })
+
+  it('has a note about YSO meeting dates', () => {
+    // Go to YSO vocab home page
+    cy.visit('/yso/fi/')
+    // Click the new link
+    cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
+    // Check that meeting info is in correct format
+    const regex = /((0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[0-2])\.(\d{4})) mennessä tehdyt ehdotukset otetaan asialistalle ((0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[0-2])\.(\d{4})) sanastokokouksessa\./
+    cy.get('#suggestion-handling').invoke('text').should('match', regex)
   })
 
   it('new suggestion dialog moves when dragging with mouse', () => {
