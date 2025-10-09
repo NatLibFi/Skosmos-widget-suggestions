@@ -46,7 +46,11 @@ SUGGESTION_PLUGIN.relationInputComponent = {
             // Only continue if the query matches current search term to prevent a race condition
             if (query !== this.searchTerm) return
 
-            this.searchResults = data.results
+            if (data.results.length > 0) {
+              this.searchResults = data.results
+            } else {
+              this.searchResults = [{ prefLabel: 'Termejä ei löydy hakusanalla' }]
+            }
           })
           .catch(error => {
             if (error.name === 'AbortError') {
@@ -112,7 +116,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
           <li
             v-for="r in searchResults"
             :key="r.uri"
-            @click="selectConcept(r)"
+            @click="r.uri && selectConcept(r)"
           >
             <a class="dropdown-item">{{ r.prefLabel }}</a>
           </li>
