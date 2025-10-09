@@ -5,18 +5,22 @@ SUGGESTION_PLUGIN.groupInputComponent = {
   },
   data () {
     return {
-      groups: []
+      groups: [],
+      loading: false
     }
   },
   emits: ['update:selectedGroups'],
   created () {
+    this.loading = true
     fetch('rest/v1/yso/groups?lang=' + this.lang)
       .then(res => res.json())
       .then(data => {
         this.groups = data.groups
+        this.loading = false
       })
       .catch(error => {
         console.log('Fetch failed:', error)
+        this.loading = false
       })
   },
   methods: {
@@ -50,13 +54,20 @@ SUGGESTION_PLUGIN.groupInputComponent = {
           Valitse ryhmät listalta
         </button>
         <ul class="dropdown-menu" aria-labelledby="suggestion-group">
-          <li
-            v-for="g in groups"
-            :key="g.uri"
-            @click="selectGroup(g)"
-          >
-            <a class="dropdown-item">{{ g.prefLabel }}</a>
-          </li>
+          <template v-if="loading">
+            <li>
+              <a class="dropdown-item"><i v-if="loading" class="spinner fa-solid fa-spinner fa-spin-pulse" aria-hidden="true"></i></a>
+            </li>
+          </template>
+          <template v-else>
+            <li
+              v-for="g in groups"
+              :key="g.uri"
+              @click="selectGroup(g)"
+            >
+              <a class="dropdown-item">{{ g.prefLabel }}</a>
+            </li>
+          </template>
         </ul>
         <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
       </div>
