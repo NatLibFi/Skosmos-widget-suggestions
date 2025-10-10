@@ -1,8 +1,10 @@
 {
   "js": [
+    "node_modules/vue-i18n/dist/vue-i18n.global.js",
     "widget.js",
-    "vue-app.js",
     "util/meeting-dates.js",
+    "util/i18n.js",
+    "vue-app.js",
     "components/basic-textarea.js",
     "components/basic-input.js",
     "components/exact-match-input.js",

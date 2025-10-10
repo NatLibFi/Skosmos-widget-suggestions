@@ -81,5 +81,14 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
     }
   })
 
+  // Register translation service
+  const i18n = VueI18n.createI18n({
+    locale: window.SKOSMOS.lang, // This should be added to params in Skosmos
+    fallbackLocale: 'fi',
+    messages: SUGGESTION_PLUGIN.translations
+  })
+
+  vueApp.use(i18n)
+
   return vueApp
 }
