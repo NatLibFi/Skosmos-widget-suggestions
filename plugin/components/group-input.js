@@ -41,7 +41,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
   },
   template: `
     <div class="suggestion-input-container">
-      <h3 id="suggestion-group-label" class="suggestion-input-label">YSOn temaattinen ryhmä:</h3>
+      <h3 id="suggestion-group-label" class="suggestion-input-label">{{ $t('new.groups.label' )}}</h3>
 
       <chip-list
         v-if="selectedGroups.length > 0"
@@ -51,7 +51,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
 
       <div class="suggestion-dropdown btn-group" aria-labelledby="suggestion-group-label">
         <button id="suggestion-group" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" data-bs-display="static" aria-expanded="false">
-          Valitse ryhmät listalta
+          {{ $t('new.groups.placeholder') }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="suggestion-group">
           <template v-if="loading">

@@ -317,7 +317,7 @@ h3.suggestion-input-label a {
   background-color: var(--suggestion-secondary-light-color);
 }
 
-#suggestion-handling {
+#suggestion-meeting-info {
   color: var(--suggestion-dark-color);
   margin-top: 1rem;
 }

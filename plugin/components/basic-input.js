@@ -41,7 +41,7 @@ SUGGESTION_PLUGIN.basicInputComponent = {
       >
       <p class="suggestion-error"
         v-if="!isValid && submitted"
-      >Tämä on pakollinen tieto.</p>
+      >{{ $t('common.error') }}</p>
     </div>
   `
 }

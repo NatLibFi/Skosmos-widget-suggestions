@@ -5,9 +5,7 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
   },
   computed: {
     linkString () {
-      return this.links.map(l => {
-        return `<a target="_blank" href="${l.url}">${l.text}</a>`;
-      }).join(', ')
+      return this.links.map(l => `<a target="_blank" href="${l.url}">${l.text}</a>`).join(', ')
     }
   },
   emits: ['update:matches'],
@@ -29,19 +27,19 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
   template: `
     <div class="suggestion-input-container">
         <h3 class="suggestion-input-label" id="suggestion-match-label">
-          Vastaava käsite muussa sanastossa (esim. <span v-html="linkString"></span>):
+          {{ $t('new.exactMatches.label') }} <span v-html="linkString"></span>):
         </h3>
 
         <div aria-labelledby="suggestion-match-label">
           <label class="suggestion-input-label sr-only" for="suggestion-match-input-0">
-            Vastaava käsite muussa sanastossa:
+            $t('new.exactMatches.ariaLabel')
           </label>
           <clear-input
             v-if="matches[0]"
             @clear-input="updateMatches(0, '', false)"
           ></clear-input>
           <input class="suggestion-input" id="suggestion-match-input-0" type="text"
-            :placeholder="'Linkki käsitteeseen'"
+            :placeholder="$t('new.exactMatches.placeholder')"
             :value="matches[0]"
             @input="updateMatches(0, $event.target.value)"
           >
@@ -49,11 +47,11 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
             <template v-for="(m, i) in matches.slice(1)">
               <label class="suggestion-input-label sr-only"
                 :for="'suggestion-match-input-' + (i + 1)"
-              >Vastaava käsite muussa sanastossa:</label>
+              >$t('new.exactMatches.ariaLabel')</label>
               <clear-input @clear-input="removeMatchInput(i + 1)"></clear-input>
               <input class="suggestion-input" type="text"
                 :id="'suggestion-match-input-' + (i + 1)"
-                :placeholder="'Linkki käsitteeseen'"
+                :placeholder="$t('new.exactMatches.placeholder')"
                 :value="m"
                 @input="updateMatches(i + 1, $event.target.value)"
               >

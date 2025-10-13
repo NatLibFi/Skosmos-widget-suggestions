@@ -26,17 +26,17 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
         @click="showDialog = true"
       >
         <i class="fa-solid fa-pen-to-square"></i>&nbsp;
-        <h2>Ehdota uutta käsitettä tähän sanastoon</h2>
+        <h2>{{ $t('new.button') }}</h2>
       </a>
       <template v-if="showDialog">
         <draggable-dialog @close-dialog="showDialog = false">
           <template #content>
             <div id="suggestion-header">
               <h2 id="suggestion-title">
-                Ehdota uutta käsitettä sanastoon
+                {{ $t('new.heading') }}
               </h2>
               <p id="suggestion-subtitle">
-                Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta
+                {{ $t('new.subheading') }}
               </p>
             </div>
             <suggestion-new-form
@@ -46,7 +46,7 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
           </template>
           <template #footer>
             <submit-button
-              :text="'Lähetä käsite-ehdotus'"
+              :text="$t('new.submit')"
               :disabled="!formIsValid"
               @submit="handleSubmitEvent()"
             ></submit-button>

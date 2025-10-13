@@ -22,7 +22,7 @@ export const testBasicTextarea = (label, i) => {
   cy.get('@container').find('textarea').should('have.value', '')
 }
 
-export const testTermInput = (label, i, lang, vocab, text) => {
+export const testTermInput = (label, i, lang, foundInVocab, text) => {
   // Find correct input container
   cy.get('#suggestion-dialog-content .suggestion-input-container').eq(i).as('container')
   // Check label
@@ -30,7 +30,7 @@ export const testTermInput = (label, i, lang, vocab, text) => {
   // Check inputting existing concept
   cy.get('@container').find(`#suggestion-preflabel-${lang}`).type(text)
   cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('not.exist')
-  cy.get('@container').find('.suggestion-error').invoke('text').should('contain', `Termi löytyy jo ${vocab}: ${text}`)
+  cy.get('@container').find('.suggestion-error').invoke('text').should('contain', foundInVocab + text)
   // Check clearing prefLabel
   cy.get('@container').find('#suggestion-preflabel-' + lang).should('have.value', text)
   cy.get('@container').find('.suggestion-clear-input i').eq(0).click()

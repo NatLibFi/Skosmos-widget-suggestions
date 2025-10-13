@@ -31,13 +31,9 @@ SUGGESTION_PLUGIN.termInputComponent = {
     },
     errorString () {
       if (!this.concept && this.required) {
-        return 'Tämä on pakollinen tieto.'
+        return this.$t('common.error')
       } else if (this.concept) {
-        if (this.concept.vocab === 'yse') {
-          return `Termistä on jo olemassa käsite-ehdotus: <a href="${this.concept.uri}">${this.concept.prefLabel}</a>. Kommentoi tai kannata ehdotusta sen tiedoista löytyvän kotisivulinkin kautta.`
-        } else {
-          return `Termi löytyy jo ${this.concept.vocab}: <a href="${this.concept.uri}">${this.concept.prefLabel}</a>`
-        }
+        return this.$t(`new.terms.if.${this.concept.vocab}`, {link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>`})
       }
     }
   },
@@ -130,7 +126,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
         <div class="row">
           <label class="suggestion-term-label col-lg-4 pt-lg-2"
             :for="'suggestion-preflabel-' + lang"
-          >Päätermi:{{ required ? ' *' : '' }}</label>
+          >{{ $t('new.terms.prefLabel') }}{{ required ? ' *' : '' }}</label>
           <div class="col-lg-8">
             <clear-input
               v-if="prefLabel && !loading"
@@ -155,7 +151,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
         <div class="row">
           <label class="suggestion-term-label col-lg-4 pt-lg-2"
             :for="'suggestion-altlabel-' + lang + '-0'"
-          >Vaihtoehtoinen termi:</label>
+          >{{ $t('new.terms.altLabel') }}</label>
           <div class="col-lg-8">
             <clear-input
               v-if="altLabels[0]"
@@ -170,7 +166,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
               <template v-for="(l, i) in altLabels.slice(1)">
                 <label class="suggestion-term-label col-lg-3 pt-lg-2 sr-only"
                   :for="'suggestion-altlabel-' + lang + '-' + (i + 1)"
-                >Vaihtoehtoinen termi:</label>
+                >{{ $t('new.terms.altLabel') }}</label>
                 <clear-input @clear-input="removeAltLabelInput(i + 1)"></clear-input>
                 <input class="suggestion-input" type="text"
                   :id="'suggestion-altlabel-' + lang + '-' + (i + 1)"

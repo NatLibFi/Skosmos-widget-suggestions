@@ -20,17 +20,17 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
         @click="showDialog = true"
       >
         <i class="fa-solid fa-pen-to-square"></i>&nbsp;
-        <h2>Ehdota muutosta käsitteeseen</h2>
+        <h2>{{ $t('change.button') }}</h2>
       </a>
       <template v-if="showDialog">
         <draggable-dialog @close-dialog="showDialog = false">
           <template #content>
             <div id="suggestion-header">
               <h2 id="suggestion-title">
-                Ehdota muutosta käsitteeseen {{ prefLabels[0].label }}
+                {{ $t('change.heading') }} {{ prefLabels[0].label }}
               </h2>
               <p id="suggestion-subtitle">
-                Kuka tahansa sanaston käyttäjä saa ehdottaa muutoksia sanastoon
+                {{ $t('change.subheading') }}
               </p>
             </div>
             <suggestion-change-form
@@ -40,7 +40,7 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
           </template>
           <template #footer>
             <submit-button
-              :text="'Lähetä muutosehdotus'"
+              :text="$t('change.submit')"
               :disabled="!formIsValid"
               @submit="handleSubmitEvent()"
             ></submit-button>

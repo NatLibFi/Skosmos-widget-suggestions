@@ -1,18 +1,18 @@
 SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
   data() {
     return {
-      change: '',
+      description: '',
       explanation: '',
       organization: '',
-      changeIsValid: false,
+      descriptionIsValid: false,
       submitted: false
     }
   },
   emits: ['updateFormIsValid'],
   inject:['prefLabels', 'uri'],
   watch: {
-    changeIsValid () {
-      this.$emit('updateFormIsValid', this.changeIsValid)
+    descriptionIsValid () {
+      this.$emit('updateFormIsValid', this.descriptionIsValid)
     }
   },
   methods: {
@@ -33,7 +33,7 @@ Käsittelyssä
 
 **Ehdotettu muutos**
 
-${this.change}
+${this.description}
 
 **Perustelut ehdotukselle**
 
@@ -43,7 +43,7 @@ ${this.explanation}
 
 ${this.organization}
 `
-      if(this.changeIsValid) {
+      if(this.descriptionIsValid) {
         console.log('submitted:\n', data)
       } else {
         console.log('Required fields missing')
@@ -55,18 +55,18 @@ ${this.organization}
     <div id="suggestion-form" role="form">
       <div id="suggestion-form-inputs">
         <basic-textarea
-          v-model:text="change"
-          v-model:isValid="changeIsValid"
-          :label="{text: 'Ehdotettu muutos: *', id: 'suggestion-change'}"
+          v-model:text="description"
+          v-model:isValid="descriptionIsValid"
+          :label="{text: $t('change.description'), id: 'suggestion-description'}"
           :submitted="submitted"
         ></basic-textarea>
         <basic-textarea
           v-model:text="explanation"
-          :label="{text: 'Lisätietoa tai perusteluja ehdotukselle:', id: 'suggestion-explanation'}"
+          :label="{text: $t('change.explanation'), id: 'suggestion-explanation'}"
         ></basic-textarea>
         <basic-input
           v-model:text="organization"
-          :label="{text: 'Ehdottajan organisaatio:', id: 'suggestion-organization'}"
+          :label="{text: $t('change.organization'), id: 'suggestion-organization'}"
         ></basic-input>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { testBasicInput, testBasicTextarea } from '../support/form-field-tests'
 describe('Concept page', () => {
   it('shows a clickable new link', () => {
     // Go to abstract objects concept page in YSO vocab
-    cy.visit('/yso/en/page/p8318')
+    cy.visit('/yso/fi/page/p8318')
     // Find link for new suggestion form
     cy.get('#main-content .main-content-section #suggestion-plugin a').eq(1).as('new-link')
     // Check that link text is correct
@@ -13,12 +13,12 @@ describe('Concept page', () => {
     // Check that form opens and has correct content
     cy.get('#suggestion-title').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon')
     // Check that url is updated
-    cy.url().should('include', '/yso/en/page/p8318#suggestion')
+    cy.url().should('include', '/yso/fi/page/p8318#suggestion')
   })
 
   it('shows a clickable change link', () => {
     // Go to abstract objects concept page in YSO vocab
-    cy.visit('/yso/en/page/p8318')
+    cy.visit('/yso/fi/page/p8318')
     // Find link for change suggestion form
     cy.get('#main-content .main-content-section #suggestion-plugin a').first().as('change-link')
     // Check that link text is correct
@@ -26,14 +26,14 @@ describe('Concept page', () => {
     // Click link
     cy.get('@change-link').click()
     // Check that form opens and has correct title
-    cy.get('#suggestion-title').invoke('text').should('contain', 'Ehdota muutosta käsitteeseen abstract objects')
+    cy.get('#suggestion-title').invoke('text').should('contain', 'Ehdota muutosta käsitteeseen abstraktit objektit')
     // Check that url is updated
-    cy.url().should('include', '/yso/en/page/p8318#suggestion')
+    cy.url().should('include', '/yso/fi/page/p8318#suggestion')
   })
 
   it('has all correct change form fields', () => {
     // Go to abstract objects concept page in YSO vocab
-    cy.visit('/yso/en/page/p8318')
+    cy.visit('/yso/fi/page/p8318')
     // Click the change link
     cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
     // Check that form fields are correct

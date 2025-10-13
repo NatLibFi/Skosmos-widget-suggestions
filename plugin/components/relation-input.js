@@ -49,7 +49,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
             if (data.results.length > 0) {
               this.searchResults = data.results
             } else {
-              this.searchResults = [{ prefLabel: 'Termejä ei löydy hakusanalla' }]
+              this.searchResults = [{ prefLabel: this.$t('new.common.none') }]
             }
           })
           .catch(error => {

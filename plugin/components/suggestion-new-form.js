@@ -3,12 +3,6 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
     return {
       lang: '',
       selectedVocab: this.vocab,
-      termLabels: { // This is used until translation framework is implemented
-        'fi': 'Termi suomeksi:',
-        'sv': 'Termi ruotsiksi:',
-        'en': 'Termi englanniksi:',
-        'se': 'Termi pohjoissaameksi:'
-      },
       terms: {
         fi: {
           prefLabel: '',
@@ -140,20 +134,20 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       <div id="suggestion-form-inputs">
         <div class="suggestion-input-container">
           <fieldset id="suggestion-vocab-wrapper">
-            <legend class="suggestion-input-label" for="suggestion-vocab-wrapper">Kohdesanasto:</legend>
+            <legend class="suggestion-input-label" for="suggestion-vocab-wrapper">{{ $t('new.vocab.label') }}</legend>
             <div>
               <input id="suggestion-vocab-yso" type="radio" name="suggestion-radio" value="yso"
                 v-model="selectedVocab"
               />
-              <label for="suggestion-vocab-yso">YSO</label>
+              <label for="suggestion-vocab-yso">{{ $t('new.vocab.yso') }}</label>
               <input id="suggestion-vocab-yso-places" type="radio" name="suggestion-radio" value="yso-paikat"
                 v-model="selectedVocab"
               />
-              <label for="suggestion-vocab-yso-places">YSO-paikat</label>
+              <label for="suggestion-vocab-yso-places">{{ $t('new.vocab.ysoPlaces') }}</label>
               <input id="suggestion-vocab-slm" type="radio" name="suggestion-radio" value="slm"
                 v-model="selectedVocab"
               />
-              <label for="suggestion-vocab-slm">SLM</label>
+              <label for="suggestion-vocab-slm">{{ $t('new.vocab.slm') }}</label>
             </div>
           </fieldset>
         </div>
@@ -162,7 +156,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
             v-model:prefLabel="term.prefLabel"
             v-model:altLabels="term.altLabels"
             v-model:isValid="term.isValid"
-            :label="{text: termLabels[key], id: 'suggestion-term-' + key + '-label'}"
+            :label="{text: $t('new.terms.' + key), id: 'suggestion-term-' + key + '-label'}"
             :vocab="selectedVocab"
             :lang="key"
             :submitted="submitted"
@@ -172,19 +166,19 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         </div>
         <relation-input
           v-model:selectedConcepts="broader"
-          :label="{text: 'Yläkäsite (LT):', id: 'suggestion-broader'}"
+          :label="{text: $t('new.broader'), id: 'suggestion-broader'}"
           :vocab="selectedVocab"
           :key="renderKey"
         ></relation-input>
         <relation-input
           v-model:selectedConcepts="narrower"
-          :label="{text: 'Alakäsitteet (ST):', id: 'suggestion-narrower'}"
+          :label="{text: $t('new.narrower'), id: 'suggestion-narrower'}"
           :vocab="selectedVocab"
           :key="renderKey"
         ></relation-input>
         <relation-input
           v-model:selectedConcepts="associative"
-          :label="{text: 'Assosiatiiviset käsitteet (RT):', id: 'suggestion-associative'}"
+          :label="{text: $t('new.associative'), id: 'suggestion-associative'}"
           :vocab="selectedVocab"
           :key="renderKey"
         ></relation-input>
@@ -208,20 +202,20 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         ></exact-match-input>
         <basic-textarea
           v-model:text="explanation"
-          :label="{text: 'Lisätietoa tai perusteluja ehdotukselle:', id: 'suggestion-explanation'}"
+          :label="{text: $t('new.explanation'), id: 'suggestion-explanation'}"
         ></basic-textarea>
         <basic-input
           v-model:text="neededFor"
           v-model:isValid="neededForIsValid"
           :submitted="submitted"
-          :label="{text: 'Minkä aineiston kuvailussa tarvitsit käsitettä? Julkaisun nimi, ISBN tai linkki: *', id: 'suggestion-needed-for'}"
+          :label="{text: $t('new.neededFor'), id: 'suggestion-needed-for'}"
         ></basic-input>
         <basic-input
           v-model:text="organization"
-          :label="{text: 'Ehdottajan organisaatio:', id: 'suggestion-organization'}"
+          :label="{text: $t('new.organization'), id: 'suggestion-organization'}"
         ></basic-input>
-        <div id="suggestion-handling" v-if="selectedVocab === 'yso'">
-          <p>{{ deadlineDate }} mennessä tehdyt ehdotukset otetaan asialistalle {{ meetingDate }} sanastokokouksessa.</p>
+        <div id="suggestion-meeting-info" v-if="selectedVocab === 'yso'">
+          <p>{{ $t('new.meetingInfo', {deadlineDate, meetingDate}) }}</p>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { testBasicInput, testBasicTextarea, testTermInput, testRelationInput, te
 describe('Vocab page', () => {
   it('shows a clickable new button', () => {
     // Go to YSO vocab home page
-    cy.visit('/yso/en/')
+    cy.visit('/yso/fi/')
     // Find button for new suggestion form
     cy.get('#main-content .main-content-section #suggestion-plugin a').first().as('new-button')
     // Check that button text is correct
@@ -11,16 +11,16 @@ describe('Vocab page', () => {
     // Click button
     cy.get('@new-button').click()
     // Check that form opens and has correct content
-    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon ')
+    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon')
     // Check that url is updated
-    cy.url().should('include', '/yso/en/#suggestion')
+    cy.url().should('include', '/yso/fi/#suggestion')
   })
 
   it('opens new suggestion form with suggestion url', () => {
     // Go to YSO vocab home suggestion page
-    cy.visit('/yso/en/#suggestion')
+    cy.visit('/yso/fi/#suggestion')
     // Check that form opens and has correct content
-    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon ')
+    cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon')
   })
 
   it('has all correct fields in YSO form', () => {
@@ -32,10 +32,10 @@ describe('Vocab page', () => {
     cy.get('.suggestion-input-container').eq(0).find('input').eq(0).should('be.checked')
     cy.get('.suggestion-input-container').eq(1).find('input').eq(0).should('not.be.checked')
     // Check that term input fields are correct
-    testTermInput('Termi suomeksi:', 1, 'fi', 'yso', 'kissa')
-    testTermInput('Termi ruotsiksi:', 2, 'sv', 'yso', 'katt')
-    testTermInput('Termi englanniksi:', 3, 'en', 'yso', 'cat')
-    testTermInput('Termi pohjoissaameksi:', 4, 'se', 'yso', 'bussá')
+    testTermInput('Termi suomeksi:', 1, 'fi', 'Termi löytyy jo YSOsta: ', 'kissa')
+    testTermInput('Termi ruotsiksi:', 2, 'sv', 'Termi löytyy jo YSOsta: ', 'katt')
+    testTermInput('Termi englanniksi:', 3, 'en', 'Termi löytyy jo YSOsta: ', 'cat')
+    testTermInput('Termi pohjoissaameksi:', 4, 'se', 'Termi löytyy jo YSOsta: ', 'bussá')
     // Check that relation input fields are correct
     testRelationInput('Yläkäsite (LT):', 5, 'broader', 'kissa', 'kissa')
     testRelationInput('Alakäsitteet (ST):', 6, 'narrower', 'kissa', 'kissa')
@@ -77,7 +77,7 @@ describe('Vocab page', () => {
     cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
     // Check that meeting info is in correct format
     const regex = /((0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[0-2])\.(\d{4})) mennessä tehdyt ehdotukset otetaan asialistalle ((0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[0-2])\.(\d{4})) sanastokokouksessa\./
-    cy.get('#suggestion-handling').invoke('text').should('match', regex)
+    cy.get('#suggestion-meeting-info').invoke('text').should('match', regex)
   })
 
   it('new suggestion dialog moves when dragging with mouse', () => {
