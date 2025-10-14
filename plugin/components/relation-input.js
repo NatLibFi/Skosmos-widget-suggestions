@@ -1,9 +1,11 @@
 SUGGESTION_PLUGIN.relationInputComponent = {
+  inject: ['UILang'],
   props: {
     label: Object,
     vocab: String,
     selectedConcepts: Array
   },
+  emits: ['update:selectedConcepts'],
   data () {
     return {
       controller: new AbortController(),
@@ -24,8 +26,6 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       }
     }
   },
-  emits: ['update:selectedConcepts'],
-  inject: ['UILang'],
   watch: {
     searchTerm () {
       if (this.searchTerm.length > 1) {

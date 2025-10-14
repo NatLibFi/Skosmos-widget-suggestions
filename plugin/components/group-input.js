@@ -3,13 +3,13 @@ SUGGESTION_PLUGIN.groupInputComponent = {
     lang: String,
     selectedGroups: Array
   },
+  emits: ['update:selectedGroups'],
   data () {
     return {
       groups: [],
       loading: false
     }
   },
-  emits: ['update:selectedGroups'],
   created () {
     this.loading = true
     fetch('rest/v1/yso/groups?lang=' + this.lang)

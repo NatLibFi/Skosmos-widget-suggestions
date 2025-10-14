@@ -1,19 +1,19 @@
 SUGGESTION_PLUGIN.suggestionNewComponent = {
-  data() {
+  inject: ['pageUrl', 'pageType'],
+  data () {
     return {
       showDialog: false,
       formIsValid: false
     }
   },
-  inject: ['pageUrl', 'pageType'],
-  mounted() {
+  created () {
     if (this.pageUrl.includes("#suggestion") && this.pageType === 'vocab-home'){
       console.log('open new')
       this.showDialog = true
     }
   },
   methods: {
-    handleSubmitEvent() {
+    handleSubmitEvent () {
       // Call submit method inside newForm component
       this.$refs.newForm.submit()
     }

@@ -1,11 +1,6 @@
 SUGGESTION_PLUGIN.createVueApp = function(params) {
   const vueApp = Vue.createApp({
-    data() {
-      return {
-        pageType: params.pageType,
-      }
-    },
-    provide() {
+    provide () {
       return {
         pageUrl: window.location.href,
         pageType: params.pageType,
@@ -13,6 +8,11 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
         uri: params.uri,
         vocab: window.SKOSMOS.vocab, // This should be added to params in Skosmos
         UILang: window.SKOSMOS.lang // This should be added to params in Skosmos
+      }
+    },
+    data () {
+      return {
+        pageType: params.pageType,
       }
     },
     template: `

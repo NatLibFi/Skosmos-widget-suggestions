@@ -1,5 +1,6 @@
 SUGGESTION_PLUGIN.draggableDialogComponent = {
-  data() {
+  emits: ['close-dialog'],
+  data () {
     return {
       isDragging: false,
       mouseXPos: 0,
@@ -35,7 +36,6 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
       }
     }
   },
-  emits: ['close-dialog'],
   template: `
     <div v-drag="handleDragEvent" v-drag-stop="handleDragStopEvent">
       <div class="suggestion-dialog-overlay"></div>

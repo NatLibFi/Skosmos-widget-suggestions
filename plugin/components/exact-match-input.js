@@ -3,12 +3,12 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
     matches: Array,
     links: Array
   },
+  emits: ['update:matches'],
   computed: {
     linkString () {
       return this.links.map(l => `<a target="_blank" href="${l.url}">${l.text}</a>`).join(', ')
     }
   },
-  emits: ['update:matches'],
   methods: {
     updateMatches (i, value, createNew = true) {
       let newMatches = [...this.matches]

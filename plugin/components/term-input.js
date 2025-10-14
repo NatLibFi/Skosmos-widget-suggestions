@@ -18,6 +18,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
       default: false
     }
   },
+  emits: ['update:prefLabel', 'update:altLabels', 'update:isValid'],
   data () {
     return {
       controller: new AbortController(),
@@ -37,7 +38,6 @@ SUGGESTION_PLUGIN.termInputComponent = {
       }
     }
   },
-  emits: ['update:prefLabel', 'update:altLabels', 'update:isValid'],
   methods: {
     updatePrefLabel (value) {
       this.$emit('update:prefLabel', value)

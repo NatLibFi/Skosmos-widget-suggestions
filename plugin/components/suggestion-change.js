@@ -1,13 +1,13 @@
 SUGGESTION_PLUGIN.suggestionChangeComponent = {
-  data() {
+  inject: ['pageUrl', 'prefLabels'],
+  data () {
     return {
       showDialog: false,
       formIsValid: false
     }
   },
-  inject: ['pageUrl', 'prefLabels'],
   methods: {
-    handleSubmitEvent() {
+    handleSubmitEvent () {
       // Call submit method inside changeForm component
       this.$refs.changeForm.submit()
     }

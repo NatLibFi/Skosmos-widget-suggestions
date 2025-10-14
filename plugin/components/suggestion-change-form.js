@@ -1,5 +1,7 @@
 SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
-  data() {
+  inject:['prefLabels', 'uri'],
+  emits: ['updateFormIsValid'],
+  data () {
     return {
       description: '',
       explanation: '',
@@ -8,8 +10,6 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
       submitted: false
     }
   },
-  emits: ['updateFormIsValid'],
-  inject:['prefLabels', 'uri'],
   watch: {
     descriptionIsValid () {
       this.$emit('updateFormIsValid', this.descriptionIsValid)

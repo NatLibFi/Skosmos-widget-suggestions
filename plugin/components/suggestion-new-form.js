@@ -1,5 +1,7 @@
 SUGGESTION_PLUGIN.suggestionNewFormComponent = {
-  data() {
+  inject: ['vocab', 'UILang'],
+  emits: ['updateFormIsValid'],
+  data () {
     return {
       lang: '',
       selectedVocab: this.vocab,
@@ -61,8 +63,6 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       )
     },
   },
-  emits: ['updateFormIsValid'],
-  inject: ['vocab', 'UILang'],
   created () {
     // Make required term field Swedish if UI language is Swedish, otherwise make it Finnish
     this.lang = this.UILang === 'sv' ? 'sv' : 'fi'
@@ -77,7 +77,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
     this.meetingDate = `${meeting.getDate()}.${meeting.getMonth() + 1}.${meeting.getFullYear()}`
   },
   watch: {
-    selectedVocab() {
+    selectedVocab () {
       // When selected vocab is changed, reset form data
       Object.keys(this.terms).forEach(x => {
         this.terms[x] = {
