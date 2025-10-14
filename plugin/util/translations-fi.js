@@ -72,7 +72,8 @@ SUGGESTION_PLUGIN.translationsFi = {
     error: "Tämä on pakollinen tieto.",
     aria: {
       close: "Sulje",
-      clear: "Tyhjennä"
+      clear: "Tyhjennä",
+      remove: "Poista"
     }
   }
 }

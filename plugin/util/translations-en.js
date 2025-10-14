@@ -72,7 +72,8 @@ SUGGESTION_PLUGIN.translationsEn = {
     error: "This information is mandatory.",
     aria: {
       close: "Close",
-      clear: "Clear"
+      clear: "Clear",
+      remove: "Remove"
     }
   }
 }

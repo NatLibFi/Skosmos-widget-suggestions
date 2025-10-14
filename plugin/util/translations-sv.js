@@ -72,7 +72,8 @@ SUGGESTION_PLUGIN.translationsSv = {
     error: "Detta är obligatorisk information.",
     aria: {
       close: "???",
-      clear: "???"
+      clear: "???",
+      remove: "???"
     }
   }
 }
