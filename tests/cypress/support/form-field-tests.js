@@ -1,25 +1,14 @@
-export const testBasicInput = (label, i) => {
+export const testBasicInput = (label, i, isTextarea=false) => {
   // Find correct input container
   cy.get('#suggestion-dialog-content .suggestion-input-container').eq(i).as('container')
   // Check label
   cy.get('@container').find('.suggestion-input-label').invoke('text').should('contain', label)
   // Check clearing input
-  cy.get('@container').find('input').type('test')
-  cy.get('@container').find('input').should('have.value', 'test')
+  const inputClass = isTextarea ? 'textarea' : 'input'
+  cy.get('@container').find(inputClass).type('test')
+  cy.get('@container').find(inputClass).should('have.value', 'test')
   cy.get('@container').find('.suggestion-clear-input i').click()
-  cy.get('@container').find('input').should('have.value', '')
-}
-
-export const testBasicTextarea = (label, i) => {
-  // Find correct input container
-  cy.get('#suggestion-dialog-content .suggestion-input-container').eq(i).as('container')
-  // Check label
-  cy.get('@container').find('.suggestion-input-label').invoke('text').should('contain', label)
-  // Check clearing textarea
-  cy.get('@container').find('textarea').type('test')
-  cy.get('@container').find('textarea').should('have.value', 'test')
-  cy.get('@container').find('.suggestion-clear-input i').click()
-  cy.get('@container').find('textarea').should('have.value', '')
+  cy.get('@container').find(inputClass).should('have.value', '')
 }
 
 export const testTermInput = (label, i, lang, foundInVocab, text) => {

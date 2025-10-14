@@ -200,10 +200,11 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           :links="[{url: '', text: 'LCSH'}, {url: '', text: 'SAO'}, {url: '', text: 'Wikipedia'}]"
           :key="renderKey"
         ></exact-match-input>
-        <basic-textarea
+        <basic-input
           v-model:text="explanation"
           :label="{text: $t('new.explanation'), id: 'suggestion-explanation'}"
-        ></basic-textarea>
+          :is-textarea="true"
+        ></basic-input>
         <basic-input
           v-model:text="neededFor"
           v-model:isValid="neededForIsValid"

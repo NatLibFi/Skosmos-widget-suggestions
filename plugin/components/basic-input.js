@@ -2,6 +2,10 @@ SUGGESTION_PLUGIN.basicInputComponent = {
   props: {
     text: String,
     label: Object,
+    isTextarea: {
+      type: Boolean,
+      default: false
+    },
     isValid: {
       type: Boolean,
       default: false
@@ -33,7 +37,15 @@ SUGGESTION_PLUGIN.basicInputComponent = {
         v-if="text"
         @clear-input="updateText('')"
       ></clear-input>
+      <textarea class="suggestion-input" rows="3"
+        v-if="isTextarea"
+        :class="{ 'suggestion-error': !isValid && submitted }"
+        :id="label.id"
+        :value="text"
+        @input="updateText($event.target.value)"
+      ></textarea>
       <input class="suggestion-input" type="text"
+        v-else
         :class="{ 'suggestion-error': !isValid && submitted }"
         :id="label.id"
         :value="text"

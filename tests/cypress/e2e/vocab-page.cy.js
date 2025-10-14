@@ -1,4 +1,4 @@
-import { testBasicInput, testBasicTextarea, testTermInput, testRelationInput, testGroupInput, testExactMatchInput } from '../support/form-field-tests'
+import { testBasicInput, testTermInput, testRelationInput, testGroupInput, testExactMatchInput } from '../support/form-field-tests'
 
 describe('Vocab page', () => {
   it('shows a clickable new button', () => {
@@ -45,7 +45,7 @@ describe('Vocab page', () => {
     // Check that exact match input field is correct
     testExactMatchInput('Vastaava käsite muussa sanastossa (esim. LCSH, SAO, Wikipedia):', 9)
     // Check that explanation, needed for and organization fields are correct
-    testBasicTextarea('Lisätietoa tai perusteluja ehdotukselle:', 10)
+    testBasicInput('Lisätietoa tai perusteluja ehdotukselle:', 10, true)
     testBasicInput('Minkä aineiston kuvailussa tarvitsit käsitettä? Julkaisun nimi, ISBN tai linkki: *', 11)
     testBasicInput('Ehdottajan organisaatio:', 12)
     // Click submit button with empty fields and check that it is disabled

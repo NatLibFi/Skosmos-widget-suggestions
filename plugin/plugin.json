@@ -2,7 +2,6 @@
   "js": [
     "widget.js",
     "components/basic-input.js",
-    "components/basic-textarea.js",
     "components/chip-list.js",
     "components/clear-input.js",
     "components/draggable-dialog.js",

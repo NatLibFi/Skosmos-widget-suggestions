@@ -1,4 +1,4 @@
-import { testBasicInput, testBasicTextarea } from '../support/form-field-tests'
+import { testBasicInput } from '../support/form-field-tests'
 
 describe('Concept page', () => {
   it('shows a clickable new link', () => {
@@ -37,8 +37,8 @@ describe('Concept page', () => {
     // Click the change link
     cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
     // Check that form fields are correct
-    testBasicTextarea('Ehdotettu muutos: *', 0)
-    testBasicTextarea('Lisätietoa tai perusteluja ehdotukselle:', 1)
+    testBasicInput('Ehdotettu muutos: *', 0, true)
+    testBasicInput('Lisätietoa tai perusteluja ehdotukselle:', 1, true)
     testBasicInput('Ehdottajan organisaatio:', 2)
     // Click submit button with empty fields and check that it is disabled
     cy.get('#suggestion-form-submit button').should('have.class', 'disabled')

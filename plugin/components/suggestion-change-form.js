@@ -54,16 +54,18 @@ ${this.organization}
   template: `
     <div id="suggestion-form" role="form">
       <div id="suggestion-form-inputs">
-        <basic-textarea
+        <basic-input
           v-model:text="description"
           v-model:isValid="descriptionIsValid"
           :label="{text: $t('change.description'), id: 'suggestion-description'}"
           :submitted="submitted"
-        ></basic-textarea>
-        <basic-textarea
+          :is-textarea="true"
+        ></basic-input>
+        <basic-input
           v-model:text="explanation"
           :label="{text: $t('change.explanation'), id: 'suggestion-explanation'}"
-        ></basic-textarea>
+          :is-textarea="true"
+        ></basic-input>
         <basic-input
           v-model:text="organization"
           :label="{text: $t('change.organization'), id: 'suggestion-organization'}"
