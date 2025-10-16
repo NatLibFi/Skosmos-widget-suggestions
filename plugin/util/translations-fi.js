@@ -54,19 +54,6 @@ SUGGESTION_PLUGIN.translationsFi = {
     organization:"Ehdottajan organisaatio:",
     submit: "Lähetä muutosehdotus"
   },
-  messages: {
-    success: {
-      h2: "Ehdotus lähetetty onnistuneesti",
-      p_1: "Ehdotuksesi siirtyy nyt YSO-kokouksen käsiteltäväksi.",
-      p_2a: "Voit seurata ehdotuksesi käsittelyn etenemistä",
-      p_2b: "täällä"
-    },
-    failure: {
-      h2: "Ehdotuksen lähettäminen ei onnistunut",
-      p_1a: "Ehdotustasi ei valitettavasti pystytty vastaanottamaan.",
-      p_1b: "Voit kokeilla ehdotuksen täyttämistä uudestaan tai ottaa yhteyttä Finton ylläpitäjiin Tietoja-välilehden kautta."
-    }
-  },
   common: {
     required: "* Kenttä on pakollinen",
     error: "Tämä on pakollinen tieto.",
@@ -74,6 +61,17 @@ SUGGESTION_PLUGIN.translationsFi = {
       close: "Sulje",
       clear: "Tyhjennä",
       remove: "Poista"
-    }
+    },
+    success: {
+      heading: "Ehdotus lähetetty onnistuneesti",
+      subheading1: "Ehdotuksesi siirtyy nyt YSO-kokouksen käsiteltäväksi.",
+      subheading2: "Voit seurata ehdotuksesi käsittelyn etenemistä",
+      link: "täällä"
+    },
+    failure: {
+      heading: "Ehdotuksen lähettäminen ei onnistunut",
+      subheading1: "Ehdotustasi ei valitettavasti pystytty vastaanottamaan.",
+      subheading2: "Voit kokeilla ehdotuksen täyttämistä uudestaan tai ottaa yhteyttä Finton ylläpitäjiin Tietoja-välilehden kautta."
+    },
   }
 }

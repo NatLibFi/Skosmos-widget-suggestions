@@ -54,19 +54,6 @@ SUGGESTION_PLUGIN.translationsEn = {
     organization:"Organization (sender of the suggestion):",
     submit: "Send the suggestion"
   },
-  messages: {
-    success: {
-      h2: "The suggestion successfully sent",
-      p_1: "The suggestion will now be referred to the YSO meeting",
-      p_2a: "You can follow the suggestion process here",
-      p_2b: "here"
-    },
-    failure: {
-      h2: "The sending of suggestion failed",
-      p_1a: "We are sorry for having problems in the receiving of your suggestion.",
-      p_1b: "You can try to fill up the form again or you can get in touch with Finto administrators via information given on the About page"
-    }
-  },
   common: {
     required: "???",
     error: "This information is mandatory.",
@@ -74,6 +61,17 @@ SUGGESTION_PLUGIN.translationsEn = {
       close: "Close",
       clear: "Clear",
       remove: "Remove"
-    }
+    },
+    success: {
+      heading: "The suggestion successfully sent",
+      subheading1: "The suggestion will now be referred to the YSO meeting",
+      subheading2: "You can follow the suggestion process here",
+      link: "here"
+    },
+    failure: {
+      heading: "The sending of suggestion failed",
+      subheading1: "We are sorry for having problems in the receiving of your suggestion.",
+      subheading2: "You can try to fill up the form again or you can get in touch with Finto administrators via information given on the About page"
+    },
   }
 }

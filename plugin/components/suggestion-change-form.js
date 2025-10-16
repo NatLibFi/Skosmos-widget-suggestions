@@ -18,6 +18,9 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
   methods: {
     submit () {
       // This method is called by the parent component 'suggestion-change'
+      console.log('submit', this.$data)
+      this.submitted = true
+
       const data = `
 **Käsitteen tyyppi**
 
@@ -43,12 +46,13 @@ ${this.explanation}
 
 ${this.organization}
 `
-      if(this.descriptionIsValid) {
-        console.log('submitted:\n', data)
+      if (!this.descriptionIsValid) {
+        return null
       } else {
-        console.log('Required fields missing')
+        // TODO: make request to proxy server and return response
+        console.log('submitted:\n', data)
+        return "https://api.github.com/repos/Finto-ehdotus/YSE/issues/14086"
       }
-      this.submitted = true
     }
   },
   template: `

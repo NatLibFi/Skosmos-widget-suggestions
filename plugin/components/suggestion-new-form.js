@@ -120,13 +120,19 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       console.log('submit', this.$data)
       this.submitted = true
 
-      // Scroll the topmost invalid field into view after DOM has updated
-      this.$nextTick(() => {
-        const firstError = document.querySelector('.suggestion-error')
-        if (firstError) {
-          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        }
-      })
+      if (!this.formIsValid) {
+        // Scroll the topmost invalid field into view after DOM has updated
+        this.$nextTick(() => {
+          const firstError = document.querySelector('.suggestion-error')
+          if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          }
+        })
+        return null
+      } else {
+        // TODO: make request to proxy server and return response
+        return "https://api.github.com/repos/Finto-ehdotus/YSE/issues/14086"
+      }
     }
   },
   template: `

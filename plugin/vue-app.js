@@ -30,6 +30,8 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
   vueApp.component('suggestion-change', this.suggestionChangeComponent)
   vueApp.component('suggestion-new-form', this.suggestionNewFormComponent)
   vueApp.component('suggestion-change-form', this.suggestionChangeFormComponent)
+  vueApp.component('message-failure', this.messageFailureComponent)
+  vueApp.component('message-success', this.messageSuccessComponent)
   vueApp.component('draggable-dialog', this.draggableDialogComponent)
   vueApp.component('basic-input', this.basicInputComponent)
   vueApp.component('exact-match-input', this.exactMatchInputComponent)

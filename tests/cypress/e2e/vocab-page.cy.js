@@ -68,6 +68,9 @@ describe('Vocab page', () => {
     cy.get('.suggestion-input-container').eq(1).find('#suggestion-preflabel-fi').type('test')
     cy.get('.suggestion-input-container').eq(11).find('#suggestion-needed-for').type('test')
     cy.get('#suggestion-form-submit button').should('not.have.class', 'disabled')
+    // Check that success message is displayed
+    cy.get('#suggestion-form-submit button').click()
+    cy.get('#suggestion-header').invoke('text').should('contain', 'Ehdotus lähetetty onnistuneesti')
   })
 
   it('has a note about YSO meeting dates', () => {

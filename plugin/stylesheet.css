@@ -381,7 +381,7 @@ h3.suggestion-input-label a {
 }
 
 #suggestion-form textarea::-webkit-scrollbar:vertical {
-    width: 5px;
+  width: 10px;
 }
 
 #suggestion-form textarea::-webkit-scrollbar-thumb {

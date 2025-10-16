@@ -50,6 +50,9 @@ describe('Concept page', () => {
     // Check that submit button is not disabled with valid inputs
     cy.get('.suggestion-input-container').eq(0).find('textarea').type('test')
     cy.get('#suggestion-form-submit button').should('not.have.class', 'disabled')
+    // Check that success message is displayed
+    cy.get('#suggestion-form-submit button').click()
+    cy.get('#suggestion-header').invoke('text').should('contain', 'Ehdotus lähetetty onnistuneesti')
   })
 
   it('change suggestion dialog moves when dragging with mouse', () => {

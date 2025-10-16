@@ -7,6 +7,8 @@
     "components/draggable-dialog.js",
     "components/exact-match-input.js",
     "components/group-input.js",
+    "components/message-failure.js",
+    "components/message-success.js",
     "components/relation-input.js",
     "components/submit-button.js",
     "components/suggestion-change-form.js",

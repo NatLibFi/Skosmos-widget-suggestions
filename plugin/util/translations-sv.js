@@ -54,19 +54,6 @@ SUGGESTION_PLUGIN.translationsSv = {
     organization:"Förslagsställarens organisation:",
     submit: "Skicka förslaget"
   },
-  messages: {
-    success: {
-      h2: "Förslaget skickades",
-      p_1: "Ditt förslag vidarebefordras till YSO-mötet.",
-      p_2a: "Du kan följa hur behandlingen av ditt förslag framskrider",
-      p_2b: "här"
-    },
-    failure: {
-      h2: "Förslaget kunde inte skickas",
-      p_1a: "Ditt förslag kunde tyvärr inte tas emot.",
-      p_1b: "Du kan försöka fylla i formuläret igen eller så kan du kontakta Finto-servicens administratörer via responssidan."
-    }
-  },
   common: {
     required: "???",
     error: "Detta är obligatorisk information.",
@@ -74,6 +61,17 @@ SUGGESTION_PLUGIN.translationsSv = {
       close: "???",
       clear: "???",
       remove: "???"
-    }
+    },
+    success: {
+      heading: "Förslaget skickades",
+      subheading1: "Ditt förslag vidarebefordras till YSO-mötet.",
+      subheading2: "Du kan följa hur behandlingen av ditt förslag framskrider",
+      link: "här"
+    },
+    failure: {
+      heading: "Förslaget kunde inte skickas",
+      subheading1: "Ditt förslag kunde tyvärr inte tas emot.",
+      subheading2: "Du kan försöka fylla i formuläret igen eller så kan du kontakta Finto-servicens administratörer via responssidan."
+    },
   }
 }
