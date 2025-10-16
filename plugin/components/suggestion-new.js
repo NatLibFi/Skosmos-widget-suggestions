@@ -29,6 +29,13 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
         this.showFailureMessage = true
       }
     },
+    handleCloseDialogEvent () {
+      this.showDialog = false
+      this.formIsValid = false
+      this.showSuccessMessage = false
+      this.showFailureMessage = false
+      this.url = ''
+    }
   },
   template: `
     <div class="p-0 my-2">
@@ -45,7 +52,7 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
           :show-footer="!showSuccessMessage && !showFailureMessage"
           :submit-text="$t('new.submit')"
           :submit-disabled="!formIsValid"
-          @close-dialog="showDialog = false"
+          @close-dialog="handleCloseDialogEvent()"
           @submit="handleSubmitEvent()"
         >
           <template v-if="!showSuccessMessage && !showFailureMessage">
