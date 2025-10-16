@@ -37,33 +37,27 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
       <template v-if="showDialog">
         <draggable-dialog
           :show-footer="!showSuccessMessage && !showFailureMessage"
+          :submit-text="$t('change.submit')"
+          :submit-disabled="!formIsValid"
           @close-dialog="showDialog = false"
+          @submit="handleSubmitEvent()"
         >
-          <template #content>
-            <template v-if="!showSuccessMessage && !showFailureMessage">
-              <div id="suggestion-header">
-                <h2 id="suggestion-title">
-                  {{ $t('change.heading') }} {{ prefLabels[0].label }}
-                </h2>
-                <p id="suggestion-subtitle">
-                  {{ $t('change.subheading') }}
-                </p>
-              </div>
-              <suggestion-change-form
-                ref="changeForm"
-                @update-form-is-valid="(e) => this.formIsValid = e"
-              ></suggestion-change-form>
-            </template>
-            <message-success v-if="showSuccessMessage" :url="url" />
-            <message-failure v-if="showFailureMessage" />
+          <template v-if="!showSuccessMessage && !showFailureMessage">
+            <div id="suggestion-header">
+              <h2 id="suggestion-title">
+                {{ $t('change.heading') }} {{ prefLabels[0].label }}
+              </h2>
+              <p id="suggestion-subtitle">
+                {{ $t('change.subheading') }}
+              </p>
+            </div>
+            <suggestion-change-form
+              ref="changeForm"
+              @update-form-is-valid="(e) => this.formIsValid = e"
+            ></suggestion-change-form>
           </template>
-          <template #footer>
-            <submit-button
-              :text="$t('change.submit')"
-              :disabled="!formIsValid"
-              @submit="handleSubmitEvent()"
-            ></submit-button>
-          </template>
+          <message-success v-if="showSuccessMessage" :url="url" />
+          <message-failure v-if="showFailureMessage" />
         </draggable-dialog>
       </template>
     </div>

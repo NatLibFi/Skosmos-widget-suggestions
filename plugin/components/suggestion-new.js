@@ -43,33 +43,27 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
       <template v-if="showDialog">
         <draggable-dialog
           :show-footer="!showSuccessMessage && !showFailureMessage"
+          :submit-text="$t('new.submit')"
+          :submit-disabled="!formIsValid"
           @close-dialog="showDialog = false"
+          @submit="handleSubmitEvent()"
         >
-          <template #content>
-            <template v-if="!showSuccessMessage && !showFailureMessage">
-              <div id="suggestion-header">
-                <h2 id="suggestion-title">
-                  {{ $t('new.heading') }}
-                </h2>
-                <p id="suggestion-subtitle">
-                  {{ $t('new.subheading') }}
-                </p>
-              </div>
-              <suggestion-new-form
-                ref="newForm"
-                @update-form-is-valid="(e) => this.formIsValid = e"
-              ></suggestion-new-form>
-            </template>
-            <message-success v-if="showSuccessMessage" :url="url" />
-            <message-failure v-if="showFailureMessage" />
+          <template v-if="!showSuccessMessage && !showFailureMessage">
+            <div id="suggestion-header">
+              <h2 id="suggestion-title">
+                {{ $t('new.heading') }}
+              </h2>
+              <p id="suggestion-subtitle">
+                {{ $t('new.subheading') }}
+              </p>
+            </div>
+            <suggestion-new-form
+              ref="newForm"
+              @update-form-is-valid="(e) => this.formIsValid = e"
+            ></suggestion-new-form>
           </template>
-          <template #footer>
-            <submit-button
-              :text="$t('new.submit')"
-              :disabled="!formIsValid"
-              @submit="handleSubmitEvent()"
-            ></submit-button>
-          </template>
+          <message-success v-if="showSuccessMessage" :url="url" />
+          <message-failure v-if="showFailureMessage" />
         </draggable-dialog>
       </template>
     </div>

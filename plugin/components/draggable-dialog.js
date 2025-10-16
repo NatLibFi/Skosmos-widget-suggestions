@@ -1,8 +1,10 @@
 SUGGESTION_PLUGIN.draggableDialogComponent = {
   props:{
-    showFooter: Boolean
+    showFooter: Boolean,
+    submitDisabled: Boolean,
+    submitText: String
   },
-  emits: ['close-dialog'],
+  emits: ['close-dialog', 'submit'],
   data () {
     return {
       isDragging: false,
@@ -54,17 +56,21 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
           <div id="suggestion-dialog-close" class="col text-end pe-0">
             <i class="fa-solid fa-xmark align-middle" role="button"
               :aria-label="$t('common.aria.close')"
-              @click="this.$emit('close-dialog')"
+              @click="$emit('close-dialog')"
             ></i>
           </div>
         </div>
         <div id="suggestion-dialog-content" class="p-3">
-          <slot name="content"></slot>
+          <slot></slot>
         </div>
         <div id="suggestion-dialog-footer" class="px-3 py-2" v-if="showFooter">
           <div class="d-flex justify-content-between align-items-center">
             <span>{{ $t('common.required') }}</span>
-            <slot name="footer"></slot>
+            <submit-button
+              :text="submitText"
+              :disabled="submitDisabled"
+              @submit="$emit('submit')"
+            ></submit-button>
           </div>
         </div>
       </div>
