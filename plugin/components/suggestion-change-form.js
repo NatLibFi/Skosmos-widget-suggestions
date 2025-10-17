@@ -10,18 +10,9 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
       submitted: false
     }
   },
-  watch: {
-    descriptionIsValid () {
-      this.$emit('updateFormIsValid', this.descriptionIsValid)
-    }
-  },
-  methods: {
-    submit () {
-      // This method is called by the parent component 'suggestion-change'
-      console.log('submit', this.$data)
-      this.submitted = true
-
-      const data = `
+  computed: {
+    issueData () {
+      return `
 **Käsitteen tyyppi**
 
 Muutos olemassa olevaan käsitteeseen
@@ -46,11 +37,23 @@ ${this.explanation}
 
 ${this.organization}
 `
+    }
+  },
+  watch: {
+    descriptionIsValid () {
+      this.$emit('updateFormIsValid', this.descriptionIsValid)
+    }
+  },
+  methods: {
+    submit () {
+      // This method is called by the parent component 'suggestion-change'
+      console.log('submit', this.$data)
+      console.log(this.issueData)
+      this.submitted = true
       if (!this.descriptionIsValid) {
         return null
       } else {
         // TODO: make request to proxy server and return response
-        console.log('submitted:\n', data)
         return "https://api.github.com/repos/Finto-ehdotus/YSE/issues/14086"
       }
     }

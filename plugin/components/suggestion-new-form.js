@@ -62,6 +62,65 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         Object.entries(this.terms).filter(([key]) => vocabMap[this.selectedVocab].includes(key))
       )
     },
+    issueData () {
+      return `
+**Käsitteen tyyppi**
+
+${''}
+
+**Ehdotettu termi suomeksi**
+
+${this.terms.fi.prefLabel}
+
+**Ehdotettu termi ruotsiksi**
+
+${this.terms.sv.prefLabel}
+
+**Ehdotettu termi englanniksi**
+
+${this.terms.en.prefLabel}
+
+**Tarkoitusta täsmentävä selite**
+
+${''}
+
+**Perustelut ehdotukselle**
+
+${this.explanation}
+
+**Ehdotettu yläkäsite YSOssa (LT)**
+
+${this.broader.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
+
+**Ehdotetut temaattiset ryhmät**
+
+${this.groups.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
+
+**Vaihtoehtoiset termit**
+
+${this.terms.fi.altLabels.filter(x => x !== '').join(', ')}
+
+**Alakäsitteet (RT)**
+
+${this.narrower.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
+
+**Assosiatiiviset (RT)**
+
+${this.associative.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
+
+**Vastaava käsite muussa sanastossa**
+
+${this.exactMatches.filter(x => x !== '').join(', ')}
+
+**Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**
+
+${this.neededFor}
+
+**Ehdottajan organisaatio**
+
+${this.organization}
+`
+    }
   },
   created () {
     // Make required term field Swedish if UI language is Swedish, otherwise make it Finnish
@@ -116,6 +175,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   },
   methods: {
     submit () {
+      console.log(this.issueData)
       // This method is called by the parent component 'suggestion-new'
       console.log('submit', this.$data)
       this.submitted = true
