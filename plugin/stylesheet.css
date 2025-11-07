@@ -9,15 +9,15 @@
   --suggestion-accent-color: #fae196;
   --suggestion-white-color: #ffffff;
 
-  --font-size: 1em; /* same as the browser default font size, often 16px */
-  --font-family: 'Public Sans', sans-serif;
-  --font-family-heading: 'EB Garamond', serif;
+  --suggestion-font-size: 1em; /* same as the browser default font size, often 16px */
+  --suggestion-font-family: 'Public Sans', sans-serif;
+  --suggestion-font-family-heading: 'EB Garamond', serif;
 }
 
 #suggestion-plugin {
   color: var(--suggestion-dark-color);
-  font-family: var(--font-family);
-  font-size: var(--font-size);
+  font-family: var(--suggestion-font-family);
+  font-size: var(--suggestion-font-size);
 }
 
 #suggestion-plugin .container {
@@ -31,6 +31,7 @@
   border: none;
   font-size: 1.2rem;
   font-weight: bold;
+  font-family: var(--suggestion-font-family) !important;
 }
 
 .suggestion-link:hover h2 {
@@ -165,6 +166,7 @@
 #suggestion-title {
   font-weight: bold;
   font-size: 1.5rem;
+  font-family: var(--suggestion-font-family) !important;
 }
 
 #suggestion-subtitle {
@@ -201,7 +203,7 @@
 }
 
 h3.suggestion-input-label {
-  font-size: 1rem;
+  font-size: var(--suggestion-font-size);
 }
 
 h3.suggestion-input-label a {
