@@ -1,5 +1,5 @@
 SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
-  inject:['prefLabels', 'uri'],
+  inject:['prefLabels', 'uri', 'vocab'],
   emits: ['updateFormIsValid'],
   data () {
     return {
@@ -17,7 +17,7 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
 
 Muutos olemassa olevaan käsitteeseen
 
-**prefabel**
+**prefLabel**
 
 [${this.prefLabels[0].label}](${this.uri})
 
@@ -29,7 +29,7 @@ Käsittelyssä
 
 ${this.description}
 
-**Perustelut ehdotukselle**
+**Lisätietoa tai perusteluja ehdotukselle**
 
 ${this.explanation}
 
@@ -45,16 +45,43 @@ ${this.organization}
     }
   },
   methods: {
-    submit () {
+    async submit () {
       // This method is called by the parent component 'suggestion-change'
       console.log('submit', this.$data)
-      console.log(this.issueData)
+      
       this.submitted = true
       if (!this.descriptionIsValid) {
         return null
       } else {
+        console.log(this.issueData)
+
+        const labels = ['muutos']
+        if (this.vocab === 'yso-paikat') {
+          labels.push('maantieteellinen')
+        } else if (this.vocab === 'slm') {
+          labels.push('SLM')
+        }
+
+        const dataBundle = {
+          title:  this.prefLabels[0].label,
+          body: this.issueData,
+          state: 'open',
+          labels
+        }
+
+        try {
+          const params = new URLSearchParams({ payload: JSON.stringify(dataBundle) })
+          const res = await fetch('plugins/suggestion-plugin/gh_prx.php?' + params.toString(), { method: 'POST', headers: { 'Access-Control-Allow-Origin': '*' } })
+          const data = await res.json()
+          return data.url
+        } catch (error) {
+          console.log(error)
+          return null
+        }
+
+
         // TODO: make request to proxy server and return response
-        return "https://api.github.com/repos/Finto-ehdotus/YSE/issues/14086"
+        //return "https://api.github.com/repos/Finto-ehdotus/YSE/issues/14086"
       }
     }
   },

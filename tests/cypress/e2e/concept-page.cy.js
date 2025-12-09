@@ -47,12 +47,54 @@ describe('Concept page', () => {
     cy.get('.suggestion-input-container').eq(0).find('.suggestion-error').should('be.visible')
     cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('not.exist')
     cy.get('.suggestion-input-container').eq(2).find('.suggestion-error').should('not.exist')
+    
+  })
+
+  it('submits form successfully with valid inputs', () => {
+    // Go to abstract objects concept page in YSO vocab
+    cy.visit('/yso/fi/page/p8318')
+    // Click the change link
+    cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
+
     // Check that submit button is not disabled with valid inputs
     cy.get('.suggestion-input-container').eq(0).find('textarea').type('test')
     cy.get('#suggestion-form-submit button').should('not.have.class', 'disabled')
-    // Check that success message is displayed
+
+    // Intercept submit
+    cy.intercept(
+      {
+        method: 'POST',
+        url: '**/plugins/suggestion-plugin/gh_prx.php*',
+      },
+      {
+        statusCode: 200,
+        headers: { 'content-type': 'text/html' },
+        body: {
+          "status": 201,
+          "url": "https://api.github.com/repos/test/yse-test/issues/x"
+        },
+      }
+    ).as('submitRequest')
+
+    // Click submit button to submit form
     cy.get('#suggestion-form-submit button').click()
+
+    // Check request and response
+    cy.wait('@submitRequest').then(({ request, response }) => {
+      const body = typeof response.body === 'string'
+        ? JSON.parse(response.body)
+        : response.body
+      
+      expect(request.method).to.eq('POST')
+      
+      expect(response?.statusCode).to.eq(200)
+      expect(body).to.have.property('url', 'https://api.github.com/repos/test/yse-test/issues/x')
+      expect(body).to.have.property('status', 201)
+    })
+
+    // Check that success message is displayed
     cy.get('#suggestion-header').invoke('text').should('contain', 'Ehdotus lähetetty onnistuneesti')
+    cy.get('#suggestion-subtitle a').invoke('attr', 'href').should('contain', 'https://github.com/test/yse-test/issues/x')
   })
 
   it('change suggestion dialog moves when dragging with mouse', () => {

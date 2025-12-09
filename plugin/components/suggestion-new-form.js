@@ -205,7 +205,7 @@ ${this.organization}
 
         const labels = ['uusi']
         if (this.selectedVocab === 'yso-paikat') {
-          labels.push('MAANTIETEELLINEN')
+          labels.push('maantieteellinen')
         } else if (this.selectedVocab === 'slm') {
           labels.push('SLM')
         }

@@ -10,9 +10,9 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
     }
   },
   methods: {
-    handleSubmitEvent () {
+    async handleSubmitEvent () {
       // Call submit method inside the child 'suggestion-change-form' component
-      const res = this.$refs.changeForm.submit()
+      const res = await this.$refs.changeForm.submit()
 
       // Show success message if a response was received
       if (res) {
