@@ -66,7 +66,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       return `
 **Käsitteen tyyppi**
 
-${''}
+${this.selectedVocab === 'yso-paikat' ? 'GEO' : this.selectedVocab === 'slm' ? 'SLM' : 'CONCEPT'}
 
 **Ehdotettu termi suomeksi**
 
@@ -80,15 +80,15 @@ ${this.terms.sv.prefLabel}
 
 ${this.terms.en.prefLabel}
 
-**Tarkoitusta täsmentävä selite**
+**Ehdotettu termi pohjoissaameksi**
 
-${''}
+${this.terms.en.prefLabel}
 
 **Perustelut ehdotukselle**
 
 ${this.explanation}
 
-**Ehdotettu yläkäsite YSOssa (LT)**
+**Ehdotettu yläkäsite (LT)**
 
 ${this.broader.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
 
@@ -96,15 +96,27 @@ ${this.broader.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
 
 ${this.groups.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
 
-**Vaihtoehtoiset termit**
+**Vaihtoehtoiset termit suomeksi**
 
 ${this.terms.fi.altLabels.filter(x => x !== '').join(', ')}
 
-**Alakäsitteet (RT)**
+**Vaihtoehtoiset termit ruotsiksi**
+
+${this.terms.sv.altLabels.filter(x => x !== '').join(', ')}
+
+**Vaihtoehtoiset termit englanniksi**
+
+${this.terms.en.altLabels.filter(x => x !== '').join(', ')}
+
+**Vaihtoehtoiset termit pohjoissaameksi**
+
+${this.terms.se.altLabels.filter(x => x !== '').join(', ')}
+
+**Alakäsitteet (ST)**
 
 ${this.narrower.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
 
-**Assosiatiiviset (RT)**
+**Assosiatiiviset käsitteet (RT)**
 
 ${this.associative.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
 
@@ -174,8 +186,7 @@ ${this.organization}
     }
   },
   methods: {
-    submit () {
-      console.log(this.issueData)
+    async submit () {
       // This method is called by the parent component 'suggestion-new'
       console.log('submit', this.$data)
       this.submitted = true
@@ -190,8 +201,31 @@ ${this.organization}
         })
         return null
       } else {
-        // TODO: make request to proxy server and return response
-        return "https://api.github.com/repos/Finto-ehdotus/YSE/issues/14086"
+        console.log(this.issueData)
+
+        const labels = ['uusi']
+        if (this.selectedVocab === 'yso-paikat') {
+          labels.push('MAANTIETEELLINEN')
+        } else if (this.selectedVocab === 'slm') {
+          labels.push('SLM')
+        }
+
+        const dataBundle = {
+          title:  this.terms.fi.prefLabel || this.terms.sv.prefLabel,
+          body: this.issueData,
+          state: 'open',
+          labels
+        }
+
+        try {
+          const params = new URLSearchParams({ payload: JSON.stringify(dataBundle) })
+          const res = await fetch('plugins/suggestion-plugin/gh_prx.php?' + params.toString(), { method: 'POST', headers: { 'Access-Control-Allow-Origin': '*' } })
+          const data = await res.json()
+          return data.url
+        } catch (error) {
+          console.log(error)
+          return null
+        }
       }
     }
   },

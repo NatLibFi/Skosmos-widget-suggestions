@@ -16,9 +16,9 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
     }
   },
   methods: {
-    handleSubmitEvent () {
+    async handleSubmitEvent () {
       // Call submit method inside the child 'suggestion-new-form' component
-      const res = this.$refs.newForm.submit()
+      const res = await this.$refs.newForm.submit()
 
       // Show success message if a response was received
       if (res) {

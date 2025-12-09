@@ -10,6 +10,7 @@ function apiCall( $requestMethod, $body = null ){
 //  }
 
   require_once('../../../../../etc/.secret.php');
+
   define('ACCESS_TOKEN', $config['gh_token']);
   define('CONTENT_TYPE', 'application/json');
   define('ACCEPTS', 'application/vnd.github.v3.raw');

@@ -17,11 +17,16 @@ const SUGGESTION_PLUGIN = {
     newMountPoint.classList = 'row py-3'
 
     // Find parent element and add the mount point as a child
-    const parentElement = document.querySelector('#main-content .main-content-section')
+    let parentElement
+    if (params.pageType === 'vocab-home') {
+      parentElement = document.getElementById('vocab-download-links').parentElement
+    } else {
+      parentElement = document.querySelector('.main-content-section')
+    }
     parentElement.appendChild(newMountPoint)
   
     // Create a new Vue app instance and mount it to the new mount point
-    this.vueApp = this.createVueApp(params)
+    this.vueApp = this.createVueApp(params) // createVueApp defined in vue-app.js
     this.vueApp.mount('#suggestion-plugin')
   },
   remove: function() {
