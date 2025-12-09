@@ -14,6 +14,12 @@ describe('Vocab page', () => {
     cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon')
     // Check that url is updated
     cy.url().should('include', '/yso/fi/#suggestion')
+    // Close form
+    cy.get('#suggestion-dialog-close i').click()
+    // Check that form is not visible
+    cy.get('.suggestion-dialog-modal').should('not.exist')
+    // Check that url is updated
+    cy.url().should('not.include', '#suggestion')
   })
 
   it('opens new suggestion form with suggestion url', () => {

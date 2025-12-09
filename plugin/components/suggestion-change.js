@@ -29,6 +29,9 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
       this.showSuccessMessage = false
       this.showFailureMessage = false
       this.url = ''
+
+      // Remove #suggestion from page URL
+      window.history.replaceState(null, document.title, this.pageUrl.split('#')[0])
     }
   },
   template: `
