@@ -6,21 +6,29 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
       formIsValid: false,
       showSuccessMessage: false,
       showFailureMessage: false,
-      url: ''
+      url: '',
+      submissionPending: false
     }
   },
   methods: {
     async handleSubmitEvent () {
-      // Call submit method inside the child 'suggestion-change-form' component
-      const res = await this.$refs.changeForm.submit()
+      // Only make submission if a previous submission is not pending
+      if (!this.submissionPending) {
+        this.submissionPending = true
 
-      // Show success message if a response was received
-      if (res) {
-        this.url = res.replace('/repos', '').replace('api.', '')
-        this.showSuccessMessage = true
-      // Show failure message if no response was received but form is valid
-      } else if (this.formIsValid) {
-        this.showFailureMessage = true
+        // Call submit method inside the child 'suggestion-change-form' component
+        const res = await this.$refs.changeForm.submit()
+
+        // Show success message if a response was received
+        if (res) {
+          this.url = res.replace('/repos', '').replace('api.', '')
+          this.showSuccessMessage = true
+        // Show failure message if no response was received but form is valid
+        } else if (this.formIsValid) {
+          this.showFailureMessage = true
+        }
+
+        this.submissionPending = false
       }
     },
     handleCloseDialogEvent () {

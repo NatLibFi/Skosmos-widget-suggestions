@@ -6,7 +6,8 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
       formIsValid: false,
       showSuccessMessage: false,
       showFailureMessage: false,
-      url: ''
+      url: '',
+      submissionPending: false
     }
   },
   created () {
@@ -17,16 +18,23 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
   },
   methods: {
     async handleSubmitEvent () {
-      // Call submit method inside the child 'suggestion-new-form' component
-      const res = await this.$refs.newForm.submit()
+      // Only make submission if a previous submission is not pending
+      if (!this.submissionPending) {
+        this.submissionPending = true
 
-      // Show success message if a response was received
-      if (res) {
-        this.url = res.replace('/repos', '').replace('api.', '')
-        this.showSuccessMessage = true
-      // Show failure message if no response was received but form is valid
-      } else if (this.formIsValid) {
-        this.showFailureMessage = true
+        // Call submit method inside the child 'suggestion-new-form' component
+        const res = await this.$refs.newForm.submit()
+
+        // Show success message if a response was received
+        if (res) {
+          this.url = res.replace('/repos', '').replace('api.', '')
+          this.showSuccessMessage = true
+        // Show failure message if no response was received but form is valid
+        } else if (this.formIsValid) {
+          this.showFailureMessage = true
+        }
+
+        this.submissionPending = false
       }
     },
     handleCloseDialogEvent () {
