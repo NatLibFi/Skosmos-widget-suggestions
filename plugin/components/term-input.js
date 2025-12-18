@@ -73,7 +73,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
       newLabels[i] = value
       this.$emit('update:altLabels', newLabels)
 
-      // If updating last label, add a new one to the end of the array
+      // If updating last label, add a new empty one to the end of the array
       if (i === newLabels.length - 1 && createNew) {
         this.$emit('update:altLabels', [ ...newLabels, '' ])
       }
@@ -83,26 +83,26 @@ SUGGESTION_PLUGIN.termInputComponent = {
       this.controller.abort()
       this.controller = new AbortController()
 
-      const tryNext = (i) => {
-        if (i >= vocabs.length) return null // No match found
-
-        const params = new URLSearchParams({ lang: this.lang, query: query })
-        return fetch('rest/v1/' + vocabs[i] + '/search/?' + params.toString(), { signal: this.controller.signal })
-          .then(res => res.json())
-          .then(data => {
-            if (data.results[0] && data.results[0].prefLabel.toLowerCase() === query.toLowerCase()) {
-              // Only return a perfect match
-              return data.results[0]
-            } else {
-              // Try the next vocab
-              return tryNext(i + 1)
+      const params = new URLSearchParams({ lang: this.lang, query: query, vocab: 'yso yso-paikat slm yse' })
+      return fetch('rest/v1/search/?' + params.toString(), { signal: this.controller.signal })
+        .then(res => res.json())
+        .then(data => {
+          // Find the first matching result based on vocab order
+          let res
+          for (const vocab of vocabs) {
+            const match = data.results.find(r => r.vocab === vocab)
+            if (match) {
+              res = match
+              break
             }
-          })
-      }
+          }
 
-      return tryNext(0)
-        .then(res => {
-          return res
+          // Only return a perfect match
+          if (res && res.prefLabel.toLowerCase() === query.toLowerCase()) {
+            return res
+          } else {
+            return null
+          }
         })
         .catch(error => {
           if (error.name === 'AbortError') {
