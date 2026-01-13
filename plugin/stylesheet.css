@@ -146,6 +146,13 @@
   padding-right: 2rem;
 }
 
+/* Disabling textarea resizing in firefox */
+@-moz-document url-prefix() {
+  #suggestion-form textarea {
+    resize: none;
+  }
+}
+
 #suggestion-form textarea:focus {
   outline: none;
 }
