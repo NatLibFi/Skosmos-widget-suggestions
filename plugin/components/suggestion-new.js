@@ -10,6 +10,11 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
       submissionPending: false
     }
   },
+  computed: {
+    linkUrl() {
+      return this.pageType === 'vocab-home' ? this.pageUrl.split('#')[0] + '#suggestion' : null
+    }
+  },
   created () {
     if (this.pageUrl.includes("#suggestion") && this.pageType === 'vocab-home'){
       console.log('open new')
@@ -50,8 +55,8 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
   },
   template: `
     <div class="p-0 my-2">
-      <a role="button" class="suggestion-link"
-        :href="pageUrl.split('#')[0] + '#suggestion'"
+      <a id="suggestion" role="button" class="suggestion-link"
+        :href="linkUrl"
         :class="{ 'suggestion-button': pageType === 'vocab-home' }"
         @click="showDialog = true"
       >
