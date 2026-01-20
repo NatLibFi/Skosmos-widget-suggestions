@@ -90,39 +90,39 @@ ${this.explanation}
 
 **Ehdotettu yläkäsite (LT)**
 
-${this.broader.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
+${this.broader.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join('; ')}
 
 **Ehdotetut temaattiset ryhmät**
 
-${this.groups.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
+${this.groups.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join('; ')}
 
 **Vaihtoehtoiset termit suomeksi**
 
-${this.terms.fi.altLabels.filter(x => x !== '').join(', ')}
+${this.terms.fi.altLabels.filter(x => x !== '').join('; ')}
 
 **Vaihtoehtoiset termit ruotsiksi**
 
-${this.terms.sv.altLabels.filter(x => x !== '').join(', ')}
+${this.terms.sv.altLabels.filter(x => x !== '').join('; ')}
 
 **Vaihtoehtoiset termit englanniksi**
 
-${this.terms.en.altLabels.filter(x => x !== '').join(', ')}
+${this.terms.en.altLabels.filter(x => x !== '').join('; ')}
 
 **Vaihtoehtoiset termit pohjoissaameksi**
 
-${this.terms.se.altLabels.filter(x => x !== '').join(', ')}
+${this.terms.se.altLabels.filter(x => x !== '').join('; ')}
 
 **Alakäsitteet (ST)**
 
-${this.narrower.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
+${this.narrower.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join('; ')}
 
 **Assosiatiiviset käsitteet (RT)**
 
-${this.associative.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join(', ')}
+${this.associative.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join('; ')}
 
 **Vastaava käsite muussa sanastossa**
 
-${this.exactMatches.filter(x => x !== '').join(', ')}
+${this.exactMatches.filter(x => x !== '').join('; ')}
 
 **Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**
 
