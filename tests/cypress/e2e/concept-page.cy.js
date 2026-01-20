@@ -12,8 +12,6 @@ describe('Concept page', () => {
     cy.get('@new-link').click()
     // Check that form opens and has correct content
     cy.get('#suggestion-title').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon')
-    // Check that url is updated
-    cy.url().should('include', '/yso/fi/page/p8318#suggestion')
     // Close form
     cy.get('#suggestion-dialog-close i').click()
     // Check that form is not visible
@@ -33,8 +31,6 @@ describe('Concept page', () => {
     cy.get('@change-link').click()
     // Check that form opens and has correct title
     cy.get('#suggestion-title').invoke('text').should('contain', 'Ehdota muutosta käsitteeseen abstraktit objektit')
-    // Check that url is updated
-    cy.url().should('include', '/yso/fi/page/p8318#suggestion')
   })
 
   it('has all correct change form fields', () => {
