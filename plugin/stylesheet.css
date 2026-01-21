@@ -14,13 +14,13 @@
   --suggestion-font-family-heading: 'EB Garamond', serif;
 }
 
-#suggestion-plugin {
+#suggestions {
   color: var(--suggestion-dark-color);
   font-family: var(--suggestion-font-family);
   font-size: var(--suggestion-font-size);
 }
 
-#suggestion-plugin .container {
+#suggestions .container {
   max-width: 800px;
 }
 

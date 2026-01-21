@@ -8,6 +8,6 @@ fi
 
 docker run -d -p 9090:80 \
   -v "$BASE_PATH/tests/testconfig.ttl:/var/www/html/config.ttl" \
-  -v "$BASE_PATH/plugin/:/var/www/html/plugins/suggestion-plugin/" \
-  -v "$BASE_PATH/node_modules/:/var/www/html/plugins/suggestion-plugin/node_modules/" \
+  -v "$BASE_PATH/plugin/:/var/www/html/plugins/suggestions/" \
+  -v "$BASE_PATH/node_modules/:/var/www/html/plugins/suggestions/node_modules/" \
   quay.io/natlibfi/skosmos

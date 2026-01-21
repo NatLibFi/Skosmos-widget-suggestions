@@ -219,7 +219,7 @@ ${this.organization}
 
         try {
           const params = new URLSearchParams({ payload: JSON.stringify(dataBundle) })
-          const res = await fetch('plugins/suggestion-plugin/gh_prx.php?' + params.toString(), { method: 'POST', headers: { 'Access-Control-Allow-Origin': '*' } })
+          const res = await fetch('plugins/suggestions/gh_prx.php?' + params.toString(), { method: 'POST', headers: { 'Access-Control-Allow-Origin': '*' } })
           const data = await res.json()
           return data.url
         } catch (error) {

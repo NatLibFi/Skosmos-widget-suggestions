@@ -5,7 +5,7 @@ describe('Vocab page', () => {
     // Go to YSO vocab home page
     cy.visit('/yso/fi/')
     // Find button for new suggestion form
-    cy.get('#main-content .main-content-section #suggestion-plugin a').first().as('new-button')
+    cy.get('#main-content .main-content-section #suggestions a').first().as('new-button')
     // Check that button text is correct
     cy.get('@new-button').invoke('text').should('contain', 'Ehdota uutta käsitettä tähän sanastoon')
     // Click button
@@ -33,7 +33,7 @@ describe('Vocab page', () => {
     // Go to YSO vocab home page
     cy.visit('/yso/fi/')
     // Click the new link
-    cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
+    cy.get('#main-content .main-content-section #suggestions a').first().click()
     // Check that the correct vocab is selected
     cy.get('.suggestion-input-container').eq(0).find('input').eq(0).should('be.checked')
     cy.get('.suggestion-input-container').eq(1).find('input').eq(0).should('not.be.checked')
@@ -76,7 +76,7 @@ describe('Vocab page', () => {
     // Go to YSO vocab home page
     cy.visit('/yso/fi/')
     // Click the new link
-    cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
+    cy.get('#main-content .main-content-section #suggestions a').first().click()
 
     // Check that submit button is not disabled with valid inputs
     cy.get('.suggestion-input-container').eq(1).find('#suggestion-preflabel-fi').type('test')
@@ -87,7 +87,7 @@ describe('Vocab page', () => {
     cy.intercept(
       {
         method: 'POST',
-        url: '**/plugins/suggestion-plugin/gh_prx.php*',
+        url: '**/plugins/suggestions/gh_prx.php*',
       },
       {
         statusCode: 200,
@@ -124,7 +124,7 @@ describe('Vocab page', () => {
     // Go to YSO vocab home page
     cy.visit('/yso/fi/')
     // Click the new link
-    cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
+    cy.get('#main-content .main-content-section #suggestions a').first().click()
     // Check that meeting info is in correct format
     const regex = /((0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[0-2])\.(\d{4})) mennessä tehdyt ehdotukset otetaan asialistalle ((0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[0-2])\.(\d{4})) sanastokokouksessa\./
     cy.get('#suggestion-meeting-info').invoke('text').should('match', regex)

@@ -1,7 +1,7 @@
 const SUGGESTION_PLUGIN = {
   vueApp: null,
   render: function(params) {
-    const mountPoint = document.getElementById('suggestion-plugin')
+    const mountPoint = document.getElementById('suggestions')
     if (mountPoint) {
       // Unmount the Vue app if it exists
       if (this.vueApp) {
@@ -13,7 +13,7 @@ const SUGGESTION_PLUGIN = {
 
     // Create a new div for the Vue app
     const newMountPoint = document.createElement('div')
-    newMountPoint.id = 'suggestion-plugin'
+    newMountPoint.id = 'suggestions'
     newMountPoint.classList = 'row py-3'
 
     // Find parent element and add the mount point as a child
@@ -27,7 +27,7 @@ const SUGGESTION_PLUGIN = {
   
     // Create a new Vue app instance and mount it to the new mount point
     this.vueApp = this.createVueApp(params) // createVueApp defined in vue-app.js
-    this.vueApp.mount('#suggestion-plugin')
+    this.vueApp.mount('#suggestions')
   },
   remove: function() {
     if (this.vueApp) {

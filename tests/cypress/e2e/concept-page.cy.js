@@ -5,7 +5,7 @@ describe('Concept page', () => {
     // Go to abstract objects concept page in YSO vocab
     cy.visit('/yso/fi/page/p8318')
     // Find link for new suggestion form
-    cy.get('#main-content .main-content-section #suggestion-plugin a').eq(1).as('new-link')
+    cy.get('#main-content .main-content-section #suggestions a').eq(1).as('new-link')
     // Check that link text is correct
     cy.get('@new-link').invoke('text').should('contain', 'Ehdota uutta käsitettä tähän sanastoon')
     // Click link
@@ -24,7 +24,7 @@ describe('Concept page', () => {
     // Go to abstract objects concept page in YSO vocab
     cy.visit('/yso/fi/page/p8318')
     // Find link for change suggestion form
-    cy.get('#main-content .main-content-section #suggestion-plugin a').first().as('change-link')
+    cy.get('#main-content .main-content-section #suggestions a').first().as('change-link')
     // Check that link text is correct
     cy.get('@change-link').invoke('text').should('contain', 'Ehdota muutosta käsitteeseen')
     // Click link
@@ -37,7 +37,7 @@ describe('Concept page', () => {
     // Go to abstract objects concept page in YSO vocab
     cy.visit('/yso/fi/page/p8318')
     // Click the change link
-    cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
+    cy.get('#main-content .main-content-section #suggestions a').first().click()
     // Check that form fields are correct
     testBasicInput('Ehdotettu muutos: *', 0, true)
     testBasicInput('Lisätietoa tai perusteluja ehdotukselle:', 1, true)
@@ -56,7 +56,7 @@ describe('Concept page', () => {
     // Go to abstract objects concept page in YSO vocab
     cy.visit('/yso/fi/page/p8318')
     // Click the change link
-    cy.get('#main-content .main-content-section #suggestion-plugin a').first().click()
+    cy.get('#main-content .main-content-section #suggestions a').first().click()
 
     // Check that submit button is not disabled with valid inputs
     cy.get('.suggestion-input-container').eq(0).find('textarea').type('test')
@@ -66,7 +66,7 @@ describe('Concept page', () => {
     cy.intercept(
       {
         method: 'POST',
-        url: '**/plugins/suggestion-plugin/gh_prx.php*',
+        url: '**/plugins/suggestions/gh_prx.php*',
       },
       {
         statusCode: 200,
