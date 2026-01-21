@@ -3,14 +3,7 @@ header('Access-Control-Allow-Origin: *');
 
 function apiCall( $requestMethod, $body = null ){
 
-//  if ($_GET['voc'] == 'liiko') {
-//    require_once('../../../../../etc/.secret1.php');
-//  } else {
-//    require_once('../../../../../etc/.secret.php');
-//  }
-
-  require_once('../../../../../etc/.secret.php');
-
+  require_once('/etc/suggestion-secret.php');
   define('ACCESS_TOKEN', $config['gh_token']);
   define('CONTENT_TYPE', 'application/json');
   define('ACCEPTS', 'application/vnd.github.v3.raw');
@@ -59,8 +52,5 @@ function apiCall( $requestMethod, $body = null ){
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $raw_response = apiCall($requestMethod, $_GET['payload']);
 echo $raw_response;
-
-// https://github.com/FortnoxAB/api-example-php
-// php -S localhost:8000
 
 ?>
