@@ -89,12 +89,10 @@ SUGGESTION_PLUGIN.termInputComponent = {
       return fetch('rest/v1/search/?' + params.toString(), { signal: this.controller.signal })
         .then(res => res.json())
         .then(data => {
-          console.log(data)
           // Find the first matching result based on vocab order
           let res
           for (const vocab of vocabs) {
             const match = data.results.find(r => r.vocab === vocab)
-            console.log(match)
             // Proposed YSO concepts should not block suggestions for SLM (if selected vocab is SLM, matches in YSE should only be proposals to SLM or YSO places)
             if (match && !(this.vocab === 'slm' && vocab === 'yse' && !match.type.some(t => ['http://www.yso.fi/onto/yse-meta/GeographicalConcept', 'http://www.yso.fi/onto/yse-meta/GenreConcept'].includes(t)))) {
               res = match

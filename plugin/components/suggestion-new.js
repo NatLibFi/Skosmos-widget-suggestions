@@ -17,7 +17,6 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
   },
   created () {
     if (this.pageUrl.includes("#suggestion") && this.pageType === 'vocab-home'){
-      console.log('open new')
       this.showDialog = true
     }
   },

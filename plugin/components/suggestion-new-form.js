@@ -188,7 +188,6 @@ ${this.organization}
   methods: {
     async submit () {
       // This method is called by the parent component 'suggestion-new'
-      console.log('submit', this.$data)
       this.submitted = true
 
       if (!this.formIsValid) {

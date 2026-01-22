@@ -47,8 +47,6 @@ ${this.organization}
   methods: {
     async submit () {
       // This method is called by the parent component 'suggestion-change'
-      console.log('submit', this.$data)
-      
       this.submitted = true
       if (!this.descriptionIsValid) {
         return null
@@ -78,10 +76,6 @@ ${this.organization}
           console.log(error)
           return null
         }
-
-
-        // TODO: make request to proxy server and return response
-        //return "https://api.github.com/repos/Finto-ehdotus/YSE/issues/14086"
       }
     }
   },
