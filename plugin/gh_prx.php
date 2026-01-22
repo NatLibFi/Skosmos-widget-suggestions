@@ -3,7 +3,7 @@ header('Access-Control-Allow-Origin: *');
 
 function apiCall( $requestMethod, $body = null ){
 
-  require_once('/etc/suggestion-secret.php');
+  require_once('/etc/.suggestion-secret.php');
   define('ACCESS_TOKEN', $config['gh_token']);
   define('CONTENT_TYPE', 'application/json');
   define('ACCEPTS', 'application/vnd.github.v3.raw');
