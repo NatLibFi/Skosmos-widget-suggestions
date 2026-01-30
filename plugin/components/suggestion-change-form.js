@@ -12,31 +12,18 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
   },
   computed: {
     issueData () {
-      return `
-**Käsitteen tyyppi**
+      const hasText = x => x.trim() !== ''
 
-Muutos olemassa olevaan käsitteeseen
+      const fields = [
+        ['**Käsitteen tyyppi**', 'Muutos olemassa olevaan käsitteeseen'],
+        ['**prefLabel**', `[${this.prefLabels[0].label}](${this.uri})`],
+        ['**Tila**', 'Käsittelyssä'],
+        hasText(this.description) && ['**Ehdotettu muutos**', this.description],
+        hasText(this.explanation) && ['**Lisätietoa tai perusteluja ehdotukselle**', this.explanation],
+        hasText(this.organization) && ['**Ehdottajan organisaatio**', this.organization]
+      ].filter(Boolean)
 
-**prefLabel**
-
-[${this.prefLabels[0].label}](${this.uri})
-
-**Tila**
-
-Käsittelyssä
-
-**Ehdotettu muutos**
-
-${this.description}
-
-**Lisätietoa tai perusteluja ehdotukselle**
-
-${this.explanation}
-
-**Ehdottajan organisaatio**
-
-${this.organization}
-`
+      return fields.map(([title, value]) => `${title}\n\n${value}`).join('\n\n')
     }
   },
   watch: {

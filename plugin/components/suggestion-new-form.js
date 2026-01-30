@@ -63,75 +63,31 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       )
     },
     issueData () {
-      return `
-**Käsitteen tyyppi**
+      const hasText = x => x.trim() !== ''
+      const joinText = x => x.filter(y => y.trim() !== '').join('; ')
+      const joinLinks = x => x.map(y => `[${y.prefLabel}](${y.uri})`).join('; ')
 
-${this.selectedVocab === 'yso-paikat' ? 'GEO' : this.selectedVocab === 'slm' ? 'SLM' : 'CONCEPT'}
+      const fields = [
+        ['**Käsitteen tyyppi**', `${this.selectedVocab === 'yso-paikat' ? 'GEO' : this.selectedVocab === 'slm' ? 'SLM' : 'CONCEPT'}`],
+        hasText(this.terms.fi.prefLabel) && ['**Ehdotettu termi suomeksi**', this.terms.fi.prefLabel],
+        hasText(this.terms.sv.prefLabel) && ['**Ehdotettu termi ruotsiksi**', this.terms.sv.prefLabel],
+        hasText(this.terms.en.prefLabel) && ['**Ehdotettu termi englanniksi**', this.terms.en.prefLabel],
+        hasText(this.terms.se.prefLabel) && ['**Ehdotettu termi pohjoissaameksi**', this.terms.se.prefLabel],
+        hasText(this.explanation) && ['**Perustelut ehdotukselle**', this.explanation],
+        joinLinks(this.broader) && ['**Ehdotettu yläkäsite (LT)**', joinLinks(this.broader)],
+        joinLinks(this.groups) && ['**Ehdotetut temaattiset ryhmät**', joinLinks(this.groups)],
+        joinText(this.terms.fi.altLabels) && ['**Vaihtoehtoiset termit suomeksi**', joinText(this.terms.fi.altLabels)],
+        joinText(this.terms.sv.altLabels) && ['**Vaihtoehtoiset termit ruotsiksi**', joinText(this.terms.sv.altLabels)],
+        joinText(this.terms.en.altLabels) && ['**Vaihtoehtoiset termit englanniksi**', joinText(this.terms.en.altLabels)],
+        joinText(this.terms.se.altLabels) && ['**Vaihtoehtoiset termit pohjoissaameksi**', joinText(this.terms.se.altLabels)],
+        joinLinks(this.narrower) && ['**Alakäsitteet (ST)**', joinLinks(this.narrower)],
+        joinLinks(this.associative) && ['**Assosiatiiviset käsitteet (RT)**', joinLinks(this.associative)],
+        joinText(this.exactMatches) && ['**Vastaava käsite muussa sanastossa**', joinText(this.exactMatches)],
+        hasText(this.neededFor) && ['**Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**', this.neededFor],
+        hasText(this.organization) && ['**Ehdottajan organisaatio**', this.organization],
+      ].filter(Boolean)
 
-**Ehdotettu termi suomeksi**
-
-${this.terms.fi.prefLabel}
-
-**Ehdotettu termi ruotsiksi**
-
-${this.terms.sv.prefLabel}
-
-**Ehdotettu termi englanniksi**
-
-${this.terms.en.prefLabel}
-
-**Ehdotettu termi pohjoissaameksi**
-
-${this.terms.en.prefLabel}
-
-**Perustelut ehdotukselle**
-
-${this.explanation}
-
-**Ehdotettu yläkäsite (LT)**
-
-${this.broader.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join('; ')}
-
-**Ehdotetut temaattiset ryhmät**
-
-${this.groups.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join('; ')}
-
-**Vaihtoehtoiset termit suomeksi**
-
-${this.terms.fi.altLabels.filter(x => x !== '').join('; ')}
-
-**Vaihtoehtoiset termit ruotsiksi**
-
-${this.terms.sv.altLabels.filter(x => x !== '').join('; ')}
-
-**Vaihtoehtoiset termit englanniksi**
-
-${this.terms.en.altLabels.filter(x => x !== '').join('; ')}
-
-**Vaihtoehtoiset termit pohjoissaameksi**
-
-${this.terms.se.altLabels.filter(x => x !== '').join('; ')}
-
-**Alakäsitteet (ST)**
-
-${this.narrower.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join('; ')}
-
-**Assosiatiiviset käsitteet (RT)**
-
-${this.associative.map(x => '[' + x.prefLabel + '](' + x.uri + ')').join('; ')}
-
-**Vastaava käsite muussa sanastossa**
-
-${this.exactMatches.filter(x => x !== '').join('; ')}
-
-**Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**
-
-${this.neededFor}
-
-**Ehdottajan organisaatio**
-
-${this.organization}
-`
+      return fields.map(([title, value]) => `${title}\n\n${value}`).join('\n\n')
     }
   },
   created () {
