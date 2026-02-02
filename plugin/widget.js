@@ -21,7 +21,7 @@ const SUGGESTION_PLUGIN = {
     if (params.pageType === 'vocab-home') {
       parentElement = document.getElementById('vocab-download-links').parentElement
     } else {
-      parentElement = document.querySelector('.main-content-section')
+      parentElement = document.getElementById('concept-heading').parentElement
     }
     parentElement.appendChild(newMountPoint)
   
