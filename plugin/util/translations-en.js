@@ -20,7 +20,8 @@ SUGGESTION_PLUGIN.translationsEn = {
         yso: "???",
         slm: "???",
         "yso-paikat": "???",
-        yse: "???"
+        yse: "???",
+        alt: "???"
       }
     },
     broader: "Broader term (BT):", //

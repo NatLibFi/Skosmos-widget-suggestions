@@ -34,7 +34,12 @@ SUGGESTION_PLUGIN.termInputComponent = {
       if (!this.concept && this.required) {
         return this.$t('common.error')
       } else if (this.concept) {
-        return this.$t(`new.terms.if.${this.concept.vocab}`, {link: `<a href="${getConceptURL(this.concept.uri)}">${this.concept.prefLabel}</a>`})
+        if (this.concept.altLabel && this.prefLabel.trim().toLowerCase() === this.concept.altLabel.toLowerCase() ) {
+          // If matching label is an altLabel, show a separate error message
+          return this.$t('new.terms.if.alt', {link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>`})
+        } else {
+          return this.$t(`new.terms.if.${this.concept.vocab}`, {link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>`})
+        }
       }
     }
   },
@@ -83,29 +88,42 @@ SUGGESTION_PLUGIN.termInputComponent = {
       this.controller.abort()
       this.controller = new AbortController()
 
-      // YSO concepts should not block suggestions for SLM
-      const vocab = this.vocab === 'slm' ? 'yso-paikat slm yse' : 'yso yso-paikat slm yse'
-      const params = new URLSearchParams({ lang: this.lang, query: query, vocab })
+      const vocab = this.vocab === 'slm' ? 'yso-paikat slm yse' : 'yso yso-paikat slm yse' // YSO concepts should not block suggestions for SLM
+      const params = new URLSearchParams({ lang: this.lang, query, vocab })
       return fetch('rest/v1/search/?' + params.toString(), { signal: this.controller.signal })
         .then(res => res.json())
         .then(data => {
-          // Find the first matching result based on vocab order
-          let res
+          // Find first matching pref/hiddenLabel according to vocab order
           for (const vocab of vocabs) {
-            const match = data.results.find(r => r.vocab === vocab)
+            const match = data.results.find(res =>
+              res.vocab === vocab &&
+              (
+                res.prefLabel.toLowerCase() === query.trim().toLowerCase() ||
+                (res.hiddenLabel && res.hiddenLabel.toLowerCase() === query.trim().toLowerCase())
+              )
+            )
             // Proposed YSO concepts should not block suggestions for SLM (if selected vocab is SLM, matches in YSE should only be proposals to SLM or YSO places)
-            if (match && !(this.vocab === 'slm' && vocab === 'yse' && !match.type.some(t => ['http://www.yso.fi/onto/yse-meta/GeographicalConcept', 'http://www.yso.fi/onto/yse-meta/GenreConcept'].includes(t)))) {
-              res = match
-              break
+            if (
+              match && 
+              !(
+                this.vocab === 'slm' && 
+                match.vocab === 'yse' && 
+                !match.type.some(t => ['http://www.yso.fi/onto/yse-meta/GeographicalConcept', 'http://www.yso.fi/onto/yse-meta/GenreConcept'].includes(t))
+              )
+            ) {
+              return match
             }
           }
 
-          // Only return a perfect match
-          if (res && res.prefLabel.toLowerCase() === query.toLowerCase()) {
-            return res
-          } else {
-            return null
+          // If no matching pref/hiddenLabel is found, find first matching altLabel from selected vocab
+          for (const res of data.results) {
+            if (res.altLabel && res.vocab === this.vocab && res.altLabel.toLowerCase() === query.trim().toLowerCase()) {
+              return res
+            }
           }
+
+          // If no matches are found, return null
+          return null
         })
         .catch(error => {
           if (error.name === 'AbortError') {

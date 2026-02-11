@@ -82,7 +82,8 @@
 }
 
 #suggestion-dialog-top {
-  padding: 1rem;
+  padding: 0.75rem;
+  padding-left: 1rem;
   margin: 0;
   background-color: var(--suggestion-dark-color);
   color: var(--suggestion-white-color);
@@ -95,6 +96,7 @@
 
 #suggestion-dialog-top .fa-xmark {
   cursor: pointer;
+  padding: 0.25rem;
 }
 
 #suggestion-dialog-content {

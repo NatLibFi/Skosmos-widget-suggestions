@@ -20,7 +20,8 @@ SUGGESTION_PLUGIN.translationsFi = {
         yso: "Termi löytyy jo YSOsta: {link}",
         slm: "Termi löytyy jo SLMstä: {link}", //
         "yso-paikat": "Termi löytyy jo YSO-paikoista: {link}",
-        yse: "Termistä on jo olemassa käsite-ehdotus: {link}. Kommentoi tai kannata ehdotusta sen tiedoista löytyvän kotisivulinkin kautta"
+        yse: "Termistä on jo olemassa käsite-ehdotus: {link}. Kommentoi tai kannata ehdotusta sen tiedoista löytyvän kotisivulinkin kautta",
+        alt: "Tämä on jo ohjaustermi käsitteelle: {link}"
       }
     },
     broader: "Yläkäsite (LT):",

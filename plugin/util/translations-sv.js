@@ -20,7 +20,8 @@ SUGGESTION_PLUGIN.translationsSv = {
         yso: "Termen finns redan i ALLFO: {link}",
         slm: "???",
         "yso-paikat": "Termen finns redan i ALLFO-orter: {link}",
-        yse: "Termen har redan föreslagits: {link}. Kommentera eller understöd förslaget via länken till förslagets hemsida"
+        yse: "Termen har redan föreslagits: {link}. Kommentera eller understöd förslaget via länken till förslagets hemsida",
+        alt: "???"
       }
     },
     broader: "Överordnade begrepp:", //
