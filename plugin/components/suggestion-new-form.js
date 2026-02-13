@@ -3,7 +3,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   emits: ['updateFormIsValid'],
   data () {
     return {
-      lang: '',
+      requiredLang: '',
       selectedVocab: this.vocab,
       terms: {
         fi: {
@@ -92,9 +92,9 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   },
   created () {
     // Make required term field Swedish if UI language is Swedish, otherwise make it Finnish
-    this.lang = this.UILang === 'sv' ? 'sv' : 'fi'
-    this.terms[this.lang].isValid = false
-    this.terms[this.lang].required = true
+    this.requiredLang = this.UILang === 'sv' ? 'sv' : 'fi'
+    this.terms[this.requiredLang].isValid = false
+    this.terms[this.requiredLang].required = true
 
     // Parse YSO meeting dates from util/meeting-dates.js
     const deadline = new Date(Date.parse(SUGGESTION_PLUGIN.deadlineDate))
@@ -114,8 +114,8 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           required: false
         }
       })
-      this.terms[this.lang].isValid = false
-      this.terms[this.lang].required = true
+      this.terms[this.requiredLang].isValid = false
+      this.terms[this.requiredLang].required = true
 
       this.broader = []
       this.narrower = []
@@ -240,7 +240,6 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         <group-input
           v-if="selectedVocab === 'yso'"
           v-model:selectedGroups="groups"
-          :lang="UILang"
           :key="renderKey"
         ></group-input>
         <exact-match-input

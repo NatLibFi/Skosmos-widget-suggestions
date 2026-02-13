@@ -1,6 +1,6 @@
 SUGGESTION_PLUGIN.groupInputComponent = {
+  inject: ['UILang'],
   props: {
-    lang: String,
     selectedGroups: Array
   },
   emits: ['update:selectedGroups'],
@@ -12,7 +12,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
   },
   created () {
     this.loading = true
-    fetch('rest/v1/yso/groups?lang=' + this.lang)
+    fetch('rest/v1/yso/groups?lang=' + this.UILang)
       .then(res => res.json())
       .then(data => {
         this.groups = data.groups
