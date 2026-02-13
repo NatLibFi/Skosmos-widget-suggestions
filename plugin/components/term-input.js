@@ -88,18 +88,19 @@ SUGGESTION_PLUGIN.termInputComponent = {
       this.controller.abort()
       this.controller = new AbortController()
 
+      const q = query.trim().toLowerCase()
       const vocab = this.vocab === 'slm' ? 'yso-paikat slm yse' : 'yso yso-paikat slm yse' // YSO concepts should not block suggestions for SLM
-      const params = new URLSearchParams({ lang: this.lang, query, vocab })
+      const params = new URLSearchParams({ lang: this.lang, query: q, vocab })
       return fetch('rest/v1/search/?' + params.toString(), { signal: this.controller.signal })
         .then(res => res.json())
         .then(data => {
           // Find first matching pref/hiddenLabel according to vocab order
           for (const vocab of vocabs) {
-            const match = data.results.find(res =>
-              res.vocab === vocab &&
+            const match = data.results.find(r =>
+              r.vocab === vocab &&
               (
-                res.prefLabel.toLowerCase() === query.trim().toLowerCase() ||
-                (res.hiddenLabel && res.hiddenLabel.toLowerCase() === query.trim().toLowerCase())
+                r.prefLabel.toLowerCase() === q ||
+                (r.hiddenLabel && r.hiddenLabel.toLowerCase() === q)
               )
             )
             // Proposed YSO concepts should not block suggestions for SLM (if selected vocab is SLM, matches in YSE should only be proposals to SLM or YSO places)
@@ -115,10 +116,15 @@ SUGGESTION_PLUGIN.termInputComponent = {
             }
           }
 
-          // If no matching pref/hiddenLabel is found, find first matching altLabel from selected vocab
-          for (const res of data.results) {
-            if (res.altLabel && res.vocab === this.vocab && res.altLabel.toLowerCase() === query.trim().toLowerCase()) {
-              return res
+          // If no matching pref/hiddenLabel is found, find first matching altLabel according to selected vocab
+          // i.e. show warning for matching altLabels of concepts in slm and yso-places when selected vocab is SLM and yso and yso-places otherwise
+          for (const r of data.results) {
+            if (
+              r.altLabel && 
+              r.altLabel.toLowerCase() === q &&
+              (this.vocab === 'slm' ? ['slm', 'yso-paikat'] : ['yso', 'yso-paikat']).includes(r.vocab)
+            ) {
+              return r
             }
           }
 
