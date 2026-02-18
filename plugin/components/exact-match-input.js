@@ -5,8 +5,8 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
   },
   emits: ['update:matches'],
   computed: {
-    linkString () {
-      return this.links.map(l => `<a target="_blank" href="${l.url}">${l.text}</a>`).join(', ')
+    labelString () {
+      return this.$t('new.exactMatches.label', {links: this.links.map(l => `<a target="_blank" href="${l.url}">${l.text}</a>`).join(', ')})
     }
   },
   methods: {
@@ -26,9 +26,7 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
   },
   template: `
     <div class="suggestion-input-container">
-        <h3 class="suggestion-input-label" id="suggestion-match-label">
-          {{ $t('new.exactMatches.label') }} <span v-html="linkString"></span>):
-        </h3>
+        <h3 class="suggestion-input-label" id="suggestion-match-label" v-html="labelString"></h3>
 
         <div aria-labelledby="suggestion-match-label">
           <label class="suggestion-input-label sr-only" for="suggestion-match-input-0">

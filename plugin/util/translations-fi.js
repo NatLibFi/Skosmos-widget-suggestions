@@ -33,7 +33,7 @@ SUGGESTION_PLUGIN.translationsFi = {
       placeholder: "Valitse ryhmä(t) listalta"
     },
     exactMatches: {
-      label: "Vastaava käsite muussa sanastossa (esim.",
+      label: "Vastaava käsite muussa sanastossa (esim. {links}):",
       placeholder: "Linkki käsitteeseen",
       ariaLabel: "Vastaava käsite muussa sanastossa:"
     },
