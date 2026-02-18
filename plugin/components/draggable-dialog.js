@@ -21,12 +21,16 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
     },
     handleDragEvent (e) {
       e.preventDefault()
+      // Only register dragging done with left mouse button
       if (this.isDragging && e.buttons === 1) {
+        // Differences between old and new mouse coordinates
         const diffX = e.clientX - this.mouseXPos
         const diffY = e.clientY - this.mouseYPos
+        // Update element position
         this.x += diffX
         this.y += diffY
       }
+      // Update mouse coordinates
       this.mouseXPos = e.clientX
       this.mouseYPos = e.clientY
     },

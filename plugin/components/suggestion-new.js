@@ -22,7 +22,7 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
   },
   methods: {
     async handleSubmitEvent () {
-      // Only make submission if a previous submission is not pending
+      // Only make a submission if a previous submission is not pending
       if (!this.submissionPending) {
         this.submissionPending = true
 

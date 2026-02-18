@@ -25,13 +25,13 @@ SUGGESTION_PLUGIN.groupInputComponent = {
   },
   methods: {
     selectGroup (group) {
-      // Remove selected group from list
+      // Remove selected group from the list of selectable groups
       this.groups = this.groups.filter(g => g.uri !== group.uri)
 
       this.$emit('update:selectedGroups', [...this.selectedGroups, group])
     },
     removeGroup (i) {
-      // Add the group back to the list and order the list alphabetically
+      // Add the group back to the list of selectable groups and order the list alphabetically
       const group = this.selectedGroups[i]
       this.groups.push(group)
       this.groups.sort((a, b) => (a.prefLabel > b.prefLabel) ? 1 : ((b.prefLabel > a.prefLabel) ? -1 : 0))

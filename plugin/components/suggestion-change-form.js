@@ -14,6 +14,7 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
     issueData () {
       const hasText = x => x.trim() !== ''
 
+      // Only include fields that have some input data
       const fields = [
         ['**Käsitteen tyyppi**', 'Muutos olemassa olevaan käsitteeseen'],
         ['**prefLabel**', `[${this.prefLabels[0].label}](${this.uri})`],

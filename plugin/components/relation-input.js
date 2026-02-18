@@ -17,6 +17,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
   },
   computed: {
     lang () {
+      // Determine language of searches based on supported languages of each vocab with Finnish as fallback
       if (this.vocab === 'slm') {
         return this.UILang === 'sv' ? 'sv' : 'fi'
       } else if (this.vocab === 'yso-paikat') {
@@ -68,6 +69,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
   },
   methods: {
     selectConcept (concept) {
+      // Only select each concept once
       if (!this.selectedConcepts.some(c => c.uri === concept.uri)) {
         this.$emit('update:selectedConcepts', [...this.selectedConcepts, concept])
       }

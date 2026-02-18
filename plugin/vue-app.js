@@ -43,7 +43,7 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
   vueApp.component('submit-button', this.submitButtonComponent)
 
   // Register custom directives
-  vueApp.directive('drag', {
+  vueApp.directive('drag', { // Used in 'draggable-dialog' component
     beforeMount: (el, binding) => {
       el.dragEvent = event => {
         binding.value(event)
@@ -55,7 +55,7 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
     }
   })
 
-  vueApp.directive('drag-stop', {
+  vueApp.directive('drag-stop', { // Used in 'draggable-dialog' component
     beforeMount: (el, binding) => {
       el.dragStopEvent = event => {
         binding.value(event)
@@ -67,7 +67,7 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
     }
   })
 
-  vueApp.directive('click-outside', {
+  vueApp.directive('click-outside', { // Used in 'relation-input' component
     beforeMount: (el, binding) => {
       el.clickOutsideEvent = event => {
         // Ensure the click was outside the element

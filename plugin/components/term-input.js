@@ -32,10 +32,11 @@ SUGGESTION_PLUGIN.termInputComponent = {
     },
     errorString () {
       if (!this.concept && this.required) {
+        // Show error for required empty field
         return this.$t('common.error')
       } else if (this.concept) {
         if (this.concept.altLabel && this.prefLabel.trim().toLowerCase() === this.concept.altLabel.toLowerCase() ) {
-          // If matching label is an altLabel, show a separate error message
+          // If matching label is an altLabel of an existing concept, show a separate error message
           return this.$t('new.terms.if.alt', {link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>`})
         } else {
           return this.$t(`new.terms.if.${this.concept.vocab}`, {link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>`})
@@ -73,23 +74,14 @@ SUGGESTION_PLUGIN.termInputComponent = {
         this.loading = false
       }
     },
-    updateAltLabels (i, value, createNew = true) {
-      let newLabels = [...this.altLabels]
-      newLabels[i] = value
-      this.$emit('update:altLabels', newLabels)
-
-      // If updating last label, add a new empty one to the end of the array
-      if (i === newLabels.length - 1 && createNew) {
-        this.$emit('update:altLabels', [ ...newLabels, '' ])
-      }
-    },
     search (query, vocabs) {
       // Abort any previous fetch request before starting a new one
       this.controller.abort()
       this.controller = new AbortController()
 
       const q = query.trim().toLowerCase()
-      const vocab = this.vocab === 'slm' ? 'yso-paikat slm yse' : 'yso yso-paikat slm yse' // YSO concepts should not block suggestions for SLM
+      // YSO concepts should not block suggestions for SLM (if selected vocab is SLM, searches are not made to YSO)
+      const vocab = this.vocab === 'slm' ? 'yso-paikat slm yse' : 'yso yso-paikat slm yse'
       const params = new URLSearchParams({ lang: this.lang, query: q, vocab })
       return fetch('rest/v1/search/?' + params.toString(), { signal: this.controller.signal })
         .then(res => res.json())
@@ -138,6 +130,16 @@ SUGGESTION_PLUGIN.termInputComponent = {
             console.log('Fetch failed:', error)
           }
         })
+    },
+    updateAltLabels (i, value, createNew = true) {
+      let newAltLabels = [...this.altLabels] // Copy of altLabels array
+      newAltLabels[i] = value
+      this.$emit('update:altLabels', newAltLabels)
+
+      // If updating last label, add a new empty label to the end of the array
+      if (i === newAltLabels.length - 1 && createNew) {
+        this.$emit('update:altLabels', [ ...newAltLabels, '' ])
+      }
     },
     removeAltLabelInput (i) {
       this.$emit('update:altLabels', this.altLabels.filter((_, idx) => idx !== i))

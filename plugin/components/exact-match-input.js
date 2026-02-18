@@ -11,7 +11,7 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
   },
   methods: {
     updateMatches (i, value, createNew = true) {
-      let newMatches = [...this.matches]
+      let newMatches = [...this.matches] // Copy of matches array
       newMatches[i] = value
       this.$emit('update:matches', newMatches)
 

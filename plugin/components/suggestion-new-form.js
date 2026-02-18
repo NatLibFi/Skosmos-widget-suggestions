@@ -67,6 +67,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       const joinText = x => x.filter(y => y.trim() !== '').join('; ')
       const joinLinks = x => x.map(y => `[${y.prefLabel}](${y.uri})`).join('; ')
 
+      // Only include fields that have some input data
       const fields = [
         ['**Käsitteen tyyppi**', `${this.selectedVocab === 'yso-paikat' ? 'GEO' : this.selectedVocab === 'slm' ? 'SLM' : 'CONCEPT'}`],
         hasText(this.terms.fi.prefLabel) && ['**Ehdotettu termi suomeksi**', this.terms.fi.prefLabel],
