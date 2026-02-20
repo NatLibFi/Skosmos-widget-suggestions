@@ -11,12 +11,12 @@ const SUGGESTION_PLUGIN = {
       mountPoint.remove()
     }
 
-    // Create a new div for the Vue app
+    // Create a new mount point div for the Vue app
     const newMountPoint = document.createElement('div')
     newMountPoint.id = 'suggestions'
     newMountPoint.classList = 'row py-3'
 
-    // Find parent element and add the mount point as a child
+    // Find parent element and add the mount point to it as a child
     let parentElement
     if (params.pageType === 'vocab-home') {
       parentElement = document.getElementById('vocab-download-links').parentElement

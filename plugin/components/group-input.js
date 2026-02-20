@@ -56,7 +56,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
         <ul class="dropdown-menu" aria-labelledby="suggestion-group">
           <template v-if="loading">
             <li>
-              <a class="dropdown-item"><i v-if="loading" class="spinner fa-solid fa-spinner fa-spin-pulse" aria-hidden="true"></i></a>
+              <a class="dropdown-item"><i class="spinner fa-solid fa-spinner fa-spin-pulse" aria-hidden="true"></i></a>
             </li>
           </template>
           <template v-else>
