@@ -14,7 +14,7 @@ const SUGGESTION_PLUGIN = {
     // Create a new mount point div for the Vue app
     const newMountPoint = document.createElement('div')
     newMountPoint.id = 'suggestions'
-    newMountPoint.classList = 'row py-3'
+    newMountPoint.classList = params.pageType === 'vocab-home' ? 'row py-3' : 'row property'
 
     // Find parent element and add the mount point to it as a child
     let parentElement
