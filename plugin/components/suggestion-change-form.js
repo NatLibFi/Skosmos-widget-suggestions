@@ -18,6 +18,7 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
       const fields = [
         ['**Käsitteen tyyppi**', 'Muutos olemassa olevaan käsitteeseen'],
         ['**prefLabel**', `[${this.prefLabels[0].label}](${this.uri})`],
+        ['**Muunkieliset termit**', this.prefLabels.slice(1).map(x => `${x.label} (${x.lang})`).join('; ')],
         ['**Tila**', 'Käsittelyssä'],
         hasText(this.description) && ['**Ehdotettu muutos**', this.description],
         hasText(this.explanation) && ['**Lisätietoa tai perusteluja ehdotukselle**', this.explanation],
