@@ -59,7 +59,8 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
           <template v-if="!showSuccessMessage && !showFailureMessage">
             <div id="suggestion-header">
               <h2 id="suggestion-title">
-                {{ $t('change.heading') }} {{ prefLabels[0].label }}
+                {{ $t('change.heading') }}
+                <span class="fst-italic">{{ prefLabels[0].label }}</span>
               </h2>
               <p id="suggestion-subtitle">
                 {{ $t('change.subheading') }}
