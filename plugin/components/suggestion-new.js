@@ -11,12 +11,12 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
     }
   },
   computed: {
-    linkUrl() {
+    linkUrl () {
       return this.pageType === 'vocab-home' ? this.pageUrl.split('#')[0] + '#suggestion' : null
     }
   },
   created () {
-    if (this.pageUrl.includes("#suggestion") && this.pageType === 'vocab-home'){
+    if (this.pageUrl.includes('#suggestion') && this.pageType === 'vocab-home') {
       this.showDialog = true
     }
   },

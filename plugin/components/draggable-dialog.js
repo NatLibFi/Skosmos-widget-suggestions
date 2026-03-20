@@ -1,5 +1,5 @@
 SUGGESTION_PLUGIN.draggableDialogComponent = {
-  props:{
+  props: {
     showFooter: Boolean,
     submitDisabled: Boolean,
     submitText: String

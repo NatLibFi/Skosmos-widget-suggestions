@@ -10,26 +10,26 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           prefLabel: '',
           altLabels: [''],
           isValid: true,
-          required: false,
+          required: false
         },
         sv: {
           prefLabel: '',
           altLabels: [''],
           isValid: true,
-          required: false,
+          required: false
         },
         en: {
           prefLabel: '',
           altLabels: [''],
           isValid: true,
-          required: false,
+          required: false
         },
         se: {
           prefLabel: '',
           altLabels: [''],
           isValid: true,
-          required: false,
-        },
+          required: false
+        }
       },
       broader: [],
       narrower: [],
@@ -85,7 +85,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         joinLinks(this.associative) && ['**Assosiatiiviset käsitteet (RT)**', joinLinks(this.associative)],
         joinText(this.exactMatches) && ['**Vastaava käsite muussa sanastossa**', joinText(this.exactMatches)],
         hasText(this.neededFor) && ['**Aineisto jonka kuvailussa käsitettä tarvitaan (esim. nimeke tai URL)**', this.neededFor],
-        hasText(this.organization) && ['**Ehdottajan organisaatio**', this.organization],
+        hasText(this.organization) && ['**Ehdottajan organisaatio**', this.organization]
       ].filter(Boolean)
 
       return fields.map(([title, value]) => `${title}\n\n${value}`).join('\n\n')
@@ -167,7 +167,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         }
 
         const dataBundle = {
-          title:  this.terms.fi.prefLabel || this.terms.sv.prefLabel,
+          title: this.terms.fi.prefLabel || this.terms.sv.prefLabel,
           body: this.issueData,
           state: 'open',
           labels

@@ -6,18 +6,18 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
   emits: ['update:matches'],
   computed: {
     labelString () {
-      return this.$t('new.exactMatches.label', {links: this.links.map(l => `<a target="_blank" href="${l.url}">${l.text}</a>`).join(', ')})
+      return this.$t('new.exactMatches.label', { links: this.links.map(l => `<a target="_blank" href="${l.url}">${l.text}</a>`).join(', ') })
     }
   },
   methods: {
     updateMatches (i, value, createNew = true) {
-      let newMatches = [...this.matches] // Copy of matches array
+      const newMatches = [...this.matches] // Copy of matches array
       newMatches[i] = value
       this.$emit('update:matches', newMatches)
 
       // If updating last match, add a new one to the end of the array
       if (i === newMatches.length - 1 && createNew) {
-        this.$emit('update:matches', [ ...newMatches, '' ])
+        this.$emit('update:matches', [...newMatches, ''])
       }
     },
     removeMatchInput (i) {

@@ -35,11 +35,11 @@ SUGGESTION_PLUGIN.termInputComponent = {
         // Show error for required empty field
         return this.$t('common.error')
       } else if (this.concept) {
-        if (this.concept.altLabel && this.prefLabel.trim().toLowerCase() === this.concept.altLabel.toLowerCase() ) {
+        if (this.concept.altLabel && this.prefLabel.trim().toLowerCase() === this.concept.altLabel.toLowerCase()) {
           // If matching label is an altLabel of an existing concept, show a separate error message
-          return this.$t('new.terms.if.alt', {link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>`})
+          return this.$t('new.terms.if.alt', { link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>` })
         } else {
-          return this.$t(`new.terms.if.${this.concept.vocab}`, {link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>`})
+          return this.$t(`new.terms.if.${this.concept.vocab}`, { link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>` })
         }
       }
     }
@@ -49,7 +49,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
       this.$emit('update:prefLabel', value)
       this.loading = true
       if (value.length > 1) {
-        const vocabs = [this.vocab, ...['yso' ,'yso-paikat', 'slm', 'yse'].filter(v => v !== this.vocab)] // All vocabs with selected vocab first
+        const vocabs = [this.vocab, ...['yso', 'yso-paikat', 'slm', 'yse'].filter(v => v !== this.vocab)] // All vocabs with selected vocab first
         this.search(value, vocabs)
           .then(res => {
             // Only continue if the value matches current prefLabel to prevent a race condition
@@ -97,10 +97,10 @@ SUGGESTION_PLUGIN.termInputComponent = {
             )
             // Proposed YSO concepts should not block suggestions for SLM (if selected vocab is SLM, matches in YSE should only be proposals to SLM or YSO places)
             if (
-              match && 
+              match &&
               !(
-                this.vocab === 'slm' && 
-                match.vocab === 'yse' && 
+                this.vocab === 'slm' &&
+                match.vocab === 'yse' &&
                 !match.type.some(t => ['http://www.yso.fi/onto/yse-meta/GeographicalConcept', 'http://www.yso.fi/onto/yse-meta/GenreConcept'].includes(t))
               )
             ) {
@@ -112,7 +112,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
           // i.e. show warning for matching altLabels of concepts in slm and yso-places when selected vocab is SLM and yso and yso-places otherwise
           for (const r of data.results) {
             if (
-              r.altLabel && 
+              r.altLabel &&
               r.altLabel.toLowerCase() === q &&
               (this.vocab === 'slm' ? ['slm', 'yso-paikat'] : ['yso', 'yso-paikat']).includes(r.vocab)
             ) {
@@ -132,13 +132,13 @@ SUGGESTION_PLUGIN.termInputComponent = {
         })
     },
     updateAltLabels (i, value, createNew = true) {
-      let newAltLabels = [...this.altLabels] // Copy of altLabels array
+      const newAltLabels = [...this.altLabels] // Copy of altLabels array
       newAltLabels[i] = value
       this.$emit('update:altLabels', newAltLabels)
 
       // If updating last label, add a new empty label to the end of the array
       if (i === newAltLabels.length - 1 && createNew) {
-        this.$emit('update:altLabels', [ ...newAltLabels, '' ])
+        this.$emit('update:altLabels', [...newAltLabels, ''])
       }
     },
     removeAltLabelInput (i) {
@@ -193,7 +193,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
             >
             <template v-if="altLabels.length > 1">
               <template v-for="(l, i) in altLabels.slice(1)">
-                <label class="suggestion-term-label col-lg-3 pt-lg-2 sr-only"
+                <label class="suggestion-term-label sr-only"
                   :for="'suggestion-altlabel-' + lang + '-' + (i + 1)"
                 >{{ $t('new.terms.altLabel') }}</label>
                 <clear-input @clear-input="removeAltLabelInput(i + 1)"></clear-input>

@@ -21,7 +21,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       if (this.vocab === 'slm') {
         return this.UILang === 'sv' ? 'sv' : 'fi'
       } else if (this.vocab === 'yso-paikat') {
-        return this.UILang === 'se' ? 'fi': this.UILang
+        return this.UILang === 'se' ? 'fi' : this.UILang
       } else {
         return this.UILang
       }

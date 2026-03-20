@@ -19,7 +19,7 @@ SUGGESTION_PLUGIN.basicInputComponent = {
   methods: {
     updateText (value) {
       this.$emit('update:text', value)
-      if(value.length > 2) {
+      if (value.length > 2) {
         this.$emit('update:isValid', true)
       } else {
         this.$emit('update:isValid', false)

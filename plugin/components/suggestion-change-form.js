@@ -1,5 +1,5 @@
 SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
-  inject:['prefLabels', 'uri', 'vocab'],
+  inject: ['prefLabels', 'uri', 'vocab'],
   emits: ['updateFormIsValid'],
   data () {
     return {
@@ -50,7 +50,7 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
         }
 
         const dataBundle = {
-          title:  this.prefLabels[0].label,
+          title: this.prefLabels[0].label,
           body: this.issueData,
           state: 'open',
           labels

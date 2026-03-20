@@ -1,4 +1,4 @@
-SUGGESTION_PLUGIN.createVueApp = function(params) {
+SUGGESTION_PLUGIN.createVueApp = function (params) {
   const vueApp = Vue.createApp({
     provide () {
       return {
@@ -12,7 +12,7 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
     },
     data () {
       return {
-        pageType: params.pageType,
+        pageType: params.pageType
       }
     },
     template: `
@@ -48,10 +48,10 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
       el.dragEvent = event => {
         binding.value(event)
       }
-      window.addEventListener("mousemove", el.dragEvent) // registering an event listener on dragging the dialog element
+      window.addEventListener('mousemove', el.dragEvent) // registering an event listener on dragging the dialog element
     },
     unmounted: el => {
-      window.removeEventListener("mousemove", el.dragEvent)
+      window.removeEventListener('mousemove', el.dragEvent)
     }
   })
 
@@ -60,10 +60,10 @@ SUGGESTION_PLUGIN.createVueApp = function(params) {
       el.dragStopEvent = event => {
         binding.value(event)
       }
-      window.addEventListener("mouseup", el.dragStopEvent) // registering an event listener on stopping dragging the dialog element
+      window.addEventListener('mouseup', el.dragStopEvent) // registering an event listener on stopping dragging the dialog element
     },
     unmounted: el => {
-      window.removeEventListener("mouseup", el.dragStopEvent)
+      window.removeEventListener('mouseup', el.dragStopEvent)
     }
   })
 
