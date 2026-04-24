@@ -1,5 +1,5 @@
 SUGGESTION_PLUGIN.suggestionChangeComponent = {
-  inject: ['prefLabels'],
+  inject: ['pageUrl', 'prefLabels'],
   data () {
     return {
       showDialog: false,
@@ -37,12 +37,16 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
       this.showSuccessMessage = false
       this.showFailureMessage = false
       this.url = ''
+
+      // Remove #suggestion from page URL
+      window.history.replaceState(null, document.title, this.pageUrl.split('#')[0])
     }
   },
   template: `
     <div class="p-0 my-2">
-      <a role="button" class="suggestion-link"
+      <a role="button" class="suggestion-link" 
         ref="button"
+        :href="pageUrl.split('#')[0] + '#suggestion'"
         @click="showDialog = true"
       >
         <i class="fa-solid fa-pen-to-square"></i>&nbsp;
