@@ -58,10 +58,12 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
             <i class="fa-solid fa-grip-vertical align-middle" aria-hidden="true"></i>
           </div>
           <div id="suggestion-dialog-close" class="col text-end pe-0">
-            <i class="fa-solid fa-xmark align-middle" role="button"
+            <button class="btn btn-danger" 
               :aria-label="$t('common.aria.close')"
               @click="$emit('close-dialog')"
-            ></i>
+            >
+              <i class="fa-solid fa-xmark align-middle" aria-hidden="true" focusable="false"></i>
+            </button>
           </div>
         </div>
         <div id="suggestion-dialog-content" class="p-3">

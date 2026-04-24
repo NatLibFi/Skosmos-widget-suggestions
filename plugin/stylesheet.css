@@ -94,9 +94,11 @@
   font-size: 1.5rem;
 }
 
-#suggestion-dialog-top .fa-xmark {
-  cursor: pointer;
+#suggestion-dialog-top button {
   padding: 0.25rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
 }
 
 #suggestion-dialog-content {
