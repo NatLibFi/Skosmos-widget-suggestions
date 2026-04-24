@@ -29,8 +29,8 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
         <h3 class="suggestion-input-label" id="suggestion-match-label" v-html="labelString"></h3>
 
         <div aria-labelledby="suggestion-match-label">
-          <label class="suggestion-input-label sr-only" for="suggestion-match-input-0">
-            $t('new.exactMatches.ariaLabel')
+          <label class="suggestion-input-label visually-hidden" for="suggestion-match-input-0">
+            {{ $t('new.exactMatches.ariaLabel') }}
           </label>
           <clear-input
             v-if="matches[0]"
@@ -43,11 +43,11 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
           >
           <template v-if="matches.length > 1">
             <template v-for="(m, i) in matches.slice(1)">
-              <label class="suggestion-input-label sr-only"
+              <label class="suggestion-input-label visually-hidden"
                 :for="'suggestion-match-input-' + (i + 1)"
-              >$t('new.exactMatches.ariaLabel')</label>
+              >{{ $t('new.exactMatches.ariaLabel') }}</label>
               <clear-input @clear-input="removeMatchInput(i + 1)"></clear-input>
-              <input class="suggestion-input" type="text"
+              <input class="suggestion-input" type="text" aria-autocomplete="none"
                 :id="'suggestion-match-input-' + (i + 1)"
                 :placeholder="$t('new.exactMatches.placeholder')"
                 :value="m"

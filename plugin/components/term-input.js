@@ -193,7 +193,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
             >
             <template v-if="altLabels.length > 1">
               <template v-for="(l, i) in altLabels.slice(1)">
-                <label class="suggestion-term-label sr-only"
+                <label class="suggestion-term-label visually-hidden"
                   :for="'suggestion-altlabel-' + lang + '-' + (i + 1)"
                 >{{ $t('new.terms.altLabel') }}</label>
                 <clear-input @clear-input="removeAltLabelInput(i + 1)"></clear-input>
