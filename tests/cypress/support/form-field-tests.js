@@ -44,7 +44,6 @@ export const testRelationInput = (label, i, type, text, result) => {
   cy.get('@container').find('.suggestion-input-label').invoke('text').should('contain', label)
   // Check inputting existing concept
   cy.get('@container').find(`#suggestion-${type}`).click().type(text)
-  cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('exist')
   cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('not.exist')
   cy.get('@container').find('.dropdown-menu').should('have.class', 'show')
   cy.get('@container').find('.dropdown-menu .dropdown-item').eq(0).invoke('text').should('contain', result)

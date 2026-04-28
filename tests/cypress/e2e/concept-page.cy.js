@@ -44,6 +44,8 @@ describe('Concept page', () => {
     testBasicInput('Ehdottajan organisaatio:', 2)
     // Click submit button with empty fields
     cy.get('#suggestion-form-submit button').click()
+    // Check that focus is moved correctly
+    cy.get('.suggestion-input-container').eq(0).find('.suggestion-error').should('have.focus')
     // Check that fields are validated correctly
     cy.get('.suggestion-input-container').eq(0).find('.suggestion-error').should('be.visible')
     cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('not.exist')

@@ -56,6 +56,8 @@ describe('Vocab page', () => {
     testBasicInput('Ehdottajan organisaatio:', 12)
     // Click submit button with empty fields
     cy.get('#suggestion-form-submit button').click()
+    // Check that focus is moved correctly
+    cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('have.focus')
     // Check that fields are validated correctly
     cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('exist')
     cy.get('.suggestion-input-container').eq(2).find('.suggestion-error').should('not.exist')
