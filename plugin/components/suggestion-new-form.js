@@ -43,7 +43,8 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
       submitted: false,
       deadlineDate: '',
       meetingDate: '',
-      renderKey: 0
+      renderKey: 0,
+      ariaLiveMessage: ''
     }
   },
   computed: {
@@ -146,6 +147,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
     async submit () {
       // This method is called by the parent component 'suggestion-new'
       this.submitted = true
+      this.ariaLiveMessage = ''
 
       if (!this.formIsValid) {
         // Scroll the topmost invalid field into view after DOM has updated
@@ -154,6 +156,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           if (firstError) {
             firstError.scrollIntoView({ behavior: 'smooth', block: 'center' })
             firstError.focus({ preventScroll: true })
+            this.ariaLiveMessage = this.$t('common.aria.live', { count: document.querySelectorAll('input.suggestion-error').length })
           }
         })
         return null
@@ -188,6 +191,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
   },
   template: `
     <div id="suggestion-form" role="form">
+      <div id="suggestion-aria-live" class="visually-hidden" aria-live="assertive">{{ ariaLiveMessage }}</div>
       <div id="suggestion-form-inputs">
         <div class="suggestion-input-container">
           <fieldset id="suggestion-vocab-wrapper">

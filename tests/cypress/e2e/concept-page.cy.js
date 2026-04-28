@@ -50,6 +50,8 @@ describe('Concept page', () => {
     cy.get('.suggestion-input-container').eq(0).find('.suggestion-error').should('be.visible')
     cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('not.exist')
     cy.get('.suggestion-input-container').eq(2).find('.suggestion-error').should('not.exist')
+    // Check that aria live message is updated correctly
+    cy.get('#suggestion-aria-live').invoke('text').should('contain', 'Lomaketta ei lähetetty. 1 kentässä on virheitä.')
     
   })
 

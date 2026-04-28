@@ -61,7 +61,8 @@ SUGGESTION_PLUGIN.translationsSv = {
     aria: {
       close: "???",
       clear: "???",
-      remove: "???"
+      remove: "???",
+      live: "???"
     },
     success: {
       heading: "Förslaget skickades",

@@ -238,11 +238,11 @@ h3.suggestion-input-label a {
 .suggestion-clear-input i {
   position: absolute;
   top: 13px;
-  right: 15px;
+  right: 10px;
 }
 
 .suggestion-clear-input i.spinner {
-  right: 12px;
+  right: 10px;
 }
 
 .suggestion-term-label {
@@ -353,11 +353,6 @@ h3.suggestion-input-label a {
   color: var(--suggestion-white-color);
   font-weight: bold;
   padding: 0.5rem 1rem;
-}
-
-#suggestion-form-submit button.disabled {
-  opacity: 0.65;
-  cursor: default;
 }
 
 /* Setting scrollbar style separately in Firefox */

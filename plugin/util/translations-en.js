@@ -61,7 +61,8 @@ SUGGESTION_PLUGIN.translationsEn = {
     aria: {
       close: "Close",
       clear: "Clear",
-      remove: "Remove"
+      remove: "Remove",
+      live: "Form not submitted. One field has errors. | Form not submitted. {count} fields have errors."
     },
     success: {
       heading: "The suggestion successfully sent",

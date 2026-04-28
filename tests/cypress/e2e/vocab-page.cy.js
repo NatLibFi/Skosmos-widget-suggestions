@@ -71,6 +71,8 @@ describe('Vocab page', () => {
     cy.get('.suggestion-input-container').eq(10).find('.suggestion-error').should('not.exist')
     cy.get('.suggestion-input-container').eq(11).find('.suggestion-error').should('exist')
     cy.get('.suggestion-input-container').eq(12).find('.suggestion-error').should('not.exist')
+    // Check that aria live message is updated correctly
+    cy.get('#suggestion-aria-live').invoke('text').should('contain', 'Lomaketta ei lähetetty. 2 kentässä on virheitä.')
   })
 
   it ('submits form successfully with valid inputs', () => {

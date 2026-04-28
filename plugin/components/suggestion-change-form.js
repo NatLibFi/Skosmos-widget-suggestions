@@ -7,7 +7,8 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
       explanation: '',
       organization: '',
       descriptionIsValid: false,
-      submitted: false
+      submitted: false,
+      ariaLiveMessage: ''
     }
   },
   computed: {
@@ -37,10 +38,12 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
     async submit () {
       // This method is called by the parent component 'suggestion-change'
       this.submitted = true
+      this.ariaLiveMessage = ''
       if (!this.descriptionIsValid) {
         // Move focus to invalid field
         this.$nextTick(() => {
           document.querySelector('.suggestion-error').focus({ preventScroll: true })
+          this.ariaLiveMessage = this.$t('common.aria.live', { count: 1 })
         })
         return null
       } else {
@@ -74,6 +77,7 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
   },
   template: `
     <div id="suggestion-form" role="form">
+      <div id="suggestion-aria-live" class="visually-hidden" aria-live="assertive">{{ ariaLiveMessage }}</div>
       <div id="suggestion-form-inputs">
         <basic-input
           v-model:text="description"
