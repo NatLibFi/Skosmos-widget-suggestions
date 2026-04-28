@@ -54,8 +54,7 @@ describe('Vocab page', () => {
     testBasicInput('Lisätietoa tai perusteluja ehdotukselle:', 10, true)
     testBasicInput('Minkä aineiston kuvailussa tarvitsit käsitettä? Julkaisun nimi, ISBN tai linkki: *', 11)
     testBasicInput('Ehdottajan organisaatio:', 12)
-    // Click submit button with empty fields and check that it is disabled
-    cy.get('#suggestion-form-submit button').should('have.class', 'disabled')
+    // Click submit button with empty fields
     cy.get('#suggestion-form-submit button').click()
     // Check that fields are validated correctly
     cy.get('.suggestion-input-container').eq(1).find('.suggestion-error').should('exist')
@@ -78,10 +77,9 @@ describe('Vocab page', () => {
     // Click the new link
     cy.get('#main-content .main-content-section #suggestions a').first().click()
 
-    // Check that submit button is not disabled with valid inputs
+    // Fill out form with valid inputs
     cy.get('.suggestion-input-container').eq(1).find('#suggestion-preflabel-fi').type('test')
     cy.get('.suggestion-input-container').eq(11).find('#suggestion-needed-for').type('test')
-    cy.get('#suggestion-form-submit button').should('not.have.class', 'disabled')
     
     // Intercept submit
     cy.intercept(

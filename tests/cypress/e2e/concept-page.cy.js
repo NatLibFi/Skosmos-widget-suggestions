@@ -42,8 +42,7 @@ describe('Concept page', () => {
     testBasicInput('Ehdotettu muutos: *', 0, true)
     testBasicInput('Lisätietoa tai perusteluja ehdotukselle:', 1, true)
     testBasicInput('Ehdottajan organisaatio:', 2)
-    // Click submit button with empty fields and check that it is disabled
-    cy.get('#suggestion-form-submit button').should('have.class', 'disabled')
+    // Click submit button with empty fields
     cy.get('#suggestion-form-submit button').click()
     // Check that fields are validated correctly
     cy.get('.suggestion-input-container').eq(0).find('.suggestion-error').should('be.visible')
@@ -58,9 +57,8 @@ describe('Concept page', () => {
     // Click the change link
     cy.get('#main-content .main-content-section #suggestions a').first().click()
 
-    // Check that submit button is not disabled with valid inputs
+    // Fill out form with valid inputs
     cy.get('.suggestion-input-container').eq(0).find('textarea').type('test')
-    cy.get('#suggestion-form-submit button').should('not.have.class', 'disabled')
 
     // Intercept submit
     cy.intercept(

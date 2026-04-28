@@ -74,7 +74,6 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
             <span>{{ $t('common.required') }}</span>
             <submit-button
               :text="submitText"
-              :disabled="submitDisabled"
               @submit="$emit('submit')"
             ></submit-button>
           </div>

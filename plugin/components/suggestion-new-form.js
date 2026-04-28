@@ -153,6 +153,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           const firstError = document.querySelector('.suggestion-error')
           if (firstError) {
             firstError.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            firstError.focus({ preventScroll: true })
           }
         })
         return null
