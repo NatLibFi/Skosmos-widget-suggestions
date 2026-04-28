@@ -38,6 +38,10 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
       // This method is called by the parent component 'suggestion-change'
       this.submitted = true
       if (!this.descriptionIsValid) {
+        // Move focus to invalid field
+        this.$nextTick(() => {
+          document.querySelector('.suggestion-error').focus({ preventScroll: true })
+        })
         return null
       } else {
         console.log(this.issueData)
