@@ -1,7 +1,6 @@
 SUGGESTION_PLUGIN.draggableDialogComponent = {
   props: {
     showFooter: Boolean,
-    submitDisabled: Boolean,
     submitText: String
   },
   emits: ['close-dialog', 'submit'],
@@ -45,10 +44,18 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
       }
     },
     handleTabDownEvent(e) {
-      // If shift key is pressed with tab, move focus to submit button
       if (e.shiftKey) {
         e.preventDefault()
-        document.querySelector('#suggestion-form-submit button').focus({ preventScroll: true })
+        if (document.getElementById('suggestion-form-submit')) {
+          // If shift+tab is pressed when form is open, move focus to submit button
+          document.querySelector('#suggestion-form-submit button').focus({ preventScroll: true })
+        } else if (document.getElementById('suggestion-success-link')) {
+          // If shift+tab is pressed when success message is open, move focus to github link
+          document.getElementById('suggestion-success-link').focus({ preventScroll: true })
+        }
+      } else if (!document.getElementById('suggestion-form-submit') && !document.getElementById('suggestion-success-link')) {
+        // If tab is pressed when failure message is open, do not move focus
+        e.preventDefault()
       }
     }
   },

@@ -24,13 +24,21 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
         // Call submit method inside the child 'suggestion-new-form' component
         const res = await this.$refs.newForm.submit()
 
-        // Show success message if a response was received
         if (res) {
+          // Show success message if a response was received
           this.url = res.replace('/repos', '').replace('api.', '')
           this.showSuccessMessage = true
-        // Show failure message if no response was received but form is valid
+          // Move focus to success message title after DOM has updated
+          this.$nextTick(() => {
+            document.getElementById('suggestion-title').focus({ preventScroll: true })
+          })
         } else if (this.formIsValid) {
+          // Show failure message if no response was received but form is valid
           this.showFailureMessage = true
+          // Move focus to failure message title after DOM has updated
+          this.$nextTick(() => {
+            document.getElementById('suggestion-title').focus({ preventScroll: true })
+          })
         }
 
         this.submissionPending = false
