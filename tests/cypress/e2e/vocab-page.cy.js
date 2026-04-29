@@ -10,6 +10,8 @@ describe('Vocab page', () => {
     cy.get('@new-button').invoke('text').should('contain', 'Ehdota uutta käsitettä tähän sanastoon')
     // Click button
     cy.get('@new-button').click()
+    // Check that focus is moved correctly
+    cy.get('#suggestion-title').should('have.focus')
     // Check that form opens and has correct content
     cy.get('#suggestion-dialog-content').invoke('text').should('contain', 'Ehdota uutta käsitettä sanastoon')
     // Check that url is updated

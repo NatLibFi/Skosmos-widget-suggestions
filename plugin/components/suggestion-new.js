@@ -45,6 +45,13 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
 
       // Remove #suggestion from page URL
       window.history.replaceState(null, document.title, this.pageUrl.split('#')[0])
+    },
+    openDialog () {
+      this.showDialog = true
+      // Move focus to heading after DOM has updated
+      this.$nextTick(() => {
+        this.$refs.title.focus({ preventScroll: true })
+      })
     }
   },
   template: `
@@ -52,7 +59,7 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
       <a role="button" class="suggestion-link"
         :href="pageUrl.split('#')[0] + '#suggestion'"
         :class="{ 'suggestion-button': pageType === 'vocab-home' }"
-        @click="showDialog = true"
+        @click="openDialog()"
       >
         <i class="fa-solid fa-pen-to-square"></i>&nbsp;
         <h2>{{ $t('new.button') }}</h2>
@@ -67,7 +74,7 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
         >
           <template v-if="!showSuccessMessage && !showFailureMessage">
             <div id="suggestion-header">
-              <h2 id="suggestion-title">
+              <h2 id="suggestion-title" tabindex="-1" ref="title">
                 {{ $t('new.heading') }}
               </h2>
               <p id="suggestion-subtitle">
