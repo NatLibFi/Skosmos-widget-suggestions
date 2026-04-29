@@ -61,7 +61,7 @@ SUGGESTION_PLUGIN.translationsSv = {
     aria: {
       close: "???",
       clear: "???",
-      remove: "???",
+      deselect: "???",
       live: "???"
     },
     success: {

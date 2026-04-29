@@ -61,7 +61,7 @@ SUGGESTION_PLUGIN.translationsFi = {
     aria: {
       close: "Sulje",
       clear: "Tyhjennä",
-      remove: "Poista",
+      deselect: "Poista valinta",
       live: "Lomaketta ei lähetetty. {count} kentässä on virheitä."
     },
     success: {
