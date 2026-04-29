@@ -43,6 +43,13 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
         left: 'calc(50% + ' + this.x + 'px)',
         top: 'calc(50% + ' + this.y + 'px)'
       }
+    },
+    handleTabDownEvent(e) {
+      // If shift key is pressed with tab, move focus to submit button
+      if (e.shiftKey) {
+        e.preventDefault()
+        document.querySelector('#suggestion-form-submit button').focus({ preventScroll: true })
+      }
     }
   },
   template: `
@@ -61,6 +68,7 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
             <button class="btn btn-danger"
               :aria-label="$t('common.aria.close')"
               @click="$emit('close-dialog')"
+              @keydown.tab="handleTabDownEvent($event)"
             >
               <i class="fa-solid fa-xmark align-middle" aria-hidden="true" focusable="false"></i>
             </button>
