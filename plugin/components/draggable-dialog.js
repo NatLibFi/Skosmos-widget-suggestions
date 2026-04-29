@@ -51,14 +51,14 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
       <div class="suggestion-dialog-modal"
         :style="getModalStyle()"
       >
-        <div id="suggestion-dialog-top" class="row"
+        <div id="suggestion-dialog-top" class="row" tabindex="-1"
           @mousedown="handleDragStartEvent"
         >
           <div id="suggestion-dialog-handle" class="col ps-0">
             <i class="fa-solid fa-grip-vertical align-middle" aria-hidden="true"></i>
           </div>
           <div id="suggestion-dialog-close" class="col text-end pe-0">
-            <button class="btn btn-danger" 
+            <button class="btn btn-danger"
               :aria-label="$t('common.aria.close')"
               @click="$emit('close-dialog')"
             >
