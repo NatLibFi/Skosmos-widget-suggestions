@@ -85,6 +85,7 @@ describe('Vocab page', () => {
 
     // Fill out form with valid inputs
     cy.get('.suggestion-input-container').eq(1).find('#suggestion-preflabel-fi').type('test')
+    cy.get('.suggestion-input-container').eq(1).find('#suggestion-preflabel-fi i.fa-spinner').should('not.exist', {timeout: 20000})
     cy.get('.suggestion-input-container').eq(11).find('#suggestion-needed-for').type('test')
     
     // Intercept submit

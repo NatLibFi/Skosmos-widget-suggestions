@@ -18,7 +18,7 @@ export const testTermInput = (label, i, lang, foundInVocab, text) => {
   cy.get('@container').find('.suggestion-input-label').invoke('text').should('contain', label)
   // Check inputting existing concept
   cy.get('@container').find(`#suggestion-preflabel-${lang}`).type(text)
-  cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('not.exist')
+  cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('not.exist', {timeout: 20000})
   cy.get('@container').find('.suggestion-error').invoke('text').should('contain', foundInVocab + text)
   // Check clearing prefLabel
   cy.get('@container').find('#suggestion-preflabel-' + lang).should('have.value', text)
@@ -44,7 +44,7 @@ export const testRelationInput = (label, i, type, text, result) => {
   cy.get('@container').find('.suggestion-input-label').invoke('text').should('contain', label)
   // Check inputting existing concept
   cy.get('@container').find(`#suggestion-${type}`).click().type(text)
-  cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('not.exist')
+  cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('not.exist', {timeout: 20000})
   cy.get('@container').find('.dropdown-menu').should('have.class', 'show')
   cy.get('@container').find('.dropdown-menu .dropdown-item').eq(0).invoke('text').should('contain', result)
   // Check adding and removing concepts from chip list
