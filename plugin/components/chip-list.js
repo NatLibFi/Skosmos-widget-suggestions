@@ -9,6 +9,8 @@ SUGGESTION_PLUGIN.chipListComponent = {
         v-for="(c, i) in chips"
         :aria-label="$t('common.aria.deselect') + ' ' + c.prefLabel"
         @click="$emit('remove-chip', i)"
+        @keydown.enter="$emit('remove-chip', i)"
+        @keydown.space="$emit('remove-chip', i)"
       >
         <span>{{ c.prefLabel }}</span>
         <i class="fa-solid fa-xmark" aria-hidden="true"></i>
