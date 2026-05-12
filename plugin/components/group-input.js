@@ -7,7 +7,8 @@ SUGGESTION_PLUGIN.groupInputComponent = {
   data () {
     return {
       groups: [],
-      loading: false
+      loading: false,
+      optionInFocus: 0
     }
   },
   created () {
@@ -27,6 +28,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
     selectGroup (group) {
       // Remove selected group from the list of selectable groups
       this.groups = this.groups.filter(g => g.uri !== group.uri)
+      this.optionInFocus = 0
 
       this.$emit('update:selectedGroups', [...this.selectedGroups, group])
     },
@@ -37,6 +39,65 @@ SUGGESTION_PLUGIN.groupInputComponent = {
       this.groups.sort((a, b) => (a.prefLabel > b.prefLabel) ? 1 : ((b.prefLabel > a.prefLabel) ? -1 : 0))
 
       this.$emit('update:selectedGroups', this.selectedGroups.filter((_, idx) => idx !== i))
+    },
+    handleDropdownButtonKeyupEvent(e) {
+      if (e.key === 'ArrowUp') {
+        // Move focus to last list item
+        this.optionInFocus = this.groups.length - 1
+        this.$refs['option' + this.optionInFocus][0].focus()
+      } else if (e.key === 'ArrowDown' || e.key === 'Enter') {
+        // Move focus to first list item
+        this.optionInFocus = 0
+        this.$refs['option' + this.optionInFocus][0].focus()
+      } else if (e.key === ' ') {
+        // Open dropdown and move focus to first list item
+        e.preventDefault()
+        const dropdown = bootstrap.Dropdown.getOrCreateInstance(this.$refs.button)
+        dropdown.show()
+        this.optionInFocus = 0
+        this.$refs['option' + this.optionInFocus][0].focus()
+      }
+    },
+    handleListItemKeydownEvent (e, g) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        // Select group and close dropdown
+        e.preventDefault()
+        this.selectGroup(g)
+        const dropdown = bootstrap.Dropdown.getOrCreateInstance(this.$refs.button)
+        dropdown.hide()
+      } else if (e.key === 'Tab') {
+        // Close dropdown and move focus to previous/next form field
+        const dropdown = bootstrap.Dropdown.getOrCreateInstance(this.$refs.button)
+        dropdown.hide()
+        this.optionInFocus = 0
+      }
+    },
+    handleListItemKeyupEvent(e) {
+      console.log(e)
+      if (e.key === 'ArrowUp') {
+        // On first element close dropdown, otherwise move focus to previous list item
+        if (this.optionInFocus === 0) {
+          const dropdown = bootstrap.Dropdown.getOrCreateInstance(this.$refs.button)
+          dropdown.hide()
+        } else {
+          this.optionInFocus = this.optionInFocus - 1
+          this.$refs['option' + this.optionInFocus][0].focus()
+        }
+      } else if (e.key === 'ArrowDown') {
+        // On last element move focus to first list item, otherwise next list item
+        this.optionInFocus = (this.optionInFocus + 1) % this.groups.length
+        this.$refs['option' + this.optionInFocus][0].focus()
+      } else if (e.key === 'End') {
+        // Move focus to last list item
+        e.preventDefault()
+        this.optionInFocus = this.groups.length - 1
+        this.$refs['option' + this.optionInFocus][0].focus()
+      } else if (e.key === 'Home') {
+        // Move focus to first list item
+        e.preventDefault()
+        this.optionInFocus = 0
+        this.$refs['option' + this.optionInFocus][0].focus()
+      }
     }
   },
   template: `
@@ -49,21 +110,28 @@ SUGGESTION_PLUGIN.groupInputComponent = {
         @remove-chip="(i) => removeGroup(i)"
       ></chip-list>
 
-      <div class="suggestion-dropdown btn-group" aria-labelledby="suggestion-group-label">
-        <button id="suggestion-group" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" data-bs-display="static" aria-expanded="false">
+      <div id="suggestion-group" class="suggestion-dropdown btn-group" aria-labelledby="suggestion-group-label">
+        <button id="suggestion-group-button" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" data-bs-display="static" aria-expanded="false" aria-haspopup="listbox"
+          ref="button"
+          v-click-outside="() => optionInFocus = 0"
+          @keyup="handleDropdownButtonKeyupEvent($event)"
+        >
           {{ $t('new.groups.placeholder') }}
         </button>
-        <ul class="dropdown-menu" aria-labelledby="suggestion-group">
+        <ul class="dropdown-menu" aria-labelledby="suggestion-group" tabindex="-1" role="listbox">
           <template v-if="loading">
             <li>
               <a class="dropdown-item"><i class="spinner fa-solid fa-spinner fa-spin-pulse" aria-hidden="true"></i></a>
             </li>
           </template>
           <template v-else>
-            <li
-              v-for="g in groups"
+            <li tabindex="0" role="option"
+              :ref="'option' + i"
+              v-for="(g, i) in groups"
               :key="g.uri"
               @click="selectGroup(g)"
+              @keydown="handleListItemKeydownEvent($event, g)"
+              @keyup="handleListItemKeyupEvent($event)"
             >
               <a class="dropdown-item">{{ g.prefLabel }}</a>
             </li>
