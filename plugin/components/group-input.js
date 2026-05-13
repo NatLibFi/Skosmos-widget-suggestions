@@ -56,6 +56,11 @@ SUGGESTION_PLUGIN.groupInputComponent = {
         dropdown.show()
         this.optionInFocus = 0
         this.$refs['option' + this.optionInFocus][0].focus()
+      } else if (e.key === 'Tab') {
+        // Close dropdown and move focus to previous/next form field
+        const dropdown = bootstrap.Dropdown.getOrCreateInstance(this.$refs.button)
+        dropdown.hide()
+        this.optionInFocus = 0
       }
     },
     handleListItemKeydownEvent (e, g) {
