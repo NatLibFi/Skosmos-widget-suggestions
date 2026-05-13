@@ -12,7 +12,8 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       searchTerm: '',
       searchResults: [],
       showSearchResults: false,
-      loading: false
+      loading: false,
+      optionInFocus: 0
     }
   },
   computed: {
@@ -52,6 +53,8 @@ SUGGESTION_PLUGIN.relationInputComponent = {
             } else {
               this.searchResults = [{ prefLabel: this.$t('new.common.none') }]
             }
+
+            this.showSearchResults = true
           })
           .catch(error => {
             if (error.name === 'AbortError') {
@@ -75,12 +78,87 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       }
       this.clearInput()
     },
-    removeConcept (i) {
+    removeConcept (i, e) {
       this.$emit('update:selectedConcepts', this.selectedConcepts.filter((_, idx) => idx !== i))
+      
+      // If last chip was removed using keyboard, move focus to input
+      this.$nextTick(() => {
+        if (this.selectedConcepts.length === 0 && e.type === 'keydown') {
+          this.$refs.input.focus()
+        }
+      })
     },
     clearInput () {
       this.searchTerm = ''
       this.searchResults = []
+    },
+    handleInputKeydownEvent (e) {
+      if (e.key === 'Tab' || e.key === 'Escape') {
+        // Close dropdown
+        this.showSearchResults = false
+      }
+
+      // If there are no results, do nothing
+      if (this.searchResults.length === 0 || !this.searchResults[0].uri) return
+
+      if (e.key === 'ArrowUp') {
+        // Move focus to last list item
+        e.preventDefault()
+        this.optionInFocus = this.searchResults.length - 1
+        this.showSearchResults = true
+        this.$nextTick(() => {
+          this.$refs['option' + this.optionInFocus][0].focus()
+        })
+      } else if (e.key === 'ArrowDown') {
+        // Move focus to first list item
+        e.preventDefault()
+        this.optionInFocus = 0
+        this.showSearchResults = true
+        this.$nextTick(() => {
+          this.$refs['option' + this.optionInFocus][0].focus()
+        })
+      }
+    },
+    handleListItemKeydownEvent (e, r) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        // Select group and close dropdown
+        e.preventDefault()
+        this.selectConcept(r)
+        this.$refs.input.focus()
+        this.showSearchResults = false
+      } else if (e.key === 'Tab') {
+        // Close dropdown and move focus to previous/next form field
+        this.showSearchResults = false
+      } else if (e.key === 'ArrowUp') {
+        // On first element close dropdown, otherwise move focus to previous list item
+        e.preventDefault()
+        if (this.optionInFocus === 0) {
+          this.$refs.input.focus()
+          this.showSearchResults = false
+        } else {
+          this.optionInFocus = this.optionInFocus - 1
+          this.$refs['option' + this.optionInFocus][0].focus()
+        }
+      } else if (e.key === 'ArrowDown') {
+        // On last element move focus to first list item, otherwise next list item
+        e.preventDefault()
+        this.optionInFocus = (this.optionInFocus + 1) % this.searchResults.length
+        this.$refs['option' + this.optionInFocus][0].focus()
+      } else if (e.key === 'End') {
+        // Move focus to last list item
+        e.preventDefault()
+        this.optionInFocus = this.searchResults.length - 1
+        this.$refs['option' + this.optionInFocus][0].focus()
+      } else if (e.key === 'Home') {
+        // Move focus to first list item
+        e.preventDefault()
+        this.optionInFocus = 0
+        this.$refs['option' + this.optionInFocus][0].focus()
+      } else if (e.key === 'Escape') {
+        // Close dropdown and focus on input
+        this.$refs.input.focus()
+        this.showSearchResults = false
+      }
     }
   },
   template: `
@@ -90,7 +168,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       <chip-list
         v-if="selectedConcepts.length > 0"
         :chips="selectedConcepts"
-        @remove-chip="(i) => removeConcept(i)"
+        @remove-chip="(i, e) => removeConcept(i, e)"
       ></chip-list>
 
       <div class="suggestion-search-wrapper suggestion-dropdown">
@@ -103,24 +181,33 @@ SUGGESTION_PLUGIN.relationInputComponent = {
             v-if="loading"
             @click="clearInput()"
           >
-            <i class="spinner fa-solid fa-spinner fa-spin-pulse"></i>
+            <i class="spinner fa-solid fa-spinner fa-spin-pulse" aria-hidden="true"></i>
           </div>
-          <input class="suggestion-input" type="text"
+          <input class="suggestion-input" type="text" role="combobox" aria-autocomplete="list"
+            ref="input"
             v-model="searchTerm"
             :id="label.id"
-            @click="showSearchResults = true"
+            :aria-controls="label.id + '-list'"
+            :aria-expanded="showSearchResults"
+            @focus="showSearchResults = true"
+            @keydown="handleInputKeydownEvent($event)"
           >
         </div>
-        <ul class="dropdown-menu"
+        <ul role="listbox" tabindex="-1"
           v-if="searchResults.length > 0"
           :class="{ 'show': showSearchResults }"
+          :id="label.id + '-list'"
         >
-          <li
-            v-for="r in searchResults"
+          <li role="option"
+            v-for="(r, i) in searchResults"
             :key="r.uri"
+            :ref="'option' + i"
+            :tabindex="r.uri ? 0 : -1"
+            :aria-disabled="!r.uri"
             @click="r.uri && selectConcept(r)"
+            @keydown="handleListItemKeydownEvent($event, r)"
           >
-            <a class="dropdown-item">{{ r.prefLabel }}</a>
+            <a>{{ r.prefLabel }}</a>
           </li>
         </ul>
       </div>

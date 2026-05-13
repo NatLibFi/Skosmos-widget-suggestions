@@ -32,15 +32,23 @@ SUGGESTION_PLUGIN.groupInputComponent = {
 
       this.$emit('update:selectedGroups', [...this.selectedGroups, group])
     },
-    removeGroup (i) {
+    removeGroup (i, e) {
       // Add the group back to the list of selectable groups and order the list alphabetically
       const group = this.selectedGroups[i]
       this.groups.push(group)
       this.groups.sort((a, b) => (a.prefLabel > b.prefLabel) ? 1 : ((b.prefLabel > a.prefLabel) ? -1 : 0))
 
       this.$emit('update:selectedGroups', this.selectedGroups.filter((_, idx) => idx !== i))
+
+      // If last chip was removed using keyboard, move focus to dropdown button
+      this.$nextTick(() => {
+        if (this.selectedGroups.length === 0 && e.type === 'keydown') {
+          e.preventDefault()
+          this.$refs.button.focus()
+        }
+      })
     },
-    handleDropdownButtonKeyupEvent(e) {
+    handleDropdownButtonKeyupEvent (e) {
       if (e.key === 'ArrowUp') {
         // Move focus to last list item
         this.optionInFocus = this.groups.length - 1
@@ -77,8 +85,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
         this.optionInFocus = 0
       }
     },
-    handleListItemKeyupEvent(e) {
-      console.log(e)
+    handleListItemKeyupEvent (e) {
       if (e.key === 'ArrowUp') {
         // On first element close dropdown, otherwise move focus to previous list item
         if (this.optionInFocus === 0) {
@@ -112,7 +119,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
       <chip-list
         v-if="selectedGroups.length > 0"
         :chips="selectedGroups"
-        @remove-chip="(i) => removeGroup(i)"
+        @remove-chip="(i, e) => removeGroup(i, e)"
       ></chip-list>
 
       <div id="suggestion-group" class="suggestion-dropdown btn-group" aria-labelledby="suggestion-group-label">
@@ -131,9 +138,9 @@ SUGGESTION_PLUGIN.groupInputComponent = {
           </template>
           <template v-else>
             <li tabindex="0" role="option"
-              :ref="'option' + i"
               v-for="(g, i) in groups"
               :key="g.uri"
+              :ref="'option' + i"
               @click="selectGroup(g)"
               @keydown="handleListItemKeydownEvent($event, g)"
               @keyup="handleListItemKeyupEvent($event)"

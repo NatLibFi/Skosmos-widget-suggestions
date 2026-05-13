@@ -289,9 +289,14 @@ h3.suggestion-input-label a {
 }
 
 .suggestion-search-wrapper ul {
-  inset: 38px auto auto 0px !important;
-  width: 100%;
-  padding: 0;
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  background-color: var(--white-color);
+}
+
+.suggestion-search-wrapper ul.show {
+  display: block;
 }
 
 .suggestion-dropdown {
@@ -339,6 +344,9 @@ h3.suggestion-input-label a {
   color: var(--suggestion-dark-color) !important;
   font-weight: normal !important;
   white-space: wrap;
+  padding: 0.25rem 1rem;
+  display: block;
+  width: 100%;
 }
 
 .suggestion-dropdown a:hover, .suggestion-dropdown a:focus, .suggestion-dropdown a:active {
