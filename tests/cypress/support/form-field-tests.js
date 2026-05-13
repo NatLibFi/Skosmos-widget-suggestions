@@ -45,10 +45,10 @@ export const testRelationInput = (label, i, type, text, result) => {
   // Check inputting existing concept
   cy.get('@container').find(`#suggestion-${type}`).click().type(text)
   cy.get('@container').find('.suggestion-clear-input i.fa-spinner').should('not.exist', {timeout: 20000})
-  cy.get('@container').find('.dropdown-menu').should('have.class', 'show')
-  cy.get('@container').find('.dropdown-menu .dropdown-item').eq(0).invoke('text').should('contain', result)
+  cy.get('@container').find('ul').should('have.class', 'show')
+  cy.get('@container').find('ul a').eq(0).invoke('text').should('contain', result)
   // Check adding and removing concepts from chip list
-  cy.get('@container').find('.dropdown-menu .dropdown-item').eq(0).click()
+  cy.get('@container').find('ul a').eq(0).click()
   cy.get('@container').find('.suggestion-chip-list .suggestion-chip').invoke('text').should('contain', result)
   cy.get('@container').find('.suggestion-chip-list .suggestion-chip').click()
   cy.get('@container').find('.suggestion-chip-list').should('not.exist')
