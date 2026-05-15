@@ -40,11 +40,17 @@ SUGGESTION_PLUGIN.groupInputComponent = {
 
       this.$emit('update:selectedGroups', this.selectedGroups.filter((_, idx) => idx !== i))
 
-      // If last chip was removed using keyboard, move focus to dropdown button
+      // If last chip was removed using keyboard, move focus manually
       this.$nextTick(() => {
-        if (this.selectedGroups.length === 0 && e.type === 'keydown') {
-          e.preventDefault()
-          this.$refs.button.focus()
+        if (e.type === 'keydown') {
+          if (this.selectedGroups.length === 0) {
+            // Last remaining chip -> focus to input
+            this.$refs.button.focus()
+          } else if (i === this.selectedGroups.length) {
+            // Last chip otherwise -> focus to remaining last chip
+            console.log(this.$refs.chiplist.$refs, i)
+            this.$refs.chiplist.$refs['chip' + (i - 1)][0].focus()
+          }
         }
       })
     },
@@ -116,7 +122,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
     <div class="suggestion-input-container">
       <h3 id="suggestion-group-label" class="suggestion-input-label">{{ $t('new.groups.label' )}}</h3>
 
-      <chip-list
+      <chip-list ref="chiplist"
         v-if="selectedGroups.length > 0"
         :chips="selectedGroups"
         @remove-chip="(i, e) => removeGroup(i, e)"

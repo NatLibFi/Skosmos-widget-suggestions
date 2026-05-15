@@ -81,10 +81,17 @@ SUGGESTION_PLUGIN.relationInputComponent = {
     removeConcept (i, e) {
       this.$emit('update:selectedConcepts', this.selectedConcepts.filter((_, idx) => idx !== i))
       
-      // If last chip was removed using keyboard, move focus to input
+      // If last chip was removed using keyboard, move focus manually
       this.$nextTick(() => {
-        if (this.selectedConcepts.length === 0 && e.type === 'keydown') {
-          this.$refs.input.focus()
+        if (e.type === 'keydown') {
+          if (this.selectedConcepts.length === 0) {
+            // Last remaining chip -> focus to input
+            this.$refs.input.focus()
+          } else if (i === this.selectedConcepts.length) {
+            // Last chip otherwise -> focus to remaining last chip
+            console.log(this.$refs.chiplist.$refs, i)
+            this.$refs.chiplist.$refs['chip' + (i - 1)][0].focus()
+          }
         }
       })
     },
@@ -165,7 +172,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
     <div class="suggestion-input-container">
       <label class="suggestion-input-label" :for="label.id">{{ label.text }}</label>
 
-      <chip-list
+      <chip-list ref="chiplist"
         v-if="selectedConcepts.length > 0"
         :chips="selectedConcepts"
         @remove-chip="(i, e) => removeConcept(i, e)"
