@@ -51,6 +51,7 @@ SUGGESTION_PLUGIN.basicInputComponent = {
       ></textarea>
       <input class="suggestion-input" type="text"
         v-else
+        :aria-describedby="label.id + '-error'"
         :class="{ 'suggestion-error': !isValid && submitted }"
         :id="label.id"
         :required="required"
@@ -59,6 +60,7 @@ SUGGESTION_PLUGIN.basicInputComponent = {
       >
       <p class="suggestion-error"
         v-if="!isValid && submitted"
+        :id="label.id + '-error'"
       >{{ $t('common.error') }}</p>
     </div>
   `

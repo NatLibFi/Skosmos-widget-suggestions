@@ -165,14 +165,16 @@ SUGGESTION_PLUGIN.termInputComponent = {
               <i class="spinner fa-solid fa-spinner fa-spin-pulse"></i>
             </div>
             <input class="suggestion-input" type="text"
+              :aria-describedby="'suggestion-preflabel-error-' + lang"
               :class="{ 'suggestion-error': showError }"
               :id="'suggestion-preflabel-' + lang"
               :required="required"
               :value="prefLabel"
               @input="updatePrefLabel($event.target.value)"
             >
-            <p class="suggestion-error"
+            <p class="suggestion-error" aria-live="polite"
               v-if="showError"
+              :id="'suggestion-preflabel-error-' + lang"
               v-html="errorString"
             ></p>
           </div>
