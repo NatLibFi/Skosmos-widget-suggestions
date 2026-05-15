@@ -239,6 +239,7 @@ h3.suggestion-input-label a {
 .suggestion-input {
   border: none;
   background-color: var(--suggestion-light-color);
+  border-bottom: 1px solid var(--suggestion-secondary-dark-color);
 }
 
 .suggestion-clear-input {
@@ -311,6 +312,7 @@ h3.suggestion-input-label a {
   text-align: left;
   height: 40px;
   margin-bottom: 1rem;
+  border-bottom: 1px solid var(--suggestion-secondary-dark-color);
 }
 
 .suggestion-dropdown button:hover, .suggestion-dropdown button:active, .suggestion-dropdown button:focus-visible, .suggestion-dropdown button.show {
@@ -338,6 +340,7 @@ h3.suggestion-input-label a {
   width: 100%;
   max-height: 226px;
   overflow-y: scroll;
+  margin-top: 0 !important;
 }
 
 .suggestion-dropdown a {
