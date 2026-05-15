@@ -13,6 +13,10 @@ SUGGESTION_PLUGIN.basicInputComponent = {
     submitted: {
       type: Boolean,
       default: false
+    },
+    required: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['update:text', 'update:isValid'],
@@ -41,6 +45,7 @@ SUGGESTION_PLUGIN.basicInputComponent = {
         v-if="isTextarea"
         :class="{ 'suggestion-error': !isValid && submitted }"
         :id="label.id"
+        :required="required"
         :value="text"
         @input="updateText($event.target.value)"
       ></textarea>
@@ -48,6 +53,7 @@ SUGGESTION_PLUGIN.basicInputComponent = {
         v-else
         :class="{ 'suggestion-error': !isValid && submitted }"
         :id="label.id"
+        :required="required"
         :value="text"
         @input="updateText($event.target.value)"
       >

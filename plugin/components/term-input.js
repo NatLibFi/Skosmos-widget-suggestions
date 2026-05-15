@@ -167,6 +167,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
             <input class="suggestion-input" type="text"
               :class="{ 'suggestion-error': showError }"
               :id="'suggestion-preflabel-' + lang"
+              :required="required"
               :value="prefLabel"
               @input="updatePrefLabel($event.target.value)"
             >

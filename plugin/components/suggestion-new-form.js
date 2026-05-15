@@ -270,6 +270,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
           v-model:isValid="neededForIsValid"
           :submitted="submitted"
           :label="{text: $t('new.neededFor'), id: 'suggestion-needed-for'}"
+          :required="true"
         ></basic-input>
         <basic-input
           v-model:text="organization"

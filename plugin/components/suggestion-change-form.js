@@ -85,6 +85,7 @@ SUGGESTION_PLUGIN.suggestionChangeFormComponent = {
           :label="{text: $t('change.description'), id: 'suggestion-description'}"
           :submitted="submitted"
           :is-textarea="true"
+          :required="true"
         ></basic-input>
         <basic-input
           v-model:text="explanation"
