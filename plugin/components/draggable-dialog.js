@@ -62,7 +62,7 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
   template: `
     <div v-drag="handleDragEvent" v-drag-stop="handleDragStopEvent">
       <div class="suggestion-dialog-overlay"></div>
-      <div class="suggestion-dialog-modal"
+      <div class="suggestion-dialog-modal" role="dialog" aria-labelledby="suggestion-title"
         :style="getModalStyle()"
       >
         <div id="suggestion-dialog-top" class="row" tabindex="-1"
