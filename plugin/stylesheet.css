@@ -149,7 +149,7 @@
     accent-color: var(--suggestion-dark-color);
 }
 
-#suggestion-form input:focus {
+#suggestion-form :not(input[type="radio"]):focus {
   outline: none;
 }
 
