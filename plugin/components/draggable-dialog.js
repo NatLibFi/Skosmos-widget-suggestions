@@ -81,7 +81,7 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
             </button>
           </div>
         </div>
-        <div id="suggestion-dialog-content" class="p-3">
+        <div id="suggestion-dialog-content" class="p-3" tabindex="-1">
           <slot></slot>
         </div>
         <div id="suggestion-dialog-footer" class="px-3 py-2" v-if="showFooter">

@@ -18,13 +18,12 @@ SUGGESTION_PLUGIN.messageSuccessComponent = {
         <p>{{ $t('common.success.subheading1') }}</p>
         <p>
           {{ $t('common.success.subheading2') }}
-          <a id="suggestion-success-link"
+          <a id="suggestion-success-link" target="_blank"
             :href="url"
             @keydown.tab="handleTabDownEvent($event)"
           >
             {{ $t('common.success.link') }}
-          </a>
-          .
+          </a>.
         </p>
       </span>
     </div>

@@ -47,7 +47,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
             // Last remaining chip -> focus to input
             this.$refs.button.focus()
           } else if (i === this.selectedGroups.length) {
-            // Last chip otherwise -> focus to remaining last chip
+            // Last chip in list -> focus to remaining last chip
             console.log(this.$refs.chiplist.$refs, i)
             this.$refs.chiplist.$refs['chip' + (i - 1)][0].focus()
           }

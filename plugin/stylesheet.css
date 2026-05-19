@@ -83,7 +83,6 @@
 
 #suggestion-dialog-top {
   padding: 0.75rem;
-  padding-left: 1rem;
   margin: 0;
   background-color: var(--suggestion-dark-color);
   color: var(--suggestion-white-color);
@@ -239,7 +238,7 @@ h3.suggestion-input-label a {
 .suggestion-input {
   border: none;
   background-color: var(--suggestion-light-color);
-  border-bottom: 1px solid var(--suggestion-secondary-dark-color);
+  border-bottom: 1px solid var(--suggestion-dark-color);
 }
 
 .suggestion-clear-input {
@@ -312,7 +311,7 @@ h3.suggestion-input-label a {
   text-align: left;
   height: 40px;
   margin-bottom: 1rem;
-  border-bottom: 1px solid var(--suggestion-secondary-dark-color);
+  border-bottom: 1px solid var(--suggestion-dark-color);
 }
 
 .suggestion-dropdown button:hover, .suggestion-dropdown button:active, .suggestion-dropdown button:focus-visible, .suggestion-dropdown button.show {

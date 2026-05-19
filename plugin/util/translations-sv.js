@@ -68,7 +68,7 @@ SUGGESTION_PLUGIN.translationsSv = {
       heading: "Förslaget skickades",
       subheading1: "Ditt förslag vidarebefordras till YSO-mötet.",
       subheading2: "Du kan följa hur behandlingen av ditt förslag framskrider",
-      link: "här"
+      link: "på GitHub"
     },
     failure: {
       heading: "Förslaget kunde inte skickas",

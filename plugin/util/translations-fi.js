@@ -33,7 +33,7 @@ SUGGESTION_PLUGIN.translationsFi = {
       placeholder: "Valitse ryhmä(t) listalta"
     },
     exactMatches: {
-      label: "Vastaava käsite muussa sanastossa (esim. {links}):",
+      label: "Vastaava käsite muussa sanastossa (esim. {links}). Linkki käsitteeseen:",
       placeholder: "Linkki käsitteeseen",
       ariaLabel: "Vastaava käsite muussa sanastossa:"
     },
@@ -68,7 +68,7 @@ SUGGESTION_PLUGIN.translationsFi = {
       heading: "Ehdotus lähetetty onnistuneesti",
       subheading1: "Ehdotuksesi siirtyy nyt YSO-kokouksen käsiteltäväksi.",
       subheading2: "Voit seurata ehdotuksesi käsittelyn etenemistä",
-      link: "täällä"
+      link: "GitHubissa"
     },
     failure: {
       heading: "Ehdotuksen lähettäminen ei onnistunut",
