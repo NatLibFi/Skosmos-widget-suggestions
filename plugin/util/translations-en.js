@@ -1,27 +1,27 @@
 SUGGESTION_PLUGIN.translationsEn = {
   new: {
     button: "Suggest a new concept to the vocabulary",
-    heading: "???",
+    heading: "Suggest a new concept to the vocabulary",
     subheading: "Changes to the existing concepts can be suggested in the concept pages",
     vocab: {
-      label: "???",
+      label: "Vocabulary:",
       yso: "YSO",
       ysoPlaces: "YSO places",
       slm: "SLM" //
     },
     terms: {
-      fi: "???",
-      sv: "???",
-      en: "???",
-      se: "???",
-      prefLabel: "???",
+      fi: "Term in Finnish:",
+      sv: "Term in Swedish:",
+      en: "Term in English:",
+      se: "Term in Northern Sami:",
+      prefLabel: "Main term:",
       altLabel: "Alternative term:", //
       if: {
-        yso: "???",
-        slm: "???",
-        "yso-paikat": "???",
-        yse: "???",
-        alt: "???"
+        yso: "The term is already found in YSO: {link}",
+        slm: "The term is already found in SLM: {link}",
+        "yso-paikat": "The term is already found in YSO places: {link}",
+        yse: "A suggestion for the term already exists: {link}. Comment on or support it via the homepage link found in its description",
+        alt: "This is already an entry term for the concept: {link}"
       }
     },
     broader: "Broader term (BT):", //
@@ -33,14 +33,14 @@ SUGGESTION_PLUGIN.translationsEn = {
       placeholder: "Select group(s) from the list"
     },
     exactMatches: {
-      label: "???",
-      placeholder: "???",
-      ariaLabel: "???"
+      label: "Similar concepts in other vocabularies (e.g., {links}). Link to concept:",
+      placeholder: "Link to concept",
+      ariaLabel: "Similar concepts in other vocabularies:"
     },
-    explanation: "???",
-    neededFor: "???",
+    explanation: "Additional information or reasoning for the suggestion:",
+    neededFor: "What material does the concept describe? Title, ISBN or URL: *",
     organization: "Organization (sender of the suggestion):",
-    meetingInfo: "???",
+    meetingInfo: "Suggestions submitted by {deadlineDate} will be added to the agenda for the vocabulary meeting on {meetingDate}.",
     common: {
       none: "No terms can be found"
     },
@@ -49,14 +49,14 @@ SUGGESTION_PLUGIN.translationsEn = {
   change: {
     button: "Suggest changes to the concept",
     heading: "Suggest changes to the concept",
-    subheading: "???",
+    subheading: "Any user of the vocabulary may suggest changes to it",
     description: "Suggested changes to be made: *",
-    explanation: "???",
+    explanation: "Additional information or reasoning for the suggestion:",
     organization:"Organization (sender of the suggestion):",
     submit: "Send the suggestion"
   },
   common: {
-    required: "???",
+    required: "* The field is required",
     error: "This information is mandatory.",
     aria: {
       close: "Close",
