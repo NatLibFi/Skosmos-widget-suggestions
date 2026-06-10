@@ -51,7 +51,7 @@ describe('Vocab page', () => {
     // Check that group input field is correct
     testGroupInput('YSOn temaattinen ryhmä:', 8)
     // Check that exact match input field is correct
-    testExactMatchInput('Vastaava käsite muussa sanastossa (esim. LCSH, SAO, Wikipedia):', 9)
+    testExactMatchInput('Vastaava käsite muussa sanastossa (esim. LCSH, SAO, Wikipedia). Linkki käsitteeseen:', 9)
     // Check that explanation, needed for and organization fields are correct
     testBasicInput('Lisätietoa tai perusteluja ehdotukselle:', 10, true)
     testBasicInput('Minkä aineiston kuvailussa tarvitsit käsitettä? Julkaisun nimi, ISBN tai linkki: *', 11)

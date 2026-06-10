@@ -16,7 +16,6 @@
     "components/suggestion-new-form.js",
     "components/suggestion-new.js",
     "components/term-input.js",
-    "node_modules/vue-i18n/dist/vue-i18n.global.js",
     "util/meeting-dates.js",
     "util/translations-en.js",
     "util/translations-fi.js",
