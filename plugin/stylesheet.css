@@ -111,6 +111,10 @@
   border-radius: 0;
 }
 
+#suggestion-dialog-top button:focus-visible {
+  outline-color: var(--white-color) !important;
+}
+
 #suggestion-dialog-content {
   max-height: calc(100vh - 150px);
   overflow-y: scroll;
@@ -148,8 +152,8 @@
   accent-color: var(--suggestion-dark-color);
 }
 
-#suggestion-form input:not(input[type="radio"]):focus {
-  outline: none;
+#suggestion-form input[type="radio"]:focus-visible {
+  outline-offset: 1px !important;
 }
 
 #suggestion-form input::placeholder {
@@ -169,10 +173,6 @@
   #suggestion-form textarea {
     resize: none;
   }
-}
-
-#suggestion-form textarea:focus {
-  outline: none;
 }
 
 #suggestion-form textarea.suggestion-error {
@@ -351,8 +351,13 @@ h3.suggestion-input-label a {
   width: 100%;
 }
 
-.suggestion-dropdown a:hover, .suggestion-dropdown a:focus, .suggestion-dropdown a:active {
+.suggestion-dropdown a:hover, .suggestion-dropdown a:active {
   background-color: var(--suggestion-secondary-light-color);
+}
+
+.suggestion-dropdown li:focus-visible {
+  outline-offset: -3px !important;
+   background-color: var(--suggestion-secondary-light-color);
 }
 
 #suggestion-meeting-info {
@@ -374,6 +379,10 @@ h3.suggestion-input-label a {
   color: var(--suggestion-white-color);
   font-weight: bold;
   padding: 0.5rem 1rem;
+}
+
+#suggestion-form-submit button:focus-visible {
+  outline-color: var(--white-color) !important;
 }
 
 /* Setting scrollbar style separately in Firefox */
