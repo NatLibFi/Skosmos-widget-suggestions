@@ -11,13 +11,14 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
     }
   },
   created () {
+    // Open dialog automatically on vocab home page if url includes #suggestion
     if (this.pageUrl.includes('#suggestion') && this.pageType === 'vocab-home') {
       this.showDialog = true
     }
   },
   methods: {
     async handleSubmitEvent () {
-      // Only make a submission if a previous submission is not pending
+      // Only make a submission if a previous submission is not pending to prevent multiple submissions
       if (!this.submissionPending) {
         this.submissionPending = true
 

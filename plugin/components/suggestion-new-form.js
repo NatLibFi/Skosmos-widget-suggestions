@@ -161,8 +161,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         })
         return null
       } else {
-        console.log(this.issueData)
-
+        // Add labels to GitHub issue
         const labels = ['uusi']
         if (this.selectedVocab === 'yso-paikat') {
           labels.push('maantieteellinen')
@@ -178,6 +177,7 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         }
 
         try {
+          // Make call to proxy server to create GitHub issue
           const params = new URLSearchParams({ payload: JSON.stringify(dataBundle) })
           const res = await fetch('plugins/suggestions/gh_prx.php?' + params.toString(), { method: 'POST', headers: { 'Access-Control-Allow-Origin': '*' } })
           const data = await res.json()

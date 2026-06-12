@@ -26,36 +26,36 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
   },
   template: `
     <div class="suggestion-input-container">
-        <h3 class="suggestion-input-label" id="suggestion-match-label" v-html="labelString"></h3>
+      <h3 class="suggestion-input-label" id="suggestion-match-label" v-html="labelString"></h3>
 
-        <div aria-labelledby="suggestion-match-label">
-          <label class="suggestion-input-label visually-hidden" for="suggestion-match-input-0">
-            {{ $t('new.exactMatches.ariaLabel') }}
-          </label>
-          <clear-input
-            v-if="matches[0]"
-            @clear-input="updateMatches(0, '', false)"
-          ></clear-input>
-          <input class="suggestion-input" id="suggestion-match-input-0" type="text"
-            :placeholder="$t('new.exactMatches.placeholder')"
-            :value="matches[0]"
-            @input="updateMatches(0, $event.target.value)"
-          >
-          <template v-if="matches.length > 1">
-            <template v-for="(m, i) in matches.slice(1)">
-              <label class="suggestion-input-label visually-hidden"
-                :for="'suggestion-match-input-' + (i + 1)"
-              >{{ $t('new.exactMatches.ariaLabel') }}</label>
-              <clear-input @clear-input="removeMatchInput(i + 1)"></clear-input>
-              <input class="suggestion-input" type="text" aria-autocomplete="none"
-                :id="'suggestion-match-input-' + (i + 1)"
-                :placeholder="$t('new.exactMatches.placeholder')"
-                :value="m"
-                @input="updateMatches(i + 1, $event.target.value)"
-              >
-            </template>
+      <div aria-labelledby="suggestion-match-label">
+        <label class="suggestion-input-label visually-hidden" for="suggestion-match-input-0">
+          {{ $t('new.exactMatches.ariaLabel') }}
+        </label>
+        <clear-input
+          v-if="matches[0]"
+          @clear-input="updateMatches(0, '', false)"
+        ></clear-input>
+        <input class="suggestion-input" id="suggestion-match-input-0" type="text"
+          :placeholder="$t('new.exactMatches.placeholder')"
+          :value="matches[0]"
+          @input="updateMatches(0, $event.target.value)"
+        >
+        <template v-if="matches.length > 1">
+          <template v-for="(m, i) in matches.slice(1)">
+            <label class="suggestion-input-label visually-hidden"
+              :for="'suggestion-match-input-' + (i + 1)"
+            >{{ $t('new.exactMatches.ariaLabel') }}</label>
+            <clear-input @clear-input="removeMatchInput(i + 1)"></clear-input>
+            <input class="suggestion-input" type="text" aria-autocomplete="none"
+              :id="'suggestion-match-input-' + (i + 1)"
+              :placeholder="$t('new.exactMatches.placeholder')"
+              :value="m"
+              @input="updateMatches(i + 1, $event.target.value)"
+            >
           </template>
-        </div>
+        </template>
       </div>
+    </div>
   `
 }

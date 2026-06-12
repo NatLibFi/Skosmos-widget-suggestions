@@ -24,12 +24,12 @@ SUGGESTION_PLUGIN.translationsSv = {
         alt: "Denna term är redan en hänvisningsterm till begreppet: {link}"
       }
     },
-    broader: "Överordnade begrepp:", //
+    broader: "Överordnat begrepp:", //
     narrower: "Underordnade begrepp:",
     associative: "Relaterade begrepp:", //
     groups: {
       label: "Tematisk grupp i ALLFO:",
-      none: "Inga fler grupper kan väljas",
+      none: "Inga fler grupper kan väljas.",
       placeholder: "Välj grupp(er) ur listan"
     },
     exactMatches: {

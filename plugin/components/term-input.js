@@ -28,6 +28,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
   },
   computed: {
     showError () {
+      // Show error on empty required input after form is submitted and when input has a match
       return (!this.isValid && this.submitted && this.required) || this.concept
     },
     errorString () {
@@ -37,9 +38,9 @@ SUGGESTION_PLUGIN.termInputComponent = {
       } else if (this.concept) {
         if (this.concept.altLabel && this.prefLabel.trim().toLowerCase() === this.concept.altLabel.toLowerCase()) {
           // If matching label is an altLabel of an existing concept, show a separate error message
-          return this.$t('new.terms.if.alt', { link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>` })
+          return this.$t('new.terms.if.alt', { link: `<a href="${this.concept.uri}" target="_blank">${this.concept.prefLabel}</a>` })
         } else {
-          return this.$t(`new.terms.if.${this.concept.vocab}`, { link: `<a href="${this.concept.uri}">${this.concept.prefLabel}</a>` })
+          return this.$t(`new.terms.if.${this.concept.vocab}`, { link: `<a href="${this.concept.uri}" target="_blank">${this.concept.prefLabel}</a>` })
         }
       }
     }
@@ -49,6 +50,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
       this.$emit('update:prefLabel', value)
       this.loading = true
       if (value.length > 1) {
+        // Make a search only on inputs longer than 1 character
         const vocabs = [this.vocab, ...['yso', 'yso-paikat', 'slm', 'yse'].filter(v => v !== this.vocab)] // All vocabs with selected vocab first
         this.search(value, vocabs)
           .then(res => {
@@ -80,6 +82,7 @@ SUGGESTION_PLUGIN.termInputComponent = {
       this.controller = new AbortController()
 
       const q = query.trim().toLowerCase()
+
       // YSO concepts should not block suggestions for SLM (if selected vocab is SLM, searches are not made to YSO)
       const vocab = this.vocab === 'slm' ? 'yso-paikat slm yse' : 'yso yso-paikat slm yse'
       const params = new URLSearchParams({ lang: this.lang, query: q, vocab })

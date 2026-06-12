@@ -29,7 +29,7 @@ SUGGESTION_PLUGIN.translationsEn = {
     associative: "Related terms (RT):", //
     groups: {
       label: "YSO thematic group:",
-      none: "No more groups to select",
+      none: "No more groups to select.",
       placeholder: "Select group(s) from the list"
     },
     exactMatches: {

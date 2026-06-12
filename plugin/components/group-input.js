@@ -32,7 +32,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
 
       this.$emit('update:selectedGroups', [...this.selectedGroups, group])
     },
-    removeGroup (i, e) {
+    deselectGroup (i, e) {
       // Add the group back to the list of selectable groups and order the list alphabetically
       const group = this.selectedGroups[i]
       this.groups.push(group)
@@ -48,7 +48,6 @@ SUGGESTION_PLUGIN.groupInputComponent = {
             this.$refs.button.focus()
           } else if (i === this.selectedGroups.length) {
             // Last chip in list -> focus to remaining last chip
-            console.log(this.$refs.chiplist.$refs, i)
             this.$refs.chiplist.$refs['chip' + (i - 1)][0].focus()
           }
         }
@@ -120,12 +119,12 @@ SUGGESTION_PLUGIN.groupInputComponent = {
   },
   template: `
     <div class="suggestion-input-container">
-      <h3 id="suggestion-group-label" class="suggestion-input-label">{{ $t('new.groups.label' )}}</h3>
+      <h3 id="suggestion-group-label" class="suggestion-input-label">{{ $t('new.groups.label' ) }}</h3>
 
       <chip-list ref="chiplist"
         v-if="selectedGroups.length > 0"
         :chips="selectedGroups"
-        @remove-chip="(i, e) => removeGroup(i, e)"
+        @remove-chip="(i, e) => deselectGroup(i, e)"
       ></chip-list>
 
       <div id="suggestion-group" class="suggestion-dropdown btn-group" aria-labelledby="suggestion-group-label">

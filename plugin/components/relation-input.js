@@ -51,6 +51,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
             if (data.results.length > 0) {
               this.searchResults = data.results
             } else {
+              // Show no results message if nothing was found
               this.searchResults = [{ prefLabel: this.$t('new.common.none') }]
             }
 
@@ -78,7 +79,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       }
       this.clearInput()
     },
-    removeConcept (i, e) {
+    deselectConcept (i, e) {
       this.$emit('update:selectedConcepts', this.selectedConcepts.filter((_, idx) => idx !== i))
       
       // If last chip was removed using keyboard, move focus manually
@@ -89,7 +90,6 @@ SUGGESTION_PLUGIN.relationInputComponent = {
             this.$refs.input.focus()
           } else if (i === this.selectedConcepts.length) {
             // Last chip in list -> focus to remaining last chip
-            console.log(this.$refs.chiplist.$refs, i)
             this.$refs.chiplist.$refs['chip' + (i - 1)][0].focus()
           }
         }
@@ -175,7 +175,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       <chip-list ref="chiplist"
         v-if="selectedConcepts.length > 0"
         :chips="selectedConcepts"
-        @remove-chip="(i, e) => removeConcept(i, e)"
+        @remove-chip="(i, e) => deselectConcept(i, e)"
       ></chip-list>
 
       <div class="suggestion-search-wrapper suggestion-dropdown">

@@ -12,7 +12,7 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
   },
   methods: {
     async handleSubmitEvent () {
-      // Only a make submission if a previous submission is not pending
+      // Only a make submission if a previous submission is not pending to prevent multiple submissions
       if (!this.submissionPending) {
         this.submissionPending = true
 
