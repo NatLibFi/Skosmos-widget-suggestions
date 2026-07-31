@@ -76,7 +76,7 @@
   position: fixed;
   transform: translate(-50%, -50%);
   min-height: 60px;
-  width: 650px;
+  width: min(650px, calc(100vw - 50px));
   z-index: 10001;
   padding: 0;
 }

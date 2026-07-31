@@ -156,10 +156,10 @@ SUGGESTION_PLUGIN.termInputComponent = {
 
       <div :aria-labelledby="label.id">
         <div class="row">
-          <label class="suggestion-term-label col-lg-4 pt-lg-2"
+          <label class="suggestion-term-label col-sm-4 pt-sm-2"
             :for="'suggestion-preflabel-' + lang"
           >{{ $t('new.terms.prefLabel') }}{{ required ? ' *' : '' }}</label>
-          <div class="col-lg-8">
+          <div class="col-sm-8">
             <clear-input
               v-if="prefLabel && !loading"
               @clear-input="updatePrefLabel('')"
@@ -184,10 +184,10 @@ SUGGESTION_PLUGIN.termInputComponent = {
         </div>
 
         <div class="row">
-          <label class="suggestion-term-label col-lg-4 pt-lg-2"
+          <label class="suggestion-term-label col-sm-4 pt-sm-2"
             :for="'suggestion-altlabel-' + lang + '-0'"
           >{{ $t('new.terms.altLabel') }}</label>
-          <div class="col-lg-8">
+          <div class="col-sm-8">
             <clear-input
               v-if="altLabels[0]"
               @clear-input="updateAltLabels(0, '', false)"

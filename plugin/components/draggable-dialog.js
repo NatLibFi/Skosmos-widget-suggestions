@@ -27,7 +27,14 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
         const diffY = e.clientY - this.mouseYPos
         // Update element position
         this.x += diffX
-        this.y += diffY
+        this.y += diffY        
+        // Limit element position
+        const dialogModal = this.$refs.dialogModal
+        const dialogTop = this.$refs.dialogTop
+        const margin = 16
+        this.x = Math.max(-window.innerWidth / 2 + dialogModal.offsetWidth / 2 + margin, Math.min(this.x, window.innerWidth / 2 - dialogModal.offsetWidth / 2 - margin))
+        this.y = Math.max(-window.innerHeight / 2 + dialogModal.offsetHeight / 2 + margin, Math.min(this.y, window.innerHeight - dialogTop.offsetHeight - 2 * margin))
+        
       }
       // Update mouse coordinates
       this.mouseXPos = e.clientX
@@ -39,8 +46,8 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
     },
     getModalStyle () {
       return {
-        left: 'calc(50% + ' + this.x + 'px)',
-        top: 'calc(50% + ' + this.y + 'px)'
+        left: 'calc(50vw + ' + this.x + 'px)',
+        top: 'calc(50vh + ' + this.y + 'px)'
       }
     },
     handleTabDownEvent(e) {
@@ -62,10 +69,10 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
   template: `
     <div v-drag="handleDragEvent" v-drag-stop="handleDragStopEvent">
       <div class="suggestion-dialog-overlay"></div>
-      <div class="suggestion-dialog-modal" role="dialog" aria-labelledby="suggestion-title" aria-modal="true"
+      <div class="suggestion-dialog-modal" role="dialog" aria-labelledby="suggestion-title" aria-modal="true" ref="dialogModal"
         :style="getModalStyle()"
       >
-        <div id="suggestion-dialog-top" class="row" tabindex="-1"
+        <div id="suggestion-dialog-top" class="row" tabindex="-1" ref="dialogTop"
           @mousedown="handleDragStartEvent"
         >
           <div id="suggestion-dialog-handle" class="col ps-0">
