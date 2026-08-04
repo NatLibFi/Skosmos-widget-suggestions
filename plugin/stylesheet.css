@@ -120,6 +120,13 @@
   overflow-y: scroll;
 }
 
+/* Dynamic viewport height for compatible mobile browsers */
+@supports (height: 100dvh) {
+  #suggestion-dialog-content {
+    max-height: calc(100dvh - 150px);
+  }
+}
+
 #suggestion-form a {
   color: var(--suggestion-medium-color);
   font-weight: bold;
@@ -237,6 +244,7 @@ h3.suggestion-input-label a {
 
 .suggestion-input {
   border: none;
+  border-radius: 0;
   background-color: var(--suggestion-light-color);
   border-bottom: 1px solid var(--suggestion-dark-color);
 }
