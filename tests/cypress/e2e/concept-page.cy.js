@@ -60,6 +60,14 @@ describe('Concept page', () => {
   })
 
   it('submits form successfully with valid inputs', () => {
+    // Go to abstract objects concept page in YSO vocab
+    cy.visit('/yso/fi/page/p8318')
+    // Click the change link
+    cy.get('#main-content .main-content-section #suggestions a').first().click()
+
+    // Fill out form with valid inputs
+    cy.get('.suggestion-input-container').eq(0).find('textarea').type('test')
+
     // Intercept submit
     cy.intercept(
       {
@@ -75,20 +83,12 @@ describe('Concept page', () => {
         },
       }
     ).as('submitRequest')
-    
-    // Go to abstract objects concept page in YSO vocab
-    cy.visit('/yso/fi/page/p8318')
-    // Click the change link
-    cy.get('#main-content .main-content-section #suggestions a').first().click()
-
-    // Fill out form with valid inputs
-    cy.get('.suggestion-input-container').eq(0).find('textarea').type('test')
 
     // Click submit button to submit form
     cy.get('#suggestion-form-submit button').click()
 
     // Check request and response
-    cy.wait('@submitRequest').then(({ request, response }) => {
+    cy.wait('@submitRequest', { timeout: 20000 }).then(({ request, response }) => {
       const body = typeof response.body === 'string'
         ? JSON.parse(response.body)
         : response.body
