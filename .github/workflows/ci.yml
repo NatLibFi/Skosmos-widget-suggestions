@@ -25,7 +25,7 @@ jobs:
         run: ./tests/start_container.sh
 
       - name: Run Cypress tests
-        run: npx cypress run
+        run: npx cypress run --config video=true
 
       - name: Upload Cypress screenshots
         if: ${{ always() }}
@@ -33,3 +33,10 @@ jobs:
         with:
           name: cypress-screenshots
           path: /home/runner/work/Skosmos-widget-suggestions/Skosmos-widget-suggestions/tests/cypress/screenshots/**
+
+      - name: Upload Cypress videos
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: /home/runner/work/Skosmos-widget-suggestions/Skosmos-widget-suggestions/tests/cypress/videos/**
