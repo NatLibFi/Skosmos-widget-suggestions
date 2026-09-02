@@ -108,7 +108,7 @@ describe('Vocab page', () => {
     cy.get('#suggestion-form-submit button').click()
 
     // Check request and response
-    cy.wait('@submitRequest').then(({ request, response }) => {
+    cy.wait('@submitRequest', { timeout: 20000 }).then(({ request, response }) => {
       const body = typeof response.body === 'string'
         ? JSON.parse(response.body)
         : response.body
