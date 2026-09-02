@@ -1,6 +1,9 @@
 SUGGESTION_PLUGIN.translationsSv = {
   new: {
-    button: "Föreslå ett nytt begrepp till denna vokabulär",
+    button: {
+      line1: "Föreslå ett nytt begrepp",
+      line2: "till denna vokabulär"
+    },
     heading: "Föreslå ett nytt begrepp till vokabulären",
     subheading: "Du kan föreslå ändringar av begrepp som redan finns i vokabulären via begreppens egna sidor",
     vocab: {

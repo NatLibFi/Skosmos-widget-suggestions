@@ -24,6 +24,13 @@
   max-width: 800px;
 }
 
+#suggestion-heading-wrapper {
+  margin-left: -.75rem;
+  margin-right: -.75rem;
+  margin-top: 2rem;
+  padding-bottom: 2.5rem;
+}
+
 .suggestion-link h2 {
   display: inline;
   width: auto;
@@ -42,16 +49,24 @@
 .suggestion-link.suggestion-button {
   padding: 0.5rem 1rem;
   background-color: var(--suggestion-accent-color);
+  display: inline-flex;
+  gap: 3px;
 }
 
 .suggestion-link.suggestion-button h2 {
   color: var(--suggestion-dark-color);
+  display: block;
+  white-space: nowrap;
+}
+
+.suggestion-link.suggestion-button span {
+  display: block;
 }
 
 .suggestion-link i {
   display: inline;
   width: auto;
-  margin: auto 0;
+  margin-top: 1px;
   padding: 0;
   font-size: 1.2rem;
   color: var(--suggestion-dark-color) !important;

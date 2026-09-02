@@ -49,7 +49,10 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
       // Remove #suggestion from page URL
       window.history.replaceState(null, document.title, this.pageUrl.split('#')[0])
     },
-    openDialog () {
+    openDialog (e) {
+      e.preventDefault()
+
+      window.history.replaceState(null, document.title, this.pageUrl.split('#')[0] + '#suggestion')
       this.showDialog = true
       // Move focus to heading after DOM has updated
       this.$nextTick(() => {
@@ -62,7 +65,8 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
       <a role="button" class="suggestion-link" 
         ref="button"
         :href="pageUrl.split('#')[0] + '#suggestion'"
-        @click="openDialog()"
+        @click="openDialog($event)"
+        @keydown.space="openDialog($event)"
       >
         <i class="fa-solid fa-pen-to-square"></i>&nbsp;
         <h2>{{ $t('change.button') }}</h2>

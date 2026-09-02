@@ -55,7 +55,10 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
       // Remove #suggestion from page URL
       window.history.replaceState(null, document.title, this.pageUrl.split('#')[0])
     },
-    openDialog () {
+    openDialog (e) {
+      e.preventDefault()
+
+      window.history.replaceState(null, document.title, this.pageUrl.split('#')[0] + '#suggestion')
       this.showDialog = true
       // Move focus to heading after DOM has updated
       this.$nextTick(() => {
@@ -64,14 +67,18 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
     }
   },
   template: `
-    <div class="p-0 my-2">
+    <div :class="{ 'p-0 my-2': pageType === 'concept' }">
       <a role="button" class="suggestion-link"
         :href="pageUrl.split('#')[0] + '#suggestion'"
         :class="{ 'suggestion-button': pageType === 'vocab-home' }"
-        @click="openDialog()"
+        @click="openDialog($event)"
+        @keydown.space="openDialog($event)"
       >
         <i class="fa-solid fa-pen-to-square"></i>&nbsp;
-        <h2>{{ $t('new.button') }}</h2>
+        <h2>
+          {{ $t('new.button.line1') }}
+          <span>{{ $t('new.button.line2') }}</span>
+        </h2>
       </a>
       <template v-if="showDialog">
         <draggable-dialog

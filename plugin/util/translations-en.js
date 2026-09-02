@@ -1,6 +1,9 @@
 SUGGESTION_PLUGIN.translationsEn = {
   new: {
-    button: "Suggest a new concept to the vocabulary",
+    button: {
+      line1: "Suggest a new concept",
+      line2: "to the vocabulary"
+    },
     heading: "Suggest a new concept to the vocabulary",
     subheading: "Changes to the existing concepts can be suggested in the concept pages",
     vocab: {

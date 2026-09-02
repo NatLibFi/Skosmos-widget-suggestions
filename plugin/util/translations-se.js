@@ -1,6 +1,9 @@
 SUGGESTION_PLUGIN.translationsSe = {
   new: {
-    button: "Ehdota uutta käsitettä tähän sanastoon",
+    button: {
+      line1: "Ehdota uutta käsitettä",
+      line2: "tähän sanastoon"
+    },
     heading: "Ehdota uutta käsitettä sanastoon",
     subheading: "Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta",
     vocab: {
