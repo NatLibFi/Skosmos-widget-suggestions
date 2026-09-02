@@ -15,7 +15,7 @@ docker run -d -p 9090:80 \
 
 # Wait for HTTP 200 from the app (timeout ~60s)
 for i in {1..60}; do
-  if curl -sSf http://localhost:9090/yso/fi/ >/dev/null 2>&1; then
+  if curl -sSf http://localhost:9090/ >/dev/null 2>&1; then
     echo "Service ready"
     exit 0
   fi
