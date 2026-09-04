@@ -16,9 +16,10 @@ const SUGGESTION_PLUGIN = {
     newMountPoint.id = 'suggestions'
     newMountPoint.classList = params.pageType === 'vocab-home' ? 'mt-lg-0 mt-4' : 'row property'
 
-    // Find parent element and add the mount point to it as a child
+    // Create/find parent element and add the mount point to it as a child
     let parentElement
     if (params.pageType === 'vocab-home') {
+      // Create a new div as parent element
       parentElement = document.createElement('div')
       parentElement.id = 'suggestion-heading-wrapper'
       parentElement.classList = 'd-lg-flex align-items-lg-center justify-content-lg-between'
