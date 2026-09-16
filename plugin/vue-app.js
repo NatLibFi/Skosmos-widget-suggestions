@@ -71,9 +71,12 @@ SUGGESTION_PLUGIN.createVueApp = function (params) {
     beforeMount: (el, binding) => {
       el.clickOutsideEvent = event => {
         // Ensure the click was outside the element
-        if (!(el === event.target || el.contains(event.target))) {
-          binding.value(event) // Call the method provided in the directive's value
-        }
+        if (el === event.target || el.contains(event.target)) return
+
+        // Ignore stale synthesized clicks (e.g. Chrome on Android) that arrive while the input still has focus
+        if (document.activeElement === el || el.contains(document.activeElement)) return
+
+        binding.value(event) // Call the method provided in the directive's value
       }
       window.addEventListener('click', el.clickOutsideEvent)
     },
