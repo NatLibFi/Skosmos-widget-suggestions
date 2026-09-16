@@ -13,7 +13,8 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       searchResults: [],
       showSearchResults: false,
       loading: false,
-      optionInFocus: 0
+      optionInFocus: 0,
+      debounceTimer: null
     }
   },
   computed: {
@@ -28,50 +29,55 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       }
     }
   },
-  watch: {
-    searchTerm () {
-      if (this.searchTerm.length > 1) {
-        // Abort any previous fetch request before starting a new one
-        this.controller.abort()
-        this.controller = new AbortController()
+  methods: {
+    onSearchInput (e) {
+      this.searchTerm = e.target.value
 
-        this.loading = true
+      if (this.debounceTimer) clearTimeout(this.debounceTimer)
 
-        const query = this.searchTerm
-
-        const params = new URLSearchParams({ lang: this.lang, query: query + '*', unique: true })
-        fetch('rest/v1/' + this.vocab + '/search/?' + params.toString(), { signal: this.controller.signal })
-          .then(res => res.json())
-          .then(data => {
-            this.loading = false
-
-            // Only continue if the query matches current search term to prevent a race condition
-            if (query !== this.searchTerm) return
-
-            if (data.results.length > 0) {
-              this.searchResults = data.results
-            } else {
-              // Show no results message if nothing was found
-              this.searchResults = [{ prefLabel: this.$t('new.common.none') }]
-            }
-
-            this.showSearchResults = true
-          })
-          .catch(error => {
-            if (error.name === 'AbortError') {
-              console.log('Fetch was aborted')
-            } else {
-              console.log('Fetch failed:', error)
-              this.loading = false
-            }
-          })
-      } else {
+      if (this.searchTerm.length <= 1) {
         this.searchResults = []
         this.loading = false
+        this.showSearchResults = false
+        return
       }
-    }
-  },
-  methods: {
+
+      // Only fetch results when it has been 300ms since last input
+      this.loading = true
+      this.showSearchResults = true
+      this.debounceTimer = setTimeout(() => this.fetchResults(this.searchTerm), 300)
+    },
+    fetchResults (query) {
+      // Abort any previous fetch request before starting a new one
+      this.controller.abort()
+      this.controller = new AbortController()
+
+      const params = new URLSearchParams({ lang: this.lang, query: query + '*', unique: true })
+      fetch('rest/v1/' + this.vocab + '/search/?' + params.toString(), { signal: this.controller.signal })
+        .then(res => res.json())
+        .then(data => {
+          // Only continue if the query matches current search term to prevent a race condition
+          if (query !== this.searchTerm) return
+
+          this.loading = false
+
+          if (data.results.length > 0) {
+            this.searchResults = data.results
+          } else {
+            // Show no results message if nothing was found
+            this.searchResults = [{ prefLabel: this.$t('new.common.none') }]
+          }
+
+          this.showSearchResults = true
+        })
+        .catch(error => {
+          if (error.name === 'AbortError') {
+            return
+          }
+          console.log('Fetch failed:', error)
+          this.loading = false
+        })
+    },
     selectConcept (concept) {
       // Only select each concept once
       if (!this.selectedConcepts.some(c => c.uri === concept.uri)) {
@@ -81,7 +87,7 @@ SUGGESTION_PLUGIN.relationInputComponent = {
     },
     deselectConcept (i, e) {
       this.$emit('update:selectedConcepts', this.selectedConcepts.filter((_, idx) => idx !== i))
-      
+
       // If last chip was removed using keyboard, move focus manually
       this.$nextTick(() => {
         if (e.type === 'keydown') {
@@ -96,8 +102,16 @@ SUGGESTION_PLUGIN.relationInputComponent = {
       })
     },
     clearInput () {
+      if (this.debounceTimer) {
+        clearTimeout(this.debounceTimer)
+        this.debounceTimer = null
+      }
+      this.controller.abort()
+      this.controller = new AbortController()
       this.searchTerm = ''
       this.searchResults = []
+      this.loading = false
+      this.showSearchResults = false
     },
     handleInputKeydownEvent (e) {
       if (e.key === 'Tab' || e.key === 'Escape') {
@@ -192,10 +206,11 @@ SUGGESTION_PLUGIN.relationInputComponent = {
           </div>
           <input class="suggestion-input" type="text" role="combobox" aria-autocomplete="list"
             ref="input"
-            v-model="searchTerm"
+            :value="searchTerm"
             :id="label.id"
             :aria-controls="label.id + '-list'"
             :aria-expanded="showSearchResults"
+            @input="onSearchInput($event)"
             @focus="showSearchResults = true"
             @keydown="handleInputKeydownEvent($event)"
           >
