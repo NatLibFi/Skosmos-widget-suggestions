@@ -374,6 +374,7 @@ h5.suggestion-input-label a {
   padding: 0.25rem 1rem;
   display: block;
   width: 100%;
+  text-decoration: none;
 }
 
 .suggestion-dropdown a:hover, .suggestion-dropdown a:active {
