@@ -119,7 +119,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
   },
   template: `
     <div class="suggestion-input-container">
-      <h3 id="suggestion-group-label" class="suggestion-input-label">{{ $t('new.groups.label' ) }}</h3>
+      <h5 id="suggestion-group-label" class="suggestion-input-label">{{ $t('new.groups.label' ) }}</h5>
 
       <chip-list ref="chiplist"
         v-if="selectedGroups.length > 0"

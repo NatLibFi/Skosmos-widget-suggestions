@@ -8,9 +8,9 @@ SUGGESTION_PLUGIN.messageFailureComponent = {
   },
   template: `
     <div id="suggestion-header">
-      <h2 id="suggestion-title" tabindex="-1" @keydown.tab="handleTabDownEvent($event)">
+      <h4 id="suggestion-title" tabindex="-1" @keydown.tab="handleTabDownEvent($event)">
         {{ $t('common.failure.heading') }}
-      </h2>
+      </h4>
       <span id="suggestion-subtitle">
         <p>{{ $t('common.failure.subheading1') }}</p>
         <p>{{ $t('common.failure.subheading2') }}</p>

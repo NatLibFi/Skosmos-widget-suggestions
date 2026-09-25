@@ -26,7 +26,7 @@ SUGGESTION_PLUGIN.exactMatchInputComponent = {
   },
   template: `
     <div class="suggestion-input-container">
-      <h3 class="suggestion-input-label" id="suggestion-match-label" v-html="labelString"></h3>
+      <h5 class="suggestion-input-label" id="suggestion-match-label" v-html="labelString"></h5>
 
       <div aria-labelledby="suggestion-match-label">
         <label class="suggestion-input-label visually-hidden" for="suggestion-match-input-0">

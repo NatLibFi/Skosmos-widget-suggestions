@@ -69,7 +69,7 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
         @keydown.space="openDialog($event)"
       >
         <i class="fa-solid fa-pen-to-square"></i>&nbsp;
-        <h2>{{ $t('change.button') }}</h2>
+        <h3>{{ $t('change.button') }}</h3>
       </a>
       <template v-if="showDialog">
         <draggable-dialog
@@ -81,10 +81,10 @@ SUGGESTION_PLUGIN.suggestionChangeComponent = {
         >
           <template v-if="!showSuccessMessage && !showFailureMessage">
             <div id="suggestion-header">
-              <h2 id="suggestion-title" tabindex="-1" ref="title">
+              <h4 id="suggestion-title" tabindex="-1" ref="title">
                 {{ $t('change.heading') }}
                 <span class="fst-italic">{{ prefLabels[0].label }}</span>
-              </h2>
+              </h4>
               <p id="suggestion-subtitle">
                 {{ $t('change.subheading') }}
               </p>

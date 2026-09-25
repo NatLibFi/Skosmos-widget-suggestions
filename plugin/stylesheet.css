@@ -31,18 +31,18 @@
   padding-bottom: 2.5rem;
 }
 
-.suggestion-link h2 {
+.suggestion-link {
+  text-decoration: none !important;
+}
+
+.suggestion-link h3 {
   display: inline;
-  width: auto;
-  margin-bottom: 0;
-  border: none;
   font-size: 1.2rem;
   color: var(--suggestion-medium-color);
-  font-weight: bold;
   font-family: var(--suggestion-font-family) !important;
 }
 
-.suggestion-link:hover h2 {
+.suggestion-link:hover h3 {
   text-decoration: underline;
 }
 
@@ -53,9 +53,11 @@
   gap: 3px;
 }
 
-.suggestion-link.suggestion-button h2 {
+.suggestion-link.suggestion-button h3 {
+  margin-bottom: 0;
   color: var(--suggestion-dark-color);
   display: block;
+  width: auto;
   white-space: nowrap;
 }
 
@@ -249,11 +251,11 @@
   width: fit-content;
 }
 
-h3.suggestion-input-label {
+h5.suggestion-input-label {
   font-size: var(--suggestion-font-size);
 }
 
-h3.suggestion-input-label a {
+h5.suggestion-input-label a {
   text-decoration: underline !important;
 }
 

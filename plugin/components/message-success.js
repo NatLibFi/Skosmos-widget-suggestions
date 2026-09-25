@@ -11,9 +11,9 @@ SUGGESTION_PLUGIN.messageSuccessComponent = {
   },
   template: `
     <div id="suggestion-header">
-      <h2 id="suggestion-title" tabindex="-1">
+      <h4 id="suggestion-title" tabindex="-1">
         {{ $t('common.success.heading') }}
-      </h2>
+      </h4>
       <span id="suggestion-subtitle">
         <p>{{ $t('common.success.subheading1') }}</p>
         <p>

@@ -75,10 +75,10 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
         @keydown.space="openDialog($event)"
       >
         <i class="fa-solid fa-pen-to-square"></i>&nbsp;
-        <h2>
+        <h3>
           {{ $t('new.button.line1') }}
           <span>{{ $t('new.button.line2') }}</span>
-        </h2>
+        </h3>
       </a>
       <template v-if="showDialog">
         <draggable-dialog
@@ -90,9 +90,9 @@ SUGGESTION_PLUGIN.suggestionNewComponent = {
         >
           <template v-if="!showSuccessMessage && !showFailureMessage">
             <div id="suggestion-header">
-              <h2 id="suggestion-title" tabindex="-1" ref="title">
+              <h4 id="suggestion-title" tabindex="-1" ref="title">
                 {{ $t('new.heading') }}
-              </h2>
+              </h4>
               <p id="suggestion-subtitle">
                 {{ $t('new.subheading') }}
               </p>

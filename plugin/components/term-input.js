@@ -150,9 +150,9 @@ SUGGESTION_PLUGIN.termInputComponent = {
   },
   template: `
     <div class="suggestion-input-container">
-      <h3 class="suggestion-input-label"
+      <h5 class="suggestion-input-label"
         :id="label.id"
-      >{{ label.text }}</h3>
+      >{{ label.text }}</h5>
 
       <div :aria-labelledby="label.id">
         <div class="row">
