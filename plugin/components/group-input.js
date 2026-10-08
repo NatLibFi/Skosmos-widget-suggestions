@@ -28,7 +28,7 @@ SUGGESTION_PLUGIN.groupInputComponent = {
     selectGroup (group) {
       // Remove selected group from the list of selectable groups
       this.groups = this.groups.filter(g => g.uri !== group.uri)
-      this.optionInFocus = 0
+      this.optionInFocus = Math.min(this.optionInFocus, this.groups.length - 1)
 
       this.$emit('update:selectedGroups', [...this.selectedGroups, group])
     },
@@ -81,8 +81,10 @@ SUGGESTION_PLUGIN.groupInputComponent = {
         // Select group and close dropdown
         e.preventDefault()
         this.selectGroup(g)
-        const dropdown = bootstrap.Dropdown.getOrCreateInstance(this.$refs.button)
-        dropdown.hide()
+        // Move focus after list is updated
+        this.$nextTick(() => {
+          this.$refs['option' + this.optionInFocus][0].focus()
+        })
       } else if (e.key === 'Tab') {
         // Close dropdown and move focus to previous/next form field
         const dropdown = bootstrap.Dropdown.getOrCreateInstance(this.$refs.button)
@@ -128,29 +130,39 @@ SUGGESTION_PLUGIN.groupInputComponent = {
       ></chip-list>
 
       <div id="suggestion-group" class="suggestion-dropdown btn-group" aria-labelledby="suggestion-group-label">
-        <button id="suggestion-group-button" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" data-bs-display="static" aria-expanded="false" aria-haspopup="listbox"
+        <button
+          id="suggestion-group-button"
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          data-bs-auto-close="true"
+          data-bs-display="static"
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-controls="suggestion-group-list"
           ref="button"
           v-click-outside="() => optionInFocus = 0"
           @keyup="handleDropdownButtonKeyupEvent($event)"
         >
           {{ $t('new.groups.placeholder') }}
         </button>
-        <ul class="dropdown-menu" aria-labelledby="suggestion-group" tabindex="-1" role="listbox">
+        <ul id="suggestion-group-list" class="dropdown-menu" aria-labelledby="suggestion-group-label" role="listbox" aria-multiselectable="true">
           <template v-if="loading">
             <li>
-              <a class="dropdown-item"><i class="spinner fa-solid fa-spinner fa-spin-pulse" aria-hidden="true"></i></a>
+              <span><i class="spinner fa-solid fa-spinner fa-spin-pulse" aria-hidden="true"></i></span>
             </li>
           </template>
           <template v-else>
-            <li tabindex="0" role="option"
+            <li role="option" aria-selected="false"
               v-for="(g, i) in groups"
               :key="g.uri"
               :ref="'option' + i"
+              :tabindex="i === optionInFocus ? '0' : '-1'"
               @click="selectGroup(g)"
               @keydown="handleListItemKeydownEvent($event, g)"
               @keyup="handleListItemKeyupEvent($event)"
             >
-              <a class="dropdown-item">{{ g.prefLabel }}</a>
+              <span>{{ g.prefLabel }}</span>
             </li>
           </template>
         </ul>
