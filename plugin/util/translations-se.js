@@ -1,82 +1,82 @@
 SUGGESTION_PLUGIN.translationsSe = {
   new: {
     button: {
-      line1: "Ehdota uutta käsitettä",
-      line2: "tähän sanastoon"
+      line1: "Evttot ođđa doahpaga",
+      line2: "dán sátnerádjui"
     },
-    heading: "Ehdota uutta käsitettä sanastoon",
-    subheading: "Sanastossa jo oleviin käsitteisiin voit ehdottaa muutoksia käsitesivulta",
+    heading: "Evttot ođđa doahpaga sátnerádjui",
+    subheading: "Sáhtát evttohit rievdadusaid sátneráju doahpagiidda doabasiiddus",
     vocab: {
-      label: "Kohdesanasto:",
+      label: "Sátnerádju:",
       yso: "YSO",
-      ysoPlaces: "YSO-paikat",
+      ysoPlaces: "YSO-báikkit",
       slm: "SLM"
     },
     terms: {
-      fi: "Termi suomeksi:",
-      sv: "Termi ruotsiksi:",
-      en: "Termi englanniksi:",
-      se: "Termi pohjoissaameksi:",
-      prefLabel: "Päätermi:",
-      altLabel: "Vaihtoehtoinen termi:",
+      fi: "Tearbma suomagillii:",
+      sv: "Tearbma ruoŧagillii:",
+      en: "Tearbma eŋgelasgillii:",
+      se: "Tearbma davvisámegillii:",
+      prefLabel: "Váldotearbma:",
+      altLabel: "Molssaevttolaš tearbma:",
       if: {
-        yso: "Termi löytyy jo YSOsta: {link}",
-        slm: "Termi löytyy jo SLMstä: {link}", //
-        "yso-paikat": "Termi löytyy jo YSO-paikoista: {link}",
-        yse: "Termistä on jo olemassa käsite-ehdotus: {link}. Kommentoi tai kannata ehdotusta sen tiedoista löytyvän kotisivulinkin kautta",
-        alt: "Tämä on jo ohjaustermi käsitteelle: {link}"
+        yso: "Tearbma gávdno juo YSO:s: {link}",
+        slm: "Tearbma gávdno juo SLM:s: {link}", //
+        "yso-paikat": "Tearbma gávdno juo YSO-báikkiin: {link}",
+        yse: "Tearpmas lea juo doabaevttohus {link}. Kommentere dahje guottit evttohusa dan ruovttusiiddu liŋkka bokte. ",
+        alt: "Dát lea juo stivrentearbma doahpagii {link}"
       }
     },
-    broader: "Yläkäsite (LT):",
-    narrower: "Alakäsitteet (ST):",
-    associative: "Assosiatiiviset käsitteet (RT):",
+    broader: "Badjedoaba:",
+    narrower: "Vuolledoahpagat:",
+    associative: "Assosiatiiva doahpagat:",
     groups: {
-      label: "YSOn temaattinen ryhmä:",
-      none: "Ei enempää ryhmiä valittavissa.",
-      placeholder: "Valitse ryhmä(t) listalta"
+      label: "YSO temáhtalaš joavku:",
+      none: "It sáhte válljet eanet joavkkuid.",
+      placeholder: "Vállje joavkku(id) listtus"
     },
     exactMatches: {
-      label: "Vastaava käsite muussa sanastossa (esim. {links}). Linkki käsitteeseen:",
-      placeholder: "Linkki käsitteeseen",
-      ariaLabel: "Vastaava käsite muussa sanastossa:"
+      label: "Vástideaddji doaba eará sátnerájuin (omd. {links}). Liŋka doahpagii:",
+      placeholder: "Liŋka doahpagii",
+      ariaLabel: "Vástideaddji doaba eará sátnerájus:"
     },
-    explanation: "Lisätietoa tai perusteluja ehdotukselle:",
-    neededFor: "Minkä aineiston kuvailussa tarvitsit käsitettä? Julkaisun nimi, ISBN tai linkki: *",
-    organization: "Ehdottajan organisaatio:",
-    meetingInfo: "{deadlineDate} mennessä tehdyt ehdotukset otetaan asialistalle {meetingDate} sanastokokouksessa.",
+    explanation: "Lassidieđut dahje vuođustusat evttohussii:",
+    neededFor: "Man materiála govvideamis dárbbašivččet doahpaga? Publikašuvnna namma, ISBN dahje liŋka:*",
+    organization: "Evttoheaddji organisašuvdna:",
+    meetingInfo: "{deadlineDate} rádjai sáddejuvvon evttohusat váldojuvvojit áššelistui {meetingDate} sátenrádjočoahkkimis.",
     common: {
-      none: "Termejä ei löydy hakusanalla",
+      none: "Tearpmat eai gávdno ohcansániin",
     },
-    submit: "Lähetä käsite-ehdotus"
+    submit: "Sádde doabaevttohusa"
   },
   change: {
-    button: "Ehdota muutosta käsitteeseen",
-    heading: "Ehdota muutosta käsitteeseen",
-    subheading: "Kuka tahansa sanaston käyttäjä saa ehdottaa muutoksia sanastoon",
-    description: "Ehdotettu muutos: *",
-    explanation: "Lisätietoa tai perusteluja ehdotukselle:",
-    organization:"Ehdottajan organisaatio:",
-    submit: "Lähetä muutosehdotus"
+    button: "Evttot rievdadusa doahpagii",
+    heading: "Evttot rievdadusa doahpagii",
+    subheading: "Gii beare sáhttá evttohit rievdadusaid sátnerádjui",
+    description: "Evttohuvvon rievdadus: *",
+    explanation: "Lassidieđut dahje vuođustusat evttohussii:",
+    organization:"Evttoheaddji organisašuvdna:",
+    submit: "Sádde rievdadusevttohusa"
   },
   common: {
-    required: "* Kenttä on pakollinen",
-    error: "Tämä on pakollinen tieto.",
+    required: "* Gieddi lea bákkolaš",
+    error: "Dát diehtu lea bákkolaš.",
     aria: {
-      close: "Sulje",
-      clear: "Tyhjennä",
-      deselect: "Poista valinta",
-      live: "Lomaketta ei lähetetty. {count} kentässä on virheitä."
+      close: "Gidde",
+      clear: "Gurre",
+      deselect: "Váldde válljema eret",
+      live: "Skovvi ii sáddejuvvon. {count} giettis leat meattáhusat."
     },
     success: {
-      heading: "Ehdotus lähetetty onnistuneesti",
-      subheading1: "Ehdotuksesi siirtyy nyt YSO-kokouksen käsiteltäväksi.",
-      subheading2: "Voit seurata ehdotuksesi käsittelyn etenemistä",
-      link: "GitHubissa"
+      heading: "Evttohusa sádden lihkostuvai",
+      subheading1: "Du evttohus sirdašuvva dál YSO-čoahkkima gieđahallamii.",
+      subheading2: "Sáhtát čuovvut du evttohusa gieđahallama ovdáneami",
+      link: "GitHubas"
     },
     failure: {
-      heading: "Ehdotuksen lähettäminen ei onnistunut",
-      subheading1: "Ehdotustasi ei valitettavasti pystytty vastaanottamaan.",
-      subheading2: "Voit kokeilla ehdotuksen täyttämistä uudestaan tai ottaa yhteyttä Finton ylläpitäjiin Tietoja-välilehden kautta."
+      heading: "Evttohusa sádden ii lihkostuvvan",
+      subheading1: "Mii eat sáhttán vuostáiváldit du evttohusa.",
+      subheading2: "Sáhtát geahččalit deavdit skovi ođđasit dahje váldit oktavuođa Finto-bálvalussii Dieđut-siiddu bokte."
     },
   }
 }
