@@ -251,13 +251,20 @@ SUGGESTION_PLUGIN.suggestionNewFormComponent = {
         <exact-match-input
           v-if="selectedVocab === 'slm'"
           v-model:matches="exactMatches"
-          :links="[{url: '', text: 'LCGFT'}, {url: '', text: 'SAOGF'}]"
+          :links="[
+            {url: 'https://www.loc.gov/aba/publications/FreeLCGFT/freelcgft.html', text: 'LCGFT'},
+            {url: 'https://metadatabyran.kb.se/amnesord-och-genre-form/svenska-amnesord', text: 'SAOGF'}
+          ]"
           :key="renderKey"
         ></exact-match-input>
         <exact-match-input
           v-if="selectedVocab === 'yso' || selectedVocab === 'yso-paikat'"
           v-model:matches="exactMatches"
-          :links="[{url: '', text: 'LCSH'}, {url: '', text: 'SAO'}, {url: '', text: 'Wikipedia'}]"
+          :links="[
+            {url: 'https://www.loc.gov/aba/publications/FreeLCSH/freelcsh.html', text: 'LCSH'},
+            {url: 'https://metadatabyran.kb.se/amnesord-och-genre-form/svenska-amnesord', text: 'SAO'},
+            {url: 'https://www.wikidata.org/', text: 'Wikipedia'}
+          ]"
           :key="renderKey"
         ></exact-match-input>
         <basic-input
