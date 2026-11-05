@@ -8,7 +8,7 @@ SUGGESTION_PLUGIN.translationsSv = {
     subheading: "Du kan föreslå ändringar av begrepp som redan finns i vokabulären via begreppens egna sidor",
     vocab: {
       label: "Vokabulär:",
-      yso: "YSO",
+      yso: "ALLFO",
       ysoPlaces: "ALLFO-orter",
       slm: "FGF" //
     },
@@ -69,7 +69,7 @@ SUGGESTION_PLUGIN.translationsSv = {
     },
     success: {
       heading: "Förslaget skickades",
-      subheading1: "Ditt förslag vidarebefordras till YSO-mötet.",
+      subheading1: "Ditt förslag vidarebefordras till ALLFO-mötet.",
       subheading2: "Du kan följa hur behandlingen av ditt förslag framskrider",
       link: "i GitHub"
     },
