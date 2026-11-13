@@ -45,9 +45,17 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
       this.isDragging = false
     },
     getModalStyle () {
-      return {
-        left: 'calc(50vw + ' + this.x + 'px)',
-        top: 'calc(50vh + ' + this.y + 'px)'
+      // Using dynamic viewport height for compatible mobile browsers
+      if (CSS.supports('height: 50dvh') && CSS.supports('width: 50dvw')) {
+        return {
+          left: 'calc(50dvw + ' + this.x + 'px)',
+          top: 'calc(50dvh + ' + this.y + 'px)'
+        }
+      } else {
+        return {
+          left: 'calc(50vw + ' + this.x + 'px)',
+          top: 'calc(50vh + ' + this.y + 'px)'
+        }
       }
     },
     handleTabDownEvent(e) {
