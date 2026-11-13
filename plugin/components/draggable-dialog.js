@@ -67,7 +67,7 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
     }
   },
   template: `
-    <div v-drag="handleDragEvent" v-drag-stop="handleDragStopEvent">
+    <div v-drag="handleDragEvent" v-drag-stop="handleDragStopEvent" v-keydown-esc="() => $emit('close-dialog')">
       <div class="suggestion-dialog-overlay"></div>
       <div class="suggestion-dialog-modal" role="dialog" aria-labelledby="suggestion-title" aria-modal="true" ref="dialogModal"
         :style="getModalStyle()"

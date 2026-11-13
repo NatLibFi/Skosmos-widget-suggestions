@@ -67,6 +67,20 @@ SUGGESTION_PLUGIN.createVueApp = function (params) {
     }
   })
 
+  vueApp.directive('keydown-esc', { // Used in 'draggable-dialog' component
+    beforeMount: (el, binding) => {
+      el.escEvent = event => {
+        if (event.key === 'Escape') {
+          binding.value(event)
+        }
+      }
+      window.addEventListener('keydown', el.escEvent) // registering an event listener on clicking the esc key
+    },
+    unmounted: el => {
+      window.removeEventListener('keydown', el.escEvent)
+    }
+  })
+
   vueApp.directive('click-outside', { // Used in 'relation-input' component
     beforeMount: (el, binding) => {
       el.clickOutsideEvent = event => {
