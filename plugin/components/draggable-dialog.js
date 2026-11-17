@@ -10,7 +10,8 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
       mouseXPos: 0,
       mouseYPos: 0,
       x: 0,
-      y: 0
+      y: 0,
+      supportsDynamicViewport: CSS.supports('height: 50dvh') && CSS.supports('width: 50dvw')
     }
   },
   methods: {
@@ -45,8 +46,8 @@ SUGGESTION_PLUGIN.draggableDialogComponent = {
       this.isDragging = false
     },
     getModalStyle () {
-      // Using dynamic viewport height for compatible mobile browsers
-      if (CSS.supports('height: 50dvh') && CSS.supports('width: 50dvw')) {
+      // Using dynamic viewport units for compatible browsers
+      if (this.supportsDynamicViewport) {
         return {
           left: 'calc(50dvw + ' + this.x + 'px)',
           top: 'calc(50dvh + ' + this.y + 'px)'
